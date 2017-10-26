@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Intro from 'intro.js';
+import * as Intro from 'introjs';
 import Message from '../components/Message.jsx';
 
 
@@ -8,7 +8,7 @@ export default class Help extends React.Component{
 
 	node(){
 		return this.getDomObject();
- 
+
 	}
 
 	show(){

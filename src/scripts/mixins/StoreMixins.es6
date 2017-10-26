@@ -1,7 +1,7 @@
 import {createStore} from 'reflux';
 import {List,Map,Record} from 'immutable';
 
-const FALSE_DATA = {};
+const FALSE_DATA = new Map({});
 
 const StoreMixins = {
 	initialData: FALSE_DATA,
@@ -13,7 +13,7 @@ const StoreMixins = {
 		}
 		this.data = this.initialData;
 	},
-	
+
 	setData: function(newData,silent) {
 		this.data = newData;
 		if (silent!=true){
@@ -22,6 +22,7 @@ const StoreMixins = {
 	},
 
 	get: function() {
+
 		return this.data;
 	},
 

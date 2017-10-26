@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react';
 import { PropTypes } from 'react';
 
-import {L, Popup, Map, Marker, TileLayer,ZoomControl,MapLayer,ScaleControl} from 'react-leaflet'; 
+import {L, Popup, Map, Marker, TileLayer,ZoomControl,MapLayer,ScaleControl} from 'react-leaflet';
 import leafletPip from 'leaflet-pip';
 
 import * as Actions from '../../actions/Actions.es6';
@@ -24,7 +24,7 @@ import InfoPanel from './controls/InfoPanel.jsx';
 
 /*Popups*/
 import MapPopUp from './popups/PopUp.jsx';
-import LocationPopup from './popups/LocationPopup.jsx'; 
+import LocationPopup from './popups/LocationPopup.jsx';
 
 /*Dialogs*/
 import DataEntryPopup from '../dialogs/DataEntry.jsx';
@@ -32,16 +32,6 @@ import DataEntryPopup from '../dialogs/DataEntry.jsx';
 /*Store*/
 import MapStore from '../../stores/Map.es6';
 
-
- const MapSize=React.createClass({
-   componentDidMount(){
-   
-   },
-
-  render(){
-     return null;
-  }
- });
 
 export default class MapView extends React.Component {
 
@@ -74,7 +64,7 @@ export default class MapView extends React.Component {
   }
 
   /*
-    This is called by location onClick 
+    This is called by location onClick
     */
   locationClick(e) {
     //using geonames lat and lng instead of event latlng should be more precise.
@@ -82,7 +72,7 @@ export default class MapView extends React.Component {
     let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
     let locationFeature = e.target.feature
     const {latlng} = e;
-    //at this stage I have the location feature + country feature 
+    //at this stage I have the location feature + country feature
     Actions.invoke(Constants.ACTION_POPUP_INFO, {
       locationFeature, countryFeature, 'position': latlng
     })
@@ -91,15 +81,16 @@ export default class MapView extends React.Component {
   /*Query features behind the point*/
   queryFeatures(latlng, layer) {
 
-    let group = this.refs.country.leafletElement;
     let countryInfos = [];
-
-    group.eachLayer(function(layer) {
+    const map=this.refs.map.leafletElement
+    map.eachLayer(function(layer) {
+      if (layer.eachLayer){
       let countryInfo = leafletPip.pointInLayer(latlng, layer);
       if (countryInfo && countryInfo.length > 0) {
         countryInfos.push(countryInfo);
       }
-    });
+    }
+  });
     return countryInfos[0];
   }
 
@@ -118,51 +109,41 @@ export default class MapView extends React.Component {
     })
   }
 
-  render() { 
+  render() {
+    console.log(this.state.popup)
+
     return (
 
       <div id="mapContainer">
-        <div className="map">  
-          
-          <DataEntryPopup/>
-          
-          <Map   {...this.state.map}  ref="map">
-            <MapSize/>
-            <MiniMap  collapsed={true} position='topright' topPadding= {1500} bottomPadding= {40}>            
-              <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>
-                {this.state.layers.countries?this.state.layers.countries.map((country)=>{
-                  return <CountryLayer {...country}/>
-                }):null}
-              </LayerGroup>
-                <GeocodingLayer name="Geocoding" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>         
-                <GazetterLayer name="Available Locations" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.locations}/>
-         
-            </MiniMap>
-           
-            <MapPopUp maxWidth="850" {...this.state.popup}>
-                <LocationPopup/>
-            </MapPopUp>
-           
-            <ZoomControl position="bottomright"/>
+      <div className="map">
+        <DataEntryPopup/>
+        <Map   {...this.state.map}  ref="map">
+          <MapPopUp maxWidth="850" {...this.state.popup}>
+              <LocationPopup/>
+          </MapPopUp>
+          <MiniMap>
+            <GeocodingLayer showAsMiniMap={true} name="Geocoding" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>
+            <GazetterLayer name="Available Locations" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.locations}/>
 
-            <Control className="leaflet-control-layer-selector" position="bottomleft">
-              <CountrySelector/>
-            </Control>
-
-            <Control className="leaflet-control-actions-buttons" position="bottomright">
-                <ActionButtons/>
-            </Control>
-            
-            <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel"  position="topleft">
-                <InfoPanel id={this.props.params.projectID}/>
-            </Control>
-
-           
-                    
-          </Map>
-        </div>
+            <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={true}>
+                            {this.state.layers.countries?this.state.layers.countries.map((country)=>{
+                              return <CountryLayer {...country}/>
+                            }):null}
+            </LayerGroup>
+          </MiniMap>
+          <ZoomControl position="bottomright"/>
+          <Control className="leaflet-control-layer-selector" position="bottomleft">
+            <CountrySelector/>
+          </Control>
+          <Control className="leaflet-control-actions-buttons" position="bottomright">
+              <ActionButtons/>
+          </Control>
+          <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel"  position="topleft">
+              <InfoPanel id={this.props.match.params.projectID}/>
+          </Control>
+        </Map>
+    </div>
       </div>
     )
   }
 }
-

@@ -21,7 +21,7 @@ const DataEntryStore = createStore({
 		this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).failed, 'geonamesFailed');
 		this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), 'loadingAdminData');
 		this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).completed, 'updateAdminData');
-		this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, 'geonamesFailed');		
+		this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, 'geonamesFailed');
 	},
 
 	closePopup(){
@@ -32,7 +32,7 @@ const DataEntryStore = createStore({
 
 	openPopup(location){
 		var newState = Object.assign({}, this.get());
-		let adminSource = location.adminSource || (location.type=='geocoding'? 'saved' : location.adminCodes.shape? 'shape' : 'geonames');		
+		let adminSource = location.adminSource || (location.type=='geocoding'? 'saved' : location.adminCodes.shape? 'shape' : 'geonames');
 		//adminSource if it is not set, it will be set by default to:
 		// 'saved' if it is an already coded location
 		// 'shape' if it is a new location and have values from shapes
@@ -47,6 +47,7 @@ const DataEntryStore = createStore({
 	},
 
 	valueChanged(newValue){
+		
 		var newState = Object.assign({}, this.get());
 		var newGeocoding = Object.assign({}, newState.geocoding);
 		var val = {};
@@ -85,7 +86,7 @@ const DataEntryStore = createStore({
 	},
 
 	/**
-     * Create final geocoding object 
+     * Create final geocoding object
      * @return {[type]} [description]
      */
     buildGecoding(source) {
@@ -107,7 +108,7 @@ const DataEntryStore = createStore({
 	        'country': source.adminCodes[source.adminSource].country,
 	        'admin1': source.adminCodes[source.adminSource].admin1,
 	        'admin2': source.adminCodes[source.adminSource].admin2,
-	    }); 
+	    });
 		return newGeocoding;
 	},
 

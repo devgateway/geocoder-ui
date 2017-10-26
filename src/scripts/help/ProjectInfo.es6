@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Intro from 'intro.js'
+import * as Intro from 'introjs'
 import Help from './Help.jsx'
 import Message from '../components/Message.jsx'
 
 export default class ProjectInfoHelp extends Help{
- 
-  
+
+
   help() {
   this.options={steps:[
       {
@@ -30,7 +30,7 @@ export default class ProjectInfoHelp extends Help{
         position:'bottom'
       }
     ]};
-    this.show(); 
+    this.show();
   }
 
 

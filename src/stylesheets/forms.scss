@@ -4,19 +4,21 @@
 	@include fontDefault($regular,$black);
 	height:22px;
 	@include grayBorder();
-	color:$black; 
+	color:$black;
 }
 
+
+
+
+
 input[type="checkbox"],input[type="radio"]{
-	display:none;
-	
+	display:none !important;
 }
 
 input[type="checkbox"]+label,input[type="radio"]+label{
 	cursor:pointer;
 
 }
-
 
 
 input[type="checkbox"]+label:before,input[type="radio"]+label:before{
@@ -28,15 +30,18 @@ input[type="checkbox"]+label:before,input[type="radio"]+label:before{
 	margin:4px;
 }
 
+
+
+
 input[type="checkbox"]+label:before,input[type="radio"]+label:before{
 	@include grayBorder();
 	background-color:#FFF;
 }
 
 input[type="checkbox"]:checked+label:before,input[type="radio"]:checked+label:before{
-	
+
 	font-size:$small !important;
-	padding-left:1px; 
+	padding-left:1px;
 	display: inline-block;
 	font-family:FontAwesome;
 	text-rendering: auto;

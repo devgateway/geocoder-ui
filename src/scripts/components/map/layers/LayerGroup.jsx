@@ -1,9 +1,20 @@
 import React from 'react';
-import {PropTypes} from 'react';
-import {MapLayer} from 'react-leaflet'; 
+import {MapLayer} from 'react-leaflet';
 import { featureGroup } from 'leaflet';
+import { Control } from 'leaflet';
+import PropTypes from 'prop-types'
 
 export default class LayerGroup extends MapLayer {
+
+	getChildContext() {
+
+	    return {layerGroup:  this.leafletElement,};
+	  }
+
+	static childContextTypes={
+		layerGroup:Control.Layers
+	}
+
 	componentWillMount() {
 		super.componentWillMount();
 		this.leafletElement = featureGroup();
@@ -14,9 +25,11 @@ export default class LayerGroup extends MapLayer {
 
 	}
 
+	createLeafletElement (props) {
+			return new Control.Layers(props);
+	};
+
 	render() {
-		return this.renderChildrenWithProps({
-			layerGroup: this.leafletElement,
-		});
+		return (<div>{this.props.children}}</div>)
 	}
 }

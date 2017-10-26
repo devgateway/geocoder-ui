@@ -1,26 +1,37 @@
 import React from 'react';
-import { Children, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import { Children} from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { Map, popup } from 'leaflet';
 import { Popup } from 'react-leaflet';
+import Leaflet from 'leaflet'
+
 
 export default class MapPopUp extends Popup {
 
+	static contextTypes = {
+		map: PropTypes.instanceOf(Leaflet.Map),
+	}
+
+	constructor() {
+    super();
+  }
+
 	componentDidUpdate(prevProps) {
-		
-		const {open,position,map} = this.props;
-		
+
+		const map=this.context.map
+		const {open,position} = this.props;
+
 		if (open) {
 			this.leafletElement.setLatLng(position);
 			this.leafletElement.openOn(map);
-
-
 		}else{
 			map.closePopup();
 		}
 
-		if (this.leafletElement._isOpen) {
-			this.renderPopupContent();
+
+		if (this.leafletElement.isOpen()) {
+			this.renderPopUp();
 		}
 	}
 
@@ -28,8 +39,7 @@ export default class MapPopUp extends Popup {
 		/*keep this method empty*/
 	};
 
-	renderPopupContent() {
-				
+	renderPopUp() {
 		if (this.props.children) {
 			render(
 				React.cloneElement(Children.only(this.props.children), this.props) ,

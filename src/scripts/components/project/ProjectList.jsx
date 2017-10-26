@@ -1,39 +1,31 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ListGroup,ListGroupItem,Pagination,Grid,Row,Col,Input,Button}  from 'react-bootstrap';
-import { Link  } from 'react-router';
+import {ListGroup,ListGroupItem,Pagination,Grid,Row,Col,FormControl,Button}  from 'react-bootstrap';
+import { Link  } from 'react-router-dom';
 import  * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Projects from '../../stores/Projects.es6';
 import Message from '../Message.jsx';
 import Dropzone from 'react-dropzone';
 
-/*Renders a quick project info view */
 
-class ProjectInfo extends React.Component {
+const ProjectInfo= (props)=>{
+   return (
+    <div className={(props.locations && props.locations.length>0)?'bs-callout bs-callout-success':'bs-callout bs-callout-info'}>
+      <div className="text-vertical">{props.id}</div>
+      <h3><Link to={'map/'+props.id}>{props.title || props.alternate_title}</Link> </h3>
+        <span>
+         <b> {props.country?props.country.name:null}</b>
+        </span>
+        <p>
+          {props.long_description}
+        </p>
 
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <div className={(this.props.locations && this.props.locations.length>0)?'bs-callout bs-callout-success':'bs-callout bs-callout-info'}>
-        <div className="text-vertical">{this.props.project_id}</div>
-        <h3><Link to={'map/'+this.props.project_id}>{this.props.title || this.props.alternate_title}</Link> </h3>
-          <span>
-           <b> {this.props.country.name}</b>
-          </span>
-          <p>
-            {this.props.long_description}
-          </p>
-
-          <div className="pull-right"> <Link to={'map/' + this.props.project_id}><Message k="projectlist.geocodeproject"/></Link></div>
-        <br/>
-      </div>
-    )
-  }
+        <div className="pull-right"> <Link to={'map/' + props.id}><Message k="projectlist.geocodeproject"/></Link></div>
+      <br/>
+    </div>
+  )
 }
 
 
@@ -41,8 +33,8 @@ class ProjectList extends React.Component {
 
   constructor() {
     super();
-
-    this.state = Projects.get();
+    const a = Projects;
+    this.state = Projects.get().toJS();
   }
 
   componentDidMount() {
@@ -58,8 +50,7 @@ class ProjectList extends React.Component {
   }
 
   onStoreChange(data){
-
-    this.setState(data);
+    this.setState(data.toJS());
   }
 
   validationState() {
@@ -96,6 +87,7 @@ class ProjectList extends React.Component {
 
 
   render() {
+    console.log(this.state)
 
  return (
       <Grid>
@@ -109,35 +101,15 @@ class ProjectList extends React.Component {
           <Row>
 
             <Col lg={8}>
-              <Input  type="text"
+              <FormControl  type="text"
                 name="t"
                 value={this.state.value}
                 placeholder="Enter text to search"
                 label="Text search"
-                // bsStyle={this.validationState()}
-                hasFeedback
                 ref="input"
-                groupClassName="group-class"
-                labelClassName="label-class"
                 onChange={this.handleChange.bind(this)}/>
             </Col>
 
-            <Col lg={4}>
-
-
-            {this.state.files.length>0?
-              <div  className="btn  btn-sm btn-default small upload" disabled={true}> import</div>
-              :<Dropzone onDrop={this.onDrop} multiple={false} accept="application/csv" className="btn  btn-sm btn-info small upload">
-                {Message.t('projectlist.import')}
-              </Dropzone>}
-                <a href='export' className="btn  btn-sm btn-info small export" >{Message.t('projectlist.geojsonexport')} </a>
-
-                <a href='export?f=kml' className="btn  btn-sm btn-info small export" >{Message.t('projectlist.kmlexport')} </a>
-                 {this.state.files.length > 0 ?
-                  <div>
-                     <span className="small">{Message.t('projectlist.uploading')} {this.state.files.length} files...</span>
-                  </div> : null}
-            </Col>
 
           </Row>
 
@@ -148,13 +120,13 @@ class ProjectList extends React.Component {
                   <Message k="projectlist.geocodingfilter"/>
                 </label>
                 <div className="form-group spacingLg">
-                  <Input className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.havelocations')} value="yes" checked={this.state.params.withLoc =='yes'}  onChange={this.handleChange.bind(this)}/>
+                  <FormControl className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.havelocations')} value="yes" checked={this.state.params.withLoc =='yes'}  onChange={this.handleChange.bind(this)}/>
                 </div>
                 <div className="form-group spacingLg">
-                  <Input className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.nothavelocations')} value="no" checked={this.state.params.withLoc =='no'}  onChange={this.handleChange.bind(this)}/>
+                  <FormControl className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.nothavelocations')} value="no" checked={this.state.params.withLoc  =='no'}  onChange={this.handleChange.bind(this)}/>
                 </div>
                 <div className="form-group spacingLg">
-                  <Input className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.any')} value="none" checked={this.state.params.withLoc =='none'}  onChange={this.handleChange.bind(this)}/>
+                  <FormControl className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.any')} value="none" checked={this.state.params.withLoc  =='none'}  onChange={this.handleChange.bind(this)}/>
                 </div>
               </div>
             </Col>
@@ -163,10 +135,9 @@ class ProjectList extends React.Component {
         <Row id="project-search-list">
           <Col lg={12}>
             <ListGroup>
-              <h4> <Message k="projects.projectsCount" count={this.state.data.count}/> </h4>
-              {this.state.data.projects?this.state.data.projects.map((project) => {
-                  return <ProjectInfo key={project._id} {...project}/>
-                }):null
+              <h4> <Message k="projects.projectsCount" count={this.state.data.numberOfElements}/> </h4>
+              {
+                this.state.data.content?this.state.data.content.map((project) =>(<ProjectInfo  key={project.id} {...project}/>)):null
               }
             </ListGroup>
           </Col>

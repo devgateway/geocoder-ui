@@ -10,7 +10,7 @@ export default class GazetteerLayer extends GeoJsonLayer {
   }
 
   style() {
-    //styles are applied by css for this layer 
+    //styles are applied by css for this layer
   }
 
   pointToLayer(feature, latlng) {
@@ -26,7 +26,7 @@ export default class GazetteerLayer extends GeoJsonLayer {
   }
 
   onFeatureClick(e) {
-    const {data, map, ...props} = this.props;
+    const {data, ...props} = this.props;
     const position = e.latlng
     const {geometry, properties} = e.target.feature;
     this.props.onFeatureClick?this.props.onFeatureClick(e):null;

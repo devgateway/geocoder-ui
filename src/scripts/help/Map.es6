@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Intro from 'intro.js'
+import * as Intro from 'introjs'
 import Help from './Help.jsx'
 import Message from '../components/Message.jsx'
 

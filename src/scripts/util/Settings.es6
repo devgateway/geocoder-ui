@@ -21,7 +21,6 @@ export default class Settings {
 	}
 
 	get(module, name) {
-		debugger;
 		if(!window._setting){
 			throw new Error('Settings should be initialize');
 		}

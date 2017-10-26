@@ -11,6 +11,7 @@ export default class ApiClient {
 	 * @return {[array]}     an array with all projects
 	 */
 	 static getProjectList(params) {
+
 	 	const API_BASE_URL=settings.get('API','API_BASE_URL')
 	 	const PROJECT_LIST_END_POINT=settings.get('API','PROJECT_LIST_END_POINT');
 	 	const PROJECT_END_POINT=settings.get('API','PROJECT_END_POINT');
@@ -21,7 +22,7 @@ export default class ApiClient {
 	 			resolve(response.data);
 	 		})
 	 		.catch((response) => {
-	 			reject(`got ${response.status}  ${response.statusText}`)
+				reject(`got ${response.status}  ${response.statusText}`)
 	 		})
 	 	})
 	 }
@@ -72,20 +73,20 @@ export default class ApiClient {
 	 	const IMPORT_END_POINT=settings.get('API','IMPORT_END_POINT')
 	 	var data = new FormData();
 	 	data.append('file',file);
-		debugger;
+
 	 	return new Promise((resolve, reject) => {
 	 		AjaxUtil.post(`${API_BASE_URL}/${IMPORT_END_POINT}`,data).then((response) => {
-	 			debugger;
+
 	 			resolve(response);
 
 	 		})
 	 		.catch((response) => {
-	 			debugger;
+
 	 			reject(`got ${response.status}  ${response.statusText}`)
 	 		})
 
 	 	})
-	 
-	}	
-	 
+
+	}
+
 	}

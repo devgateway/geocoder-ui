@@ -1,16 +1,21 @@
 //TODO: this file needs a big refactoring (TODO ADDED By @sdimunzio 31 01 2016)
 import React from 'react';
-import {PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
 import {MapComponent, MapControl} from 'react-leaflet';
-import {control}from 'leaflet'; 
+import {Control} from 'leaflet';
 
 import * as MiniMap from '../../../libs/mnimaps.es6';
 import BaseLayerStore from '../../../stores/BaseLayers.es6';
 import L from 'leaflet';
 
-export default class  extends MapControl {
+import PropTypes from 'prop-types'
+
+
+export default class  extends React.Component {
+
+	static contextTypes = {
+        map: PropTypes.instanceOf(L.Map),
+      }
 
 
 	constructor() {
@@ -19,25 +24,25 @@ export default class  extends MapControl {
 		this.state =Object.assign({overlay:{} ,baseLayers: baseLayers});
 	}
 
-	componentDidMount() {		
-		this.state.baseLayers.OpenStreetMap.addTo(this.props.map);
-				
-		this.leafletElement = control.layers.minimap(this.state.baseLayers, this.state.overlay, {
+	componentDidMount() {
+		debugger;
+		this.state.baseLayers.OpenStreetMap.addTo(this.context.map);
+		this.leafletElement = L.control.layers.minimap(this.state.baseLayers, this.state.overlay, {
 			collapsed: true,
 			overlayBackgroundLayer: this.state.baseLayers.OpenStreetMap
-		}).addTo(this.props.map);
-	
+		}).addTo(this.context.map);
+
 		this.initiated=true;
-	
+
 	}
 
 	componentWillUnmount(){
-		this.props.map.eachLayer(function(i){this.props.map.removeLayer(i);}.bind(this));//removes all layers from map
-		super.componentWillUnmount();
+		this.context.map.eachLayer(function(i){this.context.map.removeLayer(i);}.bind(this));//removes all layers from map
 		this.leafletElement = null;
 	}
 
-	addLayer(layer,name,showAsMiniMap){	
+	addLayer(layer,name,showAsMiniMap){
+		debugger;
 		if (!this.initiated){
 			let newState=Object.assign({},this.state);
 
@@ -49,18 +54,19 @@ export default class  extends MapControl {
 				this.leafletElement.addOverlay(layer, name,showAsMiniMap);
 			}
 		}
-		this.props.map.addLayer(layer);
+		this.context.map.addLayer(layer);
 	}
 
 	removeLayer(layer){
-		this.props.map.removeLayer(layer);
+		this.context.map.removeLayer(layer);
 		if (this.leafletElement){
 			this.leafletElement.removeLayer(layer);
 		}
 	}
 
 	getClonedChildrenWithMap(extra) {
-		const { children, map } = this.props;
+		const map= this.context.map
+		const { children } = this.props;
 		const props = Object.assign({map}, extra);
 		return React.Children.map(children, child => {
 			return child ? React.cloneElement(child, props) : null;

@@ -70,7 +70,7 @@ let invoke = (name, options) => {
 }
 
 /**
- * Get action by name 
+ * Get action by name
  * @param  String name [description]
  * @return {[type]}      [description]
  */
@@ -105,7 +105,7 @@ actions[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES].listen(function(options) {
 
 /*Ajax calls for async actions */
 actions[Constants.ACTION_LOAD_SHAPE].listen(function(iso) {
-	
+
 	ShapesMapping.getGeoJsonShape(iso).then((results) => actions[Constants.ACTION_LOAD_SHAPE].completed(results, iso))
 		.catch((message) => actions[Constants.ACTION_LOAD_SHAPE].failed(message));
 })
@@ -135,15 +135,14 @@ actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function() {
 })
 
 actions[Constants.ACTION_UPLOAD_FILE].listen(function(file) {
-	debugger;
-	APIClient.upload(file)	
+
+	APIClient.upload(file)
 		.then((results) => {
-			debugger;
+
 			actions[Constants.ACTION_UPLOAD_FILE].completed(results)
 		})
 		.catch((message) =>{
-			debugger
-			 actions[Constants.ACTION_UPLOAD_FILE].failed(message)
+			actions[Constants.ACTION_UPLOAD_FILE].failed(message)
 		});
 })
 

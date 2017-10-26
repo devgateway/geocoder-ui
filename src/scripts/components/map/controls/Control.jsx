@@ -5,12 +5,16 @@ import ShapesMapping from '../../../util/ShapesMapping.es6';
 import CountryLayersStore from '../../../stores/CountryLayersStore.es6';
 import  * as Actions from '../../../actions/Actions.es6'
 import Constants from '../../../constants/Contants.es6';
-
-
+import PropTypes from 'prop-types'
+import Leaflet from 'leaflet'
 class MapControl extends React.Component{
 
+  static contextTypes = {
+        map: PropTypes.instanceOf(Leaflet.Map),
+      }
+
     componentDidMount(){
-      let map = this.props.map;
+      const map = this.context.map;
       let pos = this.props.position;
       let corner = map._controlCorners[pos];
 
@@ -22,18 +26,19 @@ class MapControl extends React.Component{
         corner.appendChild(this.container);
       }
 
-      this.props.map.on('resize', this.onResize.bind(this), this);
-   
+      map.on('resize', this.onResize.bind(this), this);
+
       ReactDOM.render(this.props.children, this.container);
 
-      this.props.map.on('zoomend',(a)=>{
-        console.log(this.props.map.getZoom());
+      map.on('zoomend',(a)=>{
+        console.log(map.getZoom());
       },this);
     }
 
 
     onResize() {
-     var mapHeight = this.props.map.getContainer().clientHeight;
+     const map = this.context.map;
+     var mapHeight = map.getContainer().clientHeight;
      var controlHeight = this.container.clientHeight;
      this.container.style.maxHeight = (mapHeight - (this.props.bottomPadding || 0) - (this.props.topPadding || 0)) + 'px';
    }
@@ -41,7 +46,6 @@ class MapControl extends React.Component{
    render(){
     return null;
   }
-} 
+}
 
 export default MapControl;
-

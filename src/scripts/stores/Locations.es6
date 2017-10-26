@@ -28,7 +28,7 @@ const LocationsStore = createStore({
 		this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
 	},
 
-	cleanStore() {		 
+	cleanStore() {
     	this.setData(this.initialData);
 	},
 
@@ -37,6 +37,7 @@ const LocationsStore = createStore({
 	},
 
 	search() {
+		debugger;
 		var newState = Object.assign({}, this.get());
 		Object.assign(newState, {'loadingLocations': true});
 		this.setData(newState);
@@ -49,12 +50,13 @@ const LocationsStore = createStore({
 	},
 
 	done(rawData) {
+
 		var newState = Object.assign({}, this.get());
 		if(rawData.totalResultsCount > 0) {
-			let types=rawData.geonames.map( (a) =>{return {code:a.fcode,name:a.fcodeName}})  
+			let types=rawData.geonames.map( (a) =>{return {code:a.fcode,name:a.fcodeName}})
 			let uniqueTypes=types.filter((value, index, self) => {
 				let valuefound=self.find(function(e){return e.code==value.code});
-				return self.indexOf( valuefound) === index				
+				return self.indexOf( valuefound) === index
 			})
 			let locations = new Map({  total:rawData.totalResultsCount,
 				records:this.inmutateResults(rawData.geonames),

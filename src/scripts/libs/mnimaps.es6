@@ -2,6 +2,7 @@ import L from 'leaflet';
 var cloneLayer = require('leaflet-clonelayer');
 require('leaflet.sync');
 
+
 L.Control.Layers.Minimap = L.Control.Layers.extend({
   options: {
     position: 'topright',
@@ -15,6 +16,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
 
 
   initialize: function(baseLayers, overlays, options) {
+    debugger;
     L.setOptions(this, options);
 
     this._layers = {};
@@ -31,6 +33,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
   },
 
   filter: function(string) {
+    debugger;
     string = string.trim();
 
     var visibleLayers = {};
@@ -55,7 +58,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
   },
 
   _expand: function() {
-    debugger;
+
     L.Control.Layers.prototype._expand.call(this);
     this._onListScroll();
   },
@@ -63,10 +66,11 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
 
 
   _initLayout: function() {
+    debugger;
     var className = 'leaflet-control-layers',
     container = this._container = L.DomUtil.create('div', className);
-    
-    
+
+
 
     //Makes this work on IE10 Touch devices by stopping it from firing a mouseout event when the touch is released
     container.setAttribute('aria-haspopup', true);
@@ -201,7 +205,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
 
 
   _addItem: function(obj) {
-
+    debugger;
     if (obj.showAsMiniMap !== false) {
       this._addMiniMap(obj);
 
@@ -214,6 +218,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
 
 
   _addMiniMap: function(obj) {
+    debugger;
     var container = obj.overlay ? this._overlaysList : this._baseLayersList;
     var label = L.DomUtil.create('div', 'leaflet-minimap-container', container);
     label._layerName = obj.name;
@@ -337,9 +342,9 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
       /*
       var scrollTop = container.scrollTop;
 
-      
+
       var lastRow = Math.ceil((scrollTop + listHeight) / minimapHeight);
-     
+
       first = firstRow * mapsPerRow; //(3 number of map in row)
       last = lastRow * mapsPerRow; //(3 number of map in row)
       */
@@ -372,7 +377,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
 
 
   _createMinimap: function(mapContainer, originalLayer, isOverlay) {
-
+    debugger;
     var minimap = mapContainer._miniMap = L.map(mapContainer, {
       attributionControl: false,
       zoomControl: false

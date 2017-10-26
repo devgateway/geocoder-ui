@@ -12,36 +12,37 @@ import Message from '../Message.jsx'
 
 class AdminOptions extends React.Component {
 
-  toggleAdminSource(e){    
-      var newSource = e.target.parentElement.value; 
+  toggleAdminSource(e){
+      var newSource = e.target.parentElement.value;
       this.props.changeCodingValue('adminSource', newSource);
       if (newSource=='geonames'){
         Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': this.props.geocoding.id});
       }
-  }  
+  }
 
   render() {
+
     let geocoding = this.props.geocoding;
     let adminSource = this.props.adminSource;
     return (
       <div className="pull-right options" id="adminOptionsContainer">
-        <label className="inline mini">Use Admin Division from:</label> 
+        <label className="inline mini">Use Admin Division from:</label>
         {(geocoding.type=='geocoding' && geocoding.status!='NEW')? //if it is an existing location, it shows the "Stored" option
             <button className={adminSource=='saved'? "btn btn-xs btn-success" : "btn btn-xs btn-default"} value='saved' onClick={this.toggleAdminSource.bind(this)}>
               <Message k="dataentry.sourceadmin.stored"/>
             </button>
-          : null 
-        }            
+          : null
+        }
         {geocoding.adminCodes.shape? //if it have shapes data, it shows the "Shapes" option
             <button className={adminSource=='shape'? "btn btn-xs btn-success" : "btn btn-xs btn-default"} value='shape' onClick={this.toggleAdminSource.bind(this)}>
               <Message k="dataentry.sourceadmin.shapes"/>
-            </button> 
-          : null 
-        }             
+            </button>
+          : null
+        }
         <button className={adminSource=='geonames'? "btn btn-xs btn-success" : "btn btn-xs btn-default"} value='geonames' onClick={this.toggleAdminSource.bind(this)}><Message k="dataentry.sourceadmin.geonames"/></button>
-        {this.props.loadingAdminGeonames? 
+        {this.props.loadingAdminGeonames?
           <i className="fa fa-spinner fa-spin"></i>
-          : null 
+          : null
         }
       </div>
     )
@@ -70,10 +71,10 @@ class DataEntryContent extends React.Component {
         val = Constants.LOCATION_CLASS_LIST.find((item) => {if (item.code == value) return item;}) || null;
         break;
       case "exactness":
-        val = Constants.EXACTNESS_LIST.find((item) => {if (item.code == value) return item;}) || null;        
+        val = Constants.EXACTNESS_LIST.find((item) => {if (item.code == value) return item;}) || null;
         break;
       default:
-        val = value;        
+        val = value;
         break;
     }
     Actions.invoke(Constants.ACTION_CHANGE_CODING_VALUE, {'name': name, 'value': val});
@@ -96,12 +97,12 @@ class DataEntryContent extends React.Component {
     this.save(false)
   }
 
-  save(skipValidation){      
+  save(skipValidation){
     let valid=(skipValidation)? true: this.validate(this.props.geocoding);
     if (valid) {
       Actions.invoke(Constants.ACTION_PREPARE_SAVE_LOCATION);
       this.onCancel();
-    } 
+    }
   }
 
   /**
@@ -109,7 +110,7 @@ class DataEntryContent extends React.Component {
    */
   validate(newGeocoding) {
     return (
-      this.validateField(newGeocoding.exactness, 'exactness') & 
+      this.validateField(newGeocoding.exactness, 'exactness') &
       this.validateField(newGeocoding.locationClass, 'locationClass') &
       this.validateField(newGeocoding.activityDescription, 'activityDescription', (val) => {return (val != null && val.length > 0)} )
     );
@@ -159,16 +160,16 @@ class DataEntryContent extends React.Component {
     }
   }
 
-  render() {  
+  render() {
     let geocoding = this.props.geocoding;
     let adminSource = this.getAdminSource(geocoding);
     let country = geocoding.adminCodes[adminSource].country.name;
     let admin1 = geocoding.adminCodes[adminSource].admin1 ? geocoding.adminCodes[adminSource].admin1.name:'N/A';
     let admin2 = geocoding.adminCodes[adminSource].admin2 ? geocoding.adminCodes[adminSource].admin2.name:'N/A';
-    
+
     if(this.props.geocoding.confirmDelete=='TO_CONFIRM'){
       return (
-      <div>    
+      <div>
         <h4 className='list-group-item-heading'>
           <Message k="dataentry.deletemessage"/>
         </h4>
@@ -181,35 +182,35 @@ class DataEntryContent extends React.Component {
       return (
       <div id='dataentry' className={geocoding.type=='location'? 'new' : 'update'}>
         <div id='noneditablefields'>
-          <div className="row"> 
+          <div className="row">
             <div className="col-lg-12">
-              <label  className="colored" for="admin1"><Message k="dataentry.name"/></label>
-              <input type="text" className="form-control big" id="name" placeholder="name" value={geocoding.name} disabled/> 
+              <label  className="colored" htmlFor="admin1"><Message k="dataentry.name"/></label>
+              <input type="text" className="form-control big" id="name" placeholder="name" value={geocoding.name} disabled/>
             </div>
           </div>
-          
-          <div className="row"> 
+
+          <div className="row">
             <div className="col-lg-4">
               <div className="form-group">
-                <label  className="colored" for="country,"><Message k="dataentry.country"/></label>
+                <label  className="colored" htmlFor="country,"><Message k="dataentry.country"/></label>
                 <input type="text" className="form-control" id="country" placeholder="NA" value={country || ''} disabled/>
               </div>
             </div>
             <div className="col-lg-4">
               <div className="form-group">
-                <label  className="colored" for="admin1"><Message k="dataentry.firstadm"/></label>
+                <label  className="colored" htmlFor="admin1"><Message k="dataentry.firstadm"/></label>
                 <input type="text" className="form-control" id="admin1" placeholder="NA" value={admin1 || ''} disabled/>
               </div>
             </div>
             <div className="col-lg-4">
               <div className="form-group">
-                <label  className="colored" for="admin2"><Message k="dataentry.secondadm"/></label>
+                <label  className="colored" htmlFor="admin2"><Message k="dataentry.secondadm"/></label>
                 <input type="text" className="form-control" id="admin2" placeholder="NA" value={admin2 || ''} disabled/>
               </div>
             </div>
-            <AdminOptions 
-                geocoding={geocoding} 
-                adminSource={adminSource} 
+            <AdminOptions
+                geocoding={geocoding}
+                adminSource={adminSource}
                 loadingAdminGeonames={this.props.loadingAdminGeonames}
                 changeCodingValue={this.changeCodingValue}
                 />
@@ -236,14 +237,14 @@ class DataEntryContent extends React.Component {
             </div>
           </div>
 
-          <div className="row"> 
+          <div className="row">
             <div className="col-lg-3">
               <div className="form-group" >
                 <label className="colored"><Message k="dataentry.featuredesignation"/></label>
                 <input type="text" className="form-control" id="featureDesignation"  value={geocoding.featureDesignation.code} disabled/>
               </div>
             </div>
-            <div className="col-lg-9"> 
+            <div className="col-lg-9">
               <div className="form-group" >
                 <label>&nbsp;</label>
                 <input type="text" className="form-control" id="featureDesignationName"  value={geocoding.featureDesignation.name} disabled/>
@@ -251,8 +252,8 @@ class DataEntryContent extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row"> 
-          <div className="col-lg-6"> 
+        <div className="row">
+          <div className="col-lg-6">
             <div className="form-group" >
               <label  className="colored" for="locationClass"><Message k="dataentry.locationclass"/></label>
               <select value={geocoding.locationClass? geocoding.locationClass.code : ''} className="form-control" name="locationClass" id="locationClass" onChange={this.codingValueChanged.bind(this)}>
@@ -263,7 +264,7 @@ class DataEntryContent extends React.Component {
               </select>
             </div>
           </div>
-          <div className="col-lg-6"> 
+          <div className="col-lg-6">
             <div className="form-group">
               <label  className="colored" for="Exactness"><Message k="dataentry.geographicexactness"/></label>
               <select value={geocoding.exactness? geocoding.exactness.code : ''} className="form-control" name="exactness" id="exactness" onChange={this.codingValueChanged.bind(this)}>
@@ -276,8 +277,8 @@ class DataEntryContent extends React.Component {
           </div>
         </div>
 
-        <div className="row"> 
-          <div className="col-lg-12"> 
+        <div className="row">
+          <div className="col-lg-12">
             <div className="form-group">
               <label  className="colored"><Message k="dataentry.activitydescription"/></label>
               <textarea   className="form-control" name="activityDescription" id="activityDescription" value={geocoding.activityDescription} onChange={this.codingValueChanged.bind(this)}></textarea>
@@ -285,22 +286,22 @@ class DataEntryContent extends React.Component {
           </div>
         </div>
 
-        <div className="row"> 
-          <div className="col-lg-12 help-container"> 
-            <div className='separator'/>        
+        <div className="row">
+          <div className="col-lg-12 help-container">
+            <div className='separator'/>
             <DataEntryHelp  parentId='dataentry' type={geocoding.type}/>
-            <div className='separator'/> 
+            <div className='separator'/>
             <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={this.onSave.bind(this)}>{geocoding.type=='location'? Message.t('dataentry.save') : Message.t('dataentry.update')}</button>
             {(geocoding.type!='location')?<button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={this.onDelete.bind(this)}><Message k="dataentry.delete"/></button>:null}
-            <button className="btn btn-lg btn-warning pull-right" id="cancelbutton" onClick={this.onCancel.bind(this)}><Message k="dataentry.cancel"/></button>      
+            <button className="btn btn-lg btn-warning pull-right" id="cancelbutton" onClick={this.onCancel.bind(this)}><Message k="dataentry.cancel"/></button>
             <button className="btn btn-lg btn-default pull-right" title={Message.t('dataentry.updatefromgeonames')} onClick={this.updateFromGeonames.bind(this)}>
               {(this.props.loadingGeonames)?<i className="fa fa-refresh fa-spin"></i>:  <i className="fa fa-refresh"></i> }
-            </button>        
+            </button>
           </div>
         </div>
         {this.props.error?
-          <div className="row"> 
-            <div className="col-lg-12"> 
+          <div className="row">
+            <div className="col-lg-12">
               <div className="form-group has-error">
                 <label  className="colored">
                   ERROR: {this.props.error}
@@ -353,4 +354,3 @@ class DataEntry extends React.Component{
 }
 
 export default DataEntry
-

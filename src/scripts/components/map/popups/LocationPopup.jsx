@@ -23,13 +23,14 @@ class InfoView extends React.Component {
   changeLanguage(lan){
     this.forceUpdate()
   }
-  
+
   onPickLocation(){
     this.props.onPickLocation?this.props.onPickLocation():null
   }
 
   render() {
     
+
     var cssClass;
     if (this.props.type == 'location') {
       cssClass = 'popup-location';
@@ -71,9 +72,9 @@ class InfoView extends React.Component {
     return (
         <div id="location-info-popup" className={cssClass}>
 
-          <h2>{this.props.name}</h2>          
+          <h2>{this.props.name}</h2>
 
-          <div className="row border"> 
+          <div className="row border">
             <div className="col-lg-4">
                 <label className="mini"><Message k="dataentry.country"/> <span className="small">*</span></label>
             </div>
@@ -85,11 +86,11 @@ class InfoView extends React.Component {
             </div>
           </div>
 
-          <div className="row"> 
+          <div className="row">
             <div className="col-lg-4">
                <label className="green text-large bolder">{country||'NA'}</label>
             </div>
-            
+
             <div className="col-lg-4">
                 <label className="green text-large bolder">{admin1||'NA'}</label>
             </div>
@@ -103,7 +104,7 @@ class InfoView extends React.Component {
                 <label className="mini"><Message k="dataentry.identifier"/></label>
             </div>
             <div className="col-lg-4">
-             
+
                 <label className="mini"><Message k="dataentry.type"/></label>
             </div>
             <div className="col-lg-5">
@@ -115,12 +116,12 @@ class InfoView extends React.Component {
            <div className="row">
             <div className="col-lg-3">
                 <label className="green text-large bolder">{this.props.id}</label>
-              
+
             </div>
             <div className="col-lg-4">
-             
+
                 <label className="green text-large bolder">{this.props.geometry.type}</label>
-              
+
             </div>
             <div className="col-lg-5">
                <label className="green text-large bolder">
@@ -130,29 +131,29 @@ class InfoView extends React.Component {
           </div>
 
 
-          <div className="row border"> 
+          <div className="row border">
             <div className="col-lg-12">
                 <label className="mini"><Message k="dataentry.featuredesignation"/></label>
             </div>
           </div>
 
-          <div className="row"> 
+          <div className="row">
             <div className="col-lg-12">
-                <label className="green text-large bolder">{this.props.featureDesignation.code} - {this.props.featureDesignation.name} </label> 
+                <label className="green text-large bolder">{this.props.featureDesignation.code} - {this.props.featureDesignation.name} </label>
             </div>
           </div>
 
-          <div className="row"> 
-            <div className="col-lg-12"> 
+          <div className="row">
+            <div className="col-lg-12">
 
               <div className="small"><span>* {comment} </span></div>
-              
-              <button 
-              className={this.props.type=='location'? "btn btn-sm btn-success pull-right" :"btn btn-sm btn-warning pull-right"} 
+
+              <button
+              className={this.props.type=='location'? "btn btn-sm btn-success pull-right" :"btn btn-sm btn-warning pull-right"}
               onClick={this.onPickLocation.bind(this)}>
               {this.props.type=='location'? Message.t('locationpopup.picklocation') : Message.t('locationpopup.update')}
             </button>
-          
+
         </div>
         </div>
       </div>
@@ -162,15 +163,12 @@ class InfoView extends React.Component {
 
 export default class LocationPopup extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   turnDataEntryOn() {
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, this.props.location);
   }
 
   render() {
+    
     const location = this.props.location;
     return ( <InfoView  {...location} onPickLocation={this.turnDataEntryOn.bind(this)}/>);
   }
