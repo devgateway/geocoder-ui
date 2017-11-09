@@ -13,13 +13,13 @@ import Dropzone from 'react-dropzone';
 const ProjectInfo= (props)=>{
    return (
     <div className={(props.locations && props.locations.length>0)?'bs-callout bs-callout-success':'bs-callout bs-callout-info'}>
-      <div className="text-vertical">{props.id}</div>
-      <h3><Link to={'map/'+props.id}>{props.title || props.alternate_title}</Link> </h3>
+      <div className="text-vertical">{props.identifier}</div>
+      <h3><Link to={'map/'+props.id}>{props.title}</Link> </h3>
         <span>
-         <b> {props.country?props.country.name:null}</b>
+         <b> {props.countries.map(country=>(<span>{country.name}</span>))}</b>
         </span>
         <p>
-          {props.long_description}
+          {props.description}
         </p>
 
         <div className="pull-right"> <Link to={'map/' + props.id}><Message k="projectlist.geocodeproject"/></Link></div>
@@ -65,8 +65,7 @@ class ProjectList extends React.Component {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS,this.state.params);
   }
 
-  handlePageChanged(event,target){
-    let page=target.eventKey;
+  handlePageChanged(page){
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PAGE,page);
   }
 
@@ -87,8 +86,7 @@ class ProjectList extends React.Component {
 
 
   render() {
-    console.log(this.state)
-
+  debugger;
  return (
       <Grid>
         <Row>
@@ -135,7 +133,7 @@ class ProjectList extends React.Component {
         <Row id="project-search-list">
           <Col lg={12}>
             <ListGroup>
-              <h4> <Message k="projects.projectsCount" count={this.state.data.numberOfElements}/> </h4>
+              <h4> <Message k="projects.projectsCount" count={this.state.data.totalElements}/> </h4>
               {
                 this.state.data.content?this.state.data.content.map((project) =>(<ProjectInfo  key={project.id} {...project}/>)):null
               }
@@ -145,7 +143,7 @@ class ProjectList extends React.Component {
         <Row>
           <Col className="centered">
               <Pagination next={true}  maxButtons={10} prev={true} bsSize="small"
-              items={this.state.pageCount} activePage={this.state.page}
+              items={this.state.data.totalElements} activePage={((this.state.data.number/this.state.data.size)+1)}
               onSelect={this.handlePageChanged.bind(this)} />
           </Col>
         </Row>

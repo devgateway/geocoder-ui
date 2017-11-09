@@ -11,7 +11,7 @@ import L from 'leaflet';
 import PropTypes from 'prop-types'
 
 
-export default class  extends React.Component {
+export default class  extends MapControl{
 
 	static contextTypes = {
         map: PropTypes.instanceOf(L.Map),
@@ -24,17 +24,17 @@ export default class  extends React.Component {
 		this.state =Object.assign({overlay:{} ,baseLayers: baseLayers});
 	}
 
-	componentDidMount() {
-		debugger;
-		this.state.baseLayers.OpenStreetMap.addTo(this.context.map);
-		this.leafletElement = L.control.layers.minimap(this.state.baseLayers, this.state.overlay, {
-			collapsed: true,
-			overlayBackgroundLayer: this.state.baseLayers.OpenStreetMap
-		}).addTo(this.context.map);
+createLeafletElement(){
+	this.state.baseLayers.OpenStreetMap.addTo(this.context.map);
+	const leafletElement = L.control.layers.minimap(this.state.baseLayers, this.state.overlay, {
+		collapsed: true,
+		overlayBackgroundLayer: this.state.baseLayers.OpenStreetMap
+	}).addTo(this.context.map);
 
-		this.initiated=true;
 
-	}
+	this.initiated=true;
+return leafletElement;
+}
 
 	componentWillUnmount(){
 		this.context.map.eachLayer(function(i){this.context.map.removeLayer(i);}.bind(this));//removes all layers from map
@@ -42,7 +42,7 @@ export default class  extends React.Component {
 	}
 
 	addLayer(layer,name,showAsMiniMap){
-		debugger;
+		
 		if (!this.initiated){
 			let newState=Object.assign({},this.state);
 

@@ -5,6 +5,8 @@ import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 import * as Actions from '../actions/Actions.es6';
 
+
+
 const initialData=
 {
 	'OpenStreetMap': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -74,7 +76,7 @@ const initialData=
 	'Esri NatGeoWorldMap': L.tileLayer.provider('Esri.NatGeoWorldMap'),
 
 	'Esri WorldGrayCanvas': L.tileLayer.provider('Esri.WorldGrayCanvas')
-	
+
 }
 
 

@@ -1,41 +1,53 @@
-import {createStore} from 'reflux';
-import {List,Map,Record} from 'immutable';
+import {
+    createStore
+} from 'reflux';
+import {
+    List,
+    Map,
+    Record
+} from 'immutable';
 
 const FALSE_DATA = new Map({});
 
 const StoreMixins = {
-	initialData: FALSE_DATA,
-	mixins: [],
+    initialData: FALSE_DATA,
+    mixins: [],
 
-	init: function() {
-		if (this.initialData === FALSE_DATA) {
-			throw new Error('Sane stores must specifi an initialData static property');
-		}
-		this.data = this.initialData;
-	},
+    init: function() {
+        if (this.initialData === FALSE_DATA) {
+            throw new Error('Sane stores must specifi an initialData static property');
+        }
+        this.data = this.initialData;
+    },
 
-	setData: function(newData,silent) {
-		this.data = newData;
-		if (silent!=true){
-			this.emit();
-		}
-	},
+    setData: function(newData, silent) {
+        this.data = newData;
+        if (silent != true) {
+            this.emit();
+        }
+    },
 
-	get: function() {
+    get: function() {
+        return this.data;
+    },
+		//use getdata to immutable data as js 
+	  getData: function() {
+        return this.data.toJS();
+    },
 
-		return this.data;
-	},
 
-	emit: function() {
-		this.trigger(this.get());
-	},
+    emit: function() {
+        this.trigger(this.get());
+    },
 
-	getInitialState: function() {
-		return this.get();
-	},
+    getInitialState: function() {
+        return this.get();
+    },
 
 
 }
 
 
-export {StoreMixins};
+export {
+    StoreMixins
+};

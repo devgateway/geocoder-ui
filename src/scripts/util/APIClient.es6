@@ -1,4 +1,5 @@
 import AjaxUtil from './AjaxUtil.es6';
+import Axios from 'axios';
 import Settings from '../util/Settings.es6';
 
 let settings=Settings.getInstace();
@@ -67,26 +68,18 @@ export default class ApiClient {
 	 }
 
 
-
 	 static upload(file){
-	 	const API_BASE_URL=settings.get('API','API_BASE_URL')
-	 	const IMPORT_END_POINT=settings.get('API','IMPORT_END_POINT')
-	 	var data = new FormData();
-	 	data.append('file',file);
+		 const API_BASE_URL=settings.get('API','API_BASE_URL')
+		 const IMPORT_END_POINT=settings.get('API','IMPORT_END_POINT')
+		 const formData = new FormData();
+		 formData.append("file", file);
+		 return Axios.post(`${API_BASE_URL}/${IMPORT_END_POINT}`, formData, {
+			 headers: { "X-Requested-With": "XMLHttpRequest" },
+		 })
 
-	 	return new Promise((resolve, reject) => {
-	 		AjaxUtil.post(`${API_BASE_URL}/${IMPORT_END_POINT}`,data).then((response) => {
+	 }
 
-	 			resolve(response);
 
-	 		})
-	 		.catch((response) => {
 
-	 			reject(`got ${response.status}  ${response.statusText}`)
-	 		})
-
-	 	})
-
-	}
 
 	}

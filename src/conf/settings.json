@@ -4,7 +4,7 @@
       "development": "http://localhost:3333",
       "production": "http://afdb-geocoder.developmentgateway.org"
     },
-    "IMPORT_END_POINT": "import-file",
+    "IMPORT_END_POINT": "import", 
     "PROJECT_END_POINT": "project",
     "PROJECT_LIST_END_POINT": "projects"
   },

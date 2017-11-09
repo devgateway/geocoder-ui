@@ -1,6 +1,39 @@
+.container{
+  width: 60%  !important;
+  margin-bottom: 10px;
+}
+.upload-options{
+  padding: 20px;
+  display: block;
+}
 .dropzone{
-  min-height: 200px;
-  line-height: 200px;
-  text-align: center;
-  font-size: 12px;
+  margin: 10px;
+  >div{
+    text-align: center;
+    width: 100%  !important;
+    height: 30%  !important;
+    border: 1px dashed #000 !important;
+    min-height: 200px;
+    padding: auto;
+    font-size: 12px;
+
+    ul{
+      line-height: 18px;
+      list-style: none;
+      li{
+        padding: 5px;
+      }
+      li:hover{
+        box-sizing: border-box;
+        border: 1px solid #CCC;
+      }
+    }
+    p{
+          line-height: 30px;
+    }
+    .link{
+      margin-right: 10px;
+      color:blue
+    }
+  }
 }

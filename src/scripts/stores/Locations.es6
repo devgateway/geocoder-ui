@@ -37,7 +37,7 @@ const LocationsStore = createStore({
 	},
 
 	search() {
-		debugger;
+		
 		var newState = Object.assign({}, this.get());
 		Object.assign(newState, {'loadingLocations': true});
 		this.setData(newState);
