@@ -1,88 +1,82 @@
 import {
-	createStore
+    createStore
 }
 from 'reflux';
-import  { Map } from 'immutable';
-import * as Actions from '../actions/Actions.es6';
-import  Constants from '../constants/Contants.es6';
 import {
-	StoreMixins
+    Map,
+    fromJS,
+} from 'immutable';
+import * as Actions from '../actions/Actions.es6';
+import Constants from '../constants/Contants.es6';
+import {
+    StoreMixins
 }
 from '../mixins/StoreMixins.es6';
 
- import Stateful from '../mixins/StoreMixins.es6';
+import Stateful from '../mixins/StoreMixins.es6';
 
 const pageSize = 20;
-const initialData =new Map( {
-	files:[],
-	data: {},
- 	page:1,
-	params: {
-		t: '',
-		withLoc: 'none',
-		'sort': 'title',
-		'order': 1,
-
-	}
+const initialData = new fromJS({
+    files: [],
+    data: {},
+    params: {
+        t: '',
+        'withLoc': 'none',
+        'sort': 'title',
+        'order': 1,
+        'page': 1,
+        'lan': 'en',
+				'page':0
+    }
 });
 
 const Projects = createStore({
 
-	initialData: initialData,
+    initialData: initialData,
 
-	mixins: [StoreMixins],
-
-
-	init() {
-		this.data = initialData;
-		this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS), 'loading');
-		this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).completed, 'completed');
-		this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).failed, 'failed');
-		this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PARAM), 'setParam');
-		this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PAGE), 'setPage');
-
-	},
-
-	loading() {
-		console.log('Loading all projects...')
-	},
-
-	completed(data) {
-		debugger;
-		this.setData( this.get().set('data',Map(data)));
-	},
+    mixins: [StoreMixins],
 
 
-	setParam(param) {
-		let resetParams=Object.assign({},this.get().params,{'skip':0});
-		//let newState = this.cloneState({page:1,params:resetParams}); //reset pagination since it will be a new result
-		//Object.assign(newState.params, param);
-		const state=this.get().setIn(['page'],1)
-		this.setData(state)
-		Actions.invoke(Constants.ACTION_FIND_PROJECTS,state );
-	},
+    init() {
+        this.data = initialData;
+        this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS), 'loading');
+        this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).completed, 'completed');
+        this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).failed, 'failed');
+        this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PARAM), 'setParam');
+        this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PAGE), 'setPage');
+
+    },
+
+    loading() {
+        console.log('Loading all projects...')
+    },
+
+    completed(data) {
+				debugger;
+			  this.setData(this.get().set('data', Map(data)));
+    },
 
 
-	setPage(page) {
-		let skip = (page - 1) * pageSize;
-		let limit = pageSize;
+    setParam(params) {
 
-		//let newState = this.cloneState({page});
-		//Object.assign(newState.params, {skip, limit});
-		//this.setData(newState);
-		Actions.invoke(Constants.ACTION_FIND_PROJECTS, newState.params);
-	},
-
-	uploadCompleted(){
-		let newState = this.cloneState({files:[]}); //reset pagination since it will be a new result
-		this.setData(newState);
-	},
+        const state = this.get().setIn(['params'], Map(params))
+																.setIn(['params', 'page'], 0)
+        this.setData(state)
+				debugger;
+        Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.get().get('params').toJS());
+    },
 
 
+    setPage(page) {
+        const state = this.get().setIn(['params', 'page'], page-1);
+        this.setData(state);
+        Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.get().get('params').toJS());
+    },
 
-	failed(message) {
-		console.error(`Error loading projects: ${message}`)
-	}
+
+    failed(message) {
+        console.error(`Error loading projects: ${message}`)
+    }
 
 });
 

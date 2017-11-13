@@ -12,7 +12,7 @@ export default class ApiClient {
 	 * @return {[array]}     an array with all projects
 	 */
 	 static getProjectList(params) {
-
+		 debugger;
 	 	const API_BASE_URL=settings.get('API','API_BASE_URL')
 	 	const PROJECT_LIST_END_POINT=settings.get('API','PROJECT_LIST_END_POINT');
 	 	const PROJECT_END_POINT=settings.get('API','PROJECT_END_POINT');

@@ -71,6 +71,7 @@ class ProjectList extends React.Component {
 
 
   handleChange(event){
+    debugger;
     let name=event.target.name;
     let value =event.target.value;
     let param={};
@@ -100,7 +101,7 @@ class ProjectList extends React.Component {
 
             <Col lg={8}>
               <FormControl  type="text"
-                name="t"
+                name="text"
                 value={this.state.value}
                 placeholder="Enter text to search"
                 label="Text search"
@@ -143,7 +144,7 @@ class ProjectList extends React.Component {
         <Row>
           <Col className="centered">
               <Pagination next={true}  maxButtons={10} prev={true} bsSize="small"
-              items={this.state.data.totalElements} activePage={((this.state.data.number/this.state.data.size)+1)}
+              items={this.state.data.totalPages} activePage={this.state.params.page+1}
               onSelect={this.handlePageChanged.bind(this)} />
           </Col>
         </Row>

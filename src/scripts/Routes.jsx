@@ -10,6 +10,8 @@ import { render } from 'react-dom';
 
 /*Layout elements*/
 import Header  from './components/Header.jsx';
+
+import ProjectListHeader  from './components/ProjectListHeader.jsx';
 import ProjectList  from './components/project/ProjectList.jsx';
 import Map from  './components/map/Map.jsx';
 
@@ -36,6 +38,18 @@ const history = createHashHistory()
   }
 }
 
+class ProjectListLayout extends React.Component {
+  render() {
+   return (
+     <div className="app">
+     <ProjectListHeader/>
+       <ProjectList {...this.props}/>
+     </div>
+     )
+ }
+}
+
+
 
 
  const AppRoutes=(props)=>{
@@ -52,8 +66,7 @@ const history = createHashHistory()
       </ul>
      </div>
     </nav>
-    <Route exact path="/" component={ProjectList}/>
-
+    <Route exact path="/" component={ProjectListLayout}/>
     <Route path="/upload" component={Upload}/>
     <Route path="/map/:projectID" component={MapLayout}/>
 

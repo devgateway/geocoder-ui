@@ -33,15 +33,18 @@ class GazetteerSearch extends React.Component{
   }
 
   onStoreChange(storeData){
+    debugger;
     let newState=Object.assign(this.state, storeData);
     this.setState(newState);
   }
 
   doSearch(){
+    debugger;
     Actions.invoke(Constants.ACTION_SEARCH_LOCATIONS,this.state)
   }
 
   handleChange(e) {
+    debugger;
     let fuzzy=(e.target.name=='fuzzy')?!this.state.fuzzy:this.state.fuzzy;
     let country=(e.target.name=='country')?!this.state.country:this.state.country;
     let text=this.state.text
@@ -53,12 +56,14 @@ class GazetteerSearch extends React.Component{
   }
 
   handleKey(e) {
+    debugger;
     if(e.keyCode == 13){
       this.doSearch();
     }
   }
 
   validationState() {
+    debugger;
     console.log('Validations');
     let length = this.state.text.length;
     if (length > 3) return 'success';
@@ -67,6 +72,7 @@ class GazetteerSearch extends React.Component{
   }
 
   render() {
+    debugger;
     return (
       <div id="gazetteer-search" className="navbar-form navbar-left" role="search">
         <div className="form-group">
