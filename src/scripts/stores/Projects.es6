@@ -52,7 +52,7 @@ const Projects = createStore({
     },
 
     completed(data) {
-				debugger;
+				
 			  this.setData(this.get().set('data', Map(data)));
     },
 
@@ -62,7 +62,7 @@ const Projects = createStore({
         const state = this.get().setIn(['params'], Map(params))
 																.setIn(['params', 'page'], 0)
         this.setData(state)
-				debugger;
+				
         Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.get().get('params').toJS());
     },
 

@@ -26,31 +26,36 @@ class InfoControl extends React.Component {
   }
 
   componentWillMount() {
-    this.unsuscribe = ProjectStore.listen(this.onStoreChange.bind(this));
-    this.unsuscribe = LocationsStore.listen(this.onLocationsLoaded.bind(this));
-    this.loadProject(this.props.id); //TODO:this can be triggered by an external event
-    this.unsubscribe = LanStore.listen(this.changeLanguage.bind(this));
+
+    this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this))
+    this.unsuscribe2= LocationsStore.listen(this.onLocationsLoaded.bind(this))
+    this.unsubscribe3 = LanStore.listen(this.changeLanguage.bind(this))
+    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id:this.props.id,lan:LanStore.get().lan})
   }
 
   changeLanguage(lan){
+
+    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id:this.props.id,lan:LanStore.get().lan})
     this.forceUpdate()
   }
 
   componentWillUnmount() {
-    this.unsuscribe()
+
+    this.unsuscribe1()
+    this.unsuscribe2()
+    this.unsuscribe3()
   }
 
   componentDidMount(){
+
     let container=ReactDOM.findDOMNode(this);
     L.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
     L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
   }
 
-  loadProject(id) {
-    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, id);
-  }
 
   onLocationsLoaded(data){
+
     let newState=Object.assign({},this.state);
     if (data.loadingLocations){
       Object.assign(newState,{'showTab': 3}); //if hit load locations, then show the results tab
@@ -72,6 +77,7 @@ class InfoControl extends React.Component {
   }
 
   toggle(){
+
     let newState=Object.assign({},this.state);
     Object.assign(newState,{expanded:!newState.expanded})
     this.setState(newState);

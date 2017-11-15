@@ -53,10 +53,8 @@ const PopUpStore = createStore({
 	init() {
 
 		this.listenTo(ProjectStore, this.onProjectUpdate);
-
 		this.listenTo(ProjectGeo, this.updateGeocodingLayer);
 		this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
-
 		this.listenTo(CountryGeo, this.updateCountry);
 		this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
 		this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
@@ -141,7 +139,7 @@ const PopUpStore = createStore({
 	},
 
 	updatePopupInfo(properties) {
-		
+
 		const {countryFeature, locationFeature, position, showDataEntry} = properties;
 		const {ID_0, ID_1, GAUL01, ID_2, GAUL02, NAME_0, Country, NAME_1, ADM1, NAME_2, ADM2} = (countryFeature) ? countryFeature.properties: {}; //TODO: normalize field extraction
 		const {

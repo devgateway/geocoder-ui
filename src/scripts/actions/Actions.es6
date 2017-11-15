@@ -7,8 +7,9 @@ import Constants from '../constants/Contants.es6'
 import Geonames from '../util/gazetteers/Geonames.es6'
 import AjaxUtil from '../util/AjaxUtil.es6'
 import APIClient from '../util/APIClient.es6'
-
 import ShapesMapping from '../util/ShapesMapping.es6'
+
+
 
 let actionsDef = {}
 
@@ -124,8 +125,9 @@ actions[Constants.ACTION_FIND_PROJECTS].listen(function(params) {
         .catch((message) => actions[Constants.ACTION_FIND_PROJECTS].failed(message));
 })
 
-actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function(id) {
-    APIClient.getProject(id)
+actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function(options) {
+
+    APIClient.getProject(options.id,options.lan)
         .then((results) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results))
         .catch((message) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].failed(message));
 })

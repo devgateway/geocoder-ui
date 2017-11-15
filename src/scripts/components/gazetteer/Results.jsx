@@ -9,7 +9,7 @@ import {Button}  from 'react-bootstrap';
 import Message from '../Message.jsx';
 
   /*
-  Renders a single Location 
+  Renders a single Location
   */
 class Item extends React.Component{
 
@@ -18,7 +18,7 @@ class Item extends React.Component{
   }
 
   setActiveLocation(data) {
-    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'locationFeature': data});	
+    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'locationFeature': data});
   }
 
   render() {
@@ -27,24 +27,24 @@ class Item extends React.Component{
         <Button className="pull-right" bsStyle='success' bsSize="small" onClick={this.setActiveLocation.bind(this, this.props)}><Message k="projectinfo.locationslist.mapit"/></Button>
         <p className="list-group-item-text">
           <label className='green text-large inline'>{this.props.name}:</label> {this.props.countryName}
-        </p>       
+        </p>
         <p className="list-group-item-text">
           {this.props.fclName} {this.props.fcodeName}
-        </p>   
+        </p>
       </div>
     )
   }
 }
 
 /*
-Renders a  List of locations  
+Renders a  List of locations
 */
 class ListItems extends React.Component{
-  
+
   constructor() {
     super();
   }
-  
+
   render() {
     if(!this.props.records || this.props.records.length == 0) {
       return (
@@ -54,18 +54,18 @@ class ListItems extends React.Component{
       return (
         <div className="list-group">
           {this.props.records.map((item) => {
-        		return <Item   key={item.geonameId} {...item}/>}) //TODO: we should define another way to obtain the object key in order to support different sources maybe a hashcode 
+        		return <Item   key={item.geonameId} {...item}/>}) //TODO: we should define another way to obtain the object key in order to support different sources maybe a hashcode
           }
         </div>
       )
-    }	
+    }
   }
 }
 
-  
+
 
 /*
-This view renders  the Gazzetter Results 
+This view renders  the Gazzetter Results
 */
 class Results extends React.Component {
 
@@ -99,10 +99,10 @@ class Results extends React.Component {
         <div className="form-group form-sm">
           <label className="bolder"><Message k="projectinfo.locationtype"/>:</label>
             <select name="typeFilter" className="large-input  form-control" onChange={this.typefilter.bind(this)} value={this.state.typefilter}>
-              <option value='ALL'>All Types</option> 
+              <option value='ALL'>All Types</option>
               {this.state.types.map((t)=>{return <option key={t.code} value={t.code}>{t.name}</option>})}
             </select>
-          </div>  
+          </div>
       </div>
       <ListItems {...this.state}/>
     </div>
@@ -111,4 +111,4 @@ class Results extends React.Component {
 }
 
 
-export default Results //TODO: rename maybe 
+export default Results //TODO: rename maybe

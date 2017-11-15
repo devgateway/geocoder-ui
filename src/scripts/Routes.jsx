@@ -41,7 +41,7 @@ const history = createHashHistory()
 class ProjectListLayout extends React.Component {
   render() {
    return (
-     <div className="app">
+     <div>
      <ProjectListHeader/>
        <ProjectList {...this.props}/>
      </div>

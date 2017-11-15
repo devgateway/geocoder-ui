@@ -55,9 +55,6 @@ AjaxUtil.get('conf/settings.json').then((conf)=>{
   });
 })
 
-
- if (module.hot) {
-   module.hot.accept('./Routes.jsx', function() {
-     console.log('Accepting the updated printMe module!');
-   })
-   }
+if (module.hot) {
+    module.hot.accept();
+}

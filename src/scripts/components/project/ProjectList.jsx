@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ListGroup,ListGroupItem,Pagination,Grid,Row,Col,FormControl,Button}  from 'react-bootstrap';
+import {ListGroup,ListGroupItem,Pagination,Grid,Row,Col,FormControl,Button,Radio,Checkbox,FormGroup}  from 'react-bootstrap';
 import { Link  } from 'react-router-dom';
 import  * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
@@ -71,7 +71,7 @@ class ProjectList extends React.Component {
 
 
   handleChange(event){
-    debugger;
+
     let name=event.target.name;
     let value =event.target.value;
     let param={};
@@ -87,7 +87,7 @@ class ProjectList extends React.Component {
 
 
   render() {
-  debugger;
+
  return (
       <Grid>
         <Row>
@@ -118,15 +118,31 @@ class ProjectList extends React.Component {
                 <label>
                   <Message k="projectlist.geocodingfilter"/>
                 </label>
+
+                <FormGroup>
+
+
                 <div className="form-group spacingLg">
-                  <FormControl className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.havelocations')} value="yes" checked={this.state.params.withLoc =='yes'}  onChange={this.handleChange.bind(this)}/>
+                    <Radio className="radio-inline" type="radio" id="withLoc1" name="withLoc"  inline  value="yes" checked={this.state.params.withLoc =='yes'}  onChange={this.handleChange.bind(this)}>
+                      <label htmlFor="withLoc1">  {Message.t('projectlist.havelocations')}</label>
+                    </Radio>
+
                 </div>
                 <div className="form-group spacingLg">
-                  <FormControl className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.nothavelocations')} value="no" checked={this.state.params.withLoc  =='no'}  onChange={this.handleChange.bind(this)}/>
+                  <Radio className="radio-inline" type="radio" id="withLoc2" name="withLoc"  inline  value="no" checked={this.state.params.withLoc  =='no'}  onChange={this.handleChange.bind(this)}>
+                          <label htmlFor="withLoc2">  {Message.t('projectlist.nothavelocations')}</label>
+
+
+                  </Radio>
                 </div>
                 <div className="form-group spacingLg">
-                  <FormControl className="radio-inline" type="radio" name="withLoc" label={Message.t('projectlist.any')} value="none" checked={this.state.params.withLoc  =='none'}  onChange={this.handleChange.bind(this)}/>
+                  <Radio className="radio-inline" type="radio" id="withLoc3" name="withLoc"   inline  value="none" checked={this.state.params.withLoc  =='none'}  onChange={this.handleChange.bind(this)}>
+                  <label htmlFor="withLoc3">    {Message.t('projectlist.any')}</label>
+
+
+                  </Radio>
                 </div>
+                 </FormGroup>
               </div>
             </Col>
           </Row>

@@ -11,21 +11,19 @@ const SingleProjectStore = createStore({
 	mixins: [StoreMixins],
 
 	init() {
-		
-		console.log(Constants.ACTION_LOAD_SINGLE_PROJECT);
 		this.data=initialData;
-		this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), 'loading');		
+		this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), 'loading');
 		this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).completed, 'completed');
 		this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).failed, 'failed');
 		this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION),'addGeocoding');
 		this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING),'submitGeocoding');
-		this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), 'loading');		
+		this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), 'loading');
 		this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, 'saveSuccess');
 		this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, 'failed');
 		this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
 	},
 
-	cleanStore() {		 
+	cleanStore() {
     	this.setData(this.initialData);
 	},
 
@@ -36,17 +34,16 @@ const SingleProjectStore = createStore({
 	completed(response){
 		let project=response.data;
 		if (project.country){
-			
-			Actions.invoke(Constants.ACTION_LOAD_SHAPE,(project.country.iso3 || project.country.iso2 || project.country.iso));
+				Actions.invoke(Constants.ACTION_LOAD_SHAPE,(project.country.iso3 || project.country.iso2 || project.country.iso));
 		}
 		Object.assign(project, {'locationsBackup': _.cloneDeep(project.locations)});//add a copy of the locations for rollback purposes
-		this.setData(project); 
+		this.setData(project);
 	},
 
 	failed(message){
 		console.error(`Error loading project: ${message}`)
 	},
-	
+
 
 	addGeocoding(geocoding){
 		let project=this.get();
@@ -58,13 +55,13 @@ const SingleProjectStore = createStore({
 			Object.assign(locGeo, geocoding);
 		} else {
 			locations.push(geocoding);
-		}		
+		}
 		if (geocoding.status=='LOCATION'){ //if a location has been deleted and not yet commited, it'll be removed
-			locations = locations.filter((it) => {return it.id!=geocoding.id});	
+			locations = locations.filter((it) => {return it.id!=geocoding.id});
 		}
 		Object.assign(newState,{'locations':locations});
 		this.setData(newState);
-		
+
 	},
 
 	submitGeocoding(geocoding){
@@ -79,7 +76,7 @@ const SingleProjectStore = createStore({
 		Object.assign(newState,{'locations': locNoStatus});
 		_.omit(newState, 'locationsBackup');
 		this.setData(newState);
-		Actions.invoke(Constants.ACTION_SAVE_PROJECT, newState);		
+		Actions.invoke(Constants.ACTION_SAVE_PROJECT, newState);
 	},
 
 

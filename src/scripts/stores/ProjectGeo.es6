@@ -19,13 +19,14 @@ const ProjectGeoJsonStore = createStore({
 	},
 
 	process(project) {
+
 		let newData;
 		if (project.locations) {
 			let featureCollection=
 			new GeoJsonBuilder({
 				type: 'Point',
 				coordinates: function() {
-					return [this.geometry.coordinates[0], this.geometry.coordinates[1]]
+					return [this.x, this.y]
 				}
 			}).build(project.locations);
 			featureCollection.features.forEach((record) => {

@@ -38,15 +38,9 @@ export default class Header extends React.Component {
       <div className="header">
         <nav className="navbar navbar-default">
           <div className="container-fluid">
-            <div className="navbar-header">
-              <Message className="navbar-brand"  k="header.branding"/>
-            </div>
+          
             <div className="nav navbar-left">
-              <div className="separator"/>
-            </div>
 
-            <div className="nav navbar-left">
-    
             </div>
             <div className="nav navbar-rigth lan-selector-container">
             <select  value={this.state.lan} name="lan" className="pull-right" onChange={this.changeLan}>

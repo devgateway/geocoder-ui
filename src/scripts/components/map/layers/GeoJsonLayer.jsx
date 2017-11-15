@@ -39,7 +39,6 @@ export default class GeoJsonLayer extends Path {
         const {data,...props} = this.props;
 
         if (this.props.data != prevProps.data) { //we should do a better work to detect data changes
-            debugger
             this.layerContainer.removeLayer(this.leafletElement);
             this.leafletElement=this.createLeafletElement();
             this.layerContainer.addLayer(this.leafletElement);
@@ -52,7 +51,7 @@ export default class GeoJsonLayer extends Path {
 
     componentWillUnmount() {
     super.componentWillUnmount();
-    this._remove();//remove this layer while unmounting the component
+    //this._remove();//remove this layer while unmounting the component
 }
 
 

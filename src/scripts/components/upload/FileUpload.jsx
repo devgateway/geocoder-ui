@@ -39,7 +39,7 @@ class Upload extends BaseStoreComponent {
   }
 
   render() {
-debugger;
+
     return (
         <div className="container">
           <h1>Upload XML File</h1>

@@ -59,7 +59,7 @@ const ImportSore = createStore({
             files.findIndex(function(item) {
               return item.name === file.name;
             }), function(item) {
-              debugger;
+              
               item.status='DONE'
               return item
             }
@@ -77,7 +77,7 @@ const ImportSore = createStore({
                 files.findIndex(function(item) {
                   return item.name === file.name;
                 }), function(item) {
-                  debugger;
+                  
                   item.status='ERROR'
                   return item
                 }
