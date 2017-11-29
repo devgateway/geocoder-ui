@@ -16,7 +16,7 @@ const ProjectInfo= (props)=>{
       <div className="text-vertical">{props.identifier}</div>
       <h3><Link to={'map/'+props.id}>{props.title}</Link> </h3>
         <span>
-         <b> {props.countries.map(country=>(<span>{country.name}</span>))}</b>
+         <b> {props.countries.map(country=>(<span key={country.name}>{country.name}</span>))}</b>
         </span>
         <p>
           {props.description}

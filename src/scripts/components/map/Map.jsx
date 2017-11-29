@@ -110,44 +110,43 @@ export default class MapView extends React.Component {
   }
 
   render() {
-    console.log(this.state.popup)
 
     return (
 
       <div id="mapContainer">
-      <div className="map">
-        <DataEntryPopup/>
-        <Map   {...this.state.map}  ref="map">
-          <MapPopUp maxWidth="850" {...this.state.popup}>
-              <LocationPopup/>
-          </MapPopUp>
-          <MiniMap>
-          <LayerGroup name="GeoCoding" showAsMiniMap={true} ref="country" showAsMiniMap={true}>
-            <GeocodingLayer   onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>
-          </LayerGroup>
-          <LayerGroup name="Locations" showAsMiniMap={true} ref="country" showAsMiniMap={true}>
-            <GazetterLayer  onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.locations}/>
-          </LayerGroup>
+          <div className="map">
+            <DataEntryPopup/>
+            <Map   {...this.state.map}  ref="map">
 
 
-            <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={true}>
-                            {this.state.layers.countries?this.state.layers.countries.map((country)=>{
-                              return <CountryLayer {...country}/>
-                            }):null}
-            </LayerGroup>
-          </MiniMap>
-          <ZoomControl position="bottomright"/>
-          <Control className="leaflet-control-layer-selector" position="bottomleft">
-            <CountrySelector/>
-          </Control>
-          <Control className="leaflet-control-actions-buttons" position="bottomright">
-              <ActionButtons/>
-          </Control>
-          <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel"  position="topleft">
-              <InfoPanel id={this.props.match.params.projectID}/>
-          </Control>
-        </Map>
-    </div>
+
+      			   <MapPopUp maxWidth="850" {...this.state.popup}>
+                   <LocationPopup/>
+              </MapPopUp>
+
+              <MiniMap>
+              <LayerGroup name="GeoCoding" showAsMiniMap={true} ref="country" showAsMiniMap={true}>
+                 <GeocodingLayer   onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>
+             </LayerGroup>
+
+              </MiniMap>
+
+
+              <ZoomControl position="bottomright"/>
+              <Control className="leaflet-control-layer-selector" position="bottomleft">
+               <CountrySelector/>
+              </Control>
+
+             <Control className="leaflet-control-actions-buttons" position="bottomright">
+                 <ActionButtons/>
+             </Control>
+
+             <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel"  position="topleft">
+                 <InfoPanel id={this.props.match.params.projectID}/>
+             </Control>
+
+            </Map>
+          </div>
       </div>
     )
   }

@@ -71,9 +71,8 @@ const PopUpStore = createStore({
 	},
 
 	setActiveLocation(params) {
-		const {
-			locationFeature, isCoded, activeDataentry
-		} = params;
+		debugger;
+		const {locationFeature, isCoded, activeDataentry} = params;
 		var newState = Object.assign({}, this.get());
 		let activeLocation;
 		if (isCoded) {

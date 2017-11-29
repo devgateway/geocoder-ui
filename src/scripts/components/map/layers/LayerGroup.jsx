@@ -1,10 +1,10 @@
 import React from 'react';
-import {MapLayer} from 'react-leaflet';
+import {LayerGroup} from 'react-leaflet';
 import { featureGroup } from 'leaflet';
 import { Control } from 'leaflet';
 import PropTypes from 'prop-types'
 
-export default class LayerGroup extends MapLayer {
+export default class Group extends LayerGroup {
 
 	getChildContext() {
 

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Tabs, Tab, Button, Label}  from 'react-bootstrap';
+import {Tabs, Tab, Button, Label,TabContainer}  from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import Draggable from 'react-draggable';
 import  * as Actions from '../../../actions/Actions.es6';
@@ -29,7 +29,7 @@ class InfoControl extends React.Component {
 
     this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this))
     this.unsuscribe2= LocationsStore.listen(this.onLocationsLoaded.bind(this))
-    this.unsubscribe3 = LanStore.listen(this.changeLanguage.bind(this))
+    this.unsuscribe3 = LanStore.listen(this.changeLanguage.bind(this))
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id:this.props.id,lan:LanStore.get().lan})
   }
 
@@ -84,6 +84,7 @@ class InfoControl extends React.Component {
   }
 
   render() {
+    debugger;
     var activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">
@@ -110,20 +111,18 @@ class InfoControl extends React.Component {
 
             </div>
             <div className="tab-container">
-              <Tabs activeKey={activeTab} onSelect={this.handleSelect.bind(this)}>
-
-                <Tab id="A" key="tab_A" className="project-info" eventKey={1} title={Message.t('projectinfo.projectinfo')}>
+              <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
+                <Tab    className="project-info" eventKey={1} title={Message.t('projectinfo.projectinfo')}>
                   <ProjectDescription  {...this.state.project}/>
                 </Tab>
-                <Tab id="B" key="tab_B"  eventKey={2} title={Message.t('projectinfo.geocoding') + " ("+(this.state.project.locations?this.state.project.locations.length:0)+")"}>
-                  <ProjectCoding {...this.state.project}/>
-                </Tab>
 
-                <Tab id="C" key="tab_C" eventKey={3} title={Message.t('projectinfo.gazetteerlocations') + " ("+(this.state.locationsCount)+")"}>
-                  <Results/>
-                </Tab>
-
-              </Tabs>
+                <Tab eventKey={2} title={Message.t('projectinfo.geocoding') + " ("+(this.state.project.locations?this.state.project.locations.length:0)+")"}>
+               <ProjectCoding {...this.state.project}/>
+             </Tab>
+             <Tab eventKey={3} title={Message.t('projectinfo.gazetteerlocations') + " ("+(this.state.locationsCount)+")"}>
+             <Results/>
+           </Tab>
+                  </Tabs>
             </div>
           </div>
 

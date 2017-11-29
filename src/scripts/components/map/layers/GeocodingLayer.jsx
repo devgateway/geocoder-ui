@@ -16,7 +16,7 @@ export default class GeocodingLayer extends GeoJsonLayer {
     let icon = L.divIcon({
       iconSize: [30, 30],
       className: iconClass,
-      html: `<div class='text'>${feature.properties.featureDesignation.code}</div>`
+      html: `<div class='text'>${feature.properties.featureDesignation?feature.properties.featureDesignation.code:null}</div>`
     });
     let marker = L.marker(latlng, {
       icon: icon

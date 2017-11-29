@@ -15,14 +15,16 @@ import Message from '../Message.jsx';
     }
 
     render() {
-
+      debugger;
      return (
       <div className="panel-body">
-      {this.props.long_description}
+      {this.props.description}
 
-      <p><label className="green inline text-medium"><Message k="projectinfo.country"/>:</label> {this.props.country?this.props.country.name:'N/A'}</p>
+      <p>
+      <label className="green inline text-medium"><Message k="projectinfo.country"/>:</label>
+          {this.props.countries?this.props.countries.map((c)=>{return (<b key={c.name}>{c.name}</b>)}):'N/A'}
+      </p>
       </div>
       );
-   } 
+   }
  }
-

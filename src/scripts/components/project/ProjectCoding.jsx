@@ -6,7 +6,7 @@ import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
 
 /*
-  Renders a single Location 
+  Renders a single Location
   */
   class Item extends React.Component{
 
@@ -23,6 +23,9 @@ import Message from '../Message.jsx';
   }
 
   render() {
+
+    debugger;
+
     var status = !this.props.status ? 'EXISTING' : this.props.status;
     let statusLabel, statusStyle;
     switch(status) {
@@ -48,16 +51,16 @@ import Message from '../Message.jsx';
       <h3 className="list-group-item-heading"><b>{this.props.name}</b></h3>
 
       <p className="list-group-item-text">
-        <label><Message k="dataentry.featuredesignation"/></label> 
-        <span> {this.props.featureDesignation.code} - {this.props.featureDesignation.name}</span>
+        <label><Message k="dataentry.featuredesignation"/></label>
+        <span> {this.props.featureDesignation?this.props.featureDesignation.code:''} - {this.props.featureDesignation?this.props.featureDesignation.name:''}</span>
       </p>
       <p className="list-group-item-text">
-        <label><Message k="dataentry.activitydescription"/></label> 
+        <label><Message k="dataentry.activitydescription"/></label>
 
         <span>{this.props.activityDescription}</span>
       </p>
       <p className="list-group-item-text">
-        <label><Message k="dataentry.type"/></label> 
+        <label><Message k="dataentry.type"/></label>
         <span>{this.props.locationClass.name}</span>
       </p>
 
@@ -65,10 +68,7 @@ import Message from '../Message.jsx';
         <label><Message k="dataentry.geographicexactness"/></label>
         <span>{this.props.exactness.name}</span>
       </p>
-      <p className="list-group-item-text">
-        <label><Message k="dataentry.geometry"/></label>
-        <span>{this.props.geometry.type} - {parseFloat(this.props.geometry.coordinates[0]).toFixed(5)}, {parseFloat(this.props.geometry.coordinates[0]).toFixed(5)}</span>
-      </p>
+      
       <p className="list-group-item-text">
         <label className="inline"><Message k="dataentry.status"/></label>
         <Label bsStyle={statusStyle} style={status=='EXISTING'?{'backgroundColor': '#FFEE42'}:{}}>{statusLabel}</Label>
@@ -76,10 +76,10 @@ import Message from '../Message.jsx';
       <p className="list-group-item-text pull-right">
         <Button bsStyle='warning' className="show-location-button" bsSize="small" onClick={this._showDataEntryForm.bind(this)}>
           <Message k="projectinfo.locationslist.edit"/>
-        </Button>     
+        </Button>
         <Button bsStyle='success' className="show-location-button" bsSize="small" onClick={this._showLocationPopup.bind(this)}>
           <Message k="projectinfo.locationslist.mapit"/>
-        </Button>     
+        </Button>
       </p>
       <br/>
     </div>
@@ -104,6 +104,5 @@ export default class ProjectCoding extends React.Component {
         </div>
       </div>
     );
-  } 
+  }
 }
-
