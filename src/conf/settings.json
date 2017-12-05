@@ -4,7 +4,7 @@
       "development": "http://localhost:3333",
       "production": "http://afdb-geocoder.developmentgateway.org"
     },
-    "IMPORT_END_POINT": "import", 
+    "IMPORT_END_POINT": "import",
     "PROJECT_END_POINT": "project",
     "PROJECT_LIST_END_POINT": "projects"
   },
@@ -41,7 +41,7 @@
     "GEO_NAMES_SERVICE_USER_NAME": "developmentgateway"
   },
   "SHAPES": {
-    "LIST":[
+    "LIST": [
       {
         "iso": "AO",
         "name": "Angola",

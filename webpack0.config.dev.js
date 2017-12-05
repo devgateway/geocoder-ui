@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 
 module.exports = {
-
+  
   devtool: "source-map", // or "inline-source-map"
   entry: [
     'webpack-hot-middleware/client',
@@ -50,9 +50,9 @@ module.exports = {
       'react': path.join(__dirname, 'node_modules', 'react'),
       'i18next': 'i18next/index.js',
       'i18next-xhr-backend':'i18next-xhr-backend/lib/index.js'
-
+      
     },
     extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx",".es6"]
   }
-
+  
 };
