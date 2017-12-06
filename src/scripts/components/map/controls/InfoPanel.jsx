@@ -11,7 +11,6 @@ import ProjectDescription from '../../project/ProjectDescription.jsx';
 import L from 'leaflet';
 import Message from '../../Message.jsx';
 import ProjectCoding from '../../project/ProjectCoding.jsx';
-import LanStore from '../../../stores/LanStore.es6';
 
 /*
    This view renders the info Ttab view UI component
@@ -24,24 +23,22 @@ class InfoControl extends React.Component {
   }
   
   componentWillMount() {
-    
-    this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this))
-    this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this))
-    this.unsuscribe3 = LanStore.listen(this.changeLanguage.bind(this))
-    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan})
+    this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this));
+    this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this));
+  
+    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
+    // Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan}) TODO - use language
   }
   
+  /** TODO - update this
   changeLanguage(lan) {
-    
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan})
     this.forceUpdate()
-  }
+  }*/
   
   componentWillUnmount() {
-    
-    this.unsuscribe1()
-    this.unsuscribe2()
-    this.unsuscribe3()
+    this.unsuscribe1();
+    this.unsuscribe2();
   }
   
   componentDidMount() {

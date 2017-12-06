@@ -1,4 +1,3 @@
-import {createStore} from 'reflux';
 import {Map} from 'immutable';
 
 const FALSE_DATA = new Map({});
@@ -9,14 +8,14 @@ const StoreMixins = {
   
   init: function () {
     if (this.initialData === FALSE_DATA) {
-      throw new Error('Sane stores must specifi an initialData static property');
+      throw new Error('Sane stores must specify an initialData static property');
     }
     this.data = this.initialData;
   },
   
   setData: function (newData, silent) {
     this.data = newData;
-    if (silent != true) {
+    if (silent !== true) {
       this.emit();
     }
   },
@@ -24,7 +23,8 @@ const StoreMixins = {
   get: function () {
     return this.data;
   },
-  //use getdata to immutable data as js
+  
+  // use getData to immutable data as js
   getData: function () {
     return this.data.toJS();
   },
@@ -36,6 +36,6 @@ const StoreMixins = {
   getInitialState: function () {
     return this.get();
   },
-}
+};
 
 export {StoreMixins};

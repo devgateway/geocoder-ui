@@ -10,41 +10,39 @@ let actionsDef = {};
 
 actionsDef[Constants.ACTION_SEARCH_LOCATIONS] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_LOAD_SHAPE] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_FIND_PROJECTS] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_LOAD_SINGLE_PROJECT] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_ADD_COUNTRY_LAYER] = {
   children: ['completed', 'failed']
-}
+};
 actionsDef[Constants.ACTION_TOGGLE_LAYER_VISIBILITY] = {
   children: ['completed', 'failed']
-}
-
+};
 
 actionsDef[Constants.ACTION_SAVE_PROJECT] = {
   children: ['completed', 'failed']
-}
-
+};
 
 actionsDef[Constants.ACTION_UPLOAD_FILES] = {
   children: ['completed', 'failed']
-}
+};
 
 
 actionsDef[Constants.ACTION_SET_FILE];
@@ -62,6 +60,7 @@ const actions = createActions(actionsDef);
  * @param  Object options [description]
  */
 let invoke = (name, options) => {
+  console.log("invoke action: " + name);
   if (!actions[name]) {
     let a = createAction();
     actions[name] = a;
