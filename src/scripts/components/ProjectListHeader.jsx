@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import {NavBrand} from 'react-bootstrap';
 import {Link} from 'react-router';
 import Message from './Message.jsx';
@@ -6,11 +7,11 @@ import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import LanStore from '../stores/LanStore.es6';
 
-export default class Header extends React.Component {
+export default class ProjectListHeader extends Reflux.Component {
   
   constructor() {
     super();
-    this.state = LanStore.get();
+    this.store = LanStore;
   }
   
   changeLan(evt) {
@@ -18,22 +19,7 @@ export default class Header extends React.Component {
     Actions.invoke(Constants.ACTION_CHANGE_LANGUAGE, lan);
   }
   
-  componentDidMount() {
-    this.unsubscribe = LanStore.listen(this.changeLanguage.bind(this));
-  }
-  
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-  
-  changeLanguage(lan) {
-    this.setState(lan)
-  }
-  
-  
   render() {
-    console.log(this.state.lan);
-    
     return (
       <div className="header">
         <nav className="navbar navbar-default">

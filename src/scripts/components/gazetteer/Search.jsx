@@ -5,7 +5,6 @@ import LocationsStore from '../../stores/Locations.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx'
 import Help from '../../help/LocationsSearch.es6';
-import LanStore from '../../stores/LanStore.es6';
 
 class GazetteerSearch extends React.Component {
   
@@ -17,11 +16,6 @@ class GazetteerSearch extends React.Component {
   
   componentDidMount() {
     this.unsuscribe = this.store.listen(this.onStoreChange.bind(this));
-    this.unsubscribe = LanStore.listen(this.changeLanguage.bind(this));
-  }
-  
-  changeLanguage(lan) {
-    this.forceUpdate()
   }
   
   componentWillUnmount() {
@@ -35,7 +29,6 @@ class GazetteerSearch extends React.Component {
   }
   
   doSearch() {
-    
     Actions.invoke(Constants.ACTION_SEARCH_LOCATIONS, this.state)
   }
   

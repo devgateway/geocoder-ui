@@ -3,7 +3,7 @@ import React from 'react';
 import {Router} from 'react-router';
 
 /*Layout elements*/
-import Header from './components/Header.jsx';
+import MapHeader from './components/MapHeader.jsx';
 import ProjectListHeader from './components/ProjectListHeader.jsx';
 import ProjectList from './components/project/ProjectList.jsx';
 import Map from './components/map/Map.jsx';
@@ -20,7 +20,7 @@ class MapLayout extends React.Component {
   render() {
     return (
       <div className="app">
-        <Header/>
+        <MapHeader/>
         <Map {...this.props}/>
       </div>
     )
