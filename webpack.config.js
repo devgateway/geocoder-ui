@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -6,12 +6,12 @@ module.exports = {
   entry: [
     './src/scripts/main.js'
   ],
-  devtool: "source-map", // or "inline-source-map",
+  devtool: "eval-source-map", // "source-map" or "inline-source-map",
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.js'
   },
-
+  
   plugins: [
     // OccurenceOrderPlugin is needed for webpack 1.x only
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -66,7 +66,7 @@ module.exports = {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
       }
-
+    
     ]
   }
 }
