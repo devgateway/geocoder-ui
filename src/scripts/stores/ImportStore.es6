@@ -1,83 +1,76 @@
 import {createStore} from 'reflux';
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
-import {List, fromJS} from 'immutable';
-import {StoreMixins} from '../mixins/StoreMixins.es6';
+import Reflux from "reflux";
 
-const initialData = fromJS({
-  files: []
-});
-//
-const ImportSore = createStore({
-  initialData: initialData,
+/**
+ * Stored used in {@link FileUpload} component.
+ */
+const initialState = {
+  autoGeocode:  false,
+  files:        []
+};
+class ImportSore extends Reflux.Store {
+  constructor() {
+    super();
+    this.state = initialState;
+    
+    this.listenTo(Actions.get(Constants.ACTION_TOGGLE_AUTOGEOCODE), this.toggleAutoGeocode);
+    this.listenTo(Actions.get(Constants.ACTION_SET_FILE), this.setFile);
+    this.listenTo(Actions.get(Constants.ACTION_REMOVE_FILE), this.removeFile);
+    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES_VALIDATION), this.setError);
+    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).completed, this.uploadCompleted);
+    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).failed, this.uploadFailed);
+  }
   
-  mixins: [StoreMixins],
-  
-  init() {
-    this.data = initialData;
-    this.listenTo(Actions.get(Constants.ACTION_SET_FILE), 'setFile');
-    this.listenTo(Actions.get(Constants.ACTION_REMOVE_FILE), 'removeFile');
-    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES_VALIDATION), 'setError');
-    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).completed, 'uploadCompleted');
-    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).failed, 'uploadFailed');
-  },
+  toggleAutoGeocode() {
+    this.setState({autoGeocode: !this.state.autoGeocode});
+  }
   
   setFile(files) {
-    const newFiles = this.get().get('files').concat(List(files))
-    const newData = this.get().set('files', newFiles).delete('error',)
-    this.setData(newData);
-  },
+    const newFiles = this.state.files.concat(files);
+    
+    this.setState({
+      files: newFiles,
+      error: undefined
+    });
+  }
   
   removeFile(name) {
-    const newData = this.get().updateIn(['files'], function (files) {
-      return files.filter(function (file) {
-        return file.name !== name;
-      });
-    });
+    const newFiles = this.state.files.filter(file => file.name !== name);
     
-    this.setData(newData);
-  },
+    this.setState({
+      files: newFiles
+    });
+  }
   
   setError(error) {
-    this.setData(this.get().set('error', error));
-  },
+    this.setState({
+      error
+    });
+  }
   
   uploadCompleted(file) {
-    const newData = this.get().updateIn(['files'], function (files) {
-      return files.update(function (files) {
-        return files.update(
-          files.findIndex(function (item) {
-            return item.name === file.name;
-          }), function (item) {
-            
-            item.status = 'DONE'
-            return item
-          }
-        );
-      });
+    const fileIndex = this.state.files.findIndex(f => f.name === file.name);
+    this.state.files[fileIndex].status = 'DONE';
+    const newFiles = this.state.files;
+  
+    this.setState({
+      files: newFiles
     });
-    this.setData(newData);
-  },
+  }
   
   uploadFailed(data) {
-    const {message, file} = data
-    const newData = this.get().updateIn(['files'], function (files) {
-      return files.update(function (files) {
-        return files.update(
-          files.findIndex(function (item) {
-            return item.name === file.name;
-          }), function (item) {
-            
-            item.status = 'ERROR'
-            return item
-          }
-        );
-      });
-    });
+    const {message, file} = data;
     
-    this.setData(newData);
-  },
+    const fileIndex = this.state.files.findIndex(f => f.name === file.name);
+    this.state.files[fileIndex].status = 'ERROR';
+    const newFiles = this.state.files;
   
-});
+    this.setState({
+      files: newFiles
+    });
+  }
+}
 
 export default ImportSore;

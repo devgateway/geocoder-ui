@@ -84,11 +84,6 @@ class ProjectList extends React.Component {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PARAM, param);
   }
   
-  onDrop(files) {
-    Actions.invoke(Constants.ACTION_SET_FILE, files);
-  }
-  
-  
   render() {
     return (
       <Grid>
