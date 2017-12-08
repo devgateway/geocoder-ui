@@ -51,10 +51,10 @@ class ImportSore extends Reflux.Store {
   }
   
   uploadCompleted(file) {
+    const newFiles = [...this.state.files];
     const fileIndex = this.state.files.findIndex(f => f.name === file.name);
-    this.state.files[fileIndex].status = 'DONE';
-    const newFiles = this.state.files;
-  
+    newFiles[fileIndex].status = 'DONE';
+    
     this.setState({
       files: newFiles
     });
@@ -63,10 +63,10 @@ class ImportSore extends Reflux.Store {
   uploadFailed(data) {
     const {message, file} = data;
     
+    const newFiles = [...this.state.files];
     const fileIndex = this.state.files.findIndex(f => f.name === file.name);
-    this.state.files[fileIndex].status = 'ERROR';
-    const newFiles = this.state.files;
-  
+    newFiles[fileIndex].status = 'ERROR';
+    
     this.setState({
       files: newFiles
     });
