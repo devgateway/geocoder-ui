@@ -4,8 +4,7 @@
     "no": "No"
   },
   "projects": {
-    "projectsCount": "{{count}} project found",
-    "projectsCount_plural": "{{count}} projects found"
+    "projectsCount": "Results: {{count}} project(s) found"
   },
   "header": {
     "branding": "Open Aid Geocoder",
@@ -112,11 +111,12 @@
     "nogeocodingdata": "No Geocoding Data."
   },
   "projectlist": {
-    "geocodeproject": "Geocode Project",
-    "geocodingfilter": "Geocoding Filter",
-    "havelocations": "Having Locations",
-    "nothavelocations": "Not having Location",
-    "any": "Any of them",
+    "geocodeproject": "GeoCode Project",
+    "geocodingfilter": "GeoCode Filter",
+    "withNoLocation": "No Location(s)",
+    "pendingVerification": "Pending Verification",
+    "verifiedLocation": "Verified Location",
+    "any": "All Options",
     "geojsonexport": "GeoJson",
     "kmlexport": "Kml",
     "import": "Import"

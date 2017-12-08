@@ -4,8 +4,7 @@
     "no": "No"
   },
   "projects": {
-    "projectsCount": "{{count}} proyecto encontrado",
-    "projectsCount_plural": "{{count}} proyectos encontrados"
+    "projectsCount": "{{count}} proyecto encontrado"
   },
   "header": {
     "branding": "Open Aid Geocoder",
@@ -114,8 +113,8 @@
   "projectlist": {
     "geocodeproject": "Geocodificar Proyecto",
     "geocodingfilter": "Filtro",
-    "havelocations": "Con ubicaciones",
-    "nothavelocations": "Sin ubicaciones",
+    "withNoLocation": "Con ubicaciones",
+    "pendingVerification": "Sin ubicaciones",
     "any": "Todos"
   },
   "locationpopup": {

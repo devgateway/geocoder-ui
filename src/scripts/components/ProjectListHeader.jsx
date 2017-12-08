@@ -1,7 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {NavBrand} from 'react-bootstrap';
-import {Link} from 'react-router';
 import Message from './Message.jsx';
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
@@ -24,10 +22,7 @@ export default class ProjectListHeader extends Reflux.Component {
       <div className="header">
         <nav className="navbar navbar-default">
           <div className="container-fluid">
-            
-            <div className="nav navbar-left">
-            
-            </div>
+            <div className="nav navbar-left"></div>
             <div className="nav navbar-rigth lan-selector-container">
               <select value={this.state.lan} name="lan" className="pull-right" onChange={this.changeLan}>
                 <option value="en">{Message.t('header.language.english')}</option>
