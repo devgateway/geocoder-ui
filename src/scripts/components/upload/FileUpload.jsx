@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from "reflux";
 import {Link} from 'react-router';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
@@ -6,17 +7,22 @@ import Dropzone from 'react-dropzone';
 import {FormControl, Button} from 'react-bootstrap';
 
 import ImportStore from '../../stores/ImportStore.es6';
-import BaseStoreComponent from '../BaseStoreComponent.es6'
 
-class Upload extends BaseStoreComponent {
+/**
+ * Component used to upload and import a file.
+ */
+class FileUpload extends Reflux.Component {
   
   constructor() {
-    super()
-    this.state = {}
+    super();
     this.store = ImportStore;
   }
   
-  onDrop(acceptedFiles, rejectedFiles) {
+  toggleAutoGeocode() {
+    Actions.invoke(Constants.ACTION_TOGGLE_AUTOGEOCODE);
+  }
+  
+  onDrop(acceptedFiles) {
     Actions.invoke(Constants.ACTION_SET_FILE, acceptedFiles);
   }
   
@@ -25,65 +31,59 @@ class Upload extends BaseStoreComponent {
   }
   
   onUpload() {
-    const files = this.store.getData().files
-    if (files.length > 0) {
-      Actions.invoke(Constants.ACTION_UPLOAD_FILES, this.store.getData().files);
+    if (this.state.files.length > 0) {
+      Actions.invoke(Constants.ACTION_UPLOAD_FILES, this.state);
     } else {
-      Actions.invoke(Constants.ACTION_UPLOAD_FILES_VALIDATION, 'Shoul shoulld  some files here')
+      Actions.invoke(Constants.ACTION_UPLOAD_FILES_VALIDATION, "Please upload some files first.");
     }
   }
   
   render() {
-    
     return (
       <div className="container">
         <h1>Upload XML File</h1>
         <p>Only *.xml files will be accepted</p>
         <div className="dropzone">
           <Dropzone accept="text/xml, application/xml" onDrop={this.onDrop} disableClick={true} ref="dropzone">
-            <p>Try dropping some files here, or click to select files to upload.
-              <ul>
-                {
-                  this.store.getData().files.map(f =>
+            <p>Try dropping some files here, or click to select files to upload.</p>
+            <ul>
+              {
+                this.state.files.map(file =>
+                  <li key={file.name}>{file.name} - {file.size} bytes
+                    {file.status === 'ERROR' ? <div className="label label-warning">Error when Loading this file</div> : null}
                     
-                    <li key={f.name}>{f.name} - {f.size} bytes
-                      {f.status == 'ERROR' ?
-                        <div className="label label-warning">Error when Loading this file</div> : null}
-                      
-                      {f.status == 'DONE' ? <div className="label label-success">File Uploaded</div> : null}
-                      
-                      <button onClick={(e) => this.onRemove(f.name)} className="btn btn-xs link pull-right">(remove)
-                      </button>
+                    {file.status === 'DONE' ? <div className="label label-success">File Uploaded</div> : null}
                     
-                    </li>)
-                }
-              </ul>
-              
-              {this.store.getData().error ?
-                <div class="alert alert-danger" role="alert">{this.store.getData().error}</div> : null}
-            </p>
+                    <button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs link pull-right">(remove)
+                    </button>
+                  </li>)
+              }
+            </ul>
+            
+            {this.state.error ?
+              <div className="alert alert-danger" role="alert">{this.state.error}</div> : null}
           </Dropzone>
-        
         </div>
+        
         <div className="upload-options">
-          <Button bsSize="small" bsStyle='success' className="pull-right" onClick={() => {
+          <Button bsSize="lg" bsStyle='success' className="pull-right" onClick={() => {
             this.refs.dropzone.open()
           }}>
             Add File
           </Button>
           
-          <Button bsSize="small" bsStyle='success' className="pull-right" onClick={e => this.onUpload()}>Upload and
+          <Button bsSize="lg" bsStyle='success' className="pull-right" onClick={e => this.onUpload()}>Upload and
             Import </Button>
           
           <div className="form-group">
-            <FormControl type="checkbox" name="autocode" label="Autocode Activities" value="yes"/>
-            <label htmlFor="autocode">Auto Code Projects</label>
+            <FormControl type="checkbox" checked={this.state.autoGeocode} onChange={this.toggleAutoGeocode.bind(this)}
+                         id="autoGeocode" name="autoGeocode" label="Auto Geocode Activities"/>
+            <label htmlFor="autoGeocode">Auto Code Projects</label>
           </div>
-        
         </div>
       </div>)
   }
   
 }
 
-export default Upload;
+export default FileUpload;

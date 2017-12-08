@@ -134,16 +134,14 @@ actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
     .catch((message) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].failed(message));
 })
 
-actions[Constants.ACTION_UPLOAD_FILES].listen(function (files) {
-  files.forEach(file => {
+actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
+  fileStore.files.forEach(file => {
     if (!file.status) {
-      APIClient.upload(file)
+      APIClient.upload(file, fileStore.autoGeocode)
         .then((results) => {
-          
           actions[Constants.ACTION_UPLOAD_FILES].completed(file)
         })
         .catch((ajax) => {
-          
           actions[Constants.ACTION_UPLOAD_FILES].failed({
             message: ajax.response.data.error,
             file
@@ -152,8 +150,7 @@ actions[Constants.ACTION_UPLOAD_FILES].listen(function (files) {
       
     }
   })
-})
-
+});
 
 export {
   get,

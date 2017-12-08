@@ -7,7 +7,7 @@ import MapHeader from './components/MapHeader.jsx';
 import ProjectListHeader from './components/ProjectListHeader.jsx';
 import ProjectList from './components/project/ProjectList.jsx';
 import Map from './components/map/Map.jsx';
-import Upload from './components/upload/FileUpload.jsx';
+import FileUpload from './components/upload/FileUpload.jsx';
 
 import createHashHistory from 'history/createHashHistory';
 
@@ -54,7 +54,7 @@ const AppRoutes = (props) => {
         </div>
       </nav>
       <Route exact path="/" component={ProjectListLayout}/>
-      <Route path="/upload" component={Upload}/>
+      <Route path="/upload" component={FileUpload}/>
       <Route path="/map/:projectID" component={MapLayout}/>
     
     </div>
