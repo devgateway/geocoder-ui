@@ -15,10 +15,11 @@ export default class Message extends Reflux.Component {
   }
   
   /**
-   * Force update if the language was changed.
+   * Force update if the language was changed OR if the this.props object changed.
    */
   shouldComponentUpdate(nextProps, nextState) {
-    return this.state.lan !== nextState.lan;
+    return this.state.lan !== nextState.lan
+      || JSON.stringify(this.props) !== JSON.stringify(nextProps);
   }
   
   render() {
