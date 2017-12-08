@@ -1,30 +1,11 @@
 import React from 'react';
 import Reflux from "reflux";
 import {ListGroup, Pagination, Grid, Row, Col, FormControl, Radio, FormGroup} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
+import ProjectInfo from './ProjectInfo.jsx';
 import Message from '../Message.jsx';
-
-const ProjectInfo = (props) => {
-  return (
-    <div
-      className={(props.locations && props.locations.length > 0) ? 'bs-callout bs-callout-success' : 'bs-callout bs-callout-info'}>
-      <div className="text-vertical">{props.identifier}</div>
-      <h3><Link to={'map/' + props.id}>{props.title}</Link></h3>
-      <span>
-         <b> {props.countries.map(country => (<span key={country.name}>{country.name}</span>))}</b>
-        </span>
-      <p>
-        {props.description}
-      </p>
-      
-      <div className="pull-right"><Link to={'map/' + props.id}><Message k="projectlist.geocodeproject"/></Link></div>
-      <br/>
-    </div>
-  )
-};
 
 /**
  * Component that displays a paginated list with all the projects.
@@ -36,17 +17,6 @@ class ProjectList extends Reflux.Component {
   }
   
   componentDidMount() {
-    Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
-  }
-  
-  validationState() {
-    let length = this.state.params.t ? this.state.params.t.length : 0;
-    if (length > 3) return 'success';
-    else if (length > 0) return 'warning';
-    else if (length > 0) return 'error';
-  }
-  
-  search() {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
   
@@ -62,7 +32,6 @@ class ProjectList extends Reflux.Component {
   }
   
   render() {
-    console.log(JSON.stringify(this.state.params, null, '\t'));
     return (
       <Grid>
         <Row>
@@ -128,8 +97,6 @@ class ProjectList extends Reflux.Component {
         </Row>
       </Grid>
     )
-    
-    // console.log(this.state.data);
   }
 }
 
