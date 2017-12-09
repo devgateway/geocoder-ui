@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  // devtool: "source-map", // or "inline-source-map"
   context: __dirname,
   entry: ['./src/scripts/main.js'],
   output: {
