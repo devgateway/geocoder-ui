@@ -4,8 +4,8 @@
   "description": "A  tool for Geocoding aid projects",
   "scripts": {
     "clean": "rimraf dist",
-    "build:webpack": "webpack --config webpack.config.prod.js",
-    "build": "SET BABEL_ENV=production && npm run clean && npm run build:webpack",
+    "build:webpack": "webpack --config webpack.config.js",
+    "build": "export BABEL_ENV=production && npm run clean && npm run build:webpack",
     "lint": "eslint app"
   },
   "repository": {
