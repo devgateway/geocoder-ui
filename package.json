@@ -4,8 +4,8 @@
   "description": "A  tool for Geocoding aid projects",
   "scripts": {
     "clean": "rimraf dist",
-    "build:webpack": "webpack --config webpack.config.js",
-    "build": "export BABEL_ENV=production && npm run clean && npm run build:webpack",
+    "build:webpack": "webpack --config webpack.config.prod.js",
+    "build": "export BABEL_ENV=production && NODE_ENV=production && npm run clean && npm run build:webpack",
     "lint": "eslint app"
   },
   "repository": {
@@ -38,6 +38,8 @@
     "bootstrap": "3.3.7",
     "css-loader": "0.28.7",
     "express": "4.16.2",
+    "extract-text-webpack-plugin": "3.0.2",
+    "html-webpack-plugin": "2.30.1",
     "lodash": "4.17.4",
     "node-sass": "4.5.3",
     "reflux": "6.4.1",
@@ -50,6 +52,7 @@
   },
   "dependencies": {
     "axios": "0.16.2",
+    "copy-webpack-plugin": "4.2.3",
     "file-loader": "1.1.5",
     "font-awesome": "4.7.0",
     "i18next": "10.0.2",

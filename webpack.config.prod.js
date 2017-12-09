@@ -1,24 +1,41 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  // devtool: "source-map", // or "inline-source-map"
   context: __dirname,
-  entry: [
-    './src/scripts/main.js'
-  ],
-  devtool: "eval-source-map", // "source-map" or "inline-source-map",
+  entry: ['./src/scripts/main.js'],
   output: {
-    path: path.resolve('dist'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   
   plugins: [
-    // OccurenceOrderPlugin is needed for webpack 1.x only
+    new CopyWebpackPlugin([{from: './src/conf', to: 'conf'}], {force: true}),
+    new CopyWebpackPlugin([{from: './src/locales', to: 'locales'}], {force: true}),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.DefinePlugin({
+      'process.env': {'NODE_ENV': JSON.stringify('production')}
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      compressor: {
+        unused    : true,
+        dead_code : true,
+        warnings  : false
+      }
+    }),
+    new ExtractTextPlugin('[name].css'),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/html/index-prod.html',
+      inject: true
+    })
   ],
+  
   module: {
     rules: [
       {
@@ -67,5 +84,12 @@ module.exports = {
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
       }
     ]
-  }
+  },
+  resolve: {
+    alias: {
+      'react': path.join(__dirname, 'node_modules', 'react')
+    },
+    extensions: [".webpack.js", ".web.js", ".js", ".jsx", ".es6"]
+  },
+  profile: true
 };
