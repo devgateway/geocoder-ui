@@ -59,13 +59,13 @@ const actions = createActions(actionsDef);
  * @param  String name    [description]
  * @param  Object options [description]
  */
-let invoke = (name, options) => {
+let invoke = (name, ...options) => {
   console.log("invoke action: " + name);
   if (!actions[name]) {
     let a = createAction();
     actions[name] = a;
   }
-  actions[name](options);
+  actions[name](...options);
 }
 
 /**
