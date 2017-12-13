@@ -1,7 +1,7 @@
 import {createStore} from 'reflux';
 import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
-import LocationsStore from './Locations.es6';
+import LocationsStore from './LocationsStore.es6';
 import {GeoJsonBuilder} from '../util/GeojsonBuilder.es6';
 import * as Actions from '../actions/Actions.es6';
 
@@ -17,7 +17,7 @@ const LocationsGeoJsonStore = createStore({
   mixins: [StoreMixins],
   
   init() {
-    this.listenTo(LocationsStore, this.process);
+    // this.listenTo(LocationsStore, this.process);   // TODO - update this
     this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), 'removeSavedLocation')
   },
   

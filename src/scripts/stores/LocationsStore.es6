@@ -1,52 +1,47 @@
-import {createStore} from 'reflux';
+import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
-import {List, Map} from 'immutable';
-import {StoreMixins} from '../mixins/StoreMixins.es6';
 import SingleProjectStore from './Project.es6';
 
-
-const initialData = {
-  'locations': new Map({total: 0, records: new List(), types: new List()}),
-  'loadingLocations': false,
-  'countryISO': null
+const initialState = {
+  fuzzy:    false,
+  country:  false,
+  text:     '',
+  locations: {
+    total: 0,
+    records: [],
+    types: []
+  },
+  loadingLocations: false,
+  countryISO: null
 };
-
-const LocationsStore = createStore({
+class LocationsStore extends Reflux.Store {
+  constructor() {
+    super();
+    this.state = initialState;
+    
+    // this.listenTo(SingleProjectStore, this.updateCountryISO); TODO
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS), this.search);
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.done);
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, this.failed);
+    this.listenTo(Actions.get(Constants.ACTION_FILTER_BY_TYPE), this.filter);
+    this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
+  }
   
-  initialData: initialData,
-  cachedData: null,
-  mixins: [StoreMixins],
-  
-  init() {
-    this.data = initialData;
-    this.listenTo(SingleProjectStore, this.updateCountryISO);
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS), 'search');
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, 'done');
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, 'failed');
-    this.listenTo(Actions.get(Constants.ACTION_FILTER_BY_TYPE), 'filter');
-    this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
-  },
-  
-  cleanStore() {
-    this.setData(this.initialData);
-  },
-  
-  getInitialState: function () {
-    return this.get();
-  },
+  // initialData: initialData,
+  // cachedData: null,
   
   search() {
     let newState = Object.assign({}, this.get());
     Object.assign(newState, {'loadingLocations': true});
-    this.setData(newState);
-  },
+    this.setState(newState);
+  }
   
   updateCountryISO(project) {
     let newState = Object.assign({}, this.get());
     Object.assign(newState, {countryISO: project.country ? project.country.iso2 : null});
-    this.setData(newState);
-  },
+    this.setState(newState);
+  }
   
   done(rawData) {
     
@@ -72,16 +67,16 @@ const LocationsStore = createStore({
     else {
       Object.assign(newState, {'locations': initialData.locations, 'loadingLocations': false});
     }
-    this.setData(newState);
-  },
+    this.setState(newState);
+  }
   
   inmutateResults(results) {
     return new List(results);
-  },
+  }
   
   failed() {
     console.log('failed');
-  },
+  }
   
   filter(type) {
     let newState = Object.assign({}, this.get());
@@ -96,10 +91,9 @@ const LocationsStore = createStore({
     } else {
       Object.assign(newState, {'locations': this.cachedData});
     }
-    this.setData(newState);
+    this.setState(newState);
   }
   
-});
-
+}
 
 export default LocationsStore;
