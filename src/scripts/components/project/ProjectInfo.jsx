@@ -6,11 +6,31 @@ import Message from '../Message.jsx';
  * Component that displays main information related to a project.
  */
 class ProjectInfo extends React.Component {
+  
+  /**
+   * Function that determines the color code for an activity.
+   */
+  activityClass(locations) {
+    const AUTO_CODED = "AUTO_CODED";
+    
+    if (locations === undefined || locations.length === 0) {
+      return "bs-callout-info";
+    }
+    
+    for(let i = 0; i < locations.length; i++) {
+      if (locations[i].locationStatus === AUTO_CODED) {
+        return "bs-callout-warning";
+      }
+    }
+    
+    return "bs-callout-success";
+  }
+  
   render() {
     const {id, locations, countries, title, description, identifier} = this.props;
     
     return (
-      <div className={(locations && locations.length > 0) ? 'bs-callout bs-callout-success' : 'bs-callout bs-callout-info'}>
+      <div className={"bs-callout " + this.activityClass(locations)}>
         <div className="text-vertical">{identifier}</div>
         <h3><Link to={'map/' + id}>{title}</Link></h3>
         <span>
