@@ -1,4 +1,3 @@
-import {createStore} from 'reflux';
 import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
