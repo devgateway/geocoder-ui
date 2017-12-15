@@ -11,10 +11,6 @@ import ProjectDescription from '../../project/ProjectDescription.jsx';
 import L from 'leaflet';
 import Message from '../../Message.jsx';
 import ProjectCoding from '../../project/ProjectCoding.jsx';
-import PanelHeading from '../../project/TempPanelHeading.jsx';
-import PanelSearch from '../../project/TempPanelSearchBox.jsx';
-import ProjectListAutoGeoCoded from '../../project/TempProjectListAutoGeocoded.jsx';
-
 
 /*
    This view renders the info Ttab view UI component
@@ -90,10 +86,40 @@ class InfoControl extends React.Component {
           <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div> :
           <div id="project-info">
             <div className="panel panel-success">
-              <PanelHeading/>
-              <div className="tab-container no-padding">
-              <PanelSearch/>
-              <ProjectListAutoGeoCoded/>
+              <div className="close-btn" onClick={this.toggle.bind(this)}>
+                <i className='fa fa-times-circle-o'></i>
+              </div>
+              <div className="panel-heading">
+                
+                <div className="options">
+                  <div className="header-icon"/>
+                  <div className="small-title">
+                    {this.state.project.project_id}
+                  </div>
+                  <div className="separator"/>
+                  <ProjectInfoHelp parentId="project-info"/>
+                  <div className="separator"/>
+                </div>
+                <div className="title">
+                  {this.state.project.title}
+                </div>
+              
+              </div>
+              <div className="tab-container">
+                <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
+                  <Tab className="project-info" eventKey={1} title={Message.t('projectinfo.projectinfo')}>
+                    <ProjectDescription  {...this.state.project}/>
+                  </Tab>
+                  
+                  <Tab eventKey={2}
+                       title={Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}>
+                    <ProjectCoding {...this.state.project}/>
+                  </Tab>
+                  <Tab eventKey={3}
+                       title={Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locationsCount) + ")"}>
+                    <Results/>
+                  </Tab>
+                </Tabs>
               </div>
             </div>
           
