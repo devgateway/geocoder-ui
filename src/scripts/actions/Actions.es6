@@ -5,8 +5,11 @@ import Geonames from '../util/gazetteers/Geonames.es6';
 import APIClient from '../util/APIClient.es6';
 import ShapesMapping from '../util/ShapesMapping.es6';
 
-
 let actionsDef = {};
+
+actionsDef[Constants.ACTION_FETCH_FILTERS] = {
+  children: ['completed', 'failed']
+};
 
 actionsDef[Constants.ACTION_SEARCH_LOCATIONS] = {
   children: ['completed', 'failed']
@@ -44,15 +47,8 @@ actionsDef[Constants.ACTION_UPLOAD_FILES] = {
   children: ['completed', 'failed']
 };
 
-
-actionsDef[Constants.ACTION_SET_FILE];
-actionsDef[Constants.ACTION_REMOVE_FILE];
-actionsDef[Constants.ACTION_UPLOAD_FILES_VALIDATION];
-
-
 /*create async actions*/
 const actions = createActions(actionsDef);
-
 
 /**
  * Call  action by name
@@ -62,11 +58,11 @@ const actions = createActions(actionsDef);
 let invoke = (name, ...options) => {
   console.log("invoke action: " + name);
   if (!actions[name]) {
-    let a = createAction();
-    actions[name] = a;
+    let action = createAction();
+    actions[name] = action;
   }
   actions[name](...options);
-}
+};
 
 /**
  * Get action by name
@@ -75,64 +71,70 @@ let invoke = (name, ...options) => {
  */
 let get = (name) => {
   if (!actions[name]) {
-    let a = createAction();
-    actions[name] = a;
+    let action = createAction();
+    actions[name] = action;
   }
   return actions[name]
-}
+};
 
 
-/*Ajax calls for async actions */
+/************************************   Ajax calls for async actions    ************************************/
+/**
+ * Load all filters.
+ */
+actions[Constants.ACTION_FETCH_FILTERS].listen(function() {
+  APIClient.getAllFilters()
+    .then((results) => actions[Constants.ACTION_FETCH_FILTERS].completed(results))
+    .catch((message) => actions[Constants.ACTION_FETCH_FILTERS].failed(message));
+});
+
 actions[Constants.ACTION_SEARCH_LOCATIONS].listen(function (options) {
   new Geonames(options)
     .find().then((results) => actions[Constants.ACTION_SEARCH_LOCATIONS].completed(results))
     .catch((message) => actions[Constants.ACTION_SEARCH_LOCATIONS].failed(message));
 })
-
+;
 actions[Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID].listen(function (options) {
   new Geonames(options)
     .findByGeonameID().then((results) => actions[Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID].completed(results))
     .catch((message) => actions[Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID].failed(message));
-})
+});
 
 actions[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES].listen(function (options) {
   new Geonames(options)
     .findByGeonameID().then((results) => actions[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES].completed(results))
     .catch((message) => actions[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES].failed(message));
-})
+});
 
-
-/*Ajax calls for async actions */
 actions[Constants.ACTION_LOAD_SHAPE].listen(function (iso) {
-  
   ShapesMapping.getGeoJsonShape(iso).then((results) => actions[Constants.ACTION_LOAD_SHAPE].completed(results, iso))
     .catch((message) => actions[Constants.ACTION_LOAD_SHAPE].failed(message));
-})
+});
 
 /* Load  projects asynchronously */
 actions[Constants.ACTION_FIND_PROJECTS].listen(function (params) {
   APIClient.getProjectList(params)
     .then((results) => actions[Constants.ACTION_FIND_PROJECTS].completed(results))
     .catch((message) => actions[Constants.ACTION_FIND_PROJECTS].failed(message));
-})
+});
 
 actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function (options) {
   
   APIClient.getProject(options.id, options.lan)
     .then((results) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results))
     .catch((message) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].failed(message));
-})
+});
 
 actions[Constants.ACTION_SAVE_PROJECT].listen(function (project) {
   APIClient.saveProject(project)
     .then((results) => actions[Constants.ACTION_SAVE_PROJECT].completed(results))
     .catch((message) => actions[Constants.ACTION_SAVE_PROJECT].failed(message));
-})
+});
 
 actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
   ShapesMapping.getShapeList().then((results) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].completed(results))
     .catch((message) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].failed(message));
-})
+});
 
 actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
   fileStore.files.forEach(file => {

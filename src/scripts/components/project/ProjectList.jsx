@@ -1,9 +1,10 @@
 import React from 'react';
 import Reflux from "reflux";
-import {ListGroup, Pagination, Grid, Row, Col, FormControl, Radio, FormGroup} from 'react-bootstrap';
+import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
+import FiltersStore from '../../stores/FiltersStore.es6';
 import ProjectInfo from './ProjectInfo.jsx';
 import Message from '../Message.jsx';
 
@@ -13,10 +14,11 @@ import Message from '../Message.jsx';
 class ProjectList extends Reflux.Component {
   constructor() {
     super();
-    this.store = ProjectListStore;
+    this.stores = [ProjectListStore, FiltersStore];
   }
   
   componentDidMount() {
+    Actions.invoke(Constants.ACTION_FETCH_FILTERS);
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
   
@@ -32,6 +34,8 @@ class ProjectList extends Reflux.Component {
   }
   
   render() {
+    console.log(this.state);
+    
     return (
       <Grid>
         <Row>

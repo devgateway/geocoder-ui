@@ -7,14 +7,30 @@ let settings = Settings.getInstace();
 export default class ApiClient {
   
   /**
-   * Get all projects fron mock data
+   * Fetches all the filters from the server.
+   */
+  static getAllFilters() {
+    const API_BASE_URL = settings.get('API', 'API_BASE_URL');
+    const ALL_FILTERS_END_POINT = settings.get('API', 'ALL_FILTERS_END_POINT');
+    
+    return new Promise((resolve, reject) => {
+      AjaxUtil.get(`${API_BASE_URL}/${ALL_FILTERS_END_POINT}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((response) => {
+          reject(`got ${response.status}  ${response.statusText}`)
+        })
+    })
+  }
+  
+  /**
+   * Get all projects from the API
    * @return {[array]}     an array with all projects
    */
   static getProjectList(params) {
-    
-    const API_BASE_URL = settings.get('API', 'API_BASE_URL')
+    const API_BASE_URL = settings.get('API', 'API_BASE_URL');
     const PROJECT_LIST_END_POINT = settings.get('API', 'PROJECT_LIST_END_POINT');
-    const PROJECT_END_POINT = settings.get('API', 'PROJECT_END_POINT');
     
     return new Promise((resolve, reject) => {
       AjaxUtil.get(`${API_BASE_URL}/${PROJECT_LIST_END_POINT}`, params)
@@ -71,7 +87,7 @@ export default class ApiClient {
   static upload(file, autoGeocode) {
     const API_BASE_URL = settings.get('API', 'API_BASE_URL');
     const IMPORT_END_POINT = settings.get('API', 'IMPORT_END_POINT');
-  
+    
     const formData = new FormData();
     formData.append("file", file);
     formData.append("autoGeocode", autoGeocode);
