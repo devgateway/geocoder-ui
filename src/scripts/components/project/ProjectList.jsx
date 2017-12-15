@@ -63,19 +63,19 @@ class ProjectList extends Reflux.Component {
                 <FormGroup className="spacingLg">
                   <FormControl type="checkbox" checked={this.state.params.withNoLocation} onChange={this.handleFilterChange.bind(this)}
                                id="withNoLocation" name="withNoLocation"/>
-                  <label htmlFor="withNoLocation">{Message.t('projectlist.withNoLocation')}</label>
+                  <label htmlFor="withNoLocation" style={{color: "#f0ad4e"}}>{Message.t('projectlist.withNoLocation')}</label>
                   
                   <FormControl type="checkbox" checked={this.state.params.pendingVerification} onChange={this.handleFilterChange.bind(this)}
                                id="pendingVerification" name="pendingVerification"/>
-                  <label htmlFor="pendingVerification">{Message.t('projectlist.pendingVerification')}</label>
+                  <label htmlFor="pendingVerification" style={{color: "#5bc0de"}}>{Message.t('projectlist.pendingVerification')}</label>
                   
                   <FormControl type="checkbox" checked={this.state.params.verifiedLocation} onChange={this.handleFilterChange.bind(this)}
                                id="verifiedLocation" name="verifiedLocation"/>
-                  <label htmlFor="verifiedLocation">{Message.t('projectlist.verifiedLocation')}</label>
+                  <label htmlFor="verifiedLocation" style={{color: "#669933"}}>{Message.t('projectlist.verifiedLocation')}</label>
                   
                   <FormControl type="checkbox" onChange={this.handleFilterChange.bind(this)}
                                id="allOptions" name="allOptions"/>
-                  <label htmlFor="allOptions">{Message.t('projectlist.any')}</label>
+                  <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                 </FormGroup>
               </div>
             </Col>
