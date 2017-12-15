@@ -14,12 +14,12 @@ class ProjectInfo extends React.Component {
     const AUTO_CODED = "AUTO_CODED";
     
     if (locations === undefined || locations.length === 0) {
-      return "bs-callout-info";
+      return "bs-callout-warning";
     }
     
     for(let i = 0; i < locations.length; i++) {
       if (locations[i].locationStatus === AUTO_CODED) {
-        return "bs-callout-warning";
+        return "bs-callout-info";
       }
     }
     
