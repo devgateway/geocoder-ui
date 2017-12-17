@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 import ProjectStore from '../../../stores/Project.es6';
-import LocationsStore from '../../../stores/Locations.es6';
-import Results from '../../gazetteer/Results.jsx';
+import LocationsStore from '../../../stores/LocationsStore.es6';
+import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
 import ProjectDescription from '../../project/ProjectDescription.jsx';
 import L from 'leaflet';
@@ -16,10 +16,10 @@ import PanelSearch from '../../project/TempPanelSearchBox.jsx';
 import ProjectListAutoGeoCoded from '../../project/TempProjectListAutoGeocoded.jsx';
 
 
-/*
-   This view renders the info Ttab view UI component
-   */
-class InfoControl extends React.Component {
+/**
+ * This view renders the info tab view UI component.
+ */
+class InfoPanel extends React.Component {
   
   constructor() {
     super();
@@ -28,14 +28,14 @@ class InfoControl extends React.Component {
   
   componentWillMount() {
     this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this));
-    this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this));
-  
+    // this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this)); TODO - update this
+    
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
     // Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan}) TODO - use language
   }
   
   /** TODO - update this
-  changeLanguage(lan) {
+   changeLanguage(lan) {
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan})
     this.forceUpdate()
   }*/
@@ -83,7 +83,7 @@ class InfoControl extends React.Component {
   }
   
   render() {
-    var activeTab = this.state.showTab || 1;
+    let activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">
         {(!this.state.expanded) ?
@@ -92,8 +92,9 @@ class InfoControl extends React.Component {
             <div className="panel panel-success">
               <PanelHeading/>
               <div className="tab-container no-padding">
-              <PanelSearch/>
-              <ProjectListAutoGeoCoded/>
+                <PanelSearch/>
+                <ProjectListAutoGeoCoded/>
+              
               </div>
             </div>
           
@@ -103,4 +104,4 @@ class InfoControl extends React.Component {
   }
 }
 
-export default InfoControl;
+export default InfoPanel;

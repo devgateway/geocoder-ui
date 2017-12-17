@@ -1,31 +1,16 @@
-import {FormControl, Button} from 'react-bootstrap';
 import React from 'react';
+import Reflux from 'reflux';
+import {FormControl, Button} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6'
-import LocationsStore from '../../stores/Locations.es6';
+import LocationsStore from '../../stores/LocationsStore.es6';
 import Constants from '../../constants/Contants.es6';
-import Message from '../Message.jsx'
+import Message from '../Message.jsx';
 import Help from '../../help/LocationsSearch.es6';
 
-class GazetteerSearch extends React.Component {
-  
+class GazetteerSearch extends Reflux.Component {
   constructor() {
     super();
     this.store = LocationsStore;
-    this.state = {'fuzzy': false, 'country': false, 'text': ''};
-  }
-  
-  componentDidMount() {
-    this.unsuscribe = this.store.listen(this.onStoreChange.bind(this));
-  }
-  
-  componentWillUnmount() {
-    this.unsuscribe();
-  }
-  
-  onStoreChange(storeData) {
-    
-    let newState = Object.assign(this.state, storeData);
-    this.setState(newState);
   }
   
   doSearch() {
@@ -33,34 +18,35 @@ class GazetteerSearch extends React.Component {
   }
   
   handleChange(e) {
-    
-    let fuzzy = (e.target.name == 'fuzzy') ? !this.state.fuzzy : this.state.fuzzy;
-    let country = (e.target.name == 'country') ? !this.state.country : this.state.country;
-    let text = this.state.text
-    if (e.target.name == 'text') {
+    let fuzzy = (e.target.name === 'fuzzy') ? !this.state.fuzzy : this.state.fuzzy;
+    let country = (e.target.name === 'country') ? !this.state.country : this.state.country;
+    let text = this.state.text;
+    if (e.target.name === 'text') {
       text = e.target.value;
     }
+    
+    // TODO - here we need to update the store.
     let newState = Object.assign(this.state, {text, fuzzy, country});
     this.setState(newState);
   }
   
   handleKey(e) {
-    
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       this.doSearch();
     }
   }
   
   validationState() {
-    
-    console.log('Validations');
     let length = this.state.text.length;
-    if (length > 3) return 'success';
-    else if (length > 0) return 'error';
-    
+    if (length > 3) {
+      return 'success';
+    } else if (length > 0) {
+      return 'error';
+    }
   }
   
   render() {
+    console.log(JSON.stringify(this.state, null, '\t'));
     
     return (
       <div id="gazetteer-search" className="navbar-form navbar-left" role="search">

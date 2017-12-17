@@ -1,8 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import {NavBrand} from 'react-bootstrap';
-import Search from './gazetteer/Search.jsx';
-import {Link} from 'react-router';
+import GazetteerSearch from './gazetteer/GazetteerSearch.jsx';
 import Message from './Message.jsx';
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
@@ -33,7 +31,7 @@ export default class MapHeader extends Reflux.Component {
             </div>
             
             <div className="nav navbar-left">
-              <Search/>
+              <GazetteerSearch/>
             </div>
             <div className="nav navbar-rigth lan-selector-container">
               <select value={this.state.lan} name="lan" className="pull-right" onChange={this.changeLan}>
