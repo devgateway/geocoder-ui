@@ -20,8 +20,6 @@ export default class ProjectDescription extends React.Component {
           {this.props.countries ? this.props.countries.map((c) => {
             return (<b key={c.name}>{c.name}</b>)
           }) : 'N/A'}
-          
-          lalalal
         </p>
       </div>
     );

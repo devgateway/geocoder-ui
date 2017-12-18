@@ -25,13 +25,13 @@ class InfoControl extends React.Component {
   componentWillMount() {
     this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this));
     this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this));
-  
+    
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
     // Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan}) TODO - use language
   }
   
   /** TODO - update this
-  changeLanguage(lan) {
+   changeLanguage(lan) {
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan})
     this.forceUpdate()
   }*/
