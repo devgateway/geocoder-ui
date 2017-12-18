@@ -1,8 +1,10 @@
 import React from 'react';
+import Reflux from "reflux";
 import {Tabs, Tab} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
+import LanStore from '../../../stores/LanStore.es6';
 import ProjectStore from '../../../stores/ProjectStore.es6';
 import LocationsStore from '../../../stores/LocationsStore.es6';
 import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
@@ -18,48 +20,43 @@ import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
 /**
  * This view renders the info tab view UI component.
  */
-class InfoPanel extends React.Component {
+class InfoPanel extends Reflux.Component {
   
   constructor() {
     super();
-    this.state = {expanded: true, project: {}, locationsCount: 0, showTab: 1};
+    
+    this.state = {
+      expanded: true,
+      project: {},
+      showTab: 1
+    };
+    
+    this.stores = [LocationsStore, LanStore];
   }
   
   componentWillMount() {
-    this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this));
-    // this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this)); TODO - update this
+    super.componentWillMount();
     
-    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
-    // Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan}) TODO - use language
+    this.unsuscribe = ProjectStore.listen(this.onStoreChange.bind(this));
   }
   
-  /** TODO - update this
-   changeLanguage(lan) {
-    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan})
-    this.forceUpdate()
-  }*/
-  
-  componentWillUnmount() {
-    this.unsuscribe1();
-    this.unsuscribe2();
+  componentWillUpdate(nextProps, nextState) {
+    if (this.state.lan !== nextState.lan) {
+      Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: this.state.lan})
+    }
   }
   
   componentDidMount() {
+    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: this.state.lan});
     
-    let container = ReactDOM.findDOMNode(this);
+    const container = ReactDOM.findDOMNode(this);
     L.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
     L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
   }
   
-  
-  onLocationsLoaded(data) {
-    
-    let newState = Object.assign({}, this.state);
-    if (data.loadingLocations) {
-      Object.assign(newState, {'showTab': 3}); //if hit load locations, then show the results tab
-    }
-    Object.assign(newState, {'locationsCount': data.locations.toJS().records.length});
-    this.setState(newState);
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this.unsuscribe();
   }
   
   handleSelect(key) {
@@ -70,18 +67,18 @@ class InfoPanel extends React.Component {
   
   onStoreChange(project) {
     let newState = Object.assign({}, this.state);
-    Object.assign(newState, {project})
+    Object.assign(newState, {project});
     this.setState(newState);
   }
   
   toggle() {
     let newState = Object.assign({}, this.state);
-    Object.assign(newState, {expanded: !newState.expanded})
+    Object.assign(newState, {expanded: !newState.expanded});
     this.setState(newState);
   }
   
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     
     let activeTab = this.state.showTab || 1;
     return (
@@ -113,7 +110,7 @@ class InfoPanel extends React.Component {
                     <ProjectCoding {...this.state.project}/>
                   </Tab>
                   <Tab eventKey={3}
-                       title={Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locationsCount) + ")"}>
+                       title={Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}>
                     <GazetteeResults/>
                   </Tab>
                 </Tabs>

@@ -39,7 +39,6 @@ class LocationsStore extends Reflux.Store {
   }
   
   toggleSearchType(searchType) {
-    console.log(searchType);
     this.setState({
       [searchType]: !this.state[searchType]
     });
