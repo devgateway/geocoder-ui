@@ -1,39 +1,41 @@
-.container{
-  width: 60%  !important;
+.container {
+  width: 60% !important;
   margin-bottom: 10px;
 }
-.upload-options{
+
+.upload-options {
   padding: 20px;
   display: block;
 }
-.dropzone{
+
+.dropzone {
   margin: 10px;
-  >div{
+  > div {
     text-align: center;
-    width: 100%  !important;
-    height: 30%  !important;
+    width: 100% !important;
+    height: 30% !important;
     border: 1px dashed #000 !important;
     min-height: 200px;
     padding: auto;
     font-size: 12px;
 
-    ul{
+    ul {
       line-height: 18px;
       list-style: none;
-      li{
+      li {
         padding: 5px;
       }
-      li:hover{
+      li:hover {
         box-sizing: border-box;
         border: 1px solid #CCC;
       }
     }
-    p{
-          line-height: 30px;
+    p {
+      line-height: 30px;
     }
-    .link{
+    .link {
       margin-right: 10px;
-      color:blue
+      color: blue
     }
   }
 }

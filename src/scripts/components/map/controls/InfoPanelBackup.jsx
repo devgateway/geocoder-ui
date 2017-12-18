@@ -3,7 +3,7 @@ import {Tabs, Tab} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
-import ProjectStore from '../../../stores/Project.es6';
+import ProjectStore from '../../../stores/ProjectStore.es6';
 import LocationsStore from '../../../stores/Locations.es6';
 import Results from '../../gazetteer/Results.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
@@ -25,13 +25,13 @@ class InfoControl extends React.Component {
   componentWillMount() {
     this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this));
     this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this));
-  
+    
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
     // Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan}) TODO - use language
   }
   
   /** TODO - update this
-  changeLanguage(lan) {
+   changeLanguage(lan) {
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: LanStore.get().lan})
     this.forceUpdate()
   }*/

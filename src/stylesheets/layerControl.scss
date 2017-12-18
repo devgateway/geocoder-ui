@@ -1,40 +1,40 @@
 
-.layer-control-container{
-  display:none;
+.layer-control-container {
+  display: none;
   width: 250px;
   background-color: #fff;
   position: absolute;
   bottom: 200px;
   right: 10px;
-  padding:0;
+  padding: 0;
   z-index: 10;
 }
 
-.show-layers-button{
-  background:#d2e5ee;
+.show-layers-button {
+  background: #d2e5ee;
   border: 1px solid #ccc;
   padding: 3;
-  outline:none;
-  width:100px;
-  position:absolute;
-  bottom:150;
+  outline: none;
+  width: 100px;
+  position: absolute;
+  bottom: 150;
   right: 0;
   color: darken(#ccc, 5%);
-  font-size:13px;
-  &:hover{
+  font-size: 13px;
+  &:hover {
     background: #fff;
   }
 }
 
-.layers-content{
+.layers-content {
   width: 250px;
-  max-height:400px;
+  max-height: 400px;
   overflow-y: auto;
   background-color: #fff;
   position: absolute;
-   bottom: 50px;
-  padding:6px 6px 4px 6px ;
-  border:1px solid;
+  bottom: 50px;
+  padding: 6px 6px 4px 6px;
+  border: 1px solid;
 }
 
 
