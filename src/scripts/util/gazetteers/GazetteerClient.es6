@@ -26,8 +26,7 @@ export default class GazetteerClient {
     return this.get(this.getURL, this.getParams(false)).then(this.results.bind(this))
   }
   
-  
-  /*This method should be imeplemented fro each service (geonames, esri geocoding, google geoco*/
+  /*This method should be implemented for each service (geonames, esri geocoding, google geoco*/
   results(response) {
     return new Promise((resolve, reject) => {
       if (response.data && response.data.status && response.data.status.message) {

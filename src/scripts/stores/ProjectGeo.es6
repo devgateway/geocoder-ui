@@ -1,7 +1,7 @@
 import {createStore} from 'reflux';
 import {getAction} from '../actions/Actions.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
-import ProjectStore from './Project.es6';
+import ProjectStore from './ProjectStore.es6';
 import {GeoJsonBuilder} from '../util/GeojsonBuilder.es6';
 
 const initialData = {'geojson': null};

@@ -3,7 +3,7 @@ import {Tabs, Tab} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
-import ProjectStore from '../../../stores/Project.es6';
+import ProjectStore from '../../../stores/ProjectStore.es6';
 import LocationsStore from '../../../stores/LocationsStore.es6';
 import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
@@ -75,7 +75,6 @@ class InfoPanel extends React.Component {
   }
   
   toggle() {
-    
     let newState = Object.assign({}, this.state);
     Object.assign(newState, {expanded: !newState.expanded})
     this.setState(newState);
@@ -87,9 +86,9 @@ class InfoPanel extends React.Component {
     let activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">
-        {(!this.state.expanded) ?
-          <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div> :
-          <div id="project-info">
+        {(!this.state.expanded)
+          ? <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div>
+          : <div id="project-info">
             <div className="panel panel-success">
               <PanelHeading project={this.state.project}/>
               <div className="tab-container no-padding">

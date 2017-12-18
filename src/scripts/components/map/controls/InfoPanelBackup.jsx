@@ -3,7 +3,7 @@ import {Tabs, Tab} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
-import ProjectStore from '../../../stores/Project.es6';
+import ProjectStore from '../../../stores/ProjectStore.es6';
 import LocationsStore from '../../../stores/Locations.es6';
 import Results from '../../gazetteer/Results.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';

@@ -6,7 +6,7 @@ import {StoreMixins} from '../mixins/StoreMixins.es6';
 
 import LocationsGeoJson from './LocationsGeo.es6';
 import CountryGeo from './CountryGeo.es6';
-import ProjectStore from './Project.es6';
+import ProjectStore from './ProjectStore.es6';
 import ProjectGeo from './ProjectGeo.es6';
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/

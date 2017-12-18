@@ -5,7 +5,7 @@ import {StoreMixins} from '../mixins/StoreMixins.es6';
 import _ from 'lodash'; //TODO: rewview if we can use an es6 method instead of lodash
 
 const initialData = {};
-const SingleProjectStore = createStore({
+const ProjectStore = createStore({
   
   initialData: initialData,
   mixins: [StoreMixins],
@@ -93,4 +93,4 @@ const SingleProjectStore = createStore({
 });
 
 
-export default SingleProjectStore;
+export default ProjectStore;

@@ -1,7 +1,7 @@
 import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
-import SingleProjectStore from './Project.es6';
+import ProjectStore from './ProjectStore.es6';
 
 const initialState = {
   fuzzy:    false,
@@ -13,25 +13,24 @@ const initialState = {
     types: []
   },
   loadingLocations: false,
-  countryISO: null
+  countryISO: undefined
 };
 class LocationsStore extends Reflux.Store {
   constructor() {
     super();
     this.state = initialState;
     
-    // this.listenTo(SingleProjectStore, this.updateCountryISO); TODO
+    this.cachedData = undefined;
+    
+    this.listenTo(ProjectStore, this.updateCountryISO);
     this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_SEARCHTYPE), this.toggleSearchType);
     this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_UPDATETEXT), this.updateText);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS), this.search);
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.done);
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FILTER_BY_TYPE), this.filter);
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
   }
-  
-  // initialData: initialData,
-  // cachedData: null,
   
   updateText(text) {
     this.setState({
@@ -47,46 +46,50 @@ class LocationsStore extends Reflux.Store {
   }
   
   search() {
-    let newState = Object.assign({}, this.get());
-    Object.assign(newState, {'loadingLocations': true});
-    this.setState(newState);
+    console.log('Loading Gazetteer...');
+    
+    this.setState({
+      loadingLocations: true
+    });
   }
   
   updateCountryISO(project) {
-    let newState = Object.assign({}, this.get());
-    Object.assign(newState, {countryISO: project.country ? project.country.iso2 : null});
-    this.setState(newState);
+    const {countries} = project;
+    let iso2;
+    if (countries !== undefined && countries.length !== 0) {
+      iso2 = countries[0].iso2;
+    }
+    
+    this.setState({
+      countryISO: iso2
+    });
   }
   
-  done(rawData) {
+  completed(rawData) {
+    const newLocations = {...this.state.locations};
     
-    let newState = Object.assign({}, this.get());
     if (rawData.totalResultsCount > 0) {
       let types = rawData.geonames.map((a) => {
         return {code: a.fcode, name: a.fcodeName}
-      })
+      });
       let uniqueTypes = types.filter((value, index, self) => {
         let valuefound = self.find(function (e) {
-          return e.code == value.code
+          return e.code === value.code
         });
-        return self.indexOf(valuefound) === index
-      })
-      let locations = new Map({
-        total: rawData.totalResultsCount,
-        records: this.inmutateResults(rawData.geonames),
-        types: this.inmutateResults(uniqueTypes)
+        return self.indexOf(valuefound) === index;
       });
-      Object.assign(newState, {'locations': locations, 'loadingLocations': false});
-      this.cachedData = locations;
+      
+      newLocations.total = rawData.totalResultsCount;
+      newLocations.records = rawData.geonames;
+      newLocations.types = uniqueTypes;
+      
+      this.cachedData = newLocations;
     }
-    else {
-      Object.assign(newState, {'locations': initialData.locations, 'loadingLocations': false});
-    }
-    this.setState(newState);
-  }
-  
-  inmutateResults(results) {
-    return new List(results);
+    
+    this.setState({
+      locations: newLocations,
+      loadingLocations: false
+    });
   }
   
   failed() {
@@ -95,11 +98,11 @@ class LocationsStore extends Reflux.Store {
   
   filter(type) {
     let newState = Object.assign({}, this.get());
-    if (type != 'ALL') {
+    if (type !== 'ALL') {
       let map = this.cachedData;
-      let list = map.get('records')
+      let list = map.get('records');
       const filteredList = list.filter((function (e) {
-        return e.fcode == type
+        return e.fcode === type
       }));
       let locations = new Map({total: map.get('total'), records: filteredList, types: map.get('types')});
       Object.assign(newState, {'locations': locations});

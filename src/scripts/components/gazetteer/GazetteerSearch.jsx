@@ -36,6 +36,7 @@ class GazetteerSearch extends Reflux.Component {
   }
   
   render() {
+    // console.log(this.state);
     
     return (
       <div className="panel-section">
@@ -43,26 +44,24 @@ class GazetteerSearch extends Reflux.Component {
           <div className="project-search-icon"/>
           {/*<Help parentId="gazetteer-search"/>*/}
           
-          <form>
-            <div className="form-section">
-              <input type="text" name="text" value={this.state.text} placeholder={Message.t('header.search.holder')}
-                     onChange={this.handleChange.bind(this)}
-                     onKeyDown={this.handleKey.bind(this)}/>
-              
-              <div className="select-section" id="fuzzydiv" onClick={this.handleToggle.bind(this, "fuzzy")}>
-                <span className={"select-box " + (this.state.fuzzy ? "selected" : "")}></span>
-                <span className="search-option-label"><Message k="header.search.fuzzy"/></span>
-              </div>
-              
-              <div className="select-section" id="countrydiv" onClick={this.handleToggle.bind(this, "country")}>
-                <span className={"select-box " + (this.state.country ? "selected" : "")}></span>
-                <span className="search-option-label"><Message k="header.search.country"/></span>
-              </div>
+          <div className="form-section">
+            <input type="text" name="text" value={this.state.text} placeholder={Message.t('header.search.holder')}
+                   onChange={this.handleChange.bind(this)}
+                   onKeyDown={this.handleKey.bind(this)}/>
+            
+            <div className="select-section" id="fuzzydiv" onClick={this.handleToggle.bind(this, "fuzzy")}>
+              <span className={"select-box " + (this.state.fuzzy ? "selected" : "")}></span>
+              <span className="search-option-label"><Message k="header.search.fuzzy"/></span>
             </div>
             
-            <button onClick={this.doSearch.bind(this)}>Go</button>
-            {this.state.loadingLocations ? <i className="fa fa-spinner fa-spin"></i> : null}
-          </form>
+            <div className="select-section" id="countrydiv" onClick={this.handleToggle.bind(this, "country")}>
+              <span className={"select-box " + (this.state.country ? "selected" : "")}></span>
+              <span className="search-option-label"><Message k="header.search.country"/></span>
+            </div>
+          </div>
+          
+          <button onClick={this.doSearch.bind(this)}>Go</button>
+          {this.state.loadingLocations ? <i className="fa fa-spinner fa-spin"></i> : null}
         </div>
       </div>
     )
