@@ -1,12 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {FormControl, Button} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6'
 import LocationsStore from '../../stores/LocationsStore.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
 import Help from '../../help/LocationsSearch.es6';
 
+/**
+ * Component that performs the Gazetteer Search.
+ */
 class GazetteerSearch extends Reflux.Component {
   constructor() {
     super();
@@ -17,17 +19,14 @@ class GazetteerSearch extends Reflux.Component {
     Actions.invoke(Constants.ACTION_SEARCH_LOCATIONS, this.state)
   }
   
-  handleChange(e) {
-    let fuzzy = (e.target.name === 'fuzzy') ? !this.state.fuzzy : this.state.fuzzy;
-    let country = (e.target.name === 'country') ? !this.state.country : this.state.country;
-    let text = this.state.text;
-    if (e.target.name === 'text') {
-      text = e.target.value;
-    }
+  handleChange(event) {
+    const text = event.target.value;
     
-    // TODO - here we need to update the store.
-    let newState = Object.assign(this.state, {text, fuzzy, country});
-    this.setState(newState);
+    Actions.invoke(Constants.ACTION_GAZETTEER_UPDATETEXT, text);
+  }
+  
+  handleToggle(searchType) {
+    Actions.invoke(Constants.ACTION_GAZETTEER_SEARCHTYPE, searchType);
   }
   
   handleKey(e) {
@@ -36,60 +35,35 @@ class GazetteerSearch extends Reflux.Component {
     }
   }
   
-  validationState() {
-    let length = this.state.text.length;
-    if (length > 3) {
-      return 'success';
-    } else if (length > 0) {
-      return 'error';
-    }
-  }
-  
   render() {
-    console.log(JSON.stringify(this.state, null, '\t'));
     
     return (
-      <div id="gazetteer-search" className="navbar-form navbar-left" role="search">
-        <div className="form-group">
-          <Help parentId="gazetteer-search"/>
+      <div className="panel-section">
+        <div className="project-search padded-section">
+          <div className="project-search-icon"/>
+          {/*<Help parentId="gazetteer-search"/>*/}
+          
+          <form>
+            <div className="form-section">
+              <input type="text" name="text" value={this.state.text} placeholder={Message.t('header.search.holder')}
+                     onChange={this.handleChange.bind(this)}
+                     onKeyDown={this.handleKey.bind(this)}/>
+              
+              <div className="select-section" id="fuzzydiv" onClick={this.handleToggle.bind(this, "fuzzy")}>
+                <span className={"select-box " + (this.state.fuzzy ? "selected" : "")}></span>
+                <span className="search-option-label"><Message k="header.search.fuzzy"/></span>
+              </div>
+              
+              <div className="select-section" id="countrydiv" onClick={this.handleToggle.bind(this, "country")}>
+                <span className={"select-box " + (this.state.country ? "selected" : "")}></span>
+                <span className="search-option-label"><Message k="header.search.country"/></span>
+              </div>
+            </div>
+            
+            <button onClick={this.doSearch.bind(this)}>Go</button>
+            {this.state.loadingLocations ? <i className="fa fa-spinner fa-spin"></i> : null}
+          </form>
         </div>
-        
-        <div className="form-group">
-          <div className="separator"/>
-        </div>
-        
-        <div className="form-group">
-          <FormControl
-            name="text"
-            type="text" value={this.state.text}
-            placeholder={Message.t('header.search.holder')}
-            bsStyle={this.validationState()}
-            bsSize="small" ref="text"
-            onChange={this.handleChange.bind(this)}
-            onKeyDown={this.handleKey.bind(this)}/>
-        </div>
-        
-        <div className="form-group" id="fuzzydiv">
-          <div className="middle">
-            <FormControl type="checkbox" id="fuzzy" name="fuzzy" checked={this.state.fuzzy}
-                         onChange={this.handleChange.bind(this)}/>
-            <label htmlFor="fuzzy"><Message k="header.search.fuzzy"/></label>
-          </div>
-        </div>
-        
-        <div className="form-group" id="countrydiv">
-          <div className="middle">
-            <FormControl type="checkbox" id="country" name="country" checked={this.state.country}
-                         onChange={this.handleChange.bind(this)}/>
-            <label htmlFor="country"> <Message k="header.search.country"/></label>
-          </div>
-        </div>
-        
-        <div className="form-group small" id="searchdiv">
-          <Button className="btn-search wide" bsStyle="success" bsSize="small" onClick={this.doSearch.bind(this)}>
-            <Message k="header.search.submit"/> </Button>
-        </div>
-        {this.state.loadingLocations ? <i className="fa fa-spinner fa-spin"></i> : null}
       </div>
     )
   }

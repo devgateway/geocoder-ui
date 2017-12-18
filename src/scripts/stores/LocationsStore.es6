@@ -21,6 +21,8 @@ class LocationsStore extends Reflux.Store {
     this.state = initialState;
     
     // this.listenTo(SingleProjectStore, this.updateCountryISO); TODO
+    this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_SEARCHTYPE), this.toggleSearchType);
+    this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_UPDATETEXT), this.updateText);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS), this.search);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.done);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, this.failed);
@@ -30,6 +32,19 @@ class LocationsStore extends Reflux.Store {
   
   // initialData: initialData,
   // cachedData: null,
+  
+  updateText(text) {
+    this.setState({
+      text: text
+    });
+  }
+  
+  toggleSearchType(searchType) {
+    console.log(searchType);
+    this.setState({
+      [searchType]: !this.state[searchType]
+    });
+  }
   
   search() {
     let newState = Object.assign({}, this.get());

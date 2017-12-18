@@ -7,13 +7,12 @@ import ProjectStore from '../../../stores/Project.es6';
 import LocationsStore from '../../../stores/LocationsStore.es6';
 import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
-import ProjectDescription from '../../project/ProjectDescription.jsx';
 import L from 'leaflet';
 import Message from '../../Message.jsx';
 import ProjectCoding from '../../project/ProjectCoding.jsx';
-import PanelHeading from '../../project/TempPanelHeading.jsx';
-import PanelSearch from '../../project/TempPanelSearchBox.jsx';
+import PanelHeading from './PanelHeading.jsx';
 import ProjectListAutoGeoCoded from '../../project/TempProjectListAutoGeocoded.jsx';
+import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
 
 
 /**
@@ -83,6 +82,8 @@ class InfoPanel extends React.Component {
   }
   
   render() {
+    // console.log(this.state);
+    
     let activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">
@@ -90,40 +91,24 @@ class InfoPanel extends React.Component {
           <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div> :
           <div id="project-info">
             <div className="panel panel-success">
-              <PanelHeading/>
+              <PanelHeading project={this.state.project}/>
               <div className="tab-container no-padding">
-                <PanelSearch/>
+                <GazetteerSearch/>
                 <ProjectListAutoGeoCoded/>
               </div>
             </div>
-  
+            
+            
+            
+            
             
             <div className="panel panel-success">
               <div className="close-btn" onClick={this.toggle.bind(this)}>
                 <i className='fa fa-times-circle-o'></i>
               </div>
-              <div className="panel-heading">
-      
-                <div className="options">
-                  <div className="header-icon"/>
-                  <div className="small-title">
-                    {this.state.project.project_id}
-                  </div>
-                  <div className="separator"/>
-                  <ProjectInfoHelp parentId="project-info"/>
-                  <div className="separator"/>
-                </div>
-                <div className="title">
-                  {this.state.project.title}
-                </div>
-    
-              </div>
+              
               <div className="tab-container">
                 <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
-                  <Tab className="project-info" eventKey={1} title={Message.t('projectinfo.projectinfo')}>
-                    <ProjectDescription  {...this.state.project}/>
-                  </Tab>
-        
                   <Tab eventKey={2}
                        title={Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}>
                     <ProjectCoding {...this.state.project}/>

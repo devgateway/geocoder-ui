@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from "reflux";
-import GazetteerSearch from './gazetteer/GazetteerSearch.jsx';
 import Message from './Message.jsx';
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
@@ -30,9 +29,6 @@ export default class MapHeader extends Reflux.Component {
               <div className="separator"/>
             </div>
             
-            <div className="nav navbar-left">
-              <GazetteerSearch/>
-            </div>
             <div className="nav navbar-rigth lan-selector-container">
               <select value={this.state.lan} name="lan" className="pull-right" onChange={this.changeLan}>
                 <option value="en">{Message.t('header.language.english')}</option>
