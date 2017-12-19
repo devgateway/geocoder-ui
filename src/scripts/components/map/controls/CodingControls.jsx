@@ -15,12 +15,13 @@ import ProjectCoding from '../../project/ProjectCoding.jsx';
 import PanelHeading from './PanelHeading.jsx';
 import ProjectListAutoGeoCoded from '../../project/TempProjectListAutoGeocoded.jsx';
 import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
+import CollapsibleControl from './CollapsibleControl.jsx';
 
 
 /**
  * This view renders the info tab view UI component.
  */
-class InfoPanel extends Reflux.Component {
+class CodingControls extends Reflux.Component {
   
   constructor() {
     super();
@@ -90,13 +91,11 @@ class InfoPanel extends Reflux.Component {
               <PanelHeading project={project} lang={lang}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
-                <ProjectListAutoGeoCoded/>
+                <CollapsibleControl>
+                  <ProjectListAutoGeoCoded/>
+                </CollapsibleControl>
               </div>
             </div>
-            
-            
-            
-            
             
             <div className="panel panel-success">
               <div className="close-btn" onClick={this.toggle.bind(this)}>
@@ -123,4 +122,4 @@ class InfoPanel extends Reflux.Component {
   }
 }
 
-export default InfoPanel;
+export default CodingControls;
