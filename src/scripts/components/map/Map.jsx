@@ -121,10 +121,9 @@ export default class MapView extends React.Component {
             </MapPopUp>
             
             <MiniMap>
-              <LayerGroup name="GeoCoding" showAsMiniMap={true} ref="country" showAsMiniMap={true}>
+              <LayerGroup name="GeoCoding" showAsMiniMap={true} ref="country">
                 <GeocodingLayer onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>
               </LayerGroup>
-            
             </MiniMap>
             
             
