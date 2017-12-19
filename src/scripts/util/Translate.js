@@ -28,11 +28,11 @@ export default class Translate {
       return undefined;
     }
     
-    const translationLanguage = this.translations.find(val => val.lan === this.lang);
+    const translationLanguage = this.translations.find(val => val.lang === this.lang);
     if (translationLanguage !== undefined) {
       return translationLanguage.description;
     } else {
-      const translationEnglish= this.translations.find(val => val.lan === Translate.ENGLISH_LANG);
+      const translationEnglish= this.translations.find(val => val.lang === Translate.ENGLISH_LANG);
       
       if (translationEnglish !== undefined) {
         return translationEnglish.description;

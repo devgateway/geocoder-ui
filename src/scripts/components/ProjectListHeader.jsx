@@ -3,18 +3,18 @@ import Reflux from 'reflux';
 import Message from './Message.jsx';
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
-import LanStore from '../stores/LanStore.es6';
+import LangStore from '../stores/LangStore.es6';
 
 export default class ProjectListHeader extends Reflux.Component {
   
   constructor() {
     super();
-    this.store = LanStore;
+    this.store = LangStore;
   }
   
   changeLan(evt) {
-    let lan = evt.target.value;
-    Actions.invoke(Constants.ACTION_CHANGE_LANGUAGE, lan);
+    let lang = evt.target.value;
+    Actions.invoke(Constants.ACTION_CHANGE_LANGUAGE, lang);
   }
   
   render() {
@@ -24,7 +24,7 @@ export default class ProjectListHeader extends Reflux.Component {
           <div className="container-fluid">
             <div className="nav navbar-left"></div>
             <div className="nav navbar-rigth lan-selector-container">
-              <select value={this.state.lan} name="lan" className="pull-right" onChange={this.changeLan}>
+              <select value={this.state.lang} name="lang" className="pull-right" onChange={this.changeLan}>
                 <option value="en">{Message.t('header.language.english')}</option>
                 <option value="es">{Message.t('header.language.spanish')}</option>
               </select>

@@ -1,13 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
 import i18next from 'i18next';
-import LanStore from '../stores/LanStore.es6';
+import LangStore from '../stores/LangStore.es6';
 
 export default class Message extends Reflux.Component {
   
   constructor() {
     super();
-    this.store = LanStore;
+    this.store = LangStore;
   }
   
   static t(k) {
@@ -18,7 +18,7 @@ export default class Message extends Reflux.Component {
    * Force update if the language was changed OR if the this.props object changed.
    */
   shouldComponentUpdate(nextProps, nextState) {
-    return this.state.lan !== nextState.lan
+    return this.state.lang !== nextState.lang
       || JSON.stringify(this.props) !== JSON.stringify(nextProps);
   }
   

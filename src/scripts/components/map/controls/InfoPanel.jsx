@@ -4,7 +4,7 @@ import {Tabs, Tab} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
-import LanStore from '../../../stores/LanStore.es6';
+import LangStore from '../../../stores/LangStore.es6';
 import ProjectStore from '../../../stores/ProjectStore.es6';
 import LocationsStore from '../../../stores/LocationsStore.es6';
 import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
@@ -31,7 +31,7 @@ class InfoPanel extends Reflux.Component {
       showTab: 1
     };
     
-    this.stores = [LocationsStore, LanStore];
+    this.stores = [LocationsStore, LangStore];
   }
   
   componentWillMount() {
@@ -41,13 +41,13 @@ class InfoPanel extends Reflux.Component {
   }
   
   componentWillUpdate(nextProps, nextState) {
-    if (this.state.lan !== nextState.lan) {
-      Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: this.state.lan})
+    if (this.state.lang !== nextState.lang) {
+      Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lang: this.state.lang})
     }
   }
   
   componentDidMount() {
-    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lan: this.state.lan});
+    Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id, lang: this.state.lang});
     
     const container = ReactDOM.findDOMNode(this);
     L.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
@@ -78,7 +78,7 @@ class InfoPanel extends Reflux.Component {
   }
   
   render() {
-    const {project, lan} = this.state;
+    const {project, lang} = this.state;
     
     let activeTab = this.state.showTab || 1;
     return (
@@ -87,7 +87,7 @@ class InfoPanel extends Reflux.Component {
           ? <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div>
           : <div id="project-info">
             <div className="panel panel-success">
-              <PanelHeading project={project} lang={lan}/>
+              <PanelHeading project={project} lang={lang}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
                 <ProjectListAutoGeoCoded/>

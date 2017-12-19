@@ -120,7 +120,7 @@ actions[Constants.ACTION_FIND_PROJECTS].listen(function (params) {
 
 actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function (options) {
   
-  APIClient.getProject(options.id, options.lan)
+  APIClient.getProject(options.id, options.lang)
     .then((results) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results))
     .catch((message) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].failed(message));
 });
