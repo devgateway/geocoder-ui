@@ -15,9 +15,10 @@ class CollapsibleControl extends React.Component {
   
   render() {
     return (<div>
-      <Button className="pull-right" onClick={() => this.setState({ open: !this.state.open })}>
-        expand
-      </Button>
+      <div className="accordion-heading" onClick={() => this.setState({ open: !this.state.open })}>
+        <div className="geocoded-icon"/>
+        <span className="accordion-title">Auto-Geocoded <span className="project-count">(4)</span></span>
+      </div>
       <Panel collapsible expanded={this.state.open}>
         {this.props.children}
       </Panel>

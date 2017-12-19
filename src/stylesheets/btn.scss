@@ -1,66 +1,67 @@
+@import "variables.scss";
+
 .btn {
-  color: #FFF;
-  margin: 2px;
+  color: $white;
+  margin: $px-unit * 2;
 
 }
 
 .btn-xs {
-  padding: 1px 7px;
-  line-height: 1;
-  border-radius: 0px;
-  @include fontDefault($small, #FFF);
+  @include fontDefault($small, $white);
   @include grayBorder();
-  height: 14px;
-  margin: 1px;
-  background-color: #EEE;
+  @include border-radius(0);
+  padding: 1px $base-unit - 3;
+  line-height: 1;
+  height: $base-unit + 3;
+  margin: $px-unit;
+  background-color: $gray;
 }
 
 .btn-default {
-  @include fontDefault($small, #000);
+  @include fontDefault($small, $black);
   @include grayBorder();
 }
 
 .btn-default:hover {
-  @include fontDefault($small, #000);
+  @include fontDefault($small, $black);
   @include grayBorder();
 }
 
 .btn-sm {
+  @include fontDefault($small, "$icon-font");
+  @include grayBorder();
+  @include border-radius(0);
   padding: 3px 15px 3px 15px;;
   line-height: 1.5;
-  border-radius: 0px;
-  height: 19px;
-  @include fontDefault($small, "#FFF");
-  @include grayBorder();
-
-  margin: 1px;
+  height: $base-unit + 9;
+  margin: $px-unit;
 }
 
 .btn-lg {
-  padding: 3px 15px 3px 15px;;
+  @include border-radius(0);
+  padding: $base-unit - 7 $base-unit + 5;
   line-height: 1.5;
-  border-radius: 0px;
   height: 24px !important;
-  @include fontDefault($small, "#FFF");
+  @include fontDefault($small, "$white");
   margin: 1px;
 }
 
 .btn-success {
-  color: #fff;
-  background-color: rgb(137, 184, 90);
-  border-color: #4cae4c;
+  color: $white;
+  background-color: $green-light;
+  border-color: darken($green-light, 10%);
 }
 
 .btn-success:hover {
-  color: #fff;
-  background-color: rgb(137, 184, 90);
-  border-color: #4cae4c;
+  color: $white;
+  background-color: $green-light;
+  border-color: darken($green-light, 10%);
 }
 
 .btn-success:active, .btn-success:focus, .btn-success.active {
-  color: #fff;
-  background-color: rgb(137, 184, 90);
-  border-color: #4cae4c;
+  color: $white;
+  background-color: $green-light;
+  border-color: darken($green-light, 10%);
 }
 
 

@@ -10,14 +10,7 @@ export default class ProjectListAutoGeoCoded extends React.Component {
   render() {
     return (
       <div className="panel-section">
-        <div className="padded-section">
-          
-          <div className="accordion-heading">
-              <div className="geocoded-icon"/>
-              <span className="accordion-title">Auto-Geocoded <span className="project-count">(4)</span></span>
-          </div>
           <div className="accordion-content">
-            <div className="panel-content">
                 <ul className="project-list search-results">
                   
                   <li>
@@ -57,12 +50,7 @@ export default class ProjectListAutoGeoCoded extends React.Component {
                   </div>
                   </li>
                 
-                </ul>
-            </div>
-          </div>
-
-        
-        
+                </ul>        
         </div>
       </div>
     );
