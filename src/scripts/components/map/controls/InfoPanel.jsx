@@ -78,7 +78,7 @@ class InfoPanel extends Reflux.Component {
   }
   
   render() {
-    console.log(this.state);
+    const {project, lan} = this.state;
     
     let activeTab = this.state.showTab || 1;
     return (
@@ -87,7 +87,7 @@ class InfoPanel extends Reflux.Component {
           ? <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div>
           : <div id="project-info">
             <div className="panel panel-success">
-              <PanelHeading project={this.state.project}/>
+              <PanelHeading project={project} lang={lan}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
                 <ProjectListAutoGeoCoded/>

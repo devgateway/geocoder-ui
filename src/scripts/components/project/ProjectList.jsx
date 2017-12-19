@@ -5,6 +5,7 @@ import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
 import FiltersStore from '../../stores/FiltersStore.es6';
+import LanStore from '../../stores/LanStore.es6';
 import ProjectInfo from './ProjectInfo.jsx';
 import Message from '../Message.jsx';
 
@@ -14,7 +15,7 @@ import Message from '../Message.jsx';
 class ProjectList extends Reflux.Component {
   constructor() {
     super();
-    this.stores = [ProjectListStore, FiltersStore];
+    this.stores = [ProjectListStore, FiltersStore, LanStore];
   }
   
   componentDidMount() {
@@ -34,8 +35,8 @@ class ProjectList extends Reflux.Component {
   }
   
   render() {
-    console.log(this.state);
-    
+    const {lan} = this.state;
+  
     return (
       <Grid>
         <Row>
@@ -87,7 +88,7 @@ class ProjectList extends Reflux.Component {
             <ListGroup>
               {
                 this.state.data.content ? this.state.data.content.map((project) => (
-                  <ProjectInfo key={project.id} {...project}/>)) : null
+                  <ProjectInfo key={project.id} lang={lan} project={project}/>)) : null
               }
             </ListGroup>
           </Col>
