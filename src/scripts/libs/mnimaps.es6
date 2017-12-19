@@ -8,7 +8,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
     position: 'topright',
     topPadding: 5,
     bottomPadding: 90,
-    overlayBackgroundLayer: L.tileLayer('http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
+    overlayBackgroundLayer: new L.TileLayer('http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
       attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a>' +
       ' &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     })

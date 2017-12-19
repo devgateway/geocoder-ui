@@ -91,31 +91,22 @@ class CodingControls extends Reflux.Component {
               <PanelHeading project={project} lang={lang}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
+                
+                <CollapsibleControl>
+                  <div>{Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}</div>
+                  <GazetteeResults/>
+                </CollapsibleControl>
+                
                 <CollapsibleControl>
                   <ProjectListAutoGeoCoded/>
                 </CollapsibleControl>
+  
+                <CollapsibleControl>
+                  <div>{Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}</div>
+                  <ProjectCoding {...this.state.project}/>
+                </CollapsibleControl>
               </div>
             </div>
-            
-            <div className="panel panel-success">
-              <div className="close-btn" onClick={this.toggle.bind(this)}>
-                <i className='fa fa-times-circle-o'></i>
-              </div>
-              
-              <div className="tab-container">
-                <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
-                  <Tab eventKey={2}
-                       title={Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}>
-                    <ProjectCoding {...this.state.project}/>
-                  </Tab>
-                  <Tab eventKey={3}
-                       title={Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}>
-                    <GazetteeResults/>
-                  </Tab>
-                </Tabs>
-              </div>
-            </div>
-          
           </div>}
       </div>
     )
