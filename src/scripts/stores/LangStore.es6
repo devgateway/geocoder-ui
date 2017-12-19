@@ -3,24 +3,24 @@ import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import i18next from 'i18next';
 
-const initialState = {lan: 'en'};
+const initialState = {lang: 'en'};
 
-class LanStore extends Reflux.Store {
+class LangStore extends Reflux.Store {
   constructor() {
     super();
     this.state = initialState;
-    this.listenTo(Actions.get(Constants.ACTION_CHANGE_LANGUAGE), this.setLan);
+    this.listenTo(Actions.get(Constants.ACTION_CHANGE_LANGUAGE), this.setLang);
   }
   
-  setLan(lan) {
-    i18next.changeLanguage(lan, (err, t) => {
+  setLang(lang) {
+    i18next.changeLanguage(lang, (err, t) => {
       if (err) {
         console.log(err);
       } else {
-        this.setState({'lan': lan})
+        this.setState({lang: lang})
       }
     });
   }
 }
 
-export default LanStore;
+export default LangStore;

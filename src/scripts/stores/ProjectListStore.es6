@@ -8,7 +8,7 @@ import Constants from '../constants/Contants.es6';
 const initialState = {
   data: {},
   params: {
-    lan: 'en',
+    lang: 'en',
     text: '',
     countries: [],
     years:     [],

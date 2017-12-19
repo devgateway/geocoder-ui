@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Message from '../../Message.jsx';
+import Translate from "../../../util/Translate";
 
 /**
  * This view renders the Project Information UI component (title, description, etc...)
  */
 export default class PanelHeading extends React.Component {
   static propTypes = {
-    project: PropTypes.object.isRequired
+    project: PropTypes.object.isRequired,
+    lang:    PropTypes.string.isRequired,
   };
   
   constructor() {
@@ -15,7 +17,9 @@ export default class PanelHeading extends React.Component {
   }
   
   render() {
-    const {project} = this.props;
+    const {project, lang} = this.props;
+    const title = new Translate(project.titles, lang);
+    const description = new Translate(project.descriptions, lang);
     
     return (
       <div className="panel-heading">
@@ -25,14 +29,14 @@ export default class PanelHeading extends React.Component {
           <div className="project-code">{project.identifier}</div>
           
           <div className="panel-section">
-            <div className="project-info-label">{project.title}</div>
+            <div className="project-info-label">{title.getTranslation()}</div>
             <div className="project-info">{Date(project.date)}</div>
           </div>
           
           <div className="panel-section">
             <div className="project-info-label">{Message.t('projectinfo.projectinfo')}</div>
             <div className="project-info">
-              {project.description}
+              {description.getTranslation()}
               <a href="">more</a>
             </div>
             

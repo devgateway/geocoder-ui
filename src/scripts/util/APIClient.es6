@@ -47,11 +47,11 @@ export default class ApiClient {
    * Get a project by project_id
    * @return {} project
    */
-  static getProject(project_id, lan) {
+  static getProject(project_id, lang) {
     const API_BASE_URL = settings.get('API', 'API_BASE_URL')
     const PROJECT_END_POINT = settings.get('API', 'PROJECT_END_POINT');
     return new Promise((resolve, reject) => {
-      AjaxUtil.get(`${API_BASE_URL}/${PROJECT_END_POINT}/${project_id}?lan=${lan}`)
+      AjaxUtil.get(`${API_BASE_URL}/${PROJECT_END_POINT}/${project_id}?lang=${lang}`)
         .then((response) => {
           resolve(response);
         })

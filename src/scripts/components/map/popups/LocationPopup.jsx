@@ -4,7 +4,7 @@ import React from 'react';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 import Message from '../../Message.jsx';
-import LanStore from '../../../stores/LanStore.es6';
+import LangStore from '../../../stores/LangStore.es6';
 
 /*Popup info*/
 class InfoView extends React.Component {
@@ -14,10 +14,10 @@ class InfoView extends React.Component {
   }
   
   componentDidMount() {
-    this.unsubscribe = LanStore.listen(this.changeLanguage.bind(this));
+    this.unsubscribe = LangStore.listen(this.changeLanguage.bind(this));
   }
   
-  changeLanguage(lan) {
+  changeLanguage(lang) {
     this.forceUpdate()
   }
   
@@ -26,8 +26,6 @@ class InfoView extends React.Component {
   }
   
   render() {
-    
-    
     var cssClass;
     if (this.props.type == 'location') {
       cssClass = 'popup-location';

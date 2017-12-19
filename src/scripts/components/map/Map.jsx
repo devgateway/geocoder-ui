@@ -17,7 +17,7 @@ import Control from './controls/Control.jsx'; //control container
 import ActionButtons from './controls/ActionButtons.jsx';
 import MiniMap from './controls/MiniMap.jsx';
 import CountrySelector from './controls/CountrySelector.jsx'
-import InfoPanel from './controls/InfoPanel.jsx';
+import CodingControls from './controls/CodingControls.jsx';
 
 /*Popups*/
 import MapPopUp from './popups/PopUp.jsx';
@@ -138,7 +138,7 @@ export default class MapView extends React.Component {
             </Control>
             
             <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel" position="topleft">
-              <InfoPanel id={this.props.match.params.projectID}/>
+              <CodingControls id={this.props.match.params.projectID}/>
             </Control>
           
           </Map>
