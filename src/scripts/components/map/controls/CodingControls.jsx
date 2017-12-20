@@ -67,19 +67,19 @@ class CodingControls extends Reflux.Component {
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
                 
-                <CollapsibleControl>
-                  <div>{Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}</div>
+                  <div className="panel-section padded-section">
+                  {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
                   <GazetteeResults/>
-                </CollapsibleControl>
+                  </div>
                 
                 <CollapsibleControl>
                   <AutoGeoCodedLocations {...this.state.project}/>
                 </CollapsibleControl>
                 
-                <CollapsibleControl>
+                <SelectedLocationsControl>
                   <div>{Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}</div>
                   <SelectedLocations {...this.state.project}/>
-                </CollapsibleControl>
+                </SelectedLocationsControl>
               </div>
             </div>
           </div>}
