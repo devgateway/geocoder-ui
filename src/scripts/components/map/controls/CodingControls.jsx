@@ -10,9 +10,9 @@ import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
 import L from 'leaflet';
 import Message from '../../Message.jsx';
-import ProjectCoding from '../../project/ProjectCoding.jsx';
+import SelectedLocations from '../../project/SelectedLocations.jsx';
 import PanelHeading from './PanelHeading.jsx';
-import ProjectListAutoGeoCoded from '../../project/TempProjectListAutoGeocoded.jsx';
+import AutoGeoCodedLocations from '../../project/AutoGeoCodedLocations.jsx';
 import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
 import CollapsibleControl from './CollapsibleControl.jsx';
 
@@ -55,7 +55,7 @@ class CodingControls extends Reflux.Component {
   
   render() {
     const {project, lang} = this.state;
-  
+    
     let activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">
@@ -73,12 +73,12 @@ class CodingControls extends Reflux.Component {
                 </CollapsibleControl>
                 
                 <CollapsibleControl>
-                  <ProjectListAutoGeoCoded/>
+                  <AutoGeoCodedLocations {...this.state.project}/>
                 </CollapsibleControl>
                 
                 <CollapsibleControl>
                   <div>{Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}</div>
-                  <ProjectCoding {...this.state.project}/>
+                  <SelectedLocations {...this.state.project}/>
                 </CollapsibleControl>
               </div>
             </div>
