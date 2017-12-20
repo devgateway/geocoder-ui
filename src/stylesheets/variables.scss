@@ -12,10 +12,9 @@ $red-variant: #d9534f;
 $blue: #1c82cd;
 $pending-locations: #2ba0f7;
 $gray: #eeeeee;
+$gray-darker: #cccccc;
 $no-locations: #f0ad4e;
 $verified: #669933;
-
-
 
 // Base units
 $base-unit: 10px;
@@ -55,6 +54,7 @@ $bold-text: 800;
   background: $bg;
   color: $white;
   float: left;
+  font-weight: $normal-weight-text + 100;
   padding: $base-unit - 3 $base-unit / 2;
   width: $extend - 70;
 }
