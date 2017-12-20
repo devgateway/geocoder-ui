@@ -65,12 +65,13 @@ const MapStore = createStore({
   
   setActiveLocation(params) {
     const {locationFeature, isCoded, activeDataentry} = params;
+    console.log(locationFeature);
     var newState = Object.assign({}, this.get());
     let activeLocation;
     if (isCoded) {
       var lf = Object.assign({}, locationFeature);
-      Object.assign(lf, {'lat': lf.geometry.coordinates[1]});
-      Object.assign(lf, {'lng': lf.geometry.coordinates[0]});
+      Object.assign(lf, {'lat': lf.x});
+      Object.assign(lf, {'lng': lf.y});
       activeLocation = lf;
     } else {
       activeLocation = locationFeature;

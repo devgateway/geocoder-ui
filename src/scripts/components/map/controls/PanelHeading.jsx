@@ -13,10 +13,6 @@ export default class PanelHeading extends React.Component {
     toggle:  PropTypes.func.isRequired,
   };
   
-  constructor() {
-    super();
-  }
-  
   render() {
     const {project, lang, toggle} = this.props;
     

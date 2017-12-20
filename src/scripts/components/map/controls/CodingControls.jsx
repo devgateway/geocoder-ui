@@ -69,8 +69,8 @@ class CodingControls extends Reflux.Component {
                 <GazetteerSearch/>
                 <SearchResults>
                   <div className="panel-section padded-section">
-                  {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
-                  <GazetteeResults/>
+                    {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
+                    <GazetteeResults/>
                   </div>
                 </SearchResults>
                 
