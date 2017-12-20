@@ -93,7 +93,7 @@ class Item extends React.Component {
 /*
    This view renders the Project Information UI component
    */
-export default class ProjectCoding extends React.Component {
+export default class SelectedLocations extends React.Component {
   
   constructor() {
     super();
