@@ -1,25 +1,26 @@
+@import "variables.scss";
+
 /*Locations Search*/
 #search-results {
   .btn {
     @include middle();
     position: absolute;
-    right: 0px;
+    right: 0;
   }
 
   p {
-
-    width: 85%;
+    width: $extend - 15;
   }
 
   .list-group {
     overflow: auto;
     max-height: 400px;
-    padding: 5px;
+    padding: $base-unit / 2;
 
   }
   .list-group-item {
     font-size: $medium;
-    border: 0px;
+    border: none;
     margin: 1px;
     border-bottom: 1px solid #eee;
 

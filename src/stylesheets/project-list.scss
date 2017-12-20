@@ -1,3 +1,4 @@
+@import "variables.scss";
 
 #project-search-form {
   @include fontDefault($medium, $black);
@@ -32,7 +33,7 @@
   }
 
   .bs-callout-info {
-    border-left-color: #5bc0de;
+    border-left-color: $pending-locations;
     min-height: 150px;
   }
 

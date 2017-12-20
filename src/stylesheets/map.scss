@@ -1,13 +1,13 @@
 /*Map*/
 @import "markers.scss";
+@import "variables.scss";
 
 .map {
-
   -webkit-border-radius: 30%;
   border-radius: 30%;
 
   > div {
-    height: 100%;
+    height: $extend;
   }
 }
 

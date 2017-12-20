@@ -1,20 +1,22 @@
+@import "variables.scss";
+
 .container {
-  width: 60% !important;
-  margin-bottom: 10px;
+  width: $extend - 40 !important;
+  margin-bottom: $base-unit;
 }
 
 .upload-options {
-  padding: 20px;
+  padding: $base-unit * 2;
   display: block;
 }
 
 .dropzone {
-  margin: 10px;
+  margin: $base-unit;
   > div {
     text-align: center;
-    width: 100% !important;
+    width: $extend !important;
     height: 30% !important;
-    border: 1px dashed #000 !important;
+    border: 1px dashed $black !important;
     min-height: 200px;
     padding: auto;
     font-size: 12px;
@@ -34,7 +36,7 @@
       line-height: 30px;
     }
     .link {
-      margin-right: 10px;
+      margin-right: $base-unit;
       color: blue
     }
   }

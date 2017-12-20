@@ -1,10 +1,4 @@
-/*Forms*/
-@mixin inputText() {
-  @include fontDefault($regular, $black);
-  height: 22px;
-  @include grayBorder();
-  color: $black;
-}
+@import "variables.scss";
 
 input[type="checkbox"],
 input[type="radio"] {
@@ -30,15 +24,15 @@ input[type="radio"] + label:before {
 
 input[type="checkbox"] + label:before, input[type="radio"] + label:before {
   @include grayBorder();
-  background-color: #FFF;
+  background-color: $white;
 }
 
 input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + label:before {
 
   font-size: $small !important;
-  padding-left: 1px;
+  padding-left: $px-unit;
   display: inline-block;
-  font-family: FontAwesome;
+  font-family: $icon-font;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   font-stretch: bold;
@@ -50,12 +44,12 @@ input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + lab
   @include inputText();
   @include grayBorder();
   display: block;
-  width: 100%;
+  width: $extend;
   height: 24px;
   padding: 2px 2px;
   line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
+  color: $darkGray;
+  background-color: $white;
   background-image: none;
   border-radius: 0px;
 }
@@ -71,8 +65,8 @@ label {
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-  background-color: #FFF;
-  color: #EEE;
+  background-color: $white;
+  color: $gray;
   opacity: 1;
 }
 

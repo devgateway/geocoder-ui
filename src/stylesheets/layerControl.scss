@@ -1,11 +1,12 @@
+@import "variables.scss";
 
 .layer-control-container {
   display: none;
-  width: 250px;
-  background-color: #fff;
+  width: $base-unit * 2.5;
+  background-color: $white;
   position: absolute;
-  bottom: 200px;
-  right: 10px;
+  bottom: $base-unit * 20;
+  right: $base-unit;
   padding: 0;
   z-index: 10;
 }
@@ -15,14 +16,14 @@
   border: 1px solid #ccc;
   padding: 3;
   outline: none;
-  width: 100px;
+  width: $base-unit * 10;
   position: absolute;
   bottom: 150;
   right: 0;
   color: darken(#ccc, 5%);
   font-size: 13px;
   &:hover {
-    background: #fff;
+    background: $white;
   }
 }
 
@@ -30,9 +31,9 @@
   width: 250px;
   max-height: 400px;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: $white;
   position: absolute;
-  bottom: 50px;
+  bottom: $base-unit * 5;
   padding: 6px 6px 4px 6px;
   border: 1px solid;
 }
