@@ -25,9 +25,16 @@
   .project-panel-content{
     overflow: hidden;
     padding: $base-unit;
+    .status-link{
+      margin-bottom: $base-unit / 2;
+    }
   }
   h3{
     margin-top: 0;
+    a{
+      color: $black;
+      font-weight: $bold-text;
+    }
   }
 }
 

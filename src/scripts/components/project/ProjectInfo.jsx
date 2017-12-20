@@ -38,7 +38,6 @@ class ProjectInfo extends React.Component {
     
     return (
       <div className={"bs-callout " + this.activityClass(locations)}>
-<<<<<<< HEAD
         <div className="callout-heading">
           <div className="project-id">{identifier}</div>
           <div className="country">
@@ -46,24 +45,10 @@ class ProjectInfo extends React.Component {
           </div>
         </div>
         <div className="project-panel-content">
-          <h3><Link to={'map/' + id}>{title.getTranslation()}</Link></h3>
-          <p>
-            {description.getTranslation()}
-          </p>
-          <div className="pull-right"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
+        <div className="status-link"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
+          <h3><Link to={'map/' + id}><MultiLingualText texts={titles}/></Link></h3>
+          {<MultiLingualText texts={descriptions}/>}
         </div>
-=======
-        <div className="text-vertical">{identifier}</div>
-        <h3><Link to={'map/' + id}><MultiLingualText texts={titles}/></Link></h3>
-        <span>
-         <b> {countries.map(country => (<span key={country.name}>{country.name}</span>))}</b>
-        </span>
-        
-        {<MultiLingualText texts={descriptions}/>}
-        
-        <div className="pull-right"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
-        <br/>
->>>>>>> master
       </div>
     )
   }
