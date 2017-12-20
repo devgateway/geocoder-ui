@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
 import Message from '../Message.jsx';
 import MultiLingualText from '../MultiLingualText.jsx';
+import Constants from "../../constants/Contants.es6";
 
 /**
  * Component that displays main information related to a project.
@@ -18,14 +19,12 @@ class ProjectInfo extends React.Component {
    * Function that determines the color code for an activity.
    */
   activityClass(locations) {
-    const AUTO_CODED = "AUTO_CODED";
-    
     if (locations === undefined || locations.length === 0) {
       return "bs-callout-warning";
     }
     
     for(let i = 0; i < locations.length; i++) {
-      if (locations[i].locationStatus === AUTO_CODED) {
+      if (locations[i].locationStatus === Constants.AUTO_CODED) {
         return "bs-callout-info";
       }
     }

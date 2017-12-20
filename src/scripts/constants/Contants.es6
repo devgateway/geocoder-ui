@@ -1,5 +1,7 @@
 
 export default class Constants {
+  static AUTO_CODED = "AUTO_CODED";
+  
   static ACTION_FETCH_FILTERS = 'ACTION_FETCH_FILTERS';
   
   static ACTION_FIND_PROJECTS = 'ACTION_FIND_PROJECTS';
