@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Message from '../../Message.jsx';
-import MultiLangualText from "../../MultiLangualText";
+import MultiLingualText from "../../MultiLingualText.jsx";
 
 /**
  * This view renders the Project Information UI component (title, description, etc...)
@@ -28,14 +28,14 @@ export default class PanelHeading extends React.Component {
           <div className="project-code">{project.identifier}</div>
           
           <div className="panel-section">
-            <div className="project-info-label"><MultiLangualText texts={project.titles}/></div>
+            <div className="project-info-label"><MultiLingualText texts={project.titles}/></div>
             <div className="project-info">{Date(project.date)}</div>
           </div>
           
           <div className="panel-section">
             <div className="project-info-label">{Message.t('projectinfo.projectinfo')}</div>
             <div className="project-info">
-              <MultiLangualText texts={project.descriptions}/>
+              <MultiLingualText texts={project.descriptions}/>
               <a href="">more</a>
             </div>
             
