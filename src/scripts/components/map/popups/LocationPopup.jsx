@@ -5,9 +5,6 @@ import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 import Message from '../../Message.jsx';
 
-const getNarrative(narrative,lang)=>{
-
-}
 
 
 /*Popup info*/
@@ -24,6 +21,7 @@ class InfoView extends React.Component {
   render() {
     debugger;
     var cssClass;
+
     if (this.props.type == 'location') {
       cssClass = 'popup-location';
     }
@@ -48,7 +46,7 @@ class InfoView extends React.Component {
       //admin2 = this.props.adminCodes.geonames.admin2 ? this.props.adminCodes.geonames.admin2.name : null;
       //comment = Message.t('locationpopup.adminsource.geonames');
     }
-    debugger;
+
     switch (this.props.adminSource) {
       case 'geonames':
         comment = Message.t('locationpopup.adminsource.geonames');
