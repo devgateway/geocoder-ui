@@ -1,7 +1,7 @@
 {
   "API": {
     "API_BASE_URL": {
-      "development": "http://demo.geocoding.dgstg.org",
+      "development": "http://localhost:8083",
       "production": "http://demo.geocoding.dgstg.org"
     },
     "ALL_FILTERS_END_POINT": "filters/all",

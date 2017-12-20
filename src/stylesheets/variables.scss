@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800');
 
 // Colors
 $black: #000000;
@@ -36,6 +36,7 @@ $regular: 10px;
 
 // Font weights
 $light-text: 300;
+$normal-weight-text: 450;
 $bold-text: 800;
 
 // Mixins 

@@ -16,6 +16,7 @@ import AutoGeoCodedLocations from '../../project/AutoGeoCodedLocations.jsx';
 import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
 import CollapsibleControl from './CollapsibleControl.jsx';
 import SelectedLocationsControl from './SelectedLocationsControl.jsx';
+import SearchResults from './SearchResults.jsx';
 
 /**
  * This view renders the info tab view UI component.
@@ -66,11 +67,12 @@ class CodingControls extends Reflux.Component {
               <PanelHeading project={project} lang={lang} toggle={this.toggle.bind(this)}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
-                
+                <SearchResults>
                   <div className="panel-section padded-section">
                   {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
                   <GazetteeResults/>
                   </div>
+                </SearchResults>
                 
                 <CollapsibleControl>
                   <AutoGeoCodedLocations {...this.state.project}/>

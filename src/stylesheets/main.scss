@@ -324,17 +324,28 @@ h4 {
     color: $green;
     display: block;
     font-size: $big + 1;
-    font-weight: $light-text;
+    font-weight: $normal-weight-text;
     margin-top: $base-unit / 1.5;
+    &.results-title{
+      color: $black;
+      margin-left: $base-unit * 3.2;
+    }
     &:hover{
       color: $green-light;
     }
-  
+    
     .project-count {
       color: $darkGray;
       display: inline-block;
       font-size: $big;
       font-weight: $light-text;
+      &.results-count{
+        color: $green-light;
+        margin-left: $base-unit / 2;
+      }
+      .results-value{
+        font-weight: $bold-text;
+      }
     }
   }
 }
