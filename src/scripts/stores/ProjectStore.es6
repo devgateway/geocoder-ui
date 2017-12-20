@@ -6,10 +6,10 @@ import _ from 'lodash'; //TODO: rewview if we can use an es6 method instead of l
 
 const initialData = {};
 const ProjectStore = createStore({
-  
+
   initialData: initialData,
   mixins: [StoreMixins],
-  
+
   init() {
     this.data = initialData;
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), 'loading');
@@ -22,15 +22,15 @@ const ProjectStore = createStore({
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, 'failed');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
-  
+
   cleanStore() {
     this.setData(this.initialData);
   },
-  
+
   loading() {
     console.log('Loading project...')
   },
-  
+
   completed(response) {
     let project = response.data;
     if (project.country) {
@@ -39,13 +39,14 @@ const ProjectStore = createStore({
     Object.assign(project, {'locationsBackup': _.cloneDeep(project.locations)});//add a copy of the locations for rollback purposes
     this.setData(project);
   },
-  
+
   failed(message) {
     console.error(`Error loading project: ${message}`)
   },
-  
-  
+
+
   addGeocoding(geocoding) {
+    debugger;
     let project = this.get();
     let newState = Object.assign({}, project);
     let locations = newState.locations || [];
@@ -65,9 +66,9 @@ const ProjectStore = createStore({
     }
     Object.assign(newState, {'locations': locations});
     this.setData(newState);
-    
+
   },
-  
+
   submitGeocoding(geocoding) {
     let project = this.get();
     let newState = Object.assign({}, project);
@@ -84,8 +85,8 @@ const ProjectStore = createStore({
     this.setData(newState);
     Actions.invoke(Constants.ACTION_SAVE_PROJECT, newState);
   },
-  
-  
+
+
   saveSuccess() {
     window.history.back();
     window.location.reload();
