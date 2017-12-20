@@ -8,8 +8,14 @@ $header-bg: #f7f7f7;
 $green: #669933;
 $green-light: #89b85a;
 $red: #ca3a3a;
+$red-variant: #d9534f;
 $blue: #1c82cd;
+$pending-locations: #2ba0f7;
 $gray: #eeeeee;
+$no-locations: #f0ad4e;
+$verified: #669933;
+
+
 
 // Base units
 $base-unit: 10px;
@@ -42,6 +48,14 @@ $bold-text: 800;
   -webkit-border-radius: $radius;
   border-radius: $radius;
   background-clip: padding-box; /* stops bg color from leaking outside the border: */
+}
+// project list callouts
+@mixin callouts($bg){
+  background: $bg;
+  color: $white;
+  float: left;
+  padding: $base-unit - 3 $base-unit / 2;
+  width: $extend - 70;
 }
 
 @mixin heading-icon() {

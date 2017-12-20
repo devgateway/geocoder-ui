@@ -1,26 +1,39 @@
 @import "variables.scss";
 
 .bs-callout {
-  padding: 0px 10px 10px 20px;
-  margin: 20px 0;
-  border: 1px solid #eee;
+  padding: 0;
+  margin: $base-unit * 2 0;
+  border: $px-unit solid $gray;
   border-left-width: 5px;
   border-radius: 3px;
-
-  .text-vertical {
-    transform: rotate(90deg);
-    transform-origin: left top 0;
-    margin-left: -26px;
-    position: absolute;
-    color: #FFF;
-    padding: 1px 4px 1px 4px;
-    font-family: monospace;
+  .country{
+    background: $gray;
+    float: left;
+    font-weight: $bold-text;
+    color: $black;
+    float: left;
+    overflow: hidden;
+    padding: $base-unit - 3 $base-unit;
+    text-transform: none;
+    width: $extend - 30;
+  }
+  .callout-heading{
+    display: inline;
+    margin-left: 0;
+    overflow: hidden;
+  }
+  .project-panel-content{
+    overflow: hidden;
+    padding: $base-unit;
+  }
+  h3{
+    margin-top: 0;
   }
 }
 
 .bs-callout h4 {
   margin-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: $base-unit / 2;
   a {
     text-decoration: none
   }
@@ -73,27 +86,27 @@
 
 .bs-callout-success {
   min-height: 150px;
-  border-left-color: #669933;
-  .text-vertical {
-    background-color: #669933;
+  border-left-color: $verified;
+  .project-id {
+    @include callouts($verified);
   }
   a {
-    color: #669933
+    color: $verified;
   }
 ;
   a:hover {
-    color: #669933
+    color: $verified
   }
 ;
 }
 
 .bs-callout-success h4 {
-  color: #669933;
+  color: $verified;
 }
 
 .bs-callout-danger {
   border-left-color: #d9534f;
-  .text-vertical {
+  .project-id {
     background-color: #d9534f;
   }
   a {
@@ -108,39 +121,38 @@
 .bs-callout-danger h4 {
   color: #d9534f;
 }
-
 .bs-callout-warning {
-  border-left-color: #f0ad4e;
-  .text-vertical {
-    background-color: #f0ad4e;
+  border-left-color: $no-locations;
+  .project-id {
+    @include callouts($no-locations);
   }
   a {
-    color: #f0ad4e
+    color: $no-locations;
   }
   a:hover {
-    color: #f0ad4e
+    color: $no-locations;
   }
 }
 
 .bs-callout-warning h4 {
-  color: #f0ad4e;
+  color: $no-locations;
 
 }
 
 .bs-callout-info {
-  border-left-color: #5bc0de;
+  border-left-color: $pending-locations;
   a {
-    color: #5bc0de
+    color: $pending-locations;
   }
 ;
-  .text-vertical {
-    background-color: #5bc0de;
+  .project-id {
+    @include callouts($pending-locations);
   }
   a {
-    color: #5bc0de
+    color: $pending-locations;
   }
   a:hover {
-    color: #5bc0de
+    color: $pending-locations;
   }
 }
 
