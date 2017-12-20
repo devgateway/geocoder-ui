@@ -6,7 +6,7 @@ import {Router} from 'react-router';
 import MapHeader from './components/MapHeader.jsx';
 import ProjectListHeader from './components/ProjectListHeader.jsx';
 import ProjectList from './components/project/ProjectList.jsx';
-import Map from './components/map/Map.jsx';
+import MapView from './components/map/MapView.jsx';
 import FileUpload from './components/upload/FileUpload.jsx';
 
 import createHashHistory from 'history/createHashHistory';
@@ -21,7 +21,7 @@ class MapLayout extends React.Component {
     return (
       <div className="app">
         <MapHeader/>
-        <Map {...this.props}/>
+        <MapView{...this.props}/>
       </div>
     )
   }

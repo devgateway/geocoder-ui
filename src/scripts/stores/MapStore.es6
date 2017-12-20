@@ -5,13 +5,12 @@ import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 
 import LocationsGeoJson from './LocationsGeo.es6';
-import CountryGeo from './CountryGeo.es6';
+import CountryGeo from './CountryShapeStore.es6';
 import ProjectStore from './ProjectStore.es6';
-import ProjectGeo from './ProjectGeo.es6';
+import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
-const PopUpStore = createStore({
-  
+const MapStore = createStore({
   initialData: {
     map: {
       center: [0.0, 0.0],
@@ -38,15 +37,22 @@ const PopUpStore = createStore({
   mixins: [StoreMixins],
   
   init() {
-    
-    this.listenTo(ProjectStore, this.onProjectUpdate);
-    this.listenTo(ProjectGeo, this.updateGeocodingLayer);
+    // TODO - use directly singleton when we switch to Reflux es6
+    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.onProjectUpdate);
+    this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
     this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
     this.listenTo(CountryGeo, this.updateCountry);
     this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
     this.listenTo(Actions.get(Constants.ACTION_SET_ACTIVE_LOCATION), 'setActiveLocation');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
+  },
+  
+  // TODO - link MapView with ProejctStore if we really need the project in the MapView
+  onProjectUpdate(projectStore) {
+    const newState = Object.assign({}, this.get());
+    newState.project = projectStore.project;
+    this.setData(newState);
   },
   
   cleanStore() {
@@ -80,12 +86,6 @@ const PopUpStore = createStore({
   updateCountry(data) {
     var newState = Object.assign({}, this.get())
     newState.layers.countries = data.countries;
-    this.setData(newState);
-  },
-  
-  onProjectUpdate(project) {
-    var newState = Object.assign({}, this.get())
-    newState.project = project;
     this.setData(newState);
   },
   
@@ -239,4 +239,4 @@ const PopUpStore = createStore({
   
 });
 
-export default PopUpStore;
+export default MapStore;

@@ -10,6 +10,7 @@ export default class PanelHeading extends React.Component {
   static propTypes = {
     project: PropTypes.object.isRequired,
     lang:    PropTypes.string.isRequired,
+    toggle:  PropTypes.func.isRequired,
   };
   
   constructor() {
@@ -17,7 +18,7 @@ export default class PanelHeading extends React.Component {
   }
   
   render() {
-    const {project, lang} = this.props;
+    const {project, lang, toggle} = this.props;
     const title = new Translate(project.titles, lang);
     const description = new Translate(project.descriptions, lang);
     
@@ -57,7 +58,7 @@ export default class PanelHeading extends React.Component {
               <span className="info-icon"/>
             </li>
             <li>
-              <span className="close-icon"/>
+              <span className="close-icon" onClick={toggle}/>
             </li>
           </ul>
         </div>
