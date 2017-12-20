@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Message from '../../Message.jsx';
-import Translate from "../../../util/Translate";
+import MultiLangualText from "../../MultiLangualText";
 
 /**
  * This view renders the Project Information UI component (title, description, etc...)
@@ -10,6 +10,7 @@ export default class PanelHeading extends React.Component {
   static propTypes = {
     project: PropTypes.object.isRequired,
     lang:    PropTypes.string.isRequired,
+    toggle:  PropTypes.func.isRequired,
   };
   
   constructor() {
@@ -17,9 +18,7 @@ export default class PanelHeading extends React.Component {
   }
   
   render() {
-    const {project, lang} = this.props;
-    const title = new Translate(project.titles, lang);
-    const description = new Translate(project.descriptions, lang);
+    const {project, lang, toggle} = this.props;
     
     return (
       <div className="panel-heading">
@@ -29,14 +28,14 @@ export default class PanelHeading extends React.Component {
           <div className="project-code">{project.identifier}</div>
           
           <div className="panel-section">
-            <div className="project-info-label">{title.getTranslation()}</div>
+            <div className="project-info-label"><MultiLangualText texts={project.titles}/></div>
             <div className="project-info">{Date(project.date)}</div>
           </div>
           
           <div className="panel-section">
             <div className="project-info-label">{Message.t('projectinfo.projectinfo')}</div>
             <div className="project-info">
-              {description.getTranslation()}
+              <MultiLangualText texts={project.descriptions}/>
               <a href="">more</a>
             </div>
             
@@ -57,7 +56,7 @@ export default class PanelHeading extends React.Component {
               <span className="info-icon"/>
             </li>
             <li>
-              <span className="close-icon"/>
+              <span className="close-icon" onClick={toggle}/>
             </li>
           </ul>
         </div>

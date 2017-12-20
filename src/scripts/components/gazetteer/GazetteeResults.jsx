@@ -7,7 +7,7 @@ import {Button} from 'react-bootstrap';
 import Message from '../Message.jsx';
 
 /**
- * This view renders the Gazetteer.
+ * This view renders the Gazetteer results.
  */
 class GazetteeResults extends Reflux.Component {
   
@@ -46,22 +46,18 @@ class GazetteeResults extends Reflux.Component {
  * Renders a  List of locations.
  */
 class ListItems extends React.Component {
-  
-  constructor() {
-    super();
-  }
-  
   render() {
-    if (!this.props.records || this.props.records.length == 0) {
+    if (!this.props.records || this.props.records.length === 0) {
       return (
         <h4> No location results found. </h4>
       )
     } else {
       return (
         <div className="list-group">
-          {this.props.records.map((item) => {
-            return <Item key={item.geonameId} {...item}/>
-          }) //TODO: we should define another way to obtain the object key in order to support different sources maybe a hashcode
+          {
+            this.props.records.map((item) => {
+              return <Item key={item.geonameId + item.lat + item.lng} {...item}/>
+            })
           }
         </div>
       )
@@ -73,10 +69,6 @@ class ListItems extends React.Component {
  * Renders a single Location.
  */
 class Item extends React.Component {
-  constructor() {
-    super();
-  }
-  
   setActiveLocation(data) {
     Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'locationFeature': data});
   }

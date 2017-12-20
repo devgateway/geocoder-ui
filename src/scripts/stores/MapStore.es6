@@ -5,9 +5,9 @@ import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 
 import LocationsGeoJson from './LocationsGeo.es6';
-import CountryGeo from './CountryGeo.es6';
+import CountryGeo from './CountryShapeStore.es6';
 import ProjectStore from './ProjectStore.es6';
-import ProjectGeo from './ProjectGeo.es6';
+import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
 const PopUpStore = createStore({
@@ -182,4 +182,4 @@ const PopUpStore = createStore({
 
 });
 
-export default PopUpStore;
+export default MapStore;

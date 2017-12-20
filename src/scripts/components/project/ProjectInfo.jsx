@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
 import Message from '../Message.jsx';
-import Translate from '../../util/Translate';
+import MultiLangualText from '../MultiLangualText';
 
 /**
  * Component that displays main information related to a project.
@@ -35,19 +35,16 @@ class ProjectInfo extends React.Component {
   
   render() {
     const {lang, project: {id, locations, countries, titles, descriptions, identifier}} = this.props;
-    const title = new Translate(titles, lang);
-    const description = new Translate(descriptions, lang);
     
     return (
       <div className={"bs-callout " + this.activityClass(locations)}>
         <div className="text-vertical">{identifier}</div>
-        <h3><Link to={'map/' + id}>{title.getTranslation()}</Link></h3>
+        <h3><Link to={'map/' + id}><MultiLangualText texts={titles}/></Link></h3>
         <span>
          <b> {countries.map(country => (<span key={country.name}>{country.name}</span>))}</b>
         </span>
-        <p>
-          {description.getTranslation()}
-        </p>
+        
+        {<MultiLangualText texts={descriptions}/>}
         
         <div className="pull-right"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
         <br/>

@@ -1,97 +1,101 @@
-import {createStore} from 'reflux';
+import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
-import {StoreMixins} from '../mixins/StoreMixins.es6';
-import _ from 'lodash'; //TODO: rewview if we can use an es6 method instead of lodash
+import _ from 'lodash';
 
-const initialData = {};
-const ProjectStore = createStore({
+const initialState = {
+  project: {}
+};
 
-  initialData: initialData,
-  mixins: [StoreMixins],
+class ProjectStore extends Reflux.Store {
+  constructor() {
+    super();
+    this.state = initialState;
 
-  init() {
-    this.data = initialData;
-    this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), 'loading');
-    this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).completed, 'completed');
-    this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).failed, 'failed');
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), 'addGeocoding');
-    this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING), 'submitGeocoding');
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), 'loading');
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, 'saveSuccess');
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, 'failed');
-    this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
-  },
+    this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), this.loading);
+    this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).completed, this.completed);
+    this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).failed, this.failed);
+    this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), this.addGeocoding);
+    this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING), this.submitGeocoding);
+    this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), this.save);
+    this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, this.saveSuccess);
+    this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, this.failed);
+    this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
+  }
 
   cleanStore() {
-    this.setData(this.initialData);
-  },
+    this.setState(this.initialData);
+  }
 
   loading() {
-    console.log('Loading project...')
-  },
+    console.log('Loading project...');
+  }
+
+  save() {
+    console.log('Save project...');
+  }
 
   completed(response) {
     let project = response.data;
-    if (project.country) {
-      Actions.invoke(Constants.ACTION_LOAD_SHAPE, (project.country.iso3 || project.country.iso2 || project.country.iso));
+
+    if (project.countries !== undefined && project.countries.length !== 0) {
+      const firstCountry = project.countries[0];
+      Actions.invoke(Constants.ACTION_LOAD_SHAPE, (firstCountry.iso3 || firstCountry.iso2 || firstCountry.iso));
     }
-    Object.assign(project, {'locationsBackup': _.cloneDeep(project.locations)});//add a copy of the locations for rollback purposes
-    this.setData(project);
-  },
+
+    project.locationsBackup = _.cloneDeep(project.locations); //add a copy of the locations for rollback purposes
+    this.setState({project: project});
+  }
 
   failed(message) {
     console.error(`Error loading project: ${message}`)
-  },
-
+  }
 
   addGeocoding(geocoding) {
-    debugger;
-    let project = this.get();
-    let newState = Object.assign({}, project);
-    let locations = newState.locations || [];
-    Object.assign(geocoding, {'type': 'geocoding'});//set type to geocoding to indentify those locations coded
-    let locGeo = locations.find((it) => {
-      return it.id === geocoding.id
-    });
-    if (locGeo) {
+    let newpProject = {...this.state.project};
+    let locations = newpProject.locations || [];
+
+    Object.assign(geocoding, {'type': 'geocoding'});  //set type to geocoding to identify those locations coded
+    let locGeo = locations.find(it => it.id === geocoding.id);
+
+    if (locGeo !== undefined) {
       Object.assign(locGeo, geocoding);
     } else {
       locations.push(geocoding);
     }
-    if (geocoding.status == 'LOCATION') { //if a location has been deleted and not yet commited, it'll be removed
-      locations = locations.filter((it) => {
-        return it.id != geocoding.id
-      });
+    if (geocoding.status === 'LOCATION') { // if a location has been deleted and not yet commited, it'll be removed
+      locations = locations.filter(it => it.id !== geocoding.id);
     }
-    Object.assign(newState, {'locations': locations});
-    this.setData(newState);
 
-  },
+    newpProject.locations = locations;
+    this.setState({project: newpProject});
+  }
 
   submitGeocoding(geocoding) {
-    let project = this.get();
-    let newState = Object.assign({}, project);
-    let locations = newState.locations || [];
-    let locNotDeleted = locations.filter((it) => {
-      return it.status != 'DELETED'
-    });
-    let locNoStatus = []
+    let newpProject = {...this.state.project};
+    let locations = newpProject.locations || [];
+
+    let locNotDeleted = locations.filter(it => it.status !== 'DELETED');
+
+    let locNoStatus = [];
     locNotDeleted.map((it) => {
-      locNoStatus.push(_.omit(it, ['status', 'adminSource', 'confirmDelete', 'adminCodes', 'rollbackData']));//remove unnecesary fields before submit
+      // remove unnecesary fields before submit
+      locNoStatus.push(_.omit(it, ['status', 'adminSource', 'confirmDelete', 'adminCodes', 'rollbackData']));
     });
-    Object.assign(newState, {'locations': locNoStatus});
-    _.omit(newState, 'locationsBackup');
-    this.setData(newState);
-    Actions.invoke(Constants.ACTION_SAVE_PROJECT, newState);
-  },
+
+    newpProject.locations = locNoStatus;
+
+    newpProject = _.omit(newpProject, 'locationsBackup');
+    this.setState({project: newpProject});
+
+    Actions.invoke(Constants.ACTION_SAVE_PROJECT, newpProject);
+  }
 
 
   saveSuccess() {
     window.history.back();
     window.location.reload();
   }
-});
-
+}
 
 export default ProjectStore;
