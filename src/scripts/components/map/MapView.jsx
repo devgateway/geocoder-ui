@@ -27,7 +27,7 @@ import LocationPopup from './popups/LocationPopup.jsx';
 import DataEntryPopup from '../dialogs/DataEntry.jsx';
 
 /*Store*/
-import MapStore from '../../stores/Map.es6';
+import MapStore from '../../stores/MapStore.es6';
 
 
 export default class MapView extends React.Component {
@@ -107,9 +107,7 @@ export default class MapView extends React.Component {
   }
   
   render() {
-    
     return (
-      
       <div id="mapContainer">
         <div className="map">
           <DataEntryPopup/>

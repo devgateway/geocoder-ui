@@ -5,7 +5,7 @@ import {StoreMixins} from '../mixins/StoreMixins.es6';
 
 const initialData = {countries: []};  //a country object is like {iso:MOZ data:geojson}
 
-const ShapesStore = createStore({
+const CountryShapeStore = createStore({
   
   initialData: initialData,
   mixins: [StoreMixins],
@@ -71,4 +71,4 @@ const ShapesStore = createStore({
   
 });
 
-export default ShapesStore;
+export default CountryShapeStore;

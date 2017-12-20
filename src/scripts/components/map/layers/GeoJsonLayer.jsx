@@ -26,7 +26,6 @@ export default class GeoJsonLayer extends Path {
   }
   
   componentDidUpdate(prevProps) {
-    
     const {data, ...props} = this.props;
     
     if (this.props.data != prevProps.data) { //we should do a better work to detect data changes

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from "reflux";
-import {Tabs, Tab} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
@@ -27,18 +26,11 @@ class CodingControls extends Reflux.Component {
     super();
     
     this.state = {
-      expanded: true,
-      project: {},
-      showTab: 1
+      expanded:   true,
+      showTab:    1
     };
     
-    this.stores = [LocationsStore, LangStore];
-  }
-  
-  componentWillMount() {
-    super.componentWillMount();
-    
-    this.unsuscribe = ProjectStore.listen(this.onStoreChange.bind(this));
+    this.stores = [ProjectStore, LocationsStore, LangStore];
   }
   
   componentWillUpdate(nextProps, nextState) {
@@ -55,32 +47,15 @@ class CodingControls extends Reflux.Component {
     L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
   }
   
-  componentWillUnmount() {
-    super.componentWillUnmount();
-    this.unsuscribe();
-  }
-  
-  handleSelect(key) {
-    let newState = Object.assign({}, this.state);
-    Object.assign(newState, {'showTab': key});
-    this.setState(newState);
-  }
-  
-  onStoreChange(project) {
-    let newState = Object.assign({}, this.state);
-    Object.assign(newState, {project});
-    this.setState(newState);
-  }
-  
   toggle() {
-    let newState = Object.assign({}, this.state);
-    Object.assign(newState, {expanded: !newState.expanded});
-    this.setState(newState);
+    this.setState({
+      expanded: !this.state.expanded
+    });
   }
   
   render() {
     const {project, lang} = this.state;
-    
+  
     let activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">
@@ -88,7 +63,7 @@ class CodingControls extends Reflux.Component {
           ? <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div>
           : <div id="project-info">
             <div className="panel panel-success">
-              <PanelHeading project={project} lang={lang}/>
+              <PanelHeading project={project} lang={lang} toggle={this.toggle.bind(this)}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
                 
@@ -100,7 +75,7 @@ class CodingControls extends Reflux.Component {
                 <CollapsibleControl>
                   <ProjectListAutoGeoCoded/>
                 </CollapsibleControl>
-  
+                
                 <CollapsibleControl>
                   <div>{Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}</div>
                   <ProjectCoding {...this.state.project}/>
