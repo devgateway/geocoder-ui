@@ -12,11 +12,12 @@ const ProjectGeoJsonStore = createStore({
   mixins: [StoreMixins],
   
   init() {
-    this.listenTo(ProjectStore, this.process);
+    // TODO - use directly singleton when we switch to Reflux es6
+    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.process);
   },
   
-  process(project) {
-    
+  process(projectStore) {
+    const project = projectStore.project;
     let newData;
     if (project.locations) {
       let featureCollection =

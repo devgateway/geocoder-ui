@@ -1,7 +1,7 @@
 import React from 'react';
 import Message from '../Message.jsx';
 
-export default class ProjectListAutoGeoCoded extends React.Component {
+export default class AutoGeoCodedLocations extends React.Component {
   
   constructor() {
     super();
