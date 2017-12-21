@@ -4,9 +4,10 @@ import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, Button, B
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
-import FiltersStore from '../../stores/FiltersStore.es6';
 import LangStore from '../../stores/LangStore.es6';
 import ProjectInfo from './ProjectInfo.jsx';
+import YearFilter from '../filters/YearFilter.jsx';
+import CountryFilter from '../filters/CountryFilter.jsx';
 import Message from '../Message.jsx';
 
 /**
@@ -15,7 +16,7 @@ import Message from '../Message.jsx';
 class ProjectList extends Reflux.Component {
   constructor() {
     super();
-    this.stores = [ProjectListStore, FiltersStore, LangStore];
+    this.stores = [ProjectListStore, LangStore];
   }
   
   componentDidMount() {
@@ -74,40 +75,8 @@ class ProjectList extends Reflux.Component {
                 </Col>
                 <Col md={9} className="project-list-filters">
                   
-                  <div className="filter-button-wrapper">
-                    <ButtonToolbar>
-                      <DropdownButton bsStyle="primary" bsSize="large" title="Year" id="dropdown-size-large">
-                        <li>
-                          <span className="select-box"></span>
-                          2015
-                        </li>
-                        <li>
-                          <span className="select-box"></span>
-                          2016
-                        </li>
-                        <li>
-                          <span className="select-box"></span>
-                          2017
-                        </li>
-                      </DropdownButton>
-                    </ButtonToolbar>
-                  </div>
-                  
-                  <div className="filter-button-wrapper">
-                    <ButtonToolbar>
-                      <DropdownButton bsStyle="primary" bsSize="large" title="Country" id="dropdown-size-large">
-                        <li>
-                          <span className="select-box"></span>
-                          Country 1
-                        </li>
-                        <li>
-                          <span className="select-box"></span>
-                          Country 2
-                        </li>
-                      </DropdownButton>
-                    </ButtonToolbar>
-                  </div>
-                  
+                  <YearFilter/>
+                  <CountryFilter/>
                   
                   <Message k="projectlist.geocodingfilter"/>
                   

@@ -36,7 +36,6 @@
     border-left-color: $pending-locations;
     min-height: 150px;
   }
-
 }
 
 /*Pagination*/
@@ -47,11 +46,9 @@
 .pagination.pagination-sm {
   border: 0px solid red;
   li {
-
     a {
       @include fontDefault($medium, $green);
     }
-
   }
 }
 
@@ -63,19 +60,23 @@
 
 .pagination > .active > a:hover {
   background-color: $gray;
-
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-
   z-index: 3;
   color: $black;
   cursor: default;
   background-color: $gray;
   border-color: $gray;
-
 }
 
 .project-list-header{
   background: pink;
+}
+
+.filter-section {
+  float: left;
+  margin-right: $base-unit;
+  margin-top: $base-unit / 1.1;
+  cursor: pointer;
 }
