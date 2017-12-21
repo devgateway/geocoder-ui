@@ -70,6 +70,32 @@ class ProjectList extends Reflux.Component {
                 </Col>
                 <Col md={9} className="project-list-filters">
                 <Message k="projectlist.geocodingfilter"/>
+                
+                <div class="btn-group">
+                  <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                  Year
+                  <span className="caret"></span>
+                </button>
+                <ul className="dropdown-menu">
+                  <li><a href="#"></a></li>
+                  <li><a href="#">2015</a></li>
+                  <li><a href="#">2016</a></li>
+                  <li><a href="#">2017</a></li>
+                </ul>
+                </div>
+                
+                <div class="btn-group">
+                  <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                  Country
+                  <span className="caret"></span>
+                </button>
+                <ul className="dropdown-menu">
+                  <li><a href="#">Country 1</a></li>
+                  <li><a href="#">Country 2</a></li>
+                  <li><a href="#">Country 3</a></li>
+                  <li><a href="#">Country 4</a></li>
+                </ul>
+                </div>
 
                 <FormGroup className="spacingLg">
                   <FormControl type="checkbox" checked={this.state.params.withNoLocation} onChange={this.handleFilterChange.bind(this)}
@@ -88,6 +114,8 @@ class ProjectList extends Reflux.Component {
                                id="allOptions" name="allOptions"/>
                   <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                 </FormGroup>
+                
+                <button>Clear Filters</button>
                 </Col>
               </div>
             </Col>

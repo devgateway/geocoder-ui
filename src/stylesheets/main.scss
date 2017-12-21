@@ -155,7 +155,7 @@ h4 {
 .project-code {
   color: $green;
   font-size: $large + 2;
-  font-weight: $bold-text;
+  font-weight: $bold-text - 200;
   margin-bottom: $base-unit / 2;
   margin-top: $base-unit / 1.5;
 }
