@@ -452,7 +452,7 @@ h4 {
 .project-list-filters{
   padding-top: $base-unit + 3;
   .dropdown{
-    background: red;
+    
   }
 }
 .project-search-form{
@@ -464,4 +464,33 @@ h4 {
 .project-filter{
   float: left;
   overflow: visible;
+}
+
+.filter-button-wrapper{
+  display: inline;
+  .btn-toolbar{
+    display: inline-block;
+  }
+}
+
+.dropdown-menu{
+  padding-left: $base-unit;
+  li{
+    display: block;
+    margin-bottom: $base-unit / 3;
+    
+    .select-box{
+      float: left;
+      height: $base-unit * 2;
+      margin-right: $base-unit / 2;
+      width: $base-unit * 2;
+      border:2px solid $gray;
+      &:hover{
+        background: $green;
+      }
+      &.selected{
+        background: $green;
+      }
+    }
+  }
 }
