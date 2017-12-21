@@ -73,10 +73,18 @@ class ProjectList extends Reflux.Component {
                   <div className="filter-button-wrapper">
                     <ButtonToolbar>
                       <DropdownButton bsStyle="primary" bsSize="large" title="Year" id="dropdown-size-large">
-                        <div>2013</div>
-                        <div>2014</div>
-                        <div>2015</div>
-                        <div>2016</div>
+                      <li>
+                      <span className="select-box"></span>
+                      2015
+                      </li>
+                      <li>
+                      <span className="select-box"></span>
+                      2016
+                      </li>
+                      <li>
+                      <span className="select-box"></span>
+                      2017
+                      </li>
                       </DropdownButton>
                     </ButtonToolbar>
                   </div>
@@ -84,10 +92,14 @@ class ProjectList extends Reflux.Component {
                   <div className="filter-button-wrapper">
                     <ButtonToolbar>
                       <DropdownButton bsStyle="primary" bsSize="large" title="Country" id="dropdown-size-large">
-                        <div>Country 1</div>
-                        <div>Country 2</div>
-                        <div>Country 3</div>
-                        <div>Country 4</div>
+                        <li>
+                        <span className="select-box"></span>
+                        Country 1
+                        </li>
+                        <li>
+                        <span className="select-box"></span>
+                        Country 2
+                        </li>
                       </DropdownButton>
                     </ButtonToolbar>
                   </div>
