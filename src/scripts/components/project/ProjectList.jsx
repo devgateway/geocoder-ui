@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup} from 'react-bootstrap';
+import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, Button} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
@@ -32,6 +32,10 @@ class ProjectList extends Reflux.Component {
     const value = event.target.type === 'radio' || event.target.type === 'checkbox' ? event.target.checked :event.target.value;
     
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PARAM, name, value);
+  }
+  
+  clearFilters() {
+    Actions.invoke(Constants.ACTION_CLEAR_FILTERS);
   }
   
   render() {
@@ -79,6 +83,9 @@ class ProjectList extends Reflux.Component {
                                id="allOptions" name="allOptions"/>
                   <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                 </FormGroup>
+  
+                <Button className="pull-right" bsStyle='danger' bsSize="large"
+                        onClick={this.clearFilters.bind(this)}>Clear All Filters</Button>
               </div>
             </Col>
           </Row>
