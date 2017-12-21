@@ -31,7 +31,6 @@ class ProjectListLayout extends React.Component {
   }
 }
 
-
 const AppRoutes = (props) => {
   return (<Router history={history}>
     <div>

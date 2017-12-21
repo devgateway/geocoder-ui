@@ -69,6 +69,50 @@ class ProjectList extends Reflux.Component {
                   <h3><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h3>
                 </Col>
                 <Col md={9} className="project-list-filters">
+                
+                <div className="filter-button-wrapper">
+                <button class="btn btn-primary dropdown-toggle btn-secondary" type="button" data-toggle="dropdown" aria-expanded="true">
+                  Year
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">2014</a>
+                  </li>
+                  <li><a href="#">2015</a>
+                  </li>
+                  <li><a href="#">2016</a>
+                  </li>
+                  <li><a href="#">2017</a>
+                  </li>
+                  <li><a href="#">2018</a>
+                  </li>
+                  <li><a href="#">2019</a>
+                  </li>
+                  <li><a href="#">2020</a>
+                  </li>
+                </ul>
+                </div>
+                
+                
+                <div className="filter-button-wrapper">
+                <button class="btn btn-primary dropdown-toggle btn-secondary" type="button" data-toggle="dropdown" aria-expanded="true">
+                  Country
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Country 1</a>
+                  </li>
+                  <li><a href="#">Country 2</a>
+                  </li>
+                  <li><a href="#">Country 3</a>
+                  </li>
+                  <li><a href="#">Country 4</a>
+                  </li>
+                </ul>
+                </div>
+              
+                
+                
                   <Message k="projectlist.geocodingfilter"/>
                   
                   <FormGroup className="spacingLg">
@@ -89,6 +133,7 @@ class ProjectList extends Reflux.Component {
                                  id="allOptions" name="allOptions"/>
                     <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                   </FormGroup>
+                  <button>Clear All Filters</button>
                 </Col>
               </div>
             </Col>
