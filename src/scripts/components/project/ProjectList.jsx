@@ -75,6 +75,7 @@ class ProjectList extends Reflux.Component {
                   <label htmlFor="verifiedLocation" style={{color: "#669933"}}>{Message.t('projectlist.verifiedLocation')}</label>
                   
                   <FormControl type="checkbox" onChange={this.handleFilterChange.bind(this)}
+                               checked={!this.state.params.withNoLocation && !this.state.params.pendingVerification && !this.state.params.verifiedLocation}
                                id="allOptions" name="allOptions"/>
                   <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                 </FormGroup>

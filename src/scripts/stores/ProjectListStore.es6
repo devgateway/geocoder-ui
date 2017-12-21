@@ -47,6 +47,16 @@ class ProjectListStore extends Reflux.Store {
   
   setParam(paramName, paramValue) {
     const newParams = {...this.state.params};
+    
+    // first reset all the params if we filter by location status
+    if (paramName === 'withNoLocation' || paramName === 'pendingVerification'
+      || paramName === 'verifiedLocation' || paramName === 'allOptions') {
+      newParams.withNoLocation = false;
+      newParams.pendingVerification = false;
+      newParams.verifiedLocation = false;
+    }
+    
+    
     newParams[paramName] = paramValue;
     newParams.page = 0;   // also reset the page number when a filter parameter is changed
     
