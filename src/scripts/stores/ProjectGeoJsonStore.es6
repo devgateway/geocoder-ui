@@ -3,6 +3,7 @@ import {getAction} from '../actions/Actions.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 import ProjectStore from './ProjectStore.es6';
 import {GeoJsonBuilder} from '../util/GeojsonBuilder.es6';
+import Reflux from "reflux";
 
 const initialData = {'geojson': null};
 
@@ -13,7 +14,7 @@ const ProjectGeoJsonStore = createStore({
   
   init() {
     // TODO - use directly singleton when we switch to Reflux es6
-    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.process);
+    this.listenTo(Reflux.initStore(ProjectStore), this.process);
   },
   
   process(projectStore) {

@@ -22,7 +22,7 @@ class LocationsStore extends Reflux.Store {
     
     this.cachedData = undefined;
   
-    this.listenTo(ProjectStore.singleton, this.updateCountryISO);
+    this.listenTo(Reflux.initStore(ProjectStore), this.updateCountryISO);
     this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_SEARCHTYPE), this.toggleSearchType);
     this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_UPDATETEXT), this.updateText);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS), this.search);

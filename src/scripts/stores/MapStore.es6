@@ -8,6 +8,7 @@ import LocationsGeoJson from './LocationsGeo.es6';
 import CountryGeo from './CountryShapeStore.es6';
 import ProjectStore from './ProjectStore.es6';
 import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
+import Reflux from "reflux";
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
 const MapStore = createStore({
@@ -38,7 +39,7 @@ const MapStore = createStore({
   
   init() {
     // TODO - use directly singleton when we switch to Reflux es6
-    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.onProjectUpdate);
+    this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
     this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
     this.listenTo(CountryGeo, this.updateCountry);
