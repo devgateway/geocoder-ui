@@ -7,13 +7,13 @@
   }
 
   div.radio {
-    margin-left: 10px;
+    margin-left: $base-unit;
   }
 
   input[type="checkbox"], input[type="radio"] {
     display: block;
     float: left;
-    margin: 3px;
+    margin: $px-unit * 3;
   }
 
   a {
@@ -29,7 +29,7 @@
   @include fontDefault($medium, $black);
 
   .list-group {
-    padding: 10px;
+    padding: 0;
   }
 
   .bs-callout-info {
@@ -56,22 +56,26 @@
 }
 
 .pagination > .active > a {
-  background-color: #EEE;
-  border: 1px solid #CCC;
-  color: #000;
+  background-color: $gray;
+  border: 1px solid $gray-darker;
+  color: $black;
 }
 
 .pagination > .active > a:hover {
-  background-color: #EEE;
+  background-color: $gray;
 
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
 
   z-index: 3;
-  color: #000;
+  color: $black;
   cursor: default;
-  background-color: #EEE;
-  border-color: #EEE;
+  background-color: $gray;
+  border-color: $gray;
 
+}
+
+.project-list-header{
+  background: pink;
 }

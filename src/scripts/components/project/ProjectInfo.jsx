@@ -44,7 +44,7 @@ class ProjectInfo extends React.Component {
           </div>
         </div>
         <div className="project-panel-content">
-        <div className="status-link"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
+          <div className="status-link"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
           <h3><Link to={'map/' + id}><MultiLingualText texts={titles}/></Link></h3>
           {<MultiLingualText texts={descriptions}/>}
         </div>
