@@ -99,6 +99,8 @@ class ProjectListStore extends Reflux.Store {
     newParams.verifiedLocation = false;
     
     this.setState({params: newParams});
+  
+    Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
 }
 

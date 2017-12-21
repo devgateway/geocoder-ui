@@ -22,6 +22,8 @@ class FiltersStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.UPDATE_FILTER_SELECTION), this.updateFilter);
     this.listenTo(Actions.get(Constants.SELECT_ALL_FILTER), this.selectAllFilter);
     this.listenTo(Actions.get(Constants.SELECT_NONE_FILTER), this.selectNoneFilter);
+    
+    this.listenTo(Actions.get(Constants.ACTION_CLEAR_FILTERS), this.clearFilters);
   }
   
   loading() {
@@ -56,7 +58,22 @@ class FiltersStore extends Reflux.Store {
   }
   
   selectNoneFilter(filter) {
+    const newState = {...this.state};
+    
+    newState[filter] = this.state[filter].map(item => {
+      const newItem = Object.assign({}, item);
+      // update the new item
+      newItem.selected = false;
+      
+      return newItem;
+    });
+    
+    this.setState({...newState});
+  }
   
+  clearFilters() {
+    this.selectNoneFilter("filterCountries");
+    this.selectNoneFilter("filterYears");
   }
 }
 
