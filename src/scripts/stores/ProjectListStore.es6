@@ -29,6 +29,7 @@ class ProjectListStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PARAM), this.setParam);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PAGE), this.setPage);
+    this.listenTo(Actions.get(Constants.ACTION_CLEAR_FILTERS), this.clearFilters);
   }
   
   loading() {
@@ -72,6 +73,16 @@ class ProjectListStore extends Reflux.Store {
     this.setState({params: newParams});
     
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+  }
+  
+  clearFilters() {
+    const newParams = {...this.state.params};
+    
+    newParams.withNoLocation = false;
+    newParams.pendingVerification = false;
+    newParams.verifiedLocation = false;
+  
+    this.setState({params: newParams});
   }
 }
 

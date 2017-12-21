@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, ButtonToolbar, DropdownButton} from 'react-bootstrap';
+import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, Button, ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
@@ -32,6 +32,10 @@ class ProjectList extends Reflux.Component {
     const value = event.target.type === 'radio' || event.target.type === 'checkbox' ? event.target.checked :event.target.value;
     
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PARAM, name, value);
+  }
+  
+  clearFilters() {
+    Actions.invoke(Constants.ACTION_CLEAR_FILTERS);
   }
   
   render() {
@@ -73,18 +77,18 @@ class ProjectList extends Reflux.Component {
                   <div className="filter-button-wrapper">
                     <ButtonToolbar>
                       <DropdownButton bsStyle="primary" bsSize="large" title="Year" id="dropdown-size-large">
-                      <li>
-                      <span className="select-box"></span>
-                      2015
-                      </li>
-                      <li>
-                      <span className="select-box"></span>
-                      2016
-                      </li>
-                      <li>
-                      <span className="select-box"></span>
-                      2017
-                      </li>
+                        <li>
+                          <span className="select-box"></span>
+                          2015
+                        </li>
+                        <li>
+                          <span className="select-box"></span>
+                          2016
+                        </li>
+                        <li>
+                          <span className="select-box"></span>
+                          2017
+                        </li>
                       </DropdownButton>
                     </ButtonToolbar>
                   </div>
@@ -93,12 +97,12 @@ class ProjectList extends Reflux.Component {
                     <ButtonToolbar>
                       <DropdownButton bsStyle="primary" bsSize="large" title="Country" id="dropdown-size-large">
                         <li>
-                        <span className="select-box"></span>
-                        Country 1
+                          <span className="select-box"></span>
+                          Country 1
                         </li>
                         <li>
-                        <span className="select-box"></span>
-                        Country 2
+                          <span className="select-box"></span>
+                          Country 2
                         </li>
                       </DropdownButton>
                     </ButtonToolbar>
@@ -125,8 +129,10 @@ class ProjectList extends Reflux.Component {
                                  id="allOptions" name="allOptions"/>
                     <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                   </FormGroup>
-                  <button>Clear All Filters</button>
                 </Col>
+                
+                <Button className="pull-right" bsStyle='danger' bsSize="large"
+                        onClick={this.clearFilters.bind(this)}>Clear All Filters</Button>
               </div>
             </Col>
           </Row>
