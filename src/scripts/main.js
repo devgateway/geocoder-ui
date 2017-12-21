@@ -11,7 +11,7 @@ import i18next from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import AjaxUtil from './util/AjaxUtil.es6';
 import Setting from './util/Settings.es6';
-import Routes from './Routes.jsx'
+import Routes from './AppRoutes.jsx'
 
 /*
 Not found view
