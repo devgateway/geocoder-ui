@@ -31,7 +31,6 @@ class ProjectListLayout extends React.Component {
   render() {
     return (
       <div>
-        <ProjectListHeader/>
         <ProjectList {...this.props}/>
       </div>
     )

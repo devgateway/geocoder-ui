@@ -433,3 +433,46 @@ h4 {
   height: $base-unit * 20;
   overflow-y: auto;
 }
+
+.project-search-results{
+  padding: 0 $base-unit * 3;
+}
+
+.project-header{
+  background: $project-list-header-bg;
+  padding: $base-unit + 5;
+  .project-header-search{
+    margin-top:$base-unit / 2 + 5;
+  }
+  h2{
+    float: left;
+    font-size: $huge;
+    font-weight: $normal-weight-text;
+  }
+  .action-btn{
+    @include border-radius(3px);
+    background: $pending-locations;
+    color: $white;
+    float: right;
+    font-weight: $normal-weight-text;
+    margin-left: $base-unit;
+    margin-top: $base-unit + 5;
+    padding: $base-unit / 2 $base-unit * 2;
+  }
+}
+.project-list-filters{
+  padding-top: $base-unit + 3;
+  .dropdown{
+    background: red;
+  }
+}
+.project-search-form{
+  border-bottom: $px-unit solid $gray;
+}
+.filter-container{
+   padding: 0 $base-unit * 2;
+}
+.project-filter{
+  float: left;
+  overflow: visible;
+}

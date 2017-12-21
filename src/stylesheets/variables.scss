@@ -15,6 +15,7 @@ $gray: #eeeeee;
 $gray-darker: #cccccc;
 $no-locations: #f0ad4e;
 $verified: #669933;
+$project-list-header-bg: #e7f4df;
 
 // Base units
 $base-unit: 10px;
@@ -114,4 +115,8 @@ $bold-text: 800;
   height: 22px;
   @include grayBorder();
   color: $black;
+}
+
+.no-padding{
+  padding: 0;
 }

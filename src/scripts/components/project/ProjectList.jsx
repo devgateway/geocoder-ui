@@ -38,29 +38,39 @@ class ProjectList extends Reflux.Component {
     const {lang} = this.state;
   
     return (
-      <Grid>
-        <Row>
-          <Col lg={12}>
-            <h1>Projects</h1>
-          </Col>
-        </Row>
-        <div id="project-search-form">
-          
+      <Grid fluid className="no-padding">
+      
+      <div className="project-header">
+        <div className="container-fluid">
           <Row>
-            <Col lg={8}>
-              <FormControl type="text" name="text" value={this.state.params.text}
-                           placeholder="Enter text to search" label="Text search" ref="input"
-                           onChange={this.handleFilterChange.bind(this)}/>
+            <Col md={2}>
+              <h2>Projects</h2>
+            </Col>
+            
+            <Col md={5}>
+            <FormControl className="project-header-search pull-left" type="text" name="text" value={this.state.params.text}
+                       placeholder="Enter text to search" label="Text search" ref="input"
+                       onChange={this.handleFilterChange.bind(this)}/>
+            </Col>
+          
+            <Col md={5}>
+              <button className="action-btn">export</button>
+              <button className="action-btn">import</button>
             </Col>
           </Row>
-          
+        </div>
+        </div>
+        
+        <div id="container-fluid" className="filter-container">
           <Row>
-            <Col lg={12}>
-              <div className="form form-inline pull-rigth">
-                <h2><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h2>
-                
+            <Col md={12} className="project-search-form">
+              <div className="form form-inline">
+                <Col md={3}>
+                <h3><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h3>
+                </Col>
+                <Col md={9} className="project-list-filters">
                 <Message k="projectlist.geocodingfilter"/>
-                
+
                 <FormGroup className="spacingLg">
                   <FormControl type="checkbox" checked={this.state.params.withNoLocation} onChange={this.handleFilterChange.bind(this)}
                                id="withNoLocation" name="withNoLocation"/>
@@ -78,13 +88,16 @@ class ProjectList extends Reflux.Component {
                                id="allOptions" name="allOptions"/>
                   <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
                 </FormGroup>
+                </Col>
               </div>
             </Col>
           </Row>
         </div>
         
+        
+        <div className="container-fluid project-search-results">
         <Row id="project-search-list">
-          <Col lg={12}>
+          <Col md={9}>
             <ListGroup>
               {
                 this.state.data.content ? this.state.data.content.map((project) => (
@@ -100,6 +113,7 @@ class ProjectList extends Reflux.Component {
                         onSelect={this.handlePageChanged.bind(this)}/>
           </Col>
         </Row>
+        </div>
       </Grid>
     )
   }

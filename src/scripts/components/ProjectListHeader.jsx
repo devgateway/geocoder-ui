@@ -20,15 +20,10 @@ export default class ProjectListHeader extends Reflux.Component {
   render() {
     return (
       <div className="header">
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="nav navbar-left"></div>
-            <div className="nav navbar-rigth lan-selector-container">
-              <select value={this.state.lang} name="lang" className="pull-right" onChange={this.changeLan}>
-                <option value="en">{Message.t('header.language.english')}</option>
-                <option value="es">{Message.t('header.language.spanish')}</option>
-              </select>
-            </div>
+        <nav className="project-list-header">
+          <div className="container">
+              <div className="col-md-6"><h2>Projects</h2></div>
+              <div className="col-md-6">Buttons</div>
           </div>
         </nav>
       </div>
