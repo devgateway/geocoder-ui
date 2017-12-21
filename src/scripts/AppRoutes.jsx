@@ -26,13 +26,7 @@ class MapLayout extends React.Component {
 class ProjectListLayout extends React.Component {
   render() {
     return (
-<<<<<<< HEAD:src/scripts/Routes.jsx
-      <div>
-        <ProjectList {...this.props}/>
-      </div>
-=======
       <ProjectList {...this.props}/>
->>>>>>> master:src/scripts/AppRoutes.jsx
     )
   }
 }
