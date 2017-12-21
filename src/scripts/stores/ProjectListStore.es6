@@ -35,9 +35,17 @@ class ProjectListStore extends Reflux.Store {
   }
   
   updateFilterStore(filterStore) {
-    console.log(filterStore);
+    const newParams = {...this.state.params};
     
-    this.setState({...this.state});
+    // get only selected filters
+    const countries = filterStore.filterCountries.filter(country => country.selected === true).map(country => country.iso2);
+    const years = filterStore.filterYears.filter(year => year.selected === true).map(year => year.name);
+    
+    newParams.countries = countries;
+    newParams.years = years;
+    
+    this.setState({params: newParams});
+    Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
   
   loading() {
