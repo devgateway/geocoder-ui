@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
+import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
@@ -73,21 +73,21 @@ class ProjectList extends Reflux.Component {
                   <div className="filter-button-wrapper">
                     <ButtonToolbar>
                       <DropdownButton bsStyle="primary" bsSize="large" title="Year" id="dropdown-size-large">
-                        <MenuItem eventKey="1">2014</MenuItem>
-                        <MenuItem eventKey="2">2015</MenuItem>
-                        <MenuItem eventKey="3">2016</MenuItem>
-                        <MenuItem eventKey="4">2017</MenuItem>
+                        <div>2013</div>
+                        <div>2014</div>
+                        <div>2015</div>
+                        <div>2016</div>
                       </DropdownButton>
                     </ButtonToolbar>
                   </div>
-  
+                  
                   <div className="filter-button-wrapper">
                     <ButtonToolbar>
                       <DropdownButton bsStyle="primary" bsSize="large" title="Country" id="dropdown-size-large">
-                        <MenuItem eventKey="1">Country 1</MenuItem>
-                        <MenuItem eventKey="2">Country 2</MenuItem>
-                        <MenuItem eventKey="3">Country 3</MenuItem>
-                        <MenuItem eventKey="4">Country 4</MenuItem>
+                        <div>Country 1</div>
+                        <div>Country 2</div>
+                        <div>Country 3</div>
+                        <div>Country 4</div>
                       </DropdownButton>
                     </ButtonToolbar>
                   </div>
