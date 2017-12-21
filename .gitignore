@@ -4,5 +4,3 @@ dist
 tmp
 .idea/
 yarn.lock
-
-src/conf/settings.json
