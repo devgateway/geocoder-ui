@@ -2,6 +2,8 @@ import React from 'react';
 import Reflux from "reflux";
 import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import FiltersStore from '../../stores/FiltersStore.es6';
+import * as Actions from "../../actions/Actions.es6";
+import Constants from '../../constants/Contants.es6';
 
 /**
  * Component that displays the Year filter.
@@ -13,20 +15,19 @@ class YearFilter extends Reflux.Component {
     this.storeKeys = ['filterYears'];
   }
   
-  optionClicked() {
-  
+  optionClicked(index) {
+    Actions.invoke(Constants.UPDATE_FILTER_SELECTION, "filterYears", index);
   }
   
   render() {
-    
     return (<div className="filter-button-wrapper">
       <ButtonToolbar>
         <DropdownButton bsStyle="primary" bsSize="large" title="Year" id="dropdown-size-large">
           {
-            this.state.filterYears.map(year => {
-              return (<li key={year} className="filter-section" onClick={this.optionClicked.bind(this)}>
-                <span className={"select-box selected"}></span>
-                <span className="search-option-label">{year}</span>
+            this.state.filterYears.map((year, index) => {
+              return (<li key={year.name} className="filter-section" onClick={this.optionClicked.bind(this, index)}>
+                <span className={"select-box " + (year.selected ? "selected" : "")}></span>
+                <span className="search-option-label">{year.name}</span>
               </li>)
             })
           }

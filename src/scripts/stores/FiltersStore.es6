@@ -18,6 +18,8 @@ class FiltersStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_FETCH_FILTERS), this.loading);
     this.listenTo(Actions.get(Constants.ACTION_FETCH_FILTERS).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_FETCH_FILTERS).failed, this.failed);
+  
+    this.listenTo(Actions.get(Constants.UPDATE_FILTER_SELECTION), this.updateFilter);
   }
   
   loading() {
@@ -27,12 +29,24 @@ class FiltersStore extends Reflux.Store {
   completed(data) {
     this.setState({
       filterCountries:  data.countries,
-      filterYears:      data.years
+      filterYears:      data.years.map(year => {
+        return {
+          name: year,
+          selected: false
+        }
+      })
     });
   }
   
   failed(message) {
     console.error(`Error loading filters: ${message}`)
+  }
+  
+  updateFilter(filter, index) {
+    const newState = {...this.state};
+    newState[filter][index].selected = !this.state[filter][index].selected;
+  
+    this.setState({...newState});
   }
 }
 
