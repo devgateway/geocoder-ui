@@ -1,6 +1,7 @@
 import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
+import FiltersStore from "./FiltersStore.es6";
 
 /**
  * Stored used in {@link ProjectList} component.
@@ -24,12 +25,19 @@ class ProjectListStore extends Reflux.Store {
     super();
     this.state = initialState;
     
+    this.listenTo(Reflux.initStore(FiltersStore), this.updateFilterStore);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS), this.loading);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PARAM), this.setParam);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PAGE), this.setPage);
     this.listenTo(Actions.get(Constants.ACTION_CLEAR_FILTERS), this.clearFilters);
+  }
+  
+  updateFilterStore(filterStore) {
+    console.log(filterStore);
+    
+    this.setState({...this.state});
   }
   
   loading() {
@@ -81,7 +89,7 @@ class ProjectListStore extends Reflux.Store {
     newParams.withNoLocation = false;
     newParams.pendingVerification = false;
     newParams.verifiedLocation = false;
-  
+    
     this.setState({params: newParams});
   }
 }
