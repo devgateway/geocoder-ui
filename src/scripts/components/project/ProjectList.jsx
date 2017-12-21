@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup} from 'react-bootstrap';
+import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
@@ -69,50 +69,30 @@ class ProjectList extends Reflux.Component {
                   <h3><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h3>
                 </Col>
                 <Col md={9} className="project-list-filters">
-                
-                <div className="filter-button-wrapper">
-                <button class="btn btn-primary dropdown-toggle btn-secondary" type="button" data-toggle="dropdown" aria-expanded="true">
-                  Year
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">2014</a>
-                  </li>
-                  <li><a href="#">2015</a>
-                  </li>
-                  <li><a href="#">2016</a>
-                  </li>
-                  <li><a href="#">2017</a>
-                  </li>
-                  <li><a href="#">2018</a>
-                  </li>
-                  <li><a href="#">2019</a>
-                  </li>
-                  <li><a href="#">2020</a>
-                  </li>
-                </ul>
-                </div>
-                
-                
-                <div className="filter-button-wrapper">
-                <button class="btn btn-primary dropdown-toggle btn-secondary" type="button" data-toggle="dropdown" aria-expanded="true">
-                  Country
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Country 1</a>
-                  </li>
-                  <li><a href="#">Country 2</a>
-                  </li>
-                  <li><a href="#">Country 3</a>
-                  </li>
-                  <li><a href="#">Country 4</a>
-                  </li>
-                </ul>
-                </div>
-              
-                
-                
+                  
+                  <div className="filter-button-wrapper">
+                    <ButtonToolbar>
+                      <DropdownButton bsStyle="primary" bsSize="large" title="Year" id="dropdown-size-large">
+                        <MenuItem eventKey="1">2014</MenuItem>
+                        <MenuItem eventKey="2">2015</MenuItem>
+                        <MenuItem eventKey="3">2016</MenuItem>
+                        <MenuItem eventKey="4">2017</MenuItem>
+                      </DropdownButton>
+                    </ButtonToolbar>
+                  </div>
+  
+                  <div className="filter-button-wrapper">
+                    <ButtonToolbar>
+                      <DropdownButton bsStyle="primary" bsSize="large" title="Country" id="dropdown-size-large">
+                        <MenuItem eventKey="1">Country 1</MenuItem>
+                        <MenuItem eventKey="2">Country 2</MenuItem>
+                        <MenuItem eventKey="3">Country 3</MenuItem>
+                        <MenuItem eventKey="4">Country 4</MenuItem>
+                      </DropdownButton>
+                    </ButtonToolbar>
+                  </div>
+                  
+                  
                   <Message k="projectlist.geocodingfilter"/>
                   
                   <FormGroup className="spacingLg">
