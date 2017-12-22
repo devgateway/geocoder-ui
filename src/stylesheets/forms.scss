@@ -19,7 +19,6 @@ input[type="radio"] + label:before {
   height: 12px;
   width: 12px;
   margin: 4px;
-  border: 1px solid red;
 }
 
 input[type="checkbox"].no-location:checked + label:before, 
@@ -66,7 +65,6 @@ input[type="checkbox"].all-options + label:before{
 }
 
 input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + label:before {
-
   font-size: $small !important;
   padding-left: $px-unit;
   display: inline-block;
@@ -120,6 +118,9 @@ label {
 label{
   &.all-options{
     font-size: $big - 2;
+    &:hover{
+      color: $darkGray !important;
+    }
   }
 }
 

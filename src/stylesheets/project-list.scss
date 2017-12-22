@@ -1,5 +1,7 @@
 @import "variables.scss";
-
+button{
+  outline: none;
+}
 #project-search-form {
   @include fontDefault($medium, $black);
   input[type="text"] {
@@ -84,13 +86,18 @@
 
 .filter-group-label{
   color: $pending-locations;
+  display: block;
+  float: left;
   font-size: $big - 2;
   font-weight: $normal-weight-text + 100;
   margin-right: $base-unit + 5;
-  padding-top: $px-unit * 4; 
+  padding-top: $px-unit * 5; 
 }
 
 .geo-filter{
   font-size: $big - 2;
   margin-right: $base-unit + 5;
+  &:hover{
+    color: $darkGray !important;
+  }
 }

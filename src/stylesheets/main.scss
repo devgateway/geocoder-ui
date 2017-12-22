@@ -431,22 +431,29 @@ h4 {
   background: $project-list-header-bg;
   padding: $base-unit + 5;
   .project-header-search{
-    margin-top:$base-unit / 2 + 5;
+    height: $base-unit * 3.5;
+    margin-top:$base-unit / 2;
+    padding: $base-unit;
   }
   h2{
     float: left;
     font-size: $huge;
     font-weight: $normal-weight-text;
+    margin-top: $base-unit - 1;
   }
   .action-btn{
     @include border-radius(3px);
     background: $pending-locations;
+    border: 1px solid $pending-locations;
     color: $white;
     float: right;
     font-weight: $normal-weight-text;
     margin-left: $base-unit;
-    margin-top: $base-unit + 5;
-    padding: $base-unit / 2 $base-unit * 2;
+    margin-top: $base-unit + 3;
+    padding: $base-unit / 1.5 $base-unit * 2.5;
+    &:hover{
+      background: darken($pending-locations, 20%);
+    }
   }
 }
 .project-list-filters{

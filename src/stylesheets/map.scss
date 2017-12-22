@@ -138,6 +138,15 @@
   }
 }
 
+.language-selector{
+  @include border-radius(0);
+  border: 1px solid $green;
+  float: right;
+  margin-right: 25px;
+  margin-top: 3px;
+  width: $base-unit * 12;
+}
+
 .leaflet-control.leaflet-control-layers {
   background-color: transparent !important;
   overflow: hidden;

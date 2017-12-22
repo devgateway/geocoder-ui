@@ -35,7 +35,7 @@ export default class HeaderLayout extends Reflux.Component {
             </div>
             
             <div className="nav navbar-rigth lan-selector-container">
-              <select value={this.state.lang} name="lang" className="pull-right" onChange={this.changeLan}>
+              <select value={this.state.lang} name="lang" className="language-selector" onChange={this.changeLan}>
                 <option value="en">{Message.t('header.language.english')}</option>
                 <option value="es">{Message.t('header.language.spanish')}</option>
               </select>
