@@ -22,7 +22,7 @@ class CountryFilter extends Reflux.Component {
   render() {
     return (<div className="filter-button-wrapper">
       <ButtonToolbar>
-        <DropdownButton bsStyle="primary" bsSize="large" title="Country" id="dropdown-size-large">
+        <DropdownButton className="filter-btn" title="Country" id="dropdown-size-large">
           {
             this.state.filterCountries.map((country, index) => {
               return (<li key={country.iso2} className="filter-section" onClick={this.optionClicked.bind(this, index)}>

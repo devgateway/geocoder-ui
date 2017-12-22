@@ -54,7 +54,7 @@
 
 .pagination > .active > a {
   background-color: $gray;
-  border: 1px solid $gray-darker;
+  border: $px-unit solid $gray-darker;
   color: $black;
 }
 
@@ -62,7 +62,12 @@
   background-color: $gray;
 }
 
-.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
   z-index: 3;
   color: $black;
   cursor: default;
@@ -70,13 +75,22 @@
   border-color: $gray;
 }
 
-.project-list-header{
-  background: pink;
-}
-
 .filter-section {
   float: left;
   margin-right: $base-unit;
   margin-top: $base-unit / 1.1;
   cursor: pointer;
+}
+
+.filter-group-label{
+  color: $pending-locations;
+  font-size: $big - 2;
+  font-weight: $normal-weight-text + 100;
+  margin-right: $base-unit + 5;
+  padding-top: $px-unit * 4; 
+}
+
+.geo-filter{
+  font-size: $big - 2;
+  margin-right: $base-unit + 5;
 }

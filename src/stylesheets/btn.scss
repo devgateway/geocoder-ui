@@ -31,7 +31,7 @@
   @include fontDefault($small, "$icon-font");
   @include grayBorder();
   @include border-radius(0);
-  padding: 3px 15px 3px 15px;;
+  padding: $px-unit * 3 $base-unit + 5;
   line-height: 1.5;
   height: $base-unit + 9;
   margin: $px-unit;
@@ -43,7 +43,7 @@
   line-height: 1.5;
   height: 24px !important;
   @include fontDefault($small, "$white");
-  margin: 1px;
+  margin: $px-unit;
 }
 
 .btn-success {
@@ -63,5 +63,79 @@
   background-color: $green-light;
   border-color: darken($green-light, 10%);
 }
+.filter-btn{
+  @include border-radius(0);
+  border: $px-unit solid $gray;
+  color: $pending-locations;
+  font-size: $big - 2;
+  font-weight: $normal-weight-text + 100;
+  margin-right: $base-unit;
+  padding: $base-unit / 2;
+  text-align: left;
+  width: $base-unit * 8;
+  &:hover,
+  &:focus{
+    background: $blue;
+    color: $white;
+    font-size: $big;
+    font-weight: $normal-weight-text + 100;
+  }
+  .caret{
+    position: absolute;
+    right: $base-unit;
+    top: $base-unit + 2;
+  }
+}
 
+.filter-button-wrapper{
+  .dropdown-menu{
+    @inlude border-radius(0);
+    border: $px-unit solid $gray;
+    width: $base-unit * 20;
+  }
+}
+
+.filter-btn.btn-default:active:hover, 
+.filter-btn.btn-default.active:hover, 
+.filter-btn.open > .dropdown-toggle.btn-default:hover, 
+.filter-btn.btn-default:active:focus, 
+.filter-btn.open > .dropdown-toggle.btn-default:focus, 
+.filter-btn.btn-default:active.focus, 
+.filter-btn.btn-default.active.focus, 
+.filter-btn.open > .dropdown-toggle.btn-default.focus{
+  background-color: $blue !important;
+  color: $white !important;
+}
+
+.project-filters-btn-group{
+  border: $px-unit solid $gray;
+  display: block;
+  float: left;
+  height: $base-unit * 2.9;
+  margin-top: $px-unit * 2;
+  padding: 0 $base-unit;
+}
+
+.clear-btn-wrapper{
+  border-left: $px-unit solid $gray-darker;
+  display: inline-block;
+  height: $base-unit * 3.2;
+  margin-left: $base-unit * 2;
+  margin-top: $px-unit * 2;
+  padding: 0 0 0 $base-unit + 5;
+  .btn-danger{
+    @include border-radius(0);
+    background: $white;
+    border: 1px solid $gray;
+    color: red;
+    font-size: $big - 1;
+    height: $base-unit * 2.9;
+    line-height: 120%;
+    text-align: left;
+    &:hover{
+      background: $red;
+      color: $white;
+    }
+  }
+}
 

@@ -457,6 +457,7 @@ h4 {
 }
 .project-search-form{
   border-bottom: $px-unit solid $gray;
+  padding-bottom: $base-unit * 2;
 }
 .filter-container{
    padding: 0 $base-unit * 2;
@@ -468,6 +469,7 @@ h4 {
 
 .filter-button-wrapper{
   display: inline;
+  float: left;
   .btn-toolbar{
     display: inline-block;
   }

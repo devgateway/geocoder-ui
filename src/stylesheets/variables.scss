@@ -107,14 +107,21 @@ $bold-text: 800;
 }
 
 @mixin boxSizeBig() {
-  height: 35px;
+  height: $base-unit * 3;
 }
 
 @mixin inputText() {
   @include fontDefault($regular, $black);
-  height: 22px;
+  height: $base-unit * 2.2;
   @include grayBorder();
   color: $black;
+}
+
+@mixin filter-option($border-color){
+  border: $px-unit * 3 solid $border-color;
+  background-color: $white;
+  height: $base-unit + 5;
+  width: $base-unit + 5;
 }
 
 .no-padding{
