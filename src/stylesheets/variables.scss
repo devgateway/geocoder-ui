@@ -124,6 +124,25 @@ $bold-text: 800;
   width: $base-unit + 5;
 }
 
+@mixin scrollbar(){
+  ::-webkit-scrollbar {
+    width: $base-unit + 2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @include border-radius(0);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @include border-radius(0);
+    background: rgba(158, 161, 165, 0.2);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
 .no-padding{
   padding: 0;
 }

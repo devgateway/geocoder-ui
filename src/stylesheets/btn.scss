@@ -143,3 +143,40 @@
   }
 }
 
+.map-it-btn{
+  background: $green-light;
+  border: $px-unit solid $green-light;
+  color: $white;
+  height: $base-unit * 5;
+  right: $base-unit;
+  outline:none;
+  position: absolute;
+  top: 10%;
+  width: $base-unit * 5;
+  &:hover{
+    background: darken($green-light, 10%);
+    border: $green;
+  }
+}
+
+.show-location-btn{
+  @include border-radius(2px);
+  background: $no-locations;
+  border: $no-locations;
+  color: $white;
+  outline: none;
+  &:hover, &:focus{
+    backgrouns: $gray-darker;
+  }
+}
+
+.map-location-btn{
+  @include border-radius(2px);
+  background: $green;
+  border: $green;
+  color: $white;
+  outline: none;
+  &:hover, &:focus{
+    backgrouns: $gray-darker;
+  }
+}
