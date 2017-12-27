@@ -2,12 +2,6 @@
 
 /*Locations Search*/
 #search-results {
-  .btn {
-    @include middle();
-    position: absolute;
-    right: 0;
-  }
-
   p {
     width: $extend - 15;
   }
@@ -23,6 +17,5 @@
     border: none;
     margin: 1px;
     border-bottom: 1px solid #eee;
-
   }
 }
