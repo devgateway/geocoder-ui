@@ -10,8 +10,7 @@ import Constants from '../../constants/Contants.es6';
 /*Layer*/
 import LayerGroup from './layers/LayerGroup.jsx';
 import GeocodingLayer from './layers/GeocodingLayer.jsx';
-import CountryLayer from './layers/CountryLayer.jsx';
-import GazetterLayer from './layers/GazetterLayer.jsx'
+
 /*Controls*/
 import Control from './controls/Control.jsx'; //control container
 
@@ -28,7 +27,7 @@ import LocationPopup from './popups/LocationPopup.jsx';
 import DataEntryPopup from '../dialogs/DataEntry.jsx';
 
 /*Store*/
-import MapStore from '../../stores/MapStore.es6';
+import MapStore from '../../stores/Map.es6';
 
 
 export default class MapView extends React.Component {
@@ -40,6 +39,7 @@ export default class MapView extends React.Component {
   }
 
   componentDidMount() {
+
     this.unsubscribe = MapStore.listen(this.onMapUpdated.bind(this));
   }
 
@@ -49,6 +49,7 @@ export default class MapView extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+
     if (nextState.activeLocation && nextState.activeLocation != this.state.activeLocation) {
       this.setActiveLocation(nextState.activeLocation);
     }
@@ -65,15 +66,15 @@ export default class MapView extends React.Component {
     This is called by location onClick
     */
   locationClick(e) {
-
     //using geonames lat and lng instead of event latlng should be more precise.
     let countryInfo = this.queryFeatures(e.latlng);
     let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
     let locationFeature = e.target.feature
     const {latlng} = e;
     //at this stage I have the location feature + country feature
-    //Actions.invoke(Constants.ACTION_POPUP_INFO, {locationFeature, countryFeature, 'position': latlng})
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature, 'position': latlng})
+    Actions.invoke(Constants.ACTION_POPUP_INFO, {
+      locationFeature, countryFeature, 'position': latlng
+    })
   }
 
   /*Query features behind the point*/
@@ -94,7 +95,6 @@ export default class MapView extends React.Component {
 
   /* Pass on location click from location list window, make selected location active and show popup */
   setActiveLocation(location, showDataEntry) {
-
     let countryInfo = this.queryFeatures([location.lng, location.lat], this.refs.country.leafletElement);
     let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
     this.refs.map.leafletElement.panTo({lat: location.lat, lng: location.lng});//center the map at point
@@ -113,6 +113,7 @@ export default class MapView extends React.Component {
 
 
     return (
+
       <div id="mapContainer">
         <div className="map">
           <DataEntryPopup/>
@@ -123,16 +124,16 @@ export default class MapView extends React.Component {
               <LocationPopup/>
             </MapPopUp>
 
-            <MiniMap  collapsed={true} position='topright' topPadding= {1500} bottomPadding= {40}>
-              <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>
-                {this.state.layers.countries?this.state.layers.countries.map((country)=>{
-                  return <CountryLayer {...country}/>
-                }):null}
+            <MiniMap>
+              <LayerGroup name="GeoCoding" showAsMiniMap={true} ref="geocoding" showAsMiniMap={true}>
+
+                <GeocodingLayer onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>}
+
               </LayerGroup>
 
-              <GeocodingLayer name="Geocoding" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>
-
-              <GazetterLayer name="Available Locations" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.locations}/>
+              <LayerGroup name="Boundaries" showAsMiniMap={true} ref="country" showAsMiniMap={true}>
+                {this.state.layers.countries.map(l=><CountryLayer  onFeatureClick={this.locationClick.bind(this)}  {...l}/>)}
+              </LayerGroup>
 
             </MiniMap>
 

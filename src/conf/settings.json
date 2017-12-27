@@ -7,7 +7,9 @@
     "ALL_FILTERS_END_POINT": "filters/all",
     "IMPORT_END_POINT": "import",
     "PROJECT_END_POINT": "project",
-    "PROJECT_LIST_END_POINT": "projects"
+    "PROJECT_LIST_END_POINT": "projects",
+    "BOUNDARY_END_POINT": "boundary",
+    "COUNTRY_END_POINT": "boundaries/list"
   },
   "I18N": {
     "OPTIONS": {

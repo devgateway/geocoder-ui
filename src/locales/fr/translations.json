@@ -10,8 +10,7 @@
     "branding": "Open Aid Geocoder",
     "language": {
       "english": "English",
-      "spanish": "Spanish",
-      "french": "French"
+      "spanish": "Spanish"
     },
     "search": {
       "holder": "Enter text to search",
@@ -73,8 +72,6 @@
     "locationclass": "Location Class",
     "geographicexactness": "Geographic Exactness",
     "activitydescription": "Activity Description",
-    "description": "Description",
-    "locationreach":"Location Reach",
     "updatefromgeonames": "Update data from Geonames service",
     "save": "Save",
     "geometry": "Geometry",

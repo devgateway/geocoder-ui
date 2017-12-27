@@ -17,26 +17,26 @@ class ProjectList extends Reflux.Component {
     super();
     this.stores = [ProjectListStore, FiltersStore, LangStore];
   }
-  
+
   componentDidMount() {
     Actions.invoke(Constants.ACTION_FETCH_FILTERS);
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
-  
+
   handlePageChanged(page) {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PAGE, page);
   }
-  
+
   handleFilterChange(event) {
     const name = event.target.name;
     const value = event.target.type === 'radio' || event.target.type === 'checkbox' ? event.target.checked :event.target.value;
-    
+
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PARAM, name, value);
   }
-  
+
   render() {
     const {lang} = this.state;
-  
+
     return (
       <Grid>
         <Row>
@@ -45,7 +45,7 @@ class ProjectList extends Reflux.Component {
           </Col>
         </Row>
         <div id="project-search-form">
-          
+
           <Row>
             <Col lg={8}>
               <FormControl type="text" name="text" value={this.state.params.text}
@@ -53,27 +53,27 @@ class ProjectList extends Reflux.Component {
                            onChange={this.handleFilterChange.bind(this)}/>
             </Col>
           </Row>
-          
+
           <Row>
             <Col lg={12}>
               <div className="form form-inline pull-rigth">
                 <h2><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h2>
-                
+
                 <Message k="projectlist.geocodingfilter"/>
-                
+
                 <FormGroup className="spacingLg">
                   <FormControl type="checkbox" checked={this.state.params.withNoLocation} onChange={this.handleFilterChange.bind(this)}
                                id="withNoLocation" name="withNoLocation"/>
                   <label htmlFor="withNoLocation" style={{color: "#f0ad4e"}}>{Message.t('projectlist.withNoLocation')}</label>
-                  
+
                   <FormControl type="checkbox" checked={this.state.params.pendingVerification} onChange={this.handleFilterChange.bind(this)}
                                id="pendingVerification" name="pendingVerification"/>
                   <label htmlFor="pendingVerification" style={{color: "#5bc0de"}}>{Message.t('projectlist.pendingVerification')}</label>
-                  
+
                   <FormControl type="checkbox" checked={this.state.params.verifiedLocation} onChange={this.handleFilterChange.bind(this)}
                                id="verifiedLocation" name="verifiedLocation"/>
                   <label htmlFor="verifiedLocation" style={{color: "#669933"}}>{Message.t('projectlist.verifiedLocation')}</label>
-                  
+
                   <FormControl type="checkbox" onChange={this.handleFilterChange.bind(this)}
                                id="allOptions" name="allOptions"/>
                   <label htmlFor="allOptions" style={{color: "#000"}}>{Message.t('projectlist.any')}</label>
@@ -82,7 +82,7 @@ class ProjectList extends Reflux.Component {
             </Col>
           </Row>
         </div>
-        
+
         <Row id="project-search-list">
           <Col lg={12}>
             <ListGroup>

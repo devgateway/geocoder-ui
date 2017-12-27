@@ -6,22 +6,23 @@ import * as Actions from '../../../actions/Actions.es6'
 import Constants from '../../../constants/Contants.es6';
 
 /*
-Renders a single Item 
+Renders a single Item
 */
 class LayerItem extends React.Component {
   constructor() {
     super();
   }
-  
-  _addLayer(e) {
+
+  addLayer(e) {
     Actions.invoke(Constants.ACTION_ADD_COUNTRY_LAYER, e.currentTarget.value);
   }
-  
-  _removeLayer(e) {
+
+  removeLayer(e) {
     Actions.invoke(Constants.ACTION_REMOVE_COUNTRY_LAYER, e.currentTarget.value);
   }
-  
+
   render() {
+
     return (
       <p className="list-group-item-text">
         {this.props.name}
@@ -29,13 +30,13 @@ class LayerItem extends React.Component {
           <i className="fa fa-spinner fa-spin pull-right"></i>
           :
           (this.props.added) ?
-            <Button bsStyle='warning' bsSize='small' className='pull-right' onClick={this._removeLayer.bind(this)}
-                    value={this.props.iso}>
+            <Button bsStyle='warning' bsSize='small' className='pull-right' onClick={e=>this.removeLayer(e)}
+                    value={this.props.iso3}>
               <Message k="layerselector.remove"/>
             </Button>
             :
-            <Button bsStyle='info' bsSize='small' className='pull-right' onClick={this._addLayer.bind(this)}
-                    value={this.props.iso}>
+            <Button bsStyle='info' bsSize='small' className='pull-right' onClick={e=>this.addLayer(e)}
+                    value={this.props.iso3}>
               <Message k="layerselector.add"/>
             </Button>
         }
@@ -46,14 +47,14 @@ class LayerItem extends React.Component {
 
 
 /*
-Renders a  List of Country Layers  
+Renders a  List of Country Layers
 */
 class LayerList extends React.Component {
-  
+
   constructor() {
     super();
   }
-  
+
   render() {
     return (
       <div className="list-group-item">
@@ -77,33 +78,33 @@ class LayerList extends React.Component {
 
 
 export default class CountrySelector extends React.Component {
-  
+
   constructor() {
     super();
     this.store = CountryLayersStore;
     this.state = {'expanded': false};
   }
-  
+
   componentDidMount() {
     Actions.invoke(Constants.ACTION_LOAD_COUNTRY_LAYER_LIST);//loads country layer list
     this.unsuscribe = this.store.listen(this.onStoreChange.bind(this));
   }
-  
+
   componentWillUnmount() {
     this.unsuscribe();
   }
-  
+
   onStoreChange(storeData) {
     let newState = Object.assign(this.state, storeData);
     this.setState(newState);
   }
-  
+
   toggle(e) {
     let newState = Object.assign(this.state, {'expanded': !this.state.expanded});
     this.setState(newState);
   }
-  
-  
+
+
   render() {
     return (
       <div className="leaflet-control leaflet-control-layers" id="countryLayerSelector">
@@ -120,7 +121,3 @@ export default class CountrySelector extends React.Component {
     )
   }
 }
-
-
-
-

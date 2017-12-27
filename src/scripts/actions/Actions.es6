@@ -107,7 +107,9 @@ actions[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES].listen(function (options) {
 });
 
 actions[Constants.ACTION_LOAD_SHAPE].listen(function (iso) {
-  ShapesMapping.getGeoJsonShape(iso).then((results) => actions[Constants.ACTION_LOAD_SHAPE].completed(results, iso))
+
+
+  APIClient.getGeoJsonShape(iso).then((results) => actions[Constants.ACTION_LOAD_SHAPE].completed(results, iso))
     .catch((message) => actions[Constants.ACTION_LOAD_SHAPE].failed(message));
 });
 
@@ -119,8 +121,12 @@ actions[Constants.ACTION_FIND_PROJECTS].listen(function (params) {
 });
 
 actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function (options) {
+
   APIClient.getProject(options.id, options.lang)
-    .then((results) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results))
+    .then((results) => {
+
+      return actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results)
+    })
     .catch((message) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].failed(message));
 });
 
@@ -131,7 +137,8 @@ actions[Constants.ACTION_SAVE_PROJECT].listen(function (project) {
 });
 
 actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
-  ShapesMapping.getShapeList().then((results) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].completed(results))
+
+  APIClient.getCountryList().then((results) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].completed(results))
     .catch((message) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].failed(message));
 });
 
@@ -149,7 +156,7 @@ actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
             file
           })
         });
-      
+
     }
   })
 });

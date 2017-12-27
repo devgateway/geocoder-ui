@@ -1,16 +1,20 @@
 import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import {Link} from 'react-router';
+
 import DataEntryStore from '../../stores/DataEntryStore.es6';
+import LangStore from '../../stores/LangStore.es6';
+
+import Reflux from "reflux";
 import * as Actions from '../../actions/Actions.es6'
 import Constants from '../../constants/Contants.es6';
 import DataEntryHelp from '../../help/DataEntry.es6';
 import ReactDOM from 'react-dom';
 import Message from '../Message.jsx'
-
+import MultiLangualInput from './MultiLangualInput.jsx'
 
 class AdminOptions extends React.Component {
-  
+
   toggleAdminSource(e) {
     var newSource = e.target.parentElement.value;
     this.props.changeCodingValue('adminSource', newSource);
@@ -18,9 +22,8 @@ class AdminOptions extends React.Component {
       Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': this.props.geocoding.id});
     }
   }
-  
+
   render() {
-    
     let geocoding = this.props.geocoding;
     let adminSource = this.props.adminSource;
     return (
@@ -54,19 +57,19 @@ class AdminOptions extends React.Component {
 
 /*Popup Data Entry*/
 class DataEntryContent extends React.Component {
-  
+
   static propTypes = {};
-  
+
   constructor(props) {
     super(props);
     this.state = {};
   }
-  
+
   codingValueChanged(e) {
     this.changeCodingValue(e.target.name, e.target.value);
     this.validateField(e.target.value, e.target.name)
   }
-  
+
   changeCodingValue(name, value) {
     let val;
     switch (name) {
@@ -86,24 +89,24 @@ class DataEntryContent extends React.Component {
     }
     Actions.invoke(Constants.ACTION_CHANGE_CODING_VALUE, {'name': name, 'value': val});
   }
-  
+
   onDelete() {
     this.changeCodingValue('confirmDelete', 'TO_CONFIRM');
   }
-  
+
   doDelete() {
     this.changeCodingValue('confirmDelete', 'CONFIRMED');
     this.save(true);
   }
-  
+
   cancelDelete() {
     this.changeCodingValue('confirmDelete', 'CANCELED');
   }
-  
+
   onSave() {
     this.save(false)
   }
-  
+
   save(skipValidation) {
     let valid = (skipValidation) ? true : this.validate(this.props.geocoding);
     if (valid) {
@@ -111,7 +114,7 @@ class DataEntryContent extends React.Component {
       this.onCancel();
     }
   }
-  
+
   /**
    * Validate the new geocoding object
    */
@@ -124,7 +127,7 @@ class DataEntryContent extends React.Component {
       })
     );
   }
-  
+
   validateField(value, elementId, validator) {
     if (!validator) { //default validator
       validator = (val) => {
@@ -141,17 +144,17 @@ class DataEntryContent extends React.Component {
       return true;
     }
   }
-  
+
   /*end field*/
   onCancel() {
     this.props.onCancel ? this.props.onCancel() : null;
   }
-  
+
   updateFromGeonames() {
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': this.props.geocoding.id});
     this.changeCodingValue('adminSource', 'geonames');
   }
-  
+
   getAdminSource(geocoding) {
     /*adminSource values:
         saved: load admin data from stored values
@@ -168,14 +171,18 @@ class DataEntryContent extends React.Component {
       return 'geonames'; //otherwise, return geonames
     }
   }
-  
+
   render() {
-    let geocoding = this.props.geocoding;
-    let adminSource = this.getAdminSource(geocoding);
-    let country = geocoding.adminCodes[adminSource].country.name;
-    let admin1 = geocoding.adminCodes[adminSource].admin1 ? geocoding.adminCodes[adminSource].admin1.name : 'N/A';
-    let admin2 = geocoding.adminCodes[adminSource].admin2 ? geocoding.adminCodes[adminSource].admin2.name : 'N/A';
-    
+
+    let {geocoding:{countryFeature,locationFeature},lang} = this.props;
+
+    let {properties:{activityDescriptions,administratives,descriptions,exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,locationStatus,names}}=locationFeature
+
+
+     administratives.filter(adm=>adm.level==1)
+     debugger;
+    let type='geocoding'
+    debugger;
     if (this.props.geocoding.confirmDelete == 'TO_CONFIRM') {
       return (
         <div>
@@ -189,81 +196,76 @@ class DataEntryContent extends React.Component {
       )
     } else {
       return (
-        <div id='dataentry' className={geocoding.type == 'location' ? 'new' : 'update'}>
+        <div id='dataentry' className={locationStatus == 'EXISTING' ? 'update' : 'new'}>
+
+            <label className=""><b> * All entered text will be stored in "{this.props.lang}" language</b></label>
           <div id='noneditablefields'>
             <div className="row">
               <div className="col-lg-12">
-                <label className="colored" htmlFor="admin1"><Message k="dataentry.name"/></label>
-                <input type="text" className="form-control big" id="name" placeholder="name" value={geocoding.name}
-                       disabled/>
+                  <label className="colored" htmlFor="name">
+                  <Message k="dataentry.name"/></label>
+                  <MultiLangualInput id="name" name="name" texts={names}></MultiLangualInput>
               </div>
+
             </div>
-            
+
             <div className="row">
               <div className="col-lg-4">
                 <div className="form-group">
                   <label className="colored" htmlFor="country,"><Message k="dataentry.country"/></label>
-                  <input type="text" className="form-control" id="country" placeholder="NA" value={country || ''}
-                         disabled/>
+                  <input type="text" className="form-control" id="country" placeholder="NA" value={''} disabled/>
                 </div>
               </div>
               <div className="col-lg-4">
                 <div className="form-group">
-                  <label className="colored" htmlFor="admin1"><Message k="dataentry.firstadm"/></label>
-                  <input type="text" className="form-control" id="admin1" placeholder="NA" value={admin1 || ''}
-                         disabled/>
+                  <label className="colored" htmlFor="admin1"><Message k="dataentry.admin1"/></label>
+                  <input type="text" className="form-control" id="admin1" placeholder="NA" value={administratives.find(adm=>adm.level==1).name} disabled/>
                 </div>
               </div>
               <div className="col-lg-4">
                 <div className="form-group">
-                  <label className="colored" htmlFor="admin2"><Message k="dataentry.secondadm"/></label>
-                  <input type="text" className="form-control" id="admin2" placeholder="NA" value={admin2 || ''}
-                         disabled/>
+                  <label className="colored" htmlFor="admin2"><Message k="dataentry.admin2"/></label>
+                  <input type="text" className="form-control" id="admin2" placeholder="NA" value={administratives.find(adm=>adm.level==2).name} disabled/>
                 </div>
               </div>
-              <AdminOptions
-                geocoding={geocoding}
-                adminSource={adminSource}
-                loadingAdminGeonames={this.props.loadingAdminGeonames}
-                changeCodingValue={this.changeCodingValue}
-              />
+
             </div>
-            
+
             <div className="row">
               <div className="col-lg-4">
                 <div className="form-group">
                   <label className="colored" for="id"><Message k="dataentry.identifier"/></label>
-                  <input type="text" className="form-control" id="id" placeholder="id" value={geocoding.id} disabled/>
+                  <input type="text" className="form-control" id="id" placeholder="id" value={''} disabled/>
                 </div>
               </div>
               <div className="col-lg-4">
                 <div className="form-group">
                   <label className="colored" for="geometryType"><Message k="dataentry.type"/></label>
                   <input type="text" className="form-control" id="geometryType" placeholder=""
-                         value={geocoding.geometry.type} disabled/>
+                         value={''} disabled/>
                 </div>
               </div>
               <div className="col-lg-4">
                 <div className="form-group" id="coordinates">
                   <label className="colored"><Message k="dataentry.coordinates"/></label>
-                  <div>{geocoding.geometry.coordinates.join(', ')}</div>
+                  <div>{''}</div>
                 </div>
               </div>
             </div>
-            
+
             <div className="row">
               <div className="col-lg-3">
                 <div className="form-group">
                   <label className="colored"><Message k="dataentry.featuredesignation"/></label>
                   <input type="text" className="form-control" id="featureDesignation"
-                         value={geocoding.featureDesignation.code} disabled/>
+                         value={''} disabled/>
                 </div>
               </div>
               <div className="col-lg-9">
                 <div className="form-group">
                   <label>&nbsp;</label>
                   <input type="text" className="form-control" id="featureDesignationName"
-                         value={geocoding.featureDesignation.name} disabled/>
+                         value={''} disabled/>
                 </div>
               </div>
             </div>
@@ -272,7 +274,7 @@ class DataEntryContent extends React.Component {
             <div className="col-lg-6">
               <div className="form-group">
                 <label className="colored" for="locationClass"><Message k="dataentry.locationclass"/></label>
-                <select value={geocoding.locationClass ? geocoding.locationClass.code : ''} className="form-control"
+                <select value={locationClass ? locationClass.code : ''} className="form-control"
                         name="locationClass" id="locationClass" onChange={this.codingValueChanged.bind(this)}>
                   <option>Select</option>
                   {
@@ -286,7 +288,7 @@ class DataEntryContent extends React.Component {
             <div className="col-lg-6">
               <div className="form-group">
                 <label className="colored" for="Exactness"><Message k="dataentry.geographicexactness"/></label>
-                <select value={geocoding.exactness ? geocoding.exactness.code : ''} className="form-control"
+                <select value={exactness ? exactness.code : ''} className="form-control"
                         name="exactness" id="exactness" onChange={this.codingValueChanged.bind(this)}>
                   <option>Select</option>
                   {
@@ -298,26 +300,26 @@ class DataEntryContent extends React.Component {
               </div>
             </div>
           </div>
-          
+
           <div className="row">
             <div className="col-lg-12">
               <div className="form-group">
                 <label className="colored"><Message k="dataentry.activitydescription"/></label>
                 <textarea className="form-control" name="activityDescription" id="activityDescription"
-                          value={geocoding.activityDescription}
+                          value={''}
                           onChange={this.codingValueChanged.bind(this)}></textarea>
               </div>
             </div>
           </div>
-          
+
           <div className="row">
             <div className="col-lg-12 help-container">
               <div className='separator'/>
-              <DataEntryHelp parentId='dataentry' type={geocoding.type}/>
+              <DataEntryHelp parentId='dataentry' type={type}/>
               <div className='separator'/>
               <button className="btn btn-lg btn-success pull-right" id="savebutton"
-                      onClick={this.onSave.bind(this)}>{geocoding.type == 'location' ? Message.t('dataentry.save') : Message.t('dataentry.update')}</button>
-              {(geocoding.type != 'location') ? <button className="btn btn-lg btn-danger pull-right" id="deletebutton"
+                      onClick={this.onSave.bind(this)}>{locationStatus == 'EXISTING' ? Message.t('dataentry.save') : Message.t('dataentry.update')}</button>
+                    {(locationStatus != 'NEW') ? <button className="btn btn-lg btn-danger pull-right" id="deletebutton"
                                                         onClick={this.onDelete.bind(this)}><Message
                 k="dataentry.delete"/></button> : null}
               <button className="btn btn-lg btn-warning pull-right" id="cancelbutton"
@@ -348,31 +350,21 @@ class DataEntryContent extends React.Component {
 
 
 /*Data Entry Main Container*/
-class DataEntry extends React.Component {
+class DataEntry extends Reflux.Component {
+
   constructor() {
     super();
-    this.store = DataEntryStore;
-    this.state = {'showPopup': false};
+
+    this.state = {};
+    this.stores = [DataEntryStore,LangStore];
   }
-  
-  componentDidMount() {
-    this.unsuscribe = this.store.listen(this.onStoreChange.bind(this));
-  }
-  
-  componentWillUnmount() {
-    this.unsuscribe();
-  }
-  
-  onStoreChange(storeData) {
-    let newState = Object.assign(this.state, storeData);
-    this.setState(newState);
-  }
-  
+
   close(e) {
     Actions.invoke(Constants.ACTION_CLOSE_DATAENTRY_POPUP);
   }
-  
+
   render() {
+
     return (
       <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.close}>
         <Modal.Body>

@@ -5,10 +5,10 @@ import {StoreMixins} from '../mixins/StoreMixins.es6';
 
 const initialData = {shapeList: []};
 const CountryLayersStore = createStore({
-  
+
   initialData: initialData,
   mixins: [StoreMixins],
-  
+
   init() {
     this.data = initialData;
     this.listenTo(Actions.get(Constants.ACTION_LOAD_COUNTRY_LAYER_LIST).completed, 'loadLayerList');
@@ -19,55 +19,58 @@ const CountryLayersStore = createStore({
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
     this.listenTo(Actions.get(Constants.ACTION_TOGGLE_LAYER_VISIBILITY), 'toggleLayerVisibility');
   },
-  
+
   cleanStore() {
     this.setData(this.initialData);
   },
-  
+
   loadLayerList(list) {
+
     const newState = Object.assign({}, this.get());
     Object.assign(newState, {shapeList: list});
     this.setData(newState);
   },
-  
+
   addLayer(countryISO) {
+
     let newState = Object.assign({}, this.get());
     const selectedLayer = newState.shapeList.find((it) => {
-      return it.iso === countryISO
+      return it.iso3 === countryISO
     });
+if (selectedLayer){
     Object.assign(selectedLayer, {'visible': true, loading: true});//add it
     this.setData(newState);
+
     Actions.invoke(Constants.ACTION_LOAD_SHAPE, countryISO);
-    
+}
   },
-  
+
   removeLayer(countryISO) {
+
     Actions.invoke(Constants.ACTION_UNLOAD_SHAPE, countryISO);
-    
+
   },
-  
+
+
+  flag(iso,flag){
+    let newState = Object.assign({}, this.get());
+    let layer = newState.shapeList.find((it) => {
+      return it.iso3 === iso
+    });
+    layer.added = flag;
+    layer.loading = false;
+    Object.assign(newState);
+    this.setData(newState);
+  },
+
   flagAdded(iso) {
-    let newState = Object.assign({}, this.get());
-    let layer = newState.shapeList.find((it) => {
-      return it.iso === iso
-    });
-    layer.added = true;
-    layer.loading = false;
-    Object.assign(newState);
-    this.setData(newState);
+    this.flag(iso,true)
   },
-  
+
   flagRemoved(iso) {
-    let newState = Object.assign({}, this.get());
-    let layer = newState.shapeList.find((it) => {
-      return it.iso === iso;
-    });
-    layer.added = false;
-    layer.loading = false;
-    Object.assign(newState);
-    this.setData(newState);
+    this.flag(iso,false)
   },
-  
+
   toggleLayerVisibility(data) {/*
 		var newState = Object.assign({}, this.get());
 		var layers = newState.shapeList;

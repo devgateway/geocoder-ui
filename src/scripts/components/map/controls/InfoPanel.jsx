@@ -22,7 +22,7 @@ class InfoControl extends React.Component {
   }
 
   componentWillMount() {
-    debugger;
+
     this.unsuscribe1 = ProjectStore.listen(this.onStoreChange.bind(this));
     this.unsuscribe2 = LocationsStore.listen(this.onLocationsLoaded.bind(this));
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
@@ -70,7 +70,7 @@ class InfoControl extends React.Component {
   }
 
   render() {
-    debugger;
+
     var activeTab = this.state.showTab || 1;
     return (
       <div className="leaflet-control leaflet-control-layers" id="infoControl">

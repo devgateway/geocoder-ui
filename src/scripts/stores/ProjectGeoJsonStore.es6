@@ -15,8 +15,10 @@ const ProjectGeoJsonStore = createStore({
     // TODO - use directly singleton when we switch to Reflux es6
     this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.process);
   },
-  
+
   process(projectStore) {
+
+
     const project = projectStore.project;
     let newData;
 
@@ -24,7 +26,7 @@ const ProjectGeoJsonStore = createStore({
 
       let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
 
-      debugger;
+
 
       featureCollection.features.forEach((record) => {
         let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;

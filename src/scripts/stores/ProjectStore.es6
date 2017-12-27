@@ -36,10 +36,12 @@ class ProjectStore extends Reflux.Store {
   }
 
   completed(response) {
+
     let project = response.data;
 
     if (project.countries !== undefined && project.countries.length !== 0) {
       const firstCountry = project.countries[0];
+
       Actions.invoke(Constants.ACTION_LOAD_SHAPE, (firstCountry.iso3 || firstCountry.iso2 || firstCountry.iso));
     }
 

@@ -10,8 +10,7 @@ import ProjectStore from './ProjectStore.es6';
 import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
-const PopUpStore = createStore({
-
+const MapStore = createStore({
   initialData: {
     map: {
       center: [0.0, 0.0],
@@ -38,15 +37,22 @@ const PopUpStore = createStore({
   mixins: [StoreMixins],
 
   init() {
-
-    this.listenTo(ProjectStore, this.onProjectUpdate);
-    this.listenTo(ProjectGeo, this.updateGeocodingLayer);
+    // TODO - use directly singleton when we switch to Reflux es6
+    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.onProjectUpdate);
+    this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
     this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
     this.listenTo(CountryGeo, this.updateCountry);
     this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
     this.listenTo(Actions.get(Constants.ACTION_SET_ACTIVE_LOCATION), 'setActiveLocation');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
+  },
+
+  // TODO - link MapView with ProejctStore if we really need the project in the MapView
+  onProjectUpdate(projectStore) {
+    const newState = Object.assign({}, this.get());
+    newState.project = projectStore.project;
+    this.setData(newState);
   },
 
   cleanStore() {
@@ -83,12 +89,6 @@ const PopUpStore = createStore({
     this.setData(newState);
   },
 
-  onProjectUpdate(project) {
-    var newState = Object.assign({}, this.get())
-    newState.project = project;
-    this.setData(newState);
-  },
-
   closeInfoWindow(params) {
     this.setData(Object.assign({}, this.get(), {
       popup: {
@@ -112,7 +112,6 @@ const PopUpStore = createStore({
 
 
   updateGeocodingLayer(data) {
-    debugger;
     var newState = Object.assign({}, this.get())
     newState.layers.geocoding = data;
 
@@ -125,11 +124,26 @@ const PopUpStore = createStore({
   },
 
   updatePopupInfo(properties) {
-    debugger;
+
     const {countryFeature, locationFeature, position, showDataEntry} = properties;
-    //const {ID_0, ID_1, GAUL01, ID_2, GAUL02, NAME_0, Country, NAME_1, ADM1, NAME_2, ADM2} = (countryFeature) ? countryFeature.properties : {}; //TODO: normalize field extraction
-      var geocoding = locationFeature.properties;
-    //this.addAdminCodes(geocoding, params);
+    const {ID_0, ID_1, GAUL01, ID_2, GAUL02, NAME_0, Country, NAME_1, ADM1, NAME_2, ADM2} = (countryFeature) ? countryFeature.properties : {}; //TODO: normalize field extraction
+    const {
+      fclName, adminCode1, adminCode2, adminId1, adminId2, adminName1, adminName2, adminName3, fcode, fcodeName, geonameId, lat, lng, name, toponymName, countryId, countryName, activityDescription
+    } = locationFeature.properties;
+    const params = {
+      ID_0: (ID_0 || GAUL02),
+      ID_1: (ID_1 || GAUL01),
+      ID_2: (ID_2 || GAUL02),
+      NAME_0: (NAME_0 || Country),
+      NAME_1: (NAME_1 || ADM1),
+      NAME_2: (NAME_2 || ADM2),
+      ...locationFeature.properties
+    };
+
+    var geocoding = locationFeature.properties;
+    this.addAdminCodes(geocoding, params);
+
+
     /*creates info window parameters */
     if (showDataEntry) {
       Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, geocoding);
@@ -144,9 +158,49 @@ const PopUpStore = createStore({
     }
   },
 
+  makeGeocodingObject(params) {
+    let model = {
+      'name': params.name,
+      'id': params.geonameId,
+      'activityDescription': params.activityDescription || '',
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [params.lng, params.lat]
+      },
+
+      'toponymName': params.toponymName,
+      'featureDesignation': {
+        code: params.fcode,
+        name: params.fcodeName
+      },
+      'type': params.type || 'location',
+      'status': params.status || 'EXISTING',
+      'locationClass': params.locationClass || null, //{code:''m,name:''}
+      'exactness': params.exactness || null, // {{'code': '1', 'name': 'Exact'}
+
+    }
+    return model;
+  },
 
   addAdminCodes(model, params) {
-    debugger;
+
+    var adminCodes = {
+      geonames: {
+        'country': {
+          code: params.countryId,
+          name: params.countryName
+        },
+        'admin1': {
+          code: params.adminId1,
+          name: params.adminName1
+        },
+        'admin2': {
+          code: params.adminId2,
+          name: params.adminName2
+        }
+      }
+    }
+
     if (params.ID_0 && params.ID_1 && params.ID_2) {
       Object.assign(adminCodes, {
         shape: {
