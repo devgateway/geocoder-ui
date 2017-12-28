@@ -167,7 +167,7 @@ class InfoView extends React.Component {
 
                 <button
                 className={this.props.type == 'location' ? "btn btn-sm btn-success pull-right" : "btn btn-sm btn-warning pull-right"}
-                onClick={this.onPickLocation.bind(this)}>
+                onClick={e=>this.onPickLocation(e)}>
                 {this.props.type == 'location' ? Message.t('locationpopup.picklocation') : Message.t('locationpopup.update')}
                 </button>
 
@@ -183,12 +183,12 @@ class InfoView extends React.Component {
 export default class LocationPopup extends React.Component {
 
   turnDataEntryOn() {
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, this.props.location);
+
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP);
   }
 
   render() {
-
     const location = this.props.location;
-    return (<InfoView  {...location} onPickLocation={this.turnDataEntryOn.bind(this)}/>);
+    return (<InfoView  {...location} onPickLocation={e=>this.turnDataEntryOn(e)}/>);
   }
 }

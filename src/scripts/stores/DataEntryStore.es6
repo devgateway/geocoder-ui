@@ -37,8 +37,8 @@ class DataEntryStore extends Reflux.Store {
     this.setState(newState);
   }
 
-  openPopup(location) {
-  
+  openPopup(data) {
+
     let newState = Object.assign({}, this.state);
     //let adminSource = location.adminSource || (location.type == 'geocoding' ? 'saved' : location.adminCodes.shape ? 'shape' : 'geonames');
     //adminSource if it is not set, it will be set by default to:
@@ -46,7 +46,7 @@ class DataEntryStore extends Reflux.Store {
     // 'shape' if it is a new location and have values from shapes
     // 'geonames' if it is a new location and it doesn't have values from shapes
     //Object.assign(location, {'adminSource': adminSource});
-    Object.assign(newState, {'geocoding': location,'showPopup': true});//set the location to be used
+    Object.assign(newState, {'geocoding': data,'showPopup': true});//set the location to be used
     //Object.assign(newState, {'showPopup': true});//open the popup
 
     //if (location.adminSource == 'geonames') {

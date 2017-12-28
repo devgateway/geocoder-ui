@@ -73,7 +73,7 @@ export default class MapView extends React.Component {
     const {latlng} = e;
     //at this stage I have the location feature + country feature
     //Actions.invoke(Constants.ACTION_POPUP_INFO, {locationFeature, countryFeature, 'position': latlng})
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature, 'position': latlng})
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
 
   /*Query features behind the point*/

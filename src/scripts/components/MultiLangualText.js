@@ -25,8 +25,7 @@ export default class MultiLangualText extends Reflux.Component {
    * Force update if the language was changed OR if the this.props object changed.
    */
   shouldComponentUpdate(nextProps, nextState) {
-    return this.state.lang !== nextState.lang
-      || JSON.stringify(this.props) !== JSON.stringify(nextProps);
+    return this.state.lang !== nextState.lang || JSON.stringify(this.props) !== JSON.stringify(nextProps);
   }
 
   /**
@@ -37,7 +36,8 @@ export default class MultiLangualText extends Reflux.Component {
    *
    * @param texts - array of translations
    */
-  getTranslation(texts) {
+  getTranslation(texts,exact) {
+
     if (texts === undefined || texts.length === 0) {
       return undefined;
     }
@@ -45,15 +45,18 @@ export default class MultiLangualText extends Reflux.Component {
     const translationLanguage = texts.find(val => val.lang === this.state.lang);
     if (translationLanguage !== undefined) {
       return translationLanguage.description;
-    } else {
+    } else if(!exact) {
       const translationEnglish= texts.find(val => val.lang === MultiLangualText.ENGLISH_LANG);
 
       if (translationEnglish !== undefined) {
         return translationEnglish.description;
       }
     }
-
-    return texts[0].description;
+    if (!exact){
+      return texts[0].description;
+    }else{
+      return ''
+    }
   }
 
   render() {

@@ -53,6 +53,8 @@
       "savebtn": "Click here to save or update the location",
       "cancelbtn": "Click here to cancel",
       "deletebtn": "Click here to delete the location"
+
+
     }
   },
   "dataentry": {
@@ -81,7 +83,8 @@
     "update": "Update",
     "delete": "Delete",
     "cancel": "Cancel",
-    "status": "Status"
+    "status": "Status",
+    "source": "Data Source"
   },
   "layerselector": {
     "managecountrylayers": "Manage Country Layers",

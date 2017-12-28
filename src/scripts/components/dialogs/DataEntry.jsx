@@ -12,7 +12,8 @@ import DataEntryHelp from '../../help/DataEntry.es6';
 import ReactDOM from 'react-dom';
 import Message from '../Message.jsx'
 import MultiLangualInput from './MultiLangualInput.jsx'
-
+import MultiLangualTextArea from './MultiLangualTextArea.jsx'
+import LangSelector from '../LangSelector.jsx'
 class AdminOptions extends React.Component {
 
   toggleAdminSource(e) {
@@ -66,11 +67,13 @@ class DataEntryContent extends React.Component {
   }
 
   codingValueChanged(e) {
+    debugger;
     this.changeCodingValue(e.target.name, e.target.value);
     this.validateField(e.target.value, e.target.name)
   }
 
   changeCodingValue(name, value) {
+    debugger;
     let val;
     switch (name) {
       case "locationClass":
@@ -173,14 +176,8 @@ class DataEntryContent extends React.Component {
   }
 
   render() {
-
     let {geocoding:{countryFeature,locationFeature},lang} = this.props;
-
-    let {properties:{activityDescriptions,administratives,descriptions,exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,locationStatus,names}}=locationFeature
-
-
-     administratives.filter(adm=>adm.level==1)
-     debugger;
+    let {properties:{activityDescriptions,administratives,descriptions,exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,locationStatus,names,locationIdentifiers}}=locationFeature
     let type='geocoding'
     debugger;
     if (this.props.geocoding.confirmDelete == 'TO_CONFIRM') {
@@ -197,7 +194,7 @@ class DataEntryContent extends React.Component {
     } else {
       return (
         <div id='dataentry' className={locationStatus == 'EXISTING' ? 'update' : 'new'}>
-
+            <LangSelector></LangSelector>
             <label className=""><b> * All entered text will be stored in "{this.props.lang}" language</b></label>
           <div id='noneditablefields'>
             <div className="row">
@@ -210,62 +207,55 @@ class DataEntryContent extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-lg-4">
-                <div className="form-group">
-                  <label className="colored" htmlFor="country,"><Message k="dataentry.country"/></label>
-                  <input type="text" className="form-control" id="country" placeholder="NA" value={''} disabled/>
-                </div>
+               {administratives.sort((a,b)=>a.level-b.level).map(admin=>{return (
+                 <div className={`col-lg-${12/administratives.length}`}>
+                   <div className="form-group">
+                     <label className="colored" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/></label>
+                     <input type="text" className="form-control" id="country" placeholder="NA" value={admin.name} disabled/>
+                   </div>
+                 </div>)
+               })}
+
+
+            </div>
+              <div className="row">
+                  <div className="col-lg-12 pull-right"> </div>
+
               </div>
-              <div className="col-lg-4">
+            {locationIdentifiers.map(id=>
+
+
+            <div className="row" key={id.id}>
+              <div className="col-lg-6">
                 <div className="form-group">
-                  <label className="colored" htmlFor="admin1"><Message k="dataentry.admin1"/></label>
-                  <input type="text" className="form-control" id="admin1" placeholder="NA" value={administratives.find(adm=>adm.level==1).name} disabled/>
-                </div>
-              </div>
-              <div className="col-lg-4">
-                <div className="form-group">
-                  <label className="colored" htmlFor="admin2"><Message k="dataentry.admin2"/></label>
-                  <input type="text" className="form-control" id="admin2" placeholder="NA" value={administratives.find(adm=>adm.level==2).name} disabled/>
+                  <label className="colored" htmlFor="id"><Message k="dataentry.identifier"/></label>
+                      <div><input type="text" className="form-control" id="id" placeholder="id" value={id.code} disabled/></div>
+
                 </div>
               </div>
 
-            </div>
-
-            <div className="row">
-              <div className="col-lg-4">
-                <div className="form-group">
-                  <label className="colored" for="id"><Message k="dataentry.identifier"/></label>
-                  <input type="text" className="form-control" id="id" placeholder="id" value={''} disabled/>
-                </div>
-              </div>
-              <div className="col-lg-4">
-                <div className="form-group">
-                  <label className="colored" for="geometryType"><Message k="dataentry.type"/></label>
-                  <input type="text" className="form-control" id="geometryType" placeholder=""
-                         value={''} disabled/>
-                </div>
-              </div>
-              <div className="col-lg-4">
-                <div className="form-group" id="coordinates">
-                  <label className="colored"><Message k="dataentry.coordinates"/></label>
-                  <div>{''}</div>
+              <div className="col-lg-6">
+                <div className="form-group" id="source">
+                  <label className="colored"><Message k="dataentry.source"/></label>
+                <input type="text" className="form-control" id="id" placeholder="id" value={id.vocabulary.name} disabled/>
                 </div>
               </div>
             </div>
+            )}
 
             <div className="row">
               <div className="col-lg-3">
                 <div className="form-group">
                   <label className="colored"><Message k="dataentry.featuredesignation"/></label>
                   <input type="text" className="form-control" id="featureDesignation"
-                         value={''} disabled/>
+                         value={featuresDesignation.code} disabled/>
                 </div>
               </div>
               <div className="col-lg-9">
                 <div className="form-group">
                   <label>&nbsp;</label>
                   <input type="text" className="form-control" id="featureDesignationName"
-                         value={''} disabled/>
+                         value={featuresDesignation.description} disabled/>
                 </div>
               </div>
             </div>
@@ -273,7 +263,7 @@ class DataEntryContent extends React.Component {
           <div className="row">
             <div className="col-lg-6">
               <div className="form-group">
-                <label className="colored" for="locationClass"><Message k="dataentry.locationclass"/></label>
+                <label className="colored" htmlFor="locationClass"><Message k="dataentry.locationclass"/></label>
                 <select value={locationClass ? locationClass.code : ''} className="form-control"
                         name="locationClass" id="locationClass" onChange={this.codingValueChanged.bind(this)}>
                   <option>Select</option>
@@ -287,7 +277,7 @@ class DataEntryContent extends React.Component {
             </div>
             <div className="col-lg-6">
               <div className="form-group">
-                <label className="colored" for="Exactness"><Message k="dataentry.geographicexactness"/></label>
+                <label className="colored" htmlFor="Exactness"><Message k="dataentry.geographicexactness"/></label>
                 <select value={exactness ? exactness.code : ''} className="form-control"
                         name="exactness" id="exactness" onChange={this.codingValueChanged.bind(this)}>
                   <option>Select</option>
@@ -305,9 +295,16 @@ class DataEntryContent extends React.Component {
             <div className="col-lg-12">
               <div className="form-group">
                 <label className="colored"><Message k="dataentry.activitydescription"/></label>
-                <textarea className="form-control" name="activityDescription" id="activityDescription"
-                          value={''}
-                          onChange={this.codingValueChanged.bind(this)}></textarea>
+                <MultiLangualTextArea  name="activityDescription" id="activityDescription" onChange={e=>this.codingValueChanged(e)} texts={activityDescriptions}></MultiLangualTextArea>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="form-group">
+                <label className="colored"><Message k="dataentry.description"/></label>
+                <MultiLangualTextArea  name="description" id="description" onChange={e=>this.codingValueChanged(e)} texts={descriptions}></MultiLangualTextArea>
               </div>
             </div>
           </div>
@@ -366,7 +363,7 @@ class DataEntry extends Reflux.Component {
   render() {
 
     return (
-      <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.close}>
+      <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.close} >
         <Modal.Body>
           <DataEntryContent {...this.state} onCancel={this.close.bind(this)}/>
         </Modal.Body>
