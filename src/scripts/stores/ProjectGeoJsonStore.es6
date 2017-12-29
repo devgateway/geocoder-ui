@@ -17,17 +17,12 @@ const ProjectGeoJsonStore = createStore({
   },
 
   process(projectStore) {
-
+    debugger;
 
     const project = projectStore.project;
     let newData;
-
     if (project.locations) {
-
       let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
-
-
-
       featureCollection.features.forEach((record) => {
         let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;
         Object.assign(record.properties, {'rollbackData': rollbackData});//duplicates the values into same object for rollback purposes

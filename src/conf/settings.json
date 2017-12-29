@@ -12,6 +12,11 @@
     "COUNTRY_END_POINT": "boundaries/list"
   },
   "I18N": {
+    "LANGUAGES":[
+      {"code":"en","name":"English"},
+      {"code":"fr","name":"French"},
+      {"code":"es","name":"Spanish"}
+    ],
     "OPTIONS": {
       "development": {
         "backend": {

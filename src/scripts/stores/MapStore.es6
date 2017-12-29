@@ -4,10 +4,13 @@ import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 
-import LocationsGeoJson from './LocationsGeo.es6';
-import CountryGeo from './CountryShapeStore.es6';
+
+
 import ProjectStore from './ProjectStore.es6';
+
+import LocationsGeoJson from './LocationsGeo.es6';
 import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
+import CountryGeo from './CountryShapeStore.es6';
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
 const MapStore = createStore({
@@ -39,8 +42,11 @@ const MapStore = createStore({
   init() {
     // TODO - use directly singleton when we switch to Reflux es6
     this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.onProjectUpdate);
+
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
+
     this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
+
     this.listenTo(CountryGeo, this.updateCountry);
     this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
@@ -112,6 +118,7 @@ const MapStore = createStore({
 
 
   updateGeocodingLayer(data) {
+    debugger;
     var newState = Object.assign({}, this.get())
     newState.layers.geocoding = data;
 
@@ -120,6 +127,7 @@ const MapStore = createStore({
         'open': false
       }
     });
+    
     this.setData(newState);
   },
 

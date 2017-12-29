@@ -12,17 +12,17 @@ const initialData = {
 };
 
 const LocationsGeoJsonStore = createStore({
-  
+
   initialData: initialData,
   mixins: [StoreMixins],
-  
+
   init() {
     // this.listenTo(LocationsStore, this.process);   // TODO - update this
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), 'removeSavedLocation')
+    //this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), 'removeSavedLocation')
   },
-  
+
   process(data) {
-    
+
     if (data.locations.get('total') > 0) {
       let featureCollection =
         new GeoJsonBuilder({
@@ -37,7 +37,7 @@ const LocationsGeoJsonStore = createStore({
       this.setData({});
     }
   },
-  
+
   removeSavedLocation(location) {
     let newState = Object.assign({}, this.get())
     let newGeoJson = newState.data;

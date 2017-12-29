@@ -47,6 +47,21 @@ actionsDef[Constants.ACTION_UPLOAD_FILES] = {
   children: ['completed', 'failed']
 };
 
+actionsDef[Constants.ACTION_DELETE] = {
+  children: ['completed', 'failed']
+};
+
+
+actionsDef[Constants.ACTION_SHOW_DELETE_CONFIRM] = {
+  children: ['completed', 'failed']
+};
+
+
+actionsDef[Constants.ACTION_SAVE_LOCATION] = {
+  children: ['completed', 'failed']
+};
+
+
 /*create async actions*/
 const actions = createActions(actionsDef);
 

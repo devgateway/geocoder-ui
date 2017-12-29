@@ -1,10 +1,18 @@
-import {createStore} from 'reflux';
-import * as Actions from '../actions/Actions.es6';
-import Constants from '../constants/Contants.es6';
-import {StoreMixins} from '../mixins/StoreMixins.es6';
-import Reflux from "reflux";
+import {createStore} from 'reflux'
+import * as Actions from '../actions/Actions.es6'
+import Constants from '../constants/Contants.es6'
+import {StoreMixins} from '../mixins/StoreMixins.es6'
+import Reflux from "reflux"
+import Settings from '../util/Settings.es6'
+let settings = Settings.getInstace()
 
-const initialState = {showPopup:false};
+const initialState = {showPopup:false}
+
+
+const LOCATION_CLASS_ADM_REGION = { "code": "1", "name": "Administrative Region"}
+const LOCATION_CLASS_PPL = {"code": "2",  "name": "Populated Place"}
+const LOCATION_CLASS_STR = {"code": "3",  "name": "Structure"}
+const LOCATION_CLASS_OTHER = {"code": "4",  "name": "Other Topographical Feature"}
 
 
 
@@ -12,183 +20,174 @@ class DataEntryStore extends Reflux.Store {
 
   constructor() {
 
-    super();
+    super()
 
-    this.state = initialState;
+    this.state = initialState
 
-    this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), this.openPopup);
-    this.listenTo(Actions.get(Constants.ACTION_CLOSE_DATAENTRY_POPUP), this.closePopup);
-    this.listenTo(Actions.get(Constants.ACTION_CHANGE_CODING_VALUE), this.valueChanged);
-    this.listenTo(Actions.get(Constants.ACTION_PREPARE_SAVE_LOCATION), this.saveLocation);
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID), this.loadingData);
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).completed, this.updateData);
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).failed, this.geonamesFailed);
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData);
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).completed, this.updateAdminData);
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, this.geonamesFailed);
+    this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), this.openPopup)
+
+    this.listenTo(Actions.get(Constants.ACTION_CLOSE_DATAENTRY_POPUP), this.closePopup)
+
+    this.listenTo(Actions.get(Constants.ACTION_CHANGE_CODING_VALUE), this.updateValue)
+
+    this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), this.saveLocation)
+    this.listenTo(Actions.get(Constants.ACTION_SHOW_DELETE_CONFIRM), this.beforeDelete)
+    this.listenTo(Actions.get(Constants.ACTION_DELETE), this.delete)
+    this.listenTo(Actions.get(Constants.ACTION_CANCEL), this.cancel)
+
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID), this.loadingData)
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).completed, this.updateFromGeonames)
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).failed, this.geonamesFailed)
 
 
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData)
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).completed, this.updateAdminData)
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, this.geonamesFailed)
   }
 
   closePopup() {
-
-    let newState = Object.assign({}, this.state);
-    Object.assign(newState, {'showPopup': false, 'error': null});
-    this.setState(newState);
+    let newState = Object.assign({}, this.state)
+    Object.assign(newState, {'showPopup': false})//set the location to be used
+    //Object.assign(newState, {'geocodingBackup': null})//set the location to be used
+    this.setState(newState)
   }
 
   openPopup(data) {
-
-    let newState = Object.assign({}, this.state);
-    //let adminSource = location.adminSource || (location.type == 'geocoding' ? 'saved' : location.adminCodes.shape ? 'shape' : 'geonames');
-    //adminSource if it is not set, it will be set by default to:
-    // 'saved' if it is an already coded location
-    // 'shape' if it is a new location and have values from shapes
-    // 'geonames' if it is a new location and it doesn't have values from shapes
-    //Object.assign(location, {'adminSource': adminSource});
-    Object.assign(newState, {'geocoding': data,'showPopup': true});//set the location to be used
-    //Object.assign(newState, {'showPopup': true});//open the popup
-
-    //if (location.adminSource == 'geonames') {
-      //Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': newState.geocoding.id});
-    //}
-    this.setState(newState);
+    let newState = Object.assign({}, this.state)
+    Object.assign(newState, {'geocoding': data,'showPopup': true,'confirmDeletion':false})//set the location to be used
+    Object.assign(newState, {'geocodingBackup': data})//set the location to be used
+    this.setState(newState)
   }
 
-  cleanStore() {
 
-    this.setState(this.initialData);
+  beforeDelete() {
+    let newState = Object.assign({}, this.state,{'confirmDeletion':true})
+    this.setState(newState)
   }
 
-  valueChanged(newValue) {
-    debugger
-    let newState = Object.assign({}, this.state);
-    let newGeocoding = Object.assign({}, newState.geocoding);
-    const val = {};
-    val[newValue.name] = newValue.value;
-    Object.assign(newGeocoding, val);
-    Object.assign(newState, {'geocoding': newGeocoding});
-    this.setState(newState);
+  delete() {
+    let newState = Object.assign({}, this.state,{'confirmDeletion':true})
+    newState=this.valueChanged(newState,{'name':'locationStatus','value':'DELETED'})
+    this.setState(newState)
+    this.closePopup()
   }
 
-  loadingAdminData() {
-    debugger
-    let newState = Object.assign({}, this.get());
-    Object.assign(newState, {'loadingAdminGeonames': true});
-    this.setState(newState);
-  }
-
-  loadingData() {
-    debugger
-    let newState = Object.assign({}, this.get());
-    Object.assign(newState, {'loadingGeonames': true});
-    this.setState(newState);
-  }
 
   saveLocation() {
-    let newState = Object.assign({}, this.state);
-    let geocoding = newState.geocoding;
-    let prev_status = geocoding.status;
-    let status = geocoding.type == 'location' ? 'NEW' : newState.geocoding.confirmDelete == 'CONFIRMED' ? 'DELETED' : 'UPDATED';
-    if (prev_status == 'NEW' && status == 'DELETED') {
-      status = 'LOCATION';
-    }
-    if (prev_status == 'NEW' && status == 'UPDATED') {
-      status = 'NEW';
-    }
-    let saveGeo = Object.assign({}, geocoding);
-    Object.assign(saveGeo, {'status': status});
-    Actions.invoke(Constants.ACTION_SAVE_LOCATION, saveGeo);
+    let newState = Object.assign({}, this.state)
+    newState=this.valueChanged(newState,{'name':'locationStatus','value':'UPDATED'})
+    this.setState(newState)
+    this.closePopup()
   }
 
-  /**
-   * Create final geocoding object
-   * @return {[type]} [description]
-   */
-  buildGecoding(source) {
-    debugger
-    const newGeocoding = {};
-    Object.assign(newGeocoding, {
-      name: source.name,
-      'id': source.id,
-      'geometry': source.geometry,
-      'description': source.description,
-      'featureDesignation': source.featureDesignation,
-      'type': source.type,
-      'status': source.status,
-      'activityDescription': source.activityDescription,
-      'locationClass': source.locationClass,
-      'exactness': source.exactness,
-      'adminSource': source.adminSource
-    });
-    Object.assign(newGeocoding, {
-      'country': source.adminCodes[source.adminSource].country,
-      'admin1': source.adminCodes[source.adminSource].admin1,
-      'admin2': source.adminCodes[source.adminSource].admin2,
-    });
-    return newGeocoding;
+
+
+  cleanStore() {
+    this.setState(this.initialData)
   }
+
+
+
+
+  updateValue(newValue) {
+    let newState = Object.assign({}, this.state)
+    newState=this.valueChanged(newState,newValue)
+    this.setState(newState)
+  }
+
+
+
+  valueChanged(newState,newValue) {
+
+    const {name,value,lang}=newValue
+    const val = {}
+    let newProperties = Object.assign({}, newState.geocoding.locationFeature.properties)
+
+    if (lang!=undefined && lang !=null){
+
+      let currentValues=newProperties[name].slice()
+      debugger
+      let position=currentValues.findIndex(it=>it.lang==lang)
+
+      if (position>-1){
+        if (value !='' && value!=null){
+          currentValues[position]={'description':value,'lang':lang}
+        }else{
+          debugger
+          currentValues.splice(position,1)
+        }
+      }else{
+        currentValues.push({'description':value,'lang':lang})
+      }
+      val[name] =currentValues
+    }else{
+      val[name] =value
+    }
+
+    Object.assign(newProperties, val)
+    newState.geocoding.locationFeature.properties = newProperties
+    console.log(newState.geocoding.locationFeature.properties)
+
+    return newState
+  }
+
+
+
+  loadingData() {
+    let newState = Object.assign({}, this.state)
+    Object.assign(newState, {'loadingGeonames': true})
+    this.setState(newState)
+  }
+
+
+
 
   updateAdminData(location) {
-    debugger
-    let newState = Object.assign({}, this.state);
-    const newAdminData = {
-      'country': {
-        code: location.countryId,
-        name: location.countryName
-      },
-      'admin1': {
-        code: location.adminId1,
-        name: location.adminName1
-      },
-      'admin2': {
-        code: location.adminId2,
-        name: location.adminName2
-      }
-    }
-    Object.assign(newState.geocoding.adminCodes.geonames, newAdminData);//set the new data from Geonames
-    Object.assign(newState, {'loadingAdminGeonames': false});
-    this.setState(newState);
+    alert('Re implement method')
   }
 
-  updateData(location) {
-    debugger
-    const newState = Object.assign({}, this.state);
-    let newData = {
-      'name': location.name,
-      'toponymName': location.toponymName,
-      'featureDesignation': {
-        code: location.fcode,
-        name: location.fcodeName
-      }
+
+
+  getClassFromFcl(fcl){
+    if (fcl == 'A'){
+      return LOCATION_CLASS_ADM_REGION
     }
-    Object.assign(newState.geocoding, newData);//set the new data from Geonames
-    const newAdminData = {
-      'country': {
-        code: location.countryId,
-        name: location.countryName
-      },
-      'admin1': {
-        code: location.adminId1,
-        name: location.adminName1
-      },
-      'admin2': {
-        code: location.adminId2,
-        name: location.adminName2
-      }
-    };
-    Object.assign(newState.geocoding.adminCodes.geonames, newAdminData);//set the new data from Geonames
-    Object.assign(newState, {'loadingGeonames': false});
-    this.setState(newState);
+
+    if (fcl == 'P'){
+      return LOCATION_CLASS_PPL
+    }
+
+    if (fcl in ['R', 'S']){
+      return LOCATION_CLASS_STR
+    }
+    else{
+      return LOCATION_CLASS_OTHER
+    }
+  }
+
+
+  updateFromGeonames(location) {
+    let newState = Object.assign({}, this.state)
+
+    Object.assign(newState, {'loadingGeonames': false})
+
+    const langs = settings.get('I18N', 'LANGUAGES').map(l=>l.code)
+    const names=location.alternateNames.filter((n)=>langs.indexOf(n.lang)>-1 && n.isPreferredName==true).map(name=>{
+      return {'description':name.name,'lang':name.lang}
+    })
+    newState=this.valueChanged(newState,{'name':'names','value':names})
+    newState=this.valueChanged(newState,{'name':'locationClass','value':this.getClassFromFcl(location.fcl)})
+    newState=this.valueChanged(newState,{'name':'featuresDesignation','value':{code: "PPLC", name: "capital of a political entity"}})
+
+    this.setState(newState)
   }
 
   geonamesFailed(error) {
-    debugger
-    let newState = Object.assign({}, this.state);
-    Object.assign(newState, {error, 'loadingGeonames': false, 'loadingAdminGeonames': false});
-    this.setState(newState);
+    let newState = Object.assign({}, this.state)
+    Object.assign(newState, {error, 'loadingGeonames': false, 'loadingAdminGeonames': false})
+    this.setState(newState)
   }
 }
 
 
-export default DataEntryStore;
+export default DataEntryStore

@@ -2,7 +2,7 @@ import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import _ from 'lodash';
-
+import DataEntryStore from './DataEntryStore.es6'
 const initialState = {
   project: {}
 };
@@ -15,8 +15,12 @@ class ProjectStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), this.loading);
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).failed, this.failed);
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), this.addGeocoding);
+
+
     this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING), this.submitGeocoding);
+
+    //this.listenTo(DataEntryStore, this.updateCoding);
+
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), this.save);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, this.saveSuccess);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, this.failed);
@@ -36,15 +40,11 @@ class ProjectStore extends Reflux.Store {
   }
 
   completed(response) {
-
     let project = response.data;
-
     if (project.countries !== undefined && project.countries.length !== 0) {
       const firstCountry = project.countries[0];
-
       Actions.invoke(Constants.ACTION_LOAD_SHAPE, (firstCountry.iso3 || firstCountry.iso2 || firstCountry.iso));
     }
-
     project.locationsBackup = _.cloneDeep(project.locations); //add a copy of the locations for rollback purposes
     this.setState({project: project});
   }
@@ -53,25 +53,10 @@ class ProjectStore extends Reflux.Store {
     console.error(`Error loading project: ${message}`)
   }
 
-  addGeocoding(geocoding) {
-    let newpProject = {...this.state.project};
-    let locations = newpProject.locations || [];
-
-    Object.assign(geocoding, {'type': 'geocoding'});  //set type to geocoding to identify those locations coded
-    let locGeo = locations.find(it => it.id === geocoding.id);
-
-    if (locGeo !== undefined) {
-      Object.assign(locGeo, geocoding);
-    } else {
-      locations.push(geocoding);
-    }
-    if (geocoding.status === 'LOCATION') { // if a location has been deleted and not yet commited, it'll be removed
-      locations = locations.filter(it => it.id !== geocoding.id);
-    }
-
-    newpProject.locations = locations;
-    this.setState({project: newpProject});
+  updateCoding(){
+    debugger;
   }
+
 
   submitGeocoding(geocoding) {
     let newpProject = {...this.state.project};
