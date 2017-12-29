@@ -2,6 +2,7 @@
 
 .header {
   .navbar {
+    @include border-radius(0);
     border: 1px rgb(244, 244, 244);
     height: 38px;
     min-height: 38px !important;
