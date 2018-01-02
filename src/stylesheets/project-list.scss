@@ -1,7 +1,9 @@
 @import "variables.scss";
-button{
+
+button {
   outline: none;
 }
+
 #project-search-form {
   @include fontDefault($medium, $black);
   input[type="text"] {
@@ -64,11 +66,11 @@ button{
   background-color: $gray;
 }
 
-.pagination > .active > a, 
-.pagination > .active > span, 
-.pagination > .active > a:hover, 
-.pagination > .active > span:hover, 
-.pagination > .active > a:focus, 
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
 .pagination > .active > span:focus {
   z-index: 3;
   color: $black;
@@ -84,20 +86,27 @@ button{
   cursor: pointer;
 }
 
-.filter-group-label{
+.filter-group-label {
   color: $pending-locations;
   display: block;
   float: left;
   font-size: $big - 2;
   font-weight: $normal-weight-text + 100;
   margin-right: $base-unit + 5;
-  padding-top: $px-unit * 5; 
+  padding-top: $px-unit * 5;
 }
 
-.geo-filter{
+.geo-filter {
   font-size: $big - 2;
   margin-right: $base-unit + 5;
-  &:hover{
+  &:hover {
     color: $darkGray !important;
   }
+}
+
+.filter-label {
+  font-weight: bold;
+  float: left;
+  padding: $base-unit;
+  font-size: $large;
 }
