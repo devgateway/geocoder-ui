@@ -31,10 +31,19 @@
       font-weight: $normal-weight-text;
     }
     .status-link{
+      @include border-radius(3px);
       float: right;
       font-size: $big - 3;
       font-weight: $normal-weight-text;
       margin-bottom: $base-unit / 2;
+      padding-left: $base-unit * 2;
+      padding-right: $base-unit * 2;
+      a{
+        color: $white;
+        &:hover{
+          text-decoration: none;
+        }
+      }
     }
   }
   h3{
@@ -158,6 +167,13 @@
   border-left-color: $pending-locations;
   a {
     color: $pending-locations;
+  }
+  .status-link{
+    background: $pending-locations;
+    padding: $base-unit;
+    &:hover{
+      background: $black;
+    }
   }
 ;
   .project-id {

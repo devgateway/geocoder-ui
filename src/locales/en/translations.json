@@ -111,7 +111,7 @@
     "nogeocodingdata": "No Geocoding Data."
   },
   "projectlist": {
-    "geocodeproject": "GeoCode Project",
+    "geocodeproject": "GeoCode",
     "geocodingfilter": "GeoCode Filter",
     "withNoLocation": "No Location(s)",
     "pendingVerification": "Pending Verification",
