@@ -1,24 +1,57 @@
-.bs-callout {
-  padding: 0px 10px 10px 20px;
-  margin: 20px 0;
-  border: 1px solid #eee;
-  border-left-width: 5px;
-  border-radius: 3px;
+@import "variables.scss";
 
-  .text-vertical {
-    transform: rotate(90deg);
-    transform-origin: left top 0;
-    margin-left: -26px;
-    position: absolute;
-    color: #FFF;
-    padding: 1px 4px 1px 4px;
-    font-family: monospace;
+.bs-callout {
+  border: $px-unit solid $gray;
+  border-top: none;
+  border-left-width: $px-unit * 5;
+  margin: $base-unit * 2 0;
+  padding: 0;
+
+  .country{
+    background: $gray;
+    float: left;
+    font-weight: $bold-text;
+    color: $black;
+    float: left;
+    overflow: hidden;
+    padding: $base-unit - 3 $base-unit;
+    text-transform: none;
+    width: $extend - 30;
+  }
+  .callout-heading{
+    display: inline;
+    margin-left: 0;
+    overflow: hidden;
+  }
+  .project-panel-content{
+    overflow: hidden;
+    padding: $base-unit;
+    p{
+      font-size: $big - 2;
+      font-weight: $normal-weight-text;
+    }
+    .status-link{
+      float: right;
+      font-size: $big - 3;
+      font-weight: $normal-weight-text;
+      margin-bottom: $base-unit / 2;
+    }
+  }
+  h3{
+    margin-top: 0;
+    a{
+      color: $black;
+      font-weight: $bold-text - 100;
+      &:hover{
+        color: $black;
+      }
+    }
   }
 }
 
 .bs-callout h4 {
   margin-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: $base-unit / 2;
   a {
     text-decoration: none
   }
@@ -30,119 +63,114 @@
 }
 
 .bs-callout code {
-  border-radius: 3px;
+  @include border-radius(3px);
 }
 
 .bs-callout + .bs-callout {
-  margin-top: -5px;
+  margin-top: -($base-unit / 2);
 }
 
 .bs-callout-default {
-  border-left-color: #777;
+  border-left-color: $darkGray;
 }
 
 .bs-callout-default h4 {
-  color: #777;
+  color: $darkGray;
   a {
-    color: #777
+    color: $darkGray;
   }
   a:hover {
-    color: #777
+    color: $darkGray;
   }
 }
 
 .bs-callout-primary {
   border-left-color: #428bca;
-  .text-vertical {
-    background-color: #5cb85c;
-  }
 }
 
 .bs-callout-primary h4 {
-  color: #428bca;
+  color: $pending-locations;
   a {
-    color: #428bca
+    color: $pending-locations;
   }
   a:hover {
-    color: #428bca
+    color: $pending-locations;
   }
 
 }
 
 .bs-callout-success {
   min-height: 150px;
-  border-left-color: #669933;
-  .text-vertical {
-    background-color: #669933;
+  border-left-color: $verified;
+  .project-id {
+    @include callouts($verified);
   }
   a {
-    color: #669933
+    color: $verified;
   }
 ;
   a:hover {
-    color: #669933
+    color: $verified
   }
 ;
 }
 
 .bs-callout-success h4 {
-  color: #669933;
+  color: $verified;
 }
 
 .bs-callout-danger {
   border-left-color: #d9534f;
-  .text-vertical {
+  .project-id {
     background-color: #d9534f;
   }
   a {
     color: #d9534f
   }
   a:hover {
-    color: #d9534f
+    color: $red-variant;
   }
 
 }
 
 .bs-callout-danger h4 {
-  color: #d9534f;
+  color: $red-variant;
 }
-
 .bs-callout-warning {
-  border-left-color: #f0ad4e;
-  .text-vertical {
-    background-color: #f0ad4e;
+  border-left-color: $no-locations;
+  .project-id {
+    @include callouts($no-locations);
   }
   a {
-    color: #f0ad4e
+    color: $no-locations;
   }
   a:hover {
-    color: #f0ad4e
+    color: $no-locations;
   }
 }
 
 .bs-callout-warning h4 {
-  color: #f0ad4e;
+  color: $no-locations;
 
 }
 
 .bs-callout-info {
-  border-left-color: #5bc0de;
+  border-left-color: $pending-locations;
   a {
-    color: #5bc0de
+    color: $pending-locations;
   }
 ;
-  .text-vertical {
-    background-color: #5bc0de;
+  .project-id {
+    @include callouts($pending-locations);
   }
   a {
-    color: #5bc0de
+    color: $pending-locations;
   }
   a:hover {
-    color: #5bc0de
+    color: $pending-locations;
   }
 }
 
 .bs-callout-info h4 {
   color: #5bc0de;
-
 }

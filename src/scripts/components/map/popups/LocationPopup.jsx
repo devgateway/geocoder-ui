@@ -5,7 +5,7 @@ import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 import Message from '../../Message.jsx';
 import Reflux from "reflux";
-import MultiLangualText from '../../MultiLangualText';
+import MultiLangualText from '../../MultiLingualText.jsx';
 
 
 /*Popup info*/

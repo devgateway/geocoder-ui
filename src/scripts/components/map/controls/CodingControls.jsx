@@ -16,7 +16,6 @@ import AutoGeoCodedLocations from '../../project/AutoGeoCodedLocations.jsx';
 import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
 import CollapsibleControl from './CollapsibleControl.jsx';
 
-
 /**
  * This view renders the info tab view UI component.
  */
@@ -51,7 +50,14 @@ class CodingControls extends Reflux.Component {
   }
 
   render() {
-    const {project} = this.state;
+    const {project, lang} = this.state;
+
+    let countAutogeoCoded = 0;
+    let countSelected = 0;
+    if (this.state.project.locations !== undefined) {
+      countAutogeoCoded = this.state.project.locations.filter(location => location.locationStatus === Constants.AUTO_CODED).length;
+      countSelected = this.state.project.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED).length;
+    }
 
     let activeTab = this.state.showTab || 1;
     return (
@@ -64,16 +70,18 @@ class CodingControls extends Reflux.Component {
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
 
-                <CollapsibleControl>
-                  <div>{Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}</div>
-                  <GazetteeResults/>
+                <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} count={this.state.locations.records.length}>
+                  <div className="panel-section padded-section">
+                    {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
+                    <GazetteeResults/>
+                  </div>
                 </CollapsibleControl>
 
-                <CollapsibleControl>
+                <CollapsibleControl title={"Auto-Geocoded"} iconClass={"geocoded-icon"} count={countAutogeoCoded}>
                   <AutoGeoCodedLocations {...this.state.project}/>
                 </CollapsibleControl>
 
-                <CollapsibleControl>
+                <CollapsibleControl title={"Selected Locations"} iconClass={"selected-locations-icon"} count={countSelected}>
                   <div>{Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}</div>
                   <SelectedLocations {...this.state.project}/>
                 </CollapsibleControl>

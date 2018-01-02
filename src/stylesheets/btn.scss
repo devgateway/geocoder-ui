@@ -1,66 +1,182 @@
+@import "variables.scss";
+
 .btn {
-  color: #FFF;
-  margin: 2px;
+  color: $white;
+  margin: $px-unit * 2;
 
 }
 
 .btn-xs {
-  padding: 1px 7px;
-  line-height: 1;
-  border-radius: 0px;
-  @include fontDefault($small, #FFF);
+  @include fontDefault($small, $white);
   @include grayBorder();
-  height: 14px;
-  margin: 1px;
-  background-color: #EEE;
+  @include border-radius(0);
+  padding: 1px $base-unit - 3;
+  line-height: 1;
+  height: $base-unit + 3;
+  margin: $px-unit;
+  background-color: $gray;
 }
 
 .btn-default {
-  @include fontDefault($small, #000);
+  @include fontDefault($small, $black);
   @include grayBorder();
 }
 
 .btn-default:hover {
-  @include fontDefault($small, #000);
+  @include fontDefault($small, $black);
   @include grayBorder();
 }
 
 .btn-sm {
-  padding: 3px 15px 3px 15px;;
-  line-height: 1.5;
-  border-radius: 0px;
-  height: 19px;
-  @include fontDefault($small, "#FFF");
+  @include fontDefault($small, "$icon-font");
   @include grayBorder();
-
-  margin: 1px;
+  @include border-radius(0);
+  padding: $px-unit * 3 $base-unit + 5;
+  line-height: 1.5;
+  height: $base-unit + 9;
+  margin: $px-unit;
 }
 
 .btn-lg {
-  padding: 3px 15px 3px 15px;;
+  @include border-radius(0);
+  padding: $base-unit - 7 $base-unit + 5;
   line-height: 1.5;
-  border-radius: 0px;
   height: 24px !important;
-  @include fontDefault($small, "#FFF");
-  margin: 1px;
+  @include fontDefault($small, "$white");
+  margin: $px-unit;
 }
 
 .btn-success {
-  color: #fff;
-  background-color: rgb(137, 184, 90);
-  border-color: #4cae4c;
+  color: $white;
+  background-color: $green-light;
+  border-color: darken($green-light, 10%);
 }
 
 .btn-success:hover {
-  color: #fff;
-  background-color: rgb(137, 184, 90);
-  border-color: #4cae4c;
+  color: $white;
+  background-color: $green-light;
+  border-color: darken($green-light, 10%);
 }
 
 .btn-success:active, .btn-success:focus, .btn-success.active {
-  color: #fff;
-  background-color: rgb(137, 184, 90);
-  border-color: #4cae4c;
+  color: $white;
+  background-color: $green-light;
+  border-color: darken($green-light, 10%);
+}
+.filter-btn{
+  @include border-radius(0);
+  border: $px-unit solid $gray;
+  color: $pending-locations;
+  font-size: $big - 2;
+  font-weight: $normal-weight-text + 100;
+  margin-right: $base-unit;
+  padding: $base-unit / 2;
+  text-align: left;
+  width: $base-unit * 8;
+  &:hover,
+  &:focus{
+    background: $blue;
+    color: $white;
+    font-size: $big - 1;
+    font-weight: $normal-weight-text + 100;
+  }
+  .caret{
+    position: absolute;
+    right: $base-unit;
+    top: $base-unit + 2;
+  }
 }
 
+.filter-button-wrapper{
+  .dropdown-menu{
+    @inlude border-radius(0);
+    border: $px-unit solid $gray;
+    width: $base-unit * 20;
+  }
+}
 
+.filter-btn.btn-default:active:hover, 
+.filter-btn.btn-default.active:hover, 
+.filter-btn.open > .dropdown-toggle.btn-default:hover, 
+.filter-btn.btn-default:active:focus, 
+.filter-btn.open > .dropdown-toggle.btn-default:focus, 
+.filter-btn.btn-default:active.focus, 
+.filter-btn.btn-default.active.focus, 
+.filter-btn.open > .dropdown-toggle.btn-default.focus{
+  background-color: $blue !important;
+  color: $white !important;
+}
+
+.project-filters-btn-group{
+  border: $px-unit solid $gray;
+  display: block;
+  float: left;
+  height: $base-unit * 2.9;
+  margin-top: $px-unit * 2;
+  padding: 0 $base-unit;
+}
+
+.clear-btn-wrapper{
+  border-left: $px-unit solid $gray-darker;
+  display: inline-block;
+  height: $base-unit * 3.2;
+  margin-left: $base-unit * 2;
+  margin-top: $px-unit * 2;
+  padding: 0 0 0 $base-unit + 5;
+  .btn-danger{
+    @include border-radius(0);
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA3NSA3NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNzUgNzU7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMjMxRTIwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEwO30KCS5zdDF7ZmlsbDpub25lO3N0cm9rZTojMjMxRTIwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEwO3N0cm9rZS1kYXNoYXJyYXk6Miw0LDIsNCwyLDQ7fQoJLnN0MntmaWxsOm5vbmU7c3Ryb2tlOiMyMzFFMjA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fQoJLnN0M3tmaWxsOm5vbmU7c3Ryb2tlOiMwMTAxMDE7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fQo8L3N0eWxlPgo8cG9seWxpbmUgY2xhc3M9InN0MCIgcG9pbnRzPSIxMzA0LDMxNzEuNSAxMjk0LDMxNzEuNSAxMjkwLjMsMzIwMC41IDEzNDMuMSwzMjAwLjUgMTM0MCwzMTcxLjUgMTMzMCwzMTcxLjUgIi8+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMzI3LjgsMzE1OC43Yy0wLjUtNC0yLjYtOS4yLTEwLjgtOS4yYy04LjIsMC0xMC4zLDUuMi0xMC44LDkuMmMtMC4zLDIuMi0wLjEsNC40LDAuMyw2LjYKCWMyLjUsMTEuOSw4LjcsMTksMTAuMiwyMC42YzAuMiwwLjIsMC41LDAuMiwwLjYsMGMxLjUtMS42LDcuNy04LjcsMTAuMi0yMC42QzEzMjcuOSwzMTYzLjEsMTMyOC4xLDMxNjAuOSwxMzI3LjgsMzE1OC43eiIvPgo8Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSIxMzE3IiBjeT0iMzE2MC4xIiByPSI2LjMiLz4KPHBhdGggY2xhc3M9InN0MSIgZD0iTTEzMzEuOCwzMTc2LjRjMS4yLTAuMywyLjUtMC4yLDMuNSwwLjRjMSwwLjYsMS44LDEuOCwxLjcsM2MtMC4xLDAuOS0wLjYsMS44LTEuMSwyLjYKCWMtMC40LDAuNi0wLjgsMS4xLTEuNCwxLjVjLTAuOCwwLjYtMS45LDAuOC0yLjksMC45Yy0yLjcsMC4zLTUuNCwwLjItOCwwLjVjLTIuNywwLjMtNS40LDAuOS03LjYsMi4zYy0xLDAuNy0yLDEuNS0yLjksMi4zCgljLTIuOCwyLjMtNi4xLDQuMS05LjYsNS4xYy0xLjEsMC4zLTIuMywwLjYtMy40LDAuNWMtMS4xLTAuMS0yLjMtMC44LTIuOC0xLjhjLTAuMy0wLjYtMC4zLTEuMi0wLjMtMS44YzAuMS0yLjIsMS42LTQuNSwzLjgtNC43CgljMC42LTAuMSwxLjMsMC4xLDEuNywwLjUiLz4KPGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iMzgiIGN5PSIzOCIgcj0iMjUiLz4KPHBvbHlsaW5lIGNsYXNzPSJzdDMiIHBvaW50cz0iMjksNDcgMzgsMzggNDcsMjkgIi8+Cjxwb2x5bGluZSBjbGFzcz0ic3QzIiBwb2ludHM9IjI5LDI5IDM4LDM4IDQ3LDQ3ICIvPgo8L3N2Zz4K");
+    background-position: 115px center;
+    background-repeat: no-repeat;
+    background-color: $white;
+    border: 1px solid $gray;
+    color: red;
+    font-size: $big - 1;
+    height: $base-unit * 2.9;
+    line-height: 120%;
+    text-align: left;
+    width: 150px;
+    &:hover{
+      background-color: $red;
+      color: $white;
+    }
+  }
+}
+
+.map-it-btn{
+  background: $green-light;
+  border: $px-unit solid $green-light;
+  color: $white;
+  height: $base-unit * 5;
+  right: $base-unit;
+  outline:none;
+  position: absolute;
+  top: 10%;
+  width: $base-unit * 5;
+  &:hover{
+    background: darken($green-light, 10%);
+    border: $green;
+  }
+}
+
+.show-location-btn{
+  @include border-radius(2px);
+  background: $no-locations;
+  border: $no-locations;
+  color: $white;
+  outline: none;
+  &:hover, &:focus{
+    backgrouns: $gray-darker;
+  }
+}
+
+.map-location-btn{
+  @include border-radius(2px);
+  background: $green;
+  border: $green;
+  color: $white;
+  outline: none;
+  &:hover, &:focus{
+    backgrouns: $gray-darker;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from "reflux";
 import ReactDOM from 'react-dom';
-import MultiLangualText from '../MultiLangualText'
+import MultiLangualText from '../MultiLingualText.jsx'
 
 class MultiLangualInput extends MultiLangualText {
 

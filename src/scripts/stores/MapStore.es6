@@ -4,13 +4,11 @@ import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 
-
-
 import ProjectStore from './ProjectStore.es6';
-
+import CountryGeo from './CountryShapeStore.es6';
 import LocationsGeoJson from './LocationsGeo.es6';
 import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
-import CountryGeo from './CountryShapeStore.es6';
+import Reflux from "reflux";
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
 const MapStore = createStore({
@@ -41,8 +39,7 @@ const MapStore = createStore({
 
   init() {
     // TODO - use directly singleton when we switch to Reflux es6
-    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.onProjectUpdate);
-
+    this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
 
     this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
@@ -71,12 +68,13 @@ const MapStore = createStore({
 
   setActiveLocation(params) {
     const {locationFeature, isCoded, activeDataentry} = params;
+    console.log(locationFeature);
     var newState = Object.assign({}, this.get());
     let activeLocation;
     if (isCoded) {
       var lf = Object.assign({}, locationFeature);
-      Object.assign(lf, {'lat': lf.geometry.coordinates[1]});
-      Object.assign(lf, {'lng': lf.geometry.coordinates[0]});
+      Object.assign(lf, {'lat': lf.x});
+      Object.assign(lf, {'lng': lf.y});
       activeLocation = lf;
     } else {
       activeLocation = locationFeature;
@@ -127,7 +125,7 @@ const MapStore = createStore({
         'open': false
       }
     });
-    
+
     this.setData(newState);
   },
 

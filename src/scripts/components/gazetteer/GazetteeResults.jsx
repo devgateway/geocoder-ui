@@ -76,7 +76,7 @@ class Item extends React.Component {
   render() {
     return (
       <div className="list-group-item">
-        <Button className="pull-right" bsStyle='success' bsSize="small"
+        <Button className="map-it-btn"
                 onClick={this.setActiveLocation.bind(this, this.props)}><Message
           k="projectinfo.locationslist.mapit"/></Button>
         <p className="list-group-item-text">

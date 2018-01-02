@@ -1,9 +1,10 @@
+@import "variables.scss";
 
 .marker {
   height: 30px !important;
   width: 30px !important;
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
+  -webkit-border-radius: $extend;
+  border-radius: $extend;
   background-clip: padding-box;
   padding-top: 9px !important;
   text-align: center;
@@ -76,8 +77,8 @@
   .marker{
     height: 15px !important; 
    width:15px !important;
-   -webkit-border-radius: 100%;
-   border-radius: 100%;
+   -webkit-border-radius: $extend;
+   border-radius: $extend;
    background-clip: padding-box;
    padding-top: 4px !important;
    text-align: center;

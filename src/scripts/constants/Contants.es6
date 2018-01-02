@@ -61,7 +61,6 @@ export default class Constants {
   static ACTION_SHOW_DELETE_CONFIRM='ACTION_SHOW_DELETE_CONFIRM'
 
 
-
   static LOCATION_CLASS_LIST = [{
     'code': '1',
     'name': 'Administrative Region',

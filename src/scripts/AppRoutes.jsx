@@ -1,10 +1,9 @@
-import {Route, Link} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import React from 'react';
 import {Router} from 'react-router';
 
 /*Layout elements*/
-import MapHeader from './components/MapHeader.jsx';
-import ProjectListHeader from './components/ProjectListHeader.jsx';
+import HeaderLayout from './components/HeaderLayout.jsx';
 import ProjectList from './components/project/ProjectList.jsx';
 import MapView from './components/map/MapView.jsx';
 import FileUpload from './components/upload/FileUpload.jsx';
@@ -19,10 +18,7 @@ const history = createHashHistory();
 class MapLayout extends React.Component {
   render() {
     return (
-      <div className="app">
-        <MapHeader/>
-        <MapView{...this.props}/>
-      </div>
+      <MapView{...this.props}/>
     )
   }
 }
@@ -30,36 +26,21 @@ class MapLayout extends React.Component {
 class ProjectListLayout extends React.Component {
   render() {
     return (
-      <div>
-        <ProjectListHeader/>
-        <ProjectList {...this.props}/>
-      </div>
+      <ProjectList {...this.props}/>
     )
   }
 }
 
-
 const AppRoutes = (props) => {
   return (<Router history={history}>
     <div>
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">Open Aid Geocoder</a>
-          </div>
-          <ul className="nav navbar-nav">
-            <li><Link to="/">Project List</Link></li>
-            <li><Link to="/upload">Import Activities</Link></li>
-          </ul>
-        </div>
-      </nav>
+      <HeaderLayout/>
+      
       <Route exact path="/" component={ProjectListLayout}/>
       <Route path="/upload" component={FileUpload}/>
       <Route path="/map/:projectID" component={MapLayout}/>
-    
     </div>
-  
   </Router>)
-}
+};
 
-export default AppRoutes
+export default AppRoutes;

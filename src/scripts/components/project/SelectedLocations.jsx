@@ -75,11 +75,11 @@ class Item extends React.Component {
                  style={status == 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
         </p>
         <p className="list-group-item-text pull-right">
-          <Button bsStyle='warning' className="show-location-button" bsSize="small"
+          <Button className="show-location-btn"
                   onClick={this._showDataEntryForm.bind(this)}>
             <Message k="projectinfo.locationslist.edit"/>
           </Button>
-          <Button bsStyle='success' className="show-location-button" bsSize="small"
+          <Button className="map-location-btn"
                   onClick={this._showLocationPopup.bind(this)}>
             <Message k="projectinfo.locationslist.mapit"/>
           </Button>
@@ -94,18 +94,22 @@ class Item extends React.Component {
    This view renders the Project Information UI component
    */
 export default class SelectedLocations extends React.Component {
-  
-  constructor() {
-    super();
-  }
-  
   render() {
+    let locations;
+    if (this.props.locations !== undefined) {
+      locations = this.props.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED);
+    } else {
+      locations = [];
+    }
+    
     return (
       <div className="list">
         <div className="list-group">
-          {this.props.locations ? this.props.locations.map((item) => {
-            return <Item key={item.id} {...item}/>
-          }) : null}
+          {
+            locations.map((item) => {
+              return <Item key={item.id} {...item}/>
+            })
+          }
         </div>
       </div>
     );

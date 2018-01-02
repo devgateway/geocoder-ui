@@ -1,4 +1,7 @@
-
+@import "variables.scss";
+button{
+  outline: none;
+}
 #project-search-form {
   @include fontDefault($medium, $black);
   input[type="text"] {
@@ -6,13 +9,13 @@
   }
 
   div.radio {
-    margin-left: 10px;
+    margin-left: $base-unit;
   }
 
   input[type="checkbox"], input[type="radio"] {
     display: block;
     float: left;
-    margin: 3px;
+    margin: $px-unit * 3;
   }
 
   a {
@@ -28,14 +31,13 @@
   @include fontDefault($medium, $black);
 
   .list-group {
-    padding: 10px;
+    padding: 0;
   }
 
   .bs-callout-info {
-    border-left-color: #5bc0de;
+    border-left-color: $pending-locations;
     min-height: 150px;
   }
-
 }
 
 /*Pagination*/
@@ -46,31 +48,56 @@
 .pagination.pagination-sm {
   border: 0px solid red;
   li {
-
     a {
       @include fontDefault($medium, $green);
     }
-
   }
 }
 
 .pagination > .active > a {
-  background-color: #EEE;
-  border: 1px solid #CCC;
-  color: #000;
+  background-color: $gray;
+  border: $px-unit solid $gray-darker;
+  color: $black;
 }
 
 .pagination > .active > a:hover {
-  background-color: #EEE;
-
+  background-color: $gray;
 }
 
-.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
   z-index: 3;
-  color: #000;
+  color: $black;
   cursor: default;
-  background-color: #EEE;
-  border-color: #EEE;
+  background-color: $gray;
+  border-color: $gray;
+}
 
+.filter-section {
+  float: left;
+  margin-right: $base-unit;
+  margin-top: $base-unit / 1.1;
+  cursor: pointer;
+}
+
+.filter-group-label{
+  color: $pending-locations;
+  display: block;
+  float: left;
+  font-size: $big - 2;
+  font-weight: $normal-weight-text + 100;
+  margin-right: $base-unit + 5;
+  padding-top: $px-unit * 5; 
+}
+
+.geo-filter{
+  font-size: $big - 2;
+  margin-right: $base-unit + 5;
+  &:hover{
+    color: $darkGray !important;
+  }
 }

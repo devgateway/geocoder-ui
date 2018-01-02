@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 /*INFO PANEL*/
 .leaflet-control-info-panel {
   overflow: hidden !important;
@@ -15,13 +17,17 @@
   z-index: 9999;
   -webkit-transition: opacity .1s; /* Safari */
   transition: opacity .1s;
-  height: 100%;
+  height: $extend;
   width: 620px;
   z-index: 99;
 
   @include fontDefault($medium, $darkGray);
+  @include scrollbar();
 
   .panel-success {
+    height: $base-unit * 60.5;
+    overflow-y: scroll;  
+    
     .panel-heading {
       background-color: $header-bg;
       border: 0px;

@@ -37,7 +37,7 @@ class GazetteerSearch extends Reflux.Component {
   
   render() {
     return (
-      <div className="panel-section">
+      <div className="panel-section search-section">
         <div className="project-search padded-section">
           <div className="project-search-icon"/>
           {/*<Help parentId="gazetteer-search"/>*/}

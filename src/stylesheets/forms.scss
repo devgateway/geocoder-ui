@@ -1,10 +1,4 @@
-/*Forms*/
-@mixin inputText() {
-  @include fontDefault($regular, $black);
-  height: 22px;
-  @include grayBorder();
-  color: $black;
-}
+@import "variables.scss";
 
 input[type="checkbox"],
 input[type="radio"] {
@@ -25,20 +19,56 @@ input[type="radio"] + label:before {
   height: 12px;
   width: 12px;
   margin: 4px;
-  border: 1px solid red;
 }
 
-input[type="checkbox"] + label:before, input[type="radio"] + label:before {
-  @include grayBorder();
-  background-color: #FFF;
+input[type="checkbox"].no-location:checked + label:before, 
+input[type="radio"].no-location:checked + label:before{
+  border:$px-unit * 2 solid $gray-darker;
+  background: $no-locations;
+}
+
+input[type="checkbox"].no-location + label:before{
+  @include border-radius(50%);
+  @include filter-option($no-locations);
+}
+
+input[type="checkbox"].pending-location:checked + label:before, 
+input[type="radio"].pending-location:checked + label:before{
+  border:$px-unit * 2 solid $gray-darker;
+  background: $pending-locations;
+}
+
+input[type="checkbox"].pending-location + label:before{
+  @include border-radius(50%);
+  @include filter-option($pending-locations);
+}
+
+input[type="checkbox"].verified-location:checked + label:before, 
+input[type="radio"].verified-location:checked + label:before{
+  border:$px-unit * 2 solid $gray-darker;
+  background: $verified;
+}
+input[type="checkbox"].verified-location + label:before{
+  @include border-radius(50%);
+  @include filter-option($verified);
+}
+
+input[type="checkbox"].all-options:checked + label:before, 
+input[type="radio"].all-options:checked + label:before{
+  border:$px-unit * 2 solid $gray-darker;
+  background: $black;
+}
+
+input[type="checkbox"].all-options + label:before{
+  @include border-radius(50%);
+  @include filter-option($black);
 }
 
 input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + label:before {
-
   font-size: $small !important;
-  padding-left: 1px;
+  padding-left: $px-unit;
   display: inline-block;
-  font-family: FontAwesome;
+  font-family: $icon-font;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   font-stretch: bold;
@@ -48,14 +78,14 @@ input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + lab
 
 .form-control {
   @include inputText();
-  @include grayBorder();
+  border: $px-unit solid $gray-darker;
   display: block;
-  width: 100%;
+  width: $extend;
   height: 24px;
   padding: 2px 2px;
   line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
+  color: $darkGray;
+  background-color: $white;
   background-image: none;
   border-radius: 0px;
 }
@@ -71,8 +101,8 @@ label {
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-  background-color: #FFF;
-  color: #EEE;
+  background-color: $white;
+  color: $gray;
   opacity: 1;
 }
 
@@ -84,3 +114,13 @@ label {
     right: 0px !important;
   }
 }
+
+label{
+  &.all-options{
+    font-size: $big - 2;
+    &:hover{
+      color: $darkGray !important;
+    }
+  }
+}
+

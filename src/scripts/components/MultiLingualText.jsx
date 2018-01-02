@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
  *
  * (see: AUTOGEO-85)
  */
-export default class MultiLangualText extends Reflux.Component {
+export default class MultiLingualText extends Reflux.Component {
   static ENGLISH_LANG = "en";
 
   static propTypes = {
@@ -33,13 +33,11 @@ export default class MultiLangualText extends Reflux.Component {
    *  * try to find the text in the selected language OR
    *  * try to find the text in the english language OR
    *  * return the first translation available.
-   *
-   * @param texts - array of translations
    */
   getTranslation(texts,exact) {
 
     if (texts === undefined || texts.length === 0) {
-      return undefined;
+      return "";
     }
 
     const translationLanguage = texts.find(val => val.lang === this.state.lang);
@@ -60,6 +58,6 @@ export default class MultiLangualText extends Reflux.Component {
   }
 
   render() {
-    return <div>{this.getTranslation(this.props.texts)}</div>
+    return <div>{this.getTranslation()}</div>
   }
 }
