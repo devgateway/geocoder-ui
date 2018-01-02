@@ -9,32 +9,31 @@ import MultiLingualText from "../../MultiLingualText.jsx";
 export default class PanelHeading extends React.Component {
   static propTypes = {
     project: PropTypes.object.isRequired,
-    lang:    PropTypes.string.isRequired,
     toggle:  PropTypes.func.isRequired,
   };
   
   render() {
-    const {project, lang, toggle} = this.props;
-    
+    const {project, toggle} = this.props;
+
     return (
       <div className="panel-heading">
         <div className="project-icon"/>
-        
+
         <div className="panel-content">
           <div className="project-code">{project.identifier}</div>
-          
+
           <div className="panel-section">
             <div className="project-info-label"><MultiLingualText texts={project.titles}/></div>
             <div className="project-info">{Date(project.date)}</div>
           </div>
-          
+
           <div className="panel-section">
             <div className="project-info-label">{Message.t('projectinfo.projectinfo')}</div>
             <div className="project-info">
               <MultiLingualText texts={project.descriptions}/>
               <a href="">more</a>
             </div>
-            
+
             <p>
               <label className="green inline text-medium"><Message k="projectinfo.country"/>:</label>
               {project.countries ? project.countries.map((c) => {
@@ -42,9 +41,9 @@ export default class PanelHeading extends React.Component {
               }) : 'N/A'}
             </p>
           </div>
-        
+
         </div>
-        
+
         <div className="heading-buttons">
           <ul>
             <li>

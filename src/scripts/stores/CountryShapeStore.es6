@@ -6,10 +6,10 @@ import {StoreMixins} from '../mixins/StoreMixins.es6';
 const initialData = {countries: []};  //a country object is like {iso:MOZ data:geojson}
 
 const CountryShapeStore = createStore({
-  
+
   initialData: initialData,
   mixins: [StoreMixins],
-  
+
   init() {
     this.data = initialData;
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SHAPE), 'loading');
@@ -18,17 +18,18 @@ const CountryShapeStore = createStore({
     this.listenTo(Actions.get(Constants.ACTION_UNLOAD_SHAPE), 'remove');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
-  
+
   cleanStore() {
     this.setData(this.initialData);
   },
-  
+
   loading() {
     //TODO:activate loading spiner
     console.log('Loading country shape')
   },
-  
+
   completed(data, iso) {
+    
     const newState = Object.assign({}, this.get());
     if (!newState.countries.find((it) => {
         return it.iso === iso
@@ -53,7 +54,7 @@ const CountryShapeStore = createStore({
       Actions.invoke(Constants.ACTION_COUNTRY_LAYER_ADDED_TO_MAP, iso);
     }
   },
-  
+
   remove(iso) {
     let newState = Object.assign({}, this.get());
     let countries = newState.countries.filter((it) => {
@@ -63,12 +64,12 @@ const CountryShapeStore = createStore({
     this.setData(newState);
     Actions.invoke(Constants.ACTION_COUNTRY_LAYER_REMOVED_FROM_MAP, iso);
   },
-  
-  
+
+
   failed(message) {
     console.error(`Ups got  ${message}`);
   }
-  
+
 });
 
 export default CountryShapeStore;
