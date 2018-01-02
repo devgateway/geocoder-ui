@@ -1,7 +1,7 @@
 import React from 'react';
-import MultiLangualText from '../MultiLingualText.jsx';
+import MultiLingualText from '../MultiLingualText.jsx';
 
-class MultiLangualTextArea extends MultiLangualText {
+class MultiLangualTextArea extends MultiLingualText {
   
   
   onChange(e) {

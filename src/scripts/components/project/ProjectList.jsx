@@ -21,7 +21,8 @@ class ProjectList extends Reflux.Component {
   
   componentDidMount() {
     Actions.invoke(Constants.ACTION_FETCH_FILTERS);
-    // Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+    // there is no need to invoke the fetch of the project list since this action will be triggered after the filters
+    // are fetched in ProjectListStore
   }
   
   handlePageChanged(page) {
