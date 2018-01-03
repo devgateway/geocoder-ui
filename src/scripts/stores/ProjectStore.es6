@@ -55,7 +55,7 @@ class ProjectStore extends Reflux.Store {
   }
 
   updateLocation(data){
-    debugger;
+    
     const {geocoding:{locationFeature},save}=data
     if (save){
       const {properties:{locationStatus,id},properties}=locationFeature

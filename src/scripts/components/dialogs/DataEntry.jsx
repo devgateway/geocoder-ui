@@ -91,7 +91,10 @@ class DataEntryContent extends React.Component {
 
     let type='geocoding'
 
-    let geonamesIdentifier=locationIdentifiers.find(id=>id.vocabulary.code=='G1')
+    let geonamesIdentifier=locationIdentifiers.find(id=>{
+
+      return (id.vocabulary?id.vocabulary.code=='G1':false)
+    })
     let geonamesId
     if (geonamesIdentifier){
         geonamesId=geonamesIdentifier.code
@@ -129,7 +132,7 @@ class DataEntryContent extends React.Component {
                 <div className="col-lg-6">
                   <div className="form-group" id="source">
                     <label className="colored"><Message k="dataentry.source"/></label>
-                  <input type="text" className="form-control" id="id" placeholder="id" value={id.vocabulary.name} disabled/>
+                  <input type="text" className="form-control" id="id" value={id.vocabulary?id.vocabulary.name:'Unknown'} disabled/>
 
 
               </div>
@@ -177,13 +180,13 @@ class DataEntryContent extends React.Component {
                 <div className="form-group">
                   <label className="colored"><Message k="dataentry.featuredesignation"/></label>
                   <input type="text" className="form-control" id="featureDesignation"
-                         value={featuresDesignation.code} disabled/>
+                         value={featuresDesignation?featuresDesignation.code:''} disabled/>
                 </div>
               </div>
               <div className="col-lg-9">
                 <div className="form-group">
                   <input type="text" className="form-control" id="featureDesignationName"
-                         value={featuresDesignation.description} disabled/>
+                         value={featuresDesignation?featuresDesignation.description:''} disabled/>
                 </div>
               </div>
             </div>

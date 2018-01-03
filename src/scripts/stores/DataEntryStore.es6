@@ -45,6 +45,9 @@ class DataEntryStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData)
     this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_SHAPES), this.setShapesAdmins)
 
+
+    this.listenTo(Actions.get(Constants.ACTION_TRANSFORM_TO_GEOCODING),this.makeGeoCoding)
+
   }
 
   closePopup() {
@@ -95,7 +98,7 @@ class DataEntryStore extends Reflux.Store {
 
 
   cleanStore() {
-    debugger;
+
     this.setState(this.initialData)
   }
 
@@ -119,14 +122,14 @@ class DataEntryStore extends Reflux.Store {
     if (lang!=undefined && lang !=null){
 
       let currentValues=newProperties[name].slice()
-      debugger
+
       let position=currentValues.findIndex(it=>it.lang==lang)
 
       if (position>-1){
         if (value !='' && value!=null){
           currentValues[position]={'description':value,'lang':lang}
         }else{
-          debugger
+
           currentValues.splice(position,1)
         }
       }else{
@@ -144,6 +147,51 @@ class DataEntryStore extends Reflux.Store {
     return newState
   }
 
+
+
+    makeGeoCoding(data){
+      const {locationFeature:{properties}}=data
+      const {lat,lng,geonameId,name,alternateNames,adminCode0,adminCode1,adminCode2,adminName0,adminName1,adminName2,fcl}=properties
+      const names=this.getNames(name,alternateNames)
+      const admins=[]
+      const vocabulary={"code":"G1","name":"Geonames","lang":"en"}
+
+      if (adminCode0 && adminName0){
+          admins.push({code:adminCode0,level:1,name:adminName0,vocabulary})
+      }
+      if (adminCode1 && adminName1){
+          admins.push({code:adminCode1,level:1,name:adminName1,vocabulary})
+      }
+      if (adminCode2 && adminName2){
+          admins.push({code:adminCode2,level:2,name:adminName2,vocabulary})
+      }
+
+      const props={
+          "names":names,
+          "activityDescriptions":[],
+          "descriptions":[],
+          "locationIdentifiers":[{"vocabulary":vocabulary,"code":geonameId}],
+          "administratives":admins,
+          "locationClass":this.getClassFromFcl(fcl),
+          //  "exactness":{"id":21,"code":"1","name":"Exact","description":"The designated geographic location is exact","lang":"en"},"locationReach":{"id":19,"code":"1","name":"Activity","description":"The location specifies where the activity is carried out","lang":"en"},
+      //  "featuresDesignation":{"id":354,"code":"PPLC","name":"capital of a political entity","description":"capital of a political entity","lang":"en"},
+      //  "precision":null,"gazetteerAgency":null,"locationStatus":"EXISTING","x":31.58247,"y":4.85165}
+        }
+
+      const newLocationFeature = {
+        "type":"Feature",
+        "geometry":{"type":"Point","coordinates":[lng,lat]},
+        "properties":props,
+        "propertiesBackup":JSON.parse(JSON.stringify(props))
+      }
+
+      let newState=Object.assign({},this.state)
+      let newGeocding=Object.assign({},newState.geocoding)
+      Object.assign(newGeocding,{locationFeature:newLocationFeature,countryFeature:newGeocding.countryFeature})
+      Object.assign(newState,{geocoding:newGeocding,'showPopup': true})
+
+      this.setState(newState)
+    }
 
 
   loadingData() {
@@ -217,16 +265,44 @@ class DataEntryStore extends Reflux.Store {
   }
 
 
+  getNames(defName,alternateNames){
+    const langs = settings.get('I18N', 'LANGUAGES').map(l=>l.code)
+
+    const names=[]
+    langs.forEach(lng=>{
+      let name=null
+      let candidates=alternateNames.filter(n=>n.lang=lng)
+
+      if (candidates.length ==1){
+        name= {'description':candidates[0].name,'lang':candidates[0].lng}
+      }
+
+      if(candidates.length > 1){
+        let filterd=candidates.filter(c=>c.isPreferredName==true)
+        if (filterd && filterd.length >0){
+            name={'description':candidates[0].name,'lang':candidates[0].lng}
+          }
+      }
+
+      if (name==null && lng=='en'){
+          name={'description':defName,'lang':lng}
+      }
+
+      if (name!=null){
+        names.push(name)
+      }
+
+    })
+
+    return names
+  }
+
   updateFromGeonames(location) {
 
     let newState = Object.assign({}, this.state)
-
     Object.assign(newState, {'loadingGeonames': false})
+    const names=this.getNames(location.name,location.alternateNames)
 
-    const langs = settings.get('I18N', 'LANGUAGES').map(l=>l.code)
-    const names=location.alternateNames.filter((n)=>langs.indexOf(n.lang)>-1 && n.isPreferredName==true).map(name=>{
-      return {'description':name.name,'lang':name.lang}
-    })
     newState=this.valueChanged(newState,{'name':'names','value':names})
     newState=this.valueChanged(newState,{'name':'locationClass','value':this.getClassFromFcl(location.fcl)})
     newState=this.valueChanged(newState,{'name':'featuresDesignation','value':{code: "PPLC", name: "capital of a political entity"}})

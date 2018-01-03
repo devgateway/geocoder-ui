@@ -62,6 +62,11 @@ actionsDef[Constants.ACTION_SAVE_LOCATION] = {
 };
 
 
+actionsDef[Constants.ACTION_TRANSFORM_TO_GEOCODING] = {
+  children: ['completed', 'failed']
+};
+
+
 /*create async actions*/
 const actions = createActions(actionsDef);
 
