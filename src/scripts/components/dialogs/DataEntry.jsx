@@ -46,6 +46,10 @@ class DataEntryContent extends React.Component {
     Actions.invoke(Constants.ACTION_CHANGE_CODING_VALUE, {'name': name, 'value': val,'lang':lang});
   }
 
+  onCancel() {
+    Actions.invoke(Constants.ACTION_CANCEL);
+  }
+
   onDelete() {
     Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
@@ -178,7 +182,6 @@ class DataEntryContent extends React.Component {
               </div>
               <div className="col-lg-9">
                 <div className="form-group">
-                  <label>&nbsp;</label>
                   <input type="text" className="form-control" id="featureDesignationName"
                          value={featuresDesignation.description} disabled/>
                 </div>

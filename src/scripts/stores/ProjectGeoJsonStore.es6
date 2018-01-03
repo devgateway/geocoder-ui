@@ -26,8 +26,11 @@ const ProjectGeoJsonStore = createStore({
     if (project.locations) {
       let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
       featureCollection.features.forEach((record) => {
+        debugger;
         let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;
-        Object.assign(record.properties, {'rollbackData': rollbackData});//duplicates the values into same object for rollback purposes
+
+
+        Object.assign(record, {'propertiesBackup': JSON.parse(JSON.stringify(rollbackData))});//duplicates the values into same object for rollback purposes
       });
 
       newData = Object.assign(this.get(), {data: featureCollection, autoZoom: false, date: new Date()});

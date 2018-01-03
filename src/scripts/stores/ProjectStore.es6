@@ -75,6 +75,7 @@ class ProjectStore extends Reflux.Store {
 
 
   submitGeocoding(geocoding) {
+    debugger;
     let newpProject = {...this.state.project};
     let locations = newpProject.locations || [];
 

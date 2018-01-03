@@ -50,14 +50,12 @@ class DataEntryStore extends Reflux.Store {
   closePopup() {
     let newState = Object.assign({}, this.state)
     Object.assign(newState, {'showPopup': false,'save':false})//set the location to be used
-    //Object.assign(newState, {'geocodingBackup': null})//set the location to be used
     this.setState(newState)
   }
 
   openPopup(data) {
     let newState = Object.assign({}, this.state)
-    Object.assign(newState, {'geocoding': data,'showPopup': true,'confirmDeletion':false})//set the location to be used
-    Object.assign(newState, {'geocodingBackup': data})//set the location to be used
+    Object.assign(newState, {'geocoding': JSON.parse(JSON.stringify(data)),'showPopup': true,'confirmDeletion':false})//set the location to be used
     this.setState(newState)
   }
 
@@ -65,6 +63,15 @@ class DataEntryStore extends Reflux.Store {
   beforeDelete() {
     let newState = Object.assign({}, this.state,{'confirmDeletion':true})
     this.setState(newState)
+  }
+
+
+  cancel() {
+    let newState=JSON.parse(JSON.stringify(this.state))
+    let backupProperties=JSON.parse(JSON.stringify(this.state.geocoding.locationFeature.propertiesBackup))
+    newState.geocoding.locationFeature.properties=backupProperties;
+    this.setState(newState)
+    this.closePopup()
   }
 
   delete() {
