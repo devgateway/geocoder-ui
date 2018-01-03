@@ -18,26 +18,33 @@
     text-transform: none;
     width: $extend - 30;
   }
+
   .callout-heading {
     display: inline;
     margin-left: 0;
     overflow: hidden;
   }
+
   .project-panel-content {
     overflow: hidden;
     padding: $base-unit;
+
     p {
       font-size: $big - 2;
       font-weight: $normal-weight-text;
     }
+
     .status-link {
       @include border-radius(3px);
       float: right;
-      font-size: $big - 3;
+      font-size: $medium;
       font-weight: $normal-weight-text;
       margin-bottom: $base-unit / 2;
-      padding-left: $base-unit * 2;
-      padding-right: $base-unit * 2;
+      padding: $base-unit $base-unit * 2 $base-unit $base-unit * 2;
+      &:hover {
+        background: $black;
+      }
+
       a {
         color: $white;
         &:hover {
@@ -61,6 +68,7 @@
 .bs-callout h4 {
   margin-top: 0;
   margin-bottom: $base-unit / 2;
+
   a {
     text-decoration: none
   }
@@ -85,9 +93,11 @@
 
 .bs-callout-default h4 {
   color: $darkGray;
+
   a {
     color: $darkGray;
   }
+
   a:hover {
     color: $darkGray;
   }
@@ -99,9 +109,11 @@
 
 .bs-callout-primary h4 {
   color: $pending-locations;
+
   a {
     color: $pending-locations;
   }
+
   a:hover {
     color: $pending-locations;
   }
@@ -111,46 +123,39 @@
 .bs-callout-success {
   min-height: 150px;
   border-left-color: $verified;
+
+  .status-link {
+    background: $verified;
+  }
+
   .project-id {
     @include callouts($verified);
   }
+
   a {
     color: $verified;
   }
-;
+
   a:hover {
     color: $verified
   }
-;
 }
 
 .bs-callout-success h4 {
   color: $verified;
 }
 
-.bs-callout-danger {
-  border-left-color: #d9534f;
-  .project-id {
-    background-color: #d9534f;
-  }
-  a {
-    color: #d9534f
-  }
-  a:hover {
-    color: $red-variant;
-  }
-
-}
-
-.bs-callout-danger h4 {
-  color: $red-variant;
-}
-
 .bs-callout-warning {
   border-left-color: $no-locations;
+
+  .status-link {
+    background: $no-locations;
+  }
+
   .project-id {
     @include callouts($no-locations);
   }
+
   a {
     color: $no-locations;
   }
@@ -169,14 +174,11 @@
   a {
     color: $pending-locations;
   }
+
   .status-link {
     background: $pending-locations;
-    padding: $base-unit;
-    &:hover {
-      background: $black;
-    }
   }
-;
+
   .project-id {
     @include callouts($pending-locations);
   }
