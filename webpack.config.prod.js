@@ -19,14 +19,14 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {'NODE_ENV': JSON.stringify('production')}
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compressor: {
-        unused    : true,
-        dead_code : true,
-        warnings  : false
-      }
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   sourceMap: false,
+    //   compressor: {
+    //     unused    : true,
+    //     dead_code : true,
+    //     warnings  : false
+    //   }
+    // }),  TODO - disable for now uglify plugin (https://github.com/webpack/webpack/issues/2023)
     new ExtractTextPlugin('[name].css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
