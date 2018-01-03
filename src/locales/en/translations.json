@@ -125,7 +125,8 @@
     "any": "All Options",
     "geojsonexport": "GeoJson",
     "kmlexport": "Kml",
-    "import": "Import"
+    "import": "Import",
+    "export": "Export"
   },
   "locationpopup": {
     "adminsource": {
