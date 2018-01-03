@@ -9,7 +9,6 @@ import FiltersStore from "./FiltersStore.es6";
 const initialState = {
   data: {},
   params: {
-    lang: 'en',
     text: '',
     countries: [],
     years:     [],
@@ -97,11 +96,13 @@ class ProjectListStore extends Reflux.Store {
     newParams.withNoLocation = false;
     newParams.pendingVerification = false;
     newParams.verifiedLocation = false;
+    newParams.countries = [];
+    newParams.years = [];
     newParams.text = '';
     newParams.page = 0;   // also reset the page number when a filter parameter is changed
-    
+  
     this.setState({params: newParams});
-    
+  
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
 }
