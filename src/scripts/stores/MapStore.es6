@@ -121,35 +121,7 @@ const MapStore = createStore({
     });
 
     this.setData(newState);
-  },
-
-
-
-  makeGeocodingObject(params) {
-    let model = {
-      'name': params.name,
-      'id': params.geonameId,
-      'activityDescription': params.activityDescription || '',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [params.lng, params.lat]
-      },
-
-      'toponymName': params.toponymName,
-      'featureDesignation': {
-        code: params.fcode,
-        name: params.fcodeName
-      },
-      'type': params.type || 'location',
-      'status': params.status || 'EXISTING',
-      'locationClass': params.locationClass || null, //{code:''m,name:''}
-      'exactness': params.exactness || null, // {{'code': '1', 'name': 'Exact'}
-
-    }
-    return model;
-  },
-
-
+  }
 
 
 });

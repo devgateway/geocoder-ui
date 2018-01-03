@@ -49,21 +49,42 @@
     }
     .btn {
       margin: 2px;
+
+
     }
+
+
   }
+
 }
 
 #dataentry.new {
   .colored {
     color: $green;
   }
+  #savebutton{
+    background-color: $green !important
+  }
 }
 
-#dataentry.update {
+#dataentry.updated {
   .colored {
     color: rgba(253, 154, 0, 0.8);
   }
+  #savebutton{
+    background-color: rgba(253, 154, 0, 0.8) !important;
+  }
 }
+
+#dataentry.auto_coded {
+  .colored {
+    color: #0c7bce;
+  }
+  #savebutton{
+    background-color: #0c7bce!important
+  }
+}
+
 
 #dataentry {
   .has-error label {

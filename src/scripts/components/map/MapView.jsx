@@ -70,15 +70,24 @@ export default class MapView extends React.Component {
   /*
     This is called by location onClick
     */
-  locationClick(e) {
-    
-    //using geonames lat and lng instead of event latlng should be more precise.
-    let countryInfo = this.queryFeatures(e.latlng);
-    let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
+    getCountryLayerFeatures(latlng){
+      let countryInfo = this.queryFeatures(latlng);
+      let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
+      return countryFeature
+    }
+
+    onLocationClick(e){
+
+      let locationFeature = e.target.feature
+      const {latlng} = e
+      let countryFeature=this.getCountryLayerFeatures(latlng)
+      Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature, countryFeature})
+    }
+
+  onGeocodingClick(e) {
     let locationFeature = e.target.feature
-    const {latlng} = e;
-    //at this stage I have the location feature + country feature
-    //Actions.invoke(Constants.ACTION_POPUP_INFO, {locationFeature, countryFeature, 'position': latlng})
+    const {latlng} = e
+    let countryFeature=this.getCountryLayerFeatures(latlng)
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
 
@@ -136,9 +145,9 @@ export default class MapView extends React.Component {
                 }):null}
               </LayerGroup>
 
-              <GeocodingLayer name="Geocoding" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.geocoding}/>
+              <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
 
-              <GazetterLayer name="Available Locations" onFeatureClick={this.locationClick.bind(this)}  {...this.state.layers.locations}/>
+              <GazetterLayer name="Available Locations" onFeatureClick={e=>this.onLocationClick(e)}  {...this.state.layers.locations}/>
 
             </MiniMap>
 

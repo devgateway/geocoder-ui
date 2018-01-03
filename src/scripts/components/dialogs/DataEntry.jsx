@@ -91,7 +91,10 @@ class DataEntryContent extends React.Component {
 
     let type='geocoding'
 
-    let geonamesIdentifier=locationIdentifiers.find(id=>id.vocabulary.code=='G1')
+    let geonamesIdentifier=locationIdentifiers.find(id=>{
+
+      return (id.vocabulary?id.vocabulary.code=='G1':false)
+    })
     let geonamesId
     if (geonamesIdentifier){
         geonamesId=geonamesIdentifier.code
@@ -112,7 +115,7 @@ class DataEntryContent extends React.Component {
     } else {
 
       return (
-        <div id='dataentry' className={locationStatus == 'EXISTING' ? 'update' : 'new'}>
+        <div id='dataentry' className={locationStatus?locationStatus:''}>
             <LangSelector></LangSelector>
             <label className=""><b> * All entered text will be stored in "{this.props.lang}" language</b></label>
 
@@ -129,7 +132,7 @@ class DataEntryContent extends React.Component {
                 <div className="col-lg-6">
                   <div className="form-group" id="source">
                     <label className="colored"><Message k="dataentry.source"/></label>
-                  <input type="text" className="form-control" id="id" placeholder="id" value={id.vocabulary.name} disabled/>
+                  <input type="text" className="form-control" id="id" value={id.vocabulary?id.vocabulary.name:'Unknown'} disabled/>
 
 
               </div>
@@ -149,6 +152,7 @@ class DataEntryContent extends React.Component {
                {administratives.sort((a,b)=>a.level-b.level).map(admin=>{return (
                  <div className={`col-lg-${12/administratives.length}`}>
                    <div className="form-group">
+
                      <label className="colored" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/> </label>
                      <input type="text" className="form-control" id={`admin${admin.level}`} placeholder="NA" value={admin.name} disabled/>
                     <Message k="dataentry.source"/>: {admin.vocabulary.name}
@@ -157,7 +161,6 @@ class DataEntryContent extends React.Component {
             </div>
               <div className="row">
                   <div className="col-lg-12 ">
-                    Update admin names from:
                         {geonamesId?(<button className="btn btn-xs btn-success pull-right" onClick={e=>{this.updateAdminInfo(geonamesId)}}>
                           <Message k="dataentry.sourceadmin.geonames"/>
                         </button>):null}
@@ -173,17 +176,18 @@ class DataEntryContent extends React.Component {
 
 
             <div className="row">
-              <div className="col-lg-3">
+              <div className="col-lg-4">
                 <div className="form-group">
-                  <label className="colored"><Message k="dataentry.featuredesignation"/></label>
+                  <label className="colored"><Message k="dataentry.code"/></label>
                   <input type="text" className="form-control" id="featureDesignation"
-                         value={featuresDesignation.code} disabled/>
+                         value={featuresDesignation?featuresDesignation.code:''} disabled/>
                 </div>
               </div>
-              <div className="col-lg-9">
+              <div className="col-lg-6">
                 <div className="form-group">
+                    <label className="colored"><Message k="dataentry.featuredesignation"/></label>
                   <input type="text" className="form-control" id="featureDesignationName"
-                         value={featuresDesignation.description} disabled/>
+                         value={featuresDesignation?featuresDesignation.name:'None'} disabled/>
                 </div>
               </div>
             </div>
@@ -242,9 +246,13 @@ class DataEntryContent extends React.Component {
               <div className='separator'/>
               <DataEntryHelp parentId='dataentry' type={type}/>
               <div className='separator'/>
-
-              <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={e=>this.onSave()}>
-                {locationStatus == 'EXISTING' ? Message.t('dataentry.save') : Message.t('dataentry.update')}
+              {locationStatus}
+              <button className="btn btn-lg btn-success pull-right"  id="savebutton" onClick={e=>this.onSave()}>
+                {locationStatus == 'EXISTING' ? Message.t('dataentry.update') :null}
+                {locationStatus == 'NEW' ? Message.t('dataentry.add') :null}
+                {locationStatus == 'UPDATED' ? Message.t('dataentry.update') :null}
+                {locationStatus == 'AUTO_CODED' ? Message.t('dataentry.verify') :null}
+                {locationStatus == 'DELETED' ? Message.t('dataentry.save') :null}
               </button>
 
                <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>

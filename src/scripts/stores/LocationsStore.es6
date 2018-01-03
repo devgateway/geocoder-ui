@@ -15,6 +15,7 @@ const initialState = {
   loadingLocations: false,
   countryISO: undefined
 };
+
 class LocationsStore extends Reflux.Store {
   constructor() {
     super();
@@ -71,7 +72,7 @@ class LocationsStore extends Reflux.Store {
   }
 
   completed(rawData) {
-    debugger;
+
     const newLocations = {...this.state.locations};
 
     if (rawData.totalResultsCount > 0) {
