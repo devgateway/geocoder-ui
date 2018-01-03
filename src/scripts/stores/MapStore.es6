@@ -41,7 +41,7 @@ const MapStore = createStore({
     // TODO - use directly singleton when we switch to Reflux es6
     this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
-    this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
+    this.listenTo(Reflux.initStore(LocationsGeoJson), this.updateGazetteerLayer);
 
     this.listenTo(CountryGeo, this.updateCountry);
     //this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
@@ -50,8 +50,6 @@ const MapStore = createStore({
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
 
-  onProjectUpdate(projectStore) {
-  },
 
   cleanStore() {
     this.setData(this.initialData);
@@ -151,56 +149,7 @@ const MapStore = createStore({
     return model;
   },
 
-  addAdminCodes(model, params) {
 
-    var adminCodes = {
-      geonames: {
-        'country': {
-          code: params.countryId,
-          name: params.countryName
-        },
-        'admin1': {
-          code: params.adminId1,
-          name: params.adminName1
-        },
-        'admin2': {
-          code: params.adminId2,
-          name: params.adminName2
-        }
-      }
-    }
-
-    if (params.ID_0 && params.ID_1 && params.ID_2) {
-      Object.assign(adminCodes, {
-        shape: {
-          'country': {
-            code: params.ID_0,
-            name: params.NAME_0
-          },
-          'admin1': {
-            code: params.ID_1,
-            name: params.NAME_1
-          },
-          'admin2': {
-            code: params.ID_2,
-            name: params.NAME_2
-          }
-        }
-      })
-    }
-    if (model.rollbackData) {
-      Object.assign(adminCodes, {
-        saved: {
-          'country': model.rollbackData.country,
-          'admin1': model.rollbackData.admin1,
-          'admin2': model.rollbackData.admin2
-        }
-      })
-    }
-    Object.assign(model, {
-      adminCodes
-    })
-  },
 
 
 });
