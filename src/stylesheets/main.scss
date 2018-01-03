@@ -423,7 +423,7 @@ h4 {
 
 .project-header {
   background: $project-list-header-bg;
-  padding: $base-unit + 5;
+  padding: $base-unit;
   .project-header-search {
     height: $base-unit * 3.5;
     margin-top: $base-unit / 2;
@@ -433,7 +433,7 @@ h4 {
     float: left;
     font-size: $huge;
     font-weight: $normal-weight-text;
-    margin-top: $base-unit - 1;
+    padding-left: $base-unit;
   }
   .action-btn {
     @include border-radius(3px);
