@@ -145,9 +145,9 @@ export default class MapView extends React.Component {
                 }):null}
               </LayerGroup>
 
-              <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
-
+              
               <GazetterLayer name="Available Locations" onFeatureClick={e=>this.onLocationClick(e)}  {...this.state.layers.locations}/>
+              <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
 
             </MiniMap>
 

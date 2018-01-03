@@ -246,7 +246,7 @@ class DataEntryContent extends React.Component {
               <div className='separator'/>
               <DataEntryHelp parentId='dataentry' type={type}/>
               <div className='separator'/>
-              {locationStatus}
+            
               <button className="btn btn-lg btn-success pull-right"  id="savebutton" onClick={e=>this.onSave()}>
                 {locationStatus == 'EXISTING' ? Message.t('dataentry.update') :null}
                 {locationStatus == 'NEW' ? Message.t('dataentry.add') :null}
@@ -254,10 +254,10 @@ class DataEntryContent extends React.Component {
                 {locationStatus == 'AUTO_CODED' ? Message.t('dataentry.verify') :null}
                 {locationStatus == 'DELETED' ? Message.t('dataentry.save') :null}
               </button>
-
-               <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>
-                  <Message k="dataentry.delete"/>
-              </button>
+                {locationStatus=='NEW'?null:   <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>
+                      <Message k="dataentry.delete"/>
+                  </button>
+                  }
 
               <button className="btn btn-lg btn-warning pull-right" id="cancelbutton" onClick={e=>this.onCancel()}>
                   <Message k="dataentry.cancel"/>
