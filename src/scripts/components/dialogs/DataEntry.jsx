@@ -88,7 +88,7 @@ class DataEntryContent extends React.Component {
       exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,
       locationStatus,names,locationIdentifiers}}=locationFeature
 
-    
+
     let type='geocoding'
 
     let geonamesIdentifier=locationIdentifiers.find(id=>id.vocabulary.code=='G1')
@@ -254,10 +254,10 @@ class DataEntryContent extends React.Component {
               <button className="btn btn-lg btn-warning pull-right" id="cancelbutton" onClick={e=>this.onCancel()}>
                   <Message k="dataentry.cancel"/>
               </button>
-
+              {geonamesId?
               <button className="btn btn-lg btn-default pull-right" title={Message.t('dataentry.updatefromgeonames')} onClick={e=>this.updateLocationInfo(geonamesId)}>
                   {(this.props.loadingGeonames) ? <i className="fa fa-refresh fa-spin"></i> : <i className="fa fa-refresh"></i>}
-              </button>
+              </button>:null}
 
             </div>
           </div>
@@ -292,7 +292,7 @@ class DataEntry extends Reflux.Component {
 
 
   render() {
-  
+
     return (
       <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.cancel} >
         <Modal.Body>

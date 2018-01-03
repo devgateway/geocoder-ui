@@ -32,6 +32,12 @@
 
 }
 
+.geocoding-marker-auto_coded {
+  background-color: rgb(95, 187, 224);
+  box-shadow: 0 0 4px 3px rgb(43, 210, 247), 0 0 0 4px #0c7bce, 0 0 0 8px rgba(8, 132, 179, 0.24);
+
+}
+
 .geocoding-marker-new:hover {
   -webkit-transition: all 0.1s linear;
   box-shadow: 0 0 6px 5px rgba(255, 255, 255, 0.6), 0 0 0 6px rgb(50, 205, 50), 0 0 0 8px rgba(34, 139, 34, 0.24);
@@ -75,7 +81,7 @@
 /*
 .leaflet-minimap-container{
   .marker{
-    height: 15px !important; 
+    height: 15px !important;
    width:15px !important;
    -webkit-border-radius: $extend;
    border-radius: $extend;
@@ -85,6 +91,6 @@
    .text{
     @include fontDefault(6px,$black);
 
-  } 
+  }
 }
 }*/
