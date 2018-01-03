@@ -61,7 +61,7 @@ class ProjectList extends Reflux.Component {
               </Col>
               
               <Col md={5} sm={5}>
-                <button className="action-btn"><Message k="projectlist.export"/></button>
+                <button className="action-btn"><Link to="/"><Message k="projectlist.export"/></Link></button>
                 <button className="action-btn"><Link to="/upload"><Message k="projectlist.import"/></Link></button>
               </Col>
             </Row>

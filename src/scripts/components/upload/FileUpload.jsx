@@ -66,19 +66,17 @@ class FileUpload extends Reflux.Component {
         </div>
         
         <div className="upload-options">
-          <Button bsSize="lg" bsStyle='success' className="pull-right" onClick={() => {
-            this.refs.dropzone.open()
-          }}>
+          <Button bsSize="lg" bsStyle='success' className="pull-right" onClick={() => {this.refs.dropzone.open()}}>
             Add File
           </Button>
           
-          <Button bsSize="lg" bsStyle='success' className="pull-right" onClick={e => this.onUpload()}>Upload and
-            Import </Button>
+          <Button bsSize="lg" bsStyle='success' className="pull-right" onClick={e => this.onUpload()}>
+            Upload and Import
+          </Button>
           
-          <div className="form-group">
-            <FormControl type="checkbox" checked={this.state.autoGeocode} onChange={this.toggleAutoGeocode.bind(this)}
-                         id="autoGeocode" name="autoGeocode" label="Auto Geocode Activities"/>
-            <label htmlFor="autoGeocode">Auto Code Projects</label>
+          <div className="select-section" onClick={this.toggleAutoGeocode.bind(this)}>
+            <span className={"select-box " + (this.state.autoGeocode ? "selected" : "")}></span>
+            <span className="search-option-label">Auto Code Projects</span>
           </div>
         </div>
       </div>)
