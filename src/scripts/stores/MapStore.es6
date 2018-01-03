@@ -39,7 +39,7 @@ const MapStore = createStore({
 
   init() {
     // TODO - use directly singleton when we switch to Reflux es6
-    this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
+    //this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
     this.listenTo(Reflux.initStore(LocationsGeoJson), this.updateGazetteerLayer);
 
@@ -95,7 +95,7 @@ const MapStore = createStore({
   },
 
   updateGazetteerLayer(data) {
-    debugger;
+
     var newState = Object.assign({}, this.get())
     newState.layers.locations = data;
 
@@ -110,7 +110,7 @@ const MapStore = createStore({
 
 
   updateGeocodingLayer(data) {
-    debugger;
+
     var newState = Object.assign({}, this.get())
     newState.layers.geocoding = data;
 

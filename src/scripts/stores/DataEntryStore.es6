@@ -95,6 +95,7 @@ class DataEntryStore extends Reflux.Store {
 
 
   cleanStore() {
+    debugger;
     this.setState(this.initialData)
   }
 
@@ -160,7 +161,7 @@ class DataEntryStore extends Reflux.Store {
 
 
   setShapesAdmins(){
-    debugger;
+
     const {geocoding:{countryFeature:{properties}}}=this.state
 
     const {ADMIN_0_CODE,ADMIN_0_NAME,ADMIN_1_CODE,ADMIN_1_NAME,ADMIN_2_CODE,ADMIN_2_NAME}=properties
@@ -177,7 +178,7 @@ class DataEntryStore extends Reflux.Store {
   }
 
   setAdministratives(data,vocabulary) {
-    debugger;
+
     let newState = Object.assign({}, this.state)
     var newLocationFeature = JSON.parse(JSON.stringify(newState.geocoding.locationFeature))
     const admins=[];
@@ -217,7 +218,7 @@ class DataEntryStore extends Reflux.Store {
 
 
   updateFromGeonames(location) {
-    debugger;
+
     let newState = Object.assign({}, this.state)
 
     Object.assign(newState, {'loadingGeonames': false})

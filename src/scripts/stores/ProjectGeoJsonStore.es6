@@ -19,14 +19,14 @@ const ProjectGeoJsonStore = createStore({
   },
 
   process(projectStore) {
-    debugger;
+
     if (projectStore){
     const project = projectStore.project;
     let newData;
     if (project.locations) {
       let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
       featureCollection.features.forEach((record) => {
-        debugger;
+
         let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;
 
 

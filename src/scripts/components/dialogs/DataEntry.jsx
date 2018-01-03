@@ -88,7 +88,7 @@ class DataEntryContent extends React.Component {
       exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,
       locationStatus,names,locationIdentifiers}}=locationFeature
 
-    debugger;
+    
     let type='geocoding'
 
     let geonamesIdentifier=locationIdentifiers.find(id=>id.vocabulary.code=='G1')
@@ -292,7 +292,7 @@ class DataEntry extends Reflux.Component {
 
 
   render() {
-  debugger;
+  
     return (
       <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.cancel} >
         <Modal.Body>

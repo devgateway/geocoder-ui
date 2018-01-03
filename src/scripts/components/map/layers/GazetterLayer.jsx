@@ -12,7 +12,7 @@ export default class GazetteerLayer extends GeoJsonLayer {
   }
 
   pointToLayer(feature, latlng) {
-    debugger;
+    
     let icon = L.divIcon({
       iconSize: [30, 30],
       className: 'marker location-marker',

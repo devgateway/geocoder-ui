@@ -45,7 +45,7 @@ export default class MapView extends React.Component {
 
   componentWillUnmount() {
     try{
-      debugger;
+
    Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
    this.unsubscribe();
    }catch(e){
@@ -71,7 +71,7 @@ export default class MapView extends React.Component {
     This is called by location onClick
     */
   locationClick(e) {
-
+    
     //using geonames lat and lng instead of event latlng should be more precise.
     let countryInfo = this.queryFeatures(e.latlng);
     let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
