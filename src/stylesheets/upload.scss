@@ -8,6 +8,7 @@
 .upload-options {
   padding: $base-unit * 2;
   display: block;
+  font-size: $large;
 }
 
 .dropzone {
@@ -19,7 +20,7 @@
     border: 1px dashed $black !important;
     min-height: 200px;
     padding: auto;
-    font-size: 12px;
+    font-size: $large;
 
     ul {
       line-height: 18px;

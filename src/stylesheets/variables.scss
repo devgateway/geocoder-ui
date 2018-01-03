@@ -48,7 +48,6 @@ $bold-text: 800;
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
   border-radius: $radius;
-  background-clip: padding-box; /* stops bg color from leaking outside the border: */
 }
 
 // project list callouts

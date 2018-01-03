@@ -243,12 +243,20 @@ h4 {
     outline: none;
     width: $extend  / 1.6;
   }
+
   button {
     background: $green-light;
     color: $white;
     padding: $base-unit - 1;
     text-transform: uppercase;
   }
+
+  .form-section {
+    padding-top: 0;
+  }
+}
+
+.project-search, .upload-options {
   .search-option-label {
     float: left;
     margin-top: $base-unit / 6;
@@ -273,10 +281,6 @@ h4 {
     &.selected {
       background: $green;
     }
-  }
-
-  .form-section {
-    padding-top: 0;
   }
 }
 
@@ -442,16 +446,19 @@ h4 {
     color: $white;
     float: right;
     font-weight: $normal-weight-text;
+    font-size: $large;
     margin-left: $base-unit;
     margin-top: $base-unit + 3;
-    padding: $base-unit / 1.5 $base-unit * 2.5;
     &:hover {
       background: darken($pending-locations, 20%);
     }
 
     a {
+      padding: $base-unit / 1.5 $base-unit * 2.5;
       color: $white;
       text-decoration: none;
+      display: block;
+      overflow: auto;
     }
   }
 }

@@ -41,8 +41,7 @@
   padding: $base-unit - 7 $base-unit + 5;
   line-height: 1.5;
   height: 24px !important;
-  @include fontDefault($small, "$white");
-  margin: $px-unit;
+  @include fontDefault($large, "$white", 400);
 }
 
 .btn-success {

@@ -17,7 +17,5 @@
 
     @include fontDefault($giant, $darkGray);
     font-weight: normal;
-
-    @include middle();
   }
 }
