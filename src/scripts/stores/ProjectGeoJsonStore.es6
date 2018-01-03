@@ -20,7 +20,7 @@ const ProjectGeoJsonStore = createStore({
 
   process(projectStore) {
     debugger;
-
+    if (projectStore){
     const project = projectStore.project;
     let newData;
     if (project.locations) {
@@ -39,6 +39,7 @@ const ProjectGeoJsonStore = createStore({
     }
 
     this.setData(newData);
+    }
   }
 
 });

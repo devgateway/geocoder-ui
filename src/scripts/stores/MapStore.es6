@@ -41,7 +41,6 @@ const MapStore = createStore({
     // TODO - use directly singleton when we switch to Reflux es6
     this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
-
     this.listenTo(LocationsGeoJson, this.updateGazetteerLayer);
 
     this.listenTo(CountryGeo, this.updateCountry);
@@ -53,9 +52,10 @@ const MapStore = createStore({
 
   // TODO - link MapView with ProejctStore if we really need the project in the MapView
   onProjectUpdate(projectStore) {
-    const newState = Object.assign({}, this.get());
-    newState.project = projectStore.project;
-    this.setData(newState);
+    //debugger;
+    //const newState = Object.assign({}, this.get());
+    //newState.project = projectStore.project;
+    //this.setData(newState);
   },
 
   cleanStore() {

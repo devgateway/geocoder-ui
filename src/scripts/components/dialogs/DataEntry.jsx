@@ -59,10 +59,17 @@ class DataEntryContent extends React.Component {
   }
 
   onSave() {
-
       Actions.invoke(Constants.ACTION_SAVE_LOCATION);
   }
 
+
+  updateAdminInfo(geonameID) {
+    Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': geonameID});
+  }
+
+  updateAdminFromShapes(){
+    Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_SHAPES)
+  }
 
   updateLocationInfo(geonameID) {
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': geonameID});
@@ -77,6 +84,7 @@ class DataEntryContent extends React.Component {
       exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,
       locationStatus,names,locationIdentifiers}}=locationFeature
 
+    debugger;
     let type='geocoding'
 
     let geonamesIdentifier=locationIdentifiers.find(id=>id.vocabulary.code=='G1')
@@ -146,11 +154,11 @@ class DataEntryContent extends React.Component {
               <div className="row">
                   <div className="col-lg-12 ">
                     Update admin names from:
-                        {geonamesId?(<button className="btn btn-xs btn-success pull-right" onClick={e=>{}}>
+                        {geonamesId?(<button className="btn btn-xs btn-success pull-right" onClick={e=>{this.updateAdminInfo(geonamesId)}}>
                           <Message k="dataentry.sourceadmin.geonames"/>
                         </button>):null}
 
-                    {countryFeature?(<button className="btn btn-xs btn-success pull-right" onClick={e=>{}}>
+                    {countryFeature?(<button className="btn btn-xs btn-success pull-right" onClick={e=>{this.updateAdminFromShapes()}}>
                        <Message k="dataentry.sourceadmin.shapes"/>
                     </button>):null}
 
@@ -281,7 +289,7 @@ class DataEntry extends Reflux.Component {
 
 
   render() {
-
+  debugger;
     return (
       <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.cancel} >
         <Modal.Body>

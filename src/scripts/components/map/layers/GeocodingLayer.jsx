@@ -10,8 +10,8 @@ export default class GeocodingLayer extends GeoJsonLayer {
 
 
   pointToLayer(feature, latlng) {
-    
-    let iconClass = feature.properties.status ? ' marker geocoding-marker-' + feature.properties.status.toLowerCase() : 'marker geocoding-marker-existing';
+    debugger;
+    let iconClass = feature.properties.locationStatus ? ' marker geocoding-marker-' + feature.properties.locationStatus.toLowerCase() : 'marker geocoding-marker-existing';
     if (iconClass == 'geocoding-marker-location') {
       iconClass = 'location-marker';
     }

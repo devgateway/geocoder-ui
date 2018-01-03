@@ -19,9 +19,9 @@ class LocationsStore extends Reflux.Store {
   constructor() {
     super();
     this.state = initialState;
-    
+
     this.cachedData = undefined;
-  
+
     this.listenTo(Reflux.initStore(ProjectStore), this.updateCountryISO);
     this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_SEARCHTYPE), this.toggleSearchType);
     this.listenTo(Actions.get(Constants.ACTION_GAZETTEER_UPDATETEXT), this.updateText);
@@ -29,45 +29,50 @@ class LocationsStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FILTER_BY_TYPE), this.filter);
-    this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
+    //this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
   }
-  
+
   updateText(text) {
     this.setState({
       text: text
     });
   }
-  
+
   toggleSearchType(searchType) {
     this.setState({
       [searchType]: !this.state[searchType]
     });
   }
-  
+
   search() {
     console.log('Loading Gazetteer...');
-    
+
     this.setState({
       loadingLocations: true
     });
   }
-  
+
   updateCountryISO(projectStore) {
-    const {countries} = projectStore.project;
-    
-    let iso2;
-    if (countries !== undefined && countries.length !== 0) {
-      iso2 = countries[0].iso2;
+      if (projectStore){
+        const {countries} = projectStore.project;
+        let iso2;
+        if (countries !== undefined && countries.length !== 0) {iso2 = countries[0].iso2;}
+
+      this.setState({
+        countryISO: iso2
+      });
+
+    }else{
+      this.setState({
+        countryISO:null
+      });
+
     }
-    
-    this.setState({
-      countryISO: iso2
-    });
   }
-  
+
   completed(rawData) {
     const newLocations = {...this.state.locations};
-    
+
     if (rawData.totalResultsCount > 0) {
       let types = rawData.geonames.map((a) => {
         return {code: a.fcode, name: a.fcodeName}
@@ -78,43 +83,43 @@ class LocationsStore extends Reflux.Store {
         });
         return self.indexOf(valuefound) === index;
       });
-      
+
       newLocations.total = rawData.totalResultsCount;
       newLocations.records = rawData.geonames;
       newLocations.types = uniqueTypes;
-      
+
       this.cachedData = newLocations;
     }
-    
+
     this.setState({
       locations: newLocations,
       loadingLocations: false
     });
   }
-  
+
   failed() {
     console.log('failed');
   }
-  
+
   filter(type) {
     let newLocations = {...this.state.locations};
-    
+
     if (type !== 'ALL') {
       const list = this.cachedData.records;
       const filteredList = list.filter(e => e.fcode === type);
-      
+
       newLocations.total = this.cachedData.total;
       newLocations.records = filteredList;
       newLocations.types = this.cachedData.types;
     } else {
       newLocations = this.cachedData;
     }
-    
+
     this.setState({
       locations: newLocations
     });
   }
-  
+
 }
 
 export default LocationsStore;

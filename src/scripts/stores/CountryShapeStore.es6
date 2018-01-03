@@ -20,6 +20,7 @@ const CountryShapeStore = createStore({
   },
 
   cleanStore() {
+    console.log('Cleaning CountryShape');
     this.setData(this.initialData);
   },
 
@@ -29,7 +30,7 @@ const CountryShapeStore = createStore({
   },
 
   completed(data, iso) {
-    
+
     const newState = Object.assign({}, this.get());
     if (!newState.countries.find((it) => {
         return it.iso === iso

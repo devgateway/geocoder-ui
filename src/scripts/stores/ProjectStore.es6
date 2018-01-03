@@ -7,6 +7,7 @@ const initialState = {
   project: {}
 };
 
+
 class ProjectStore extends Reflux.Store {
   constructor() {
     super();
@@ -19,7 +20,7 @@ class ProjectStore extends Reflux.Store {
 
     this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING), this.submitGeocoding);
 
-    //this.listenTo(DataEntryStore, this.updateCoding);
+    this.listenTo(Reflux.initStore(DataEntryStore), this.updateLocation);
 
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), this.save);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, this.saveSuccess);
@@ -53,8 +54,23 @@ class ProjectStore extends Reflux.Store {
     console.error(`Error loading project: ${message}`)
   }
 
-  updateCoding(){
-    debugger;
+  updateLocation(data){
+
+    const {geocoding:{locationFeature},save}=data
+    if (save){
+      const {properties:{locationStatus,id},properties}=locationFeature
+      let project=Object.assign({},this.state.project)
+
+      let newLocations=project.locations.slice(0).map(loc=>{
+        if (loc.id==id){
+          return Object.assign({},properties)
+        }else{
+          return Object.assign({},loc)
+        }
+      })
+      let newProject=Object.assign(project,{locations:newLocations})
+      this.setState({project: newProject});
+    }
   }
 
 

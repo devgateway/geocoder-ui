@@ -44,8 +44,14 @@ export default class MapView extends React.Component {
   }
 
   componentWillUnmount() {
-    Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
-    this.unsubscribe();
+    try{
+      debugger;
+   Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
+   this.unsubscribe();
+   }catch(e){
+     console.log(e)
+   }
+
   }
 
   componentWillUpdate(nextProps, nextState) {

@@ -21,6 +21,7 @@ const CountryLayersStore = createStore({
   },
 
   cleanStore() {
+    console.log('cleaning CountryLayer');
     this.setData(this.initialData);
   },
 

@@ -6,7 +6,7 @@ import Reflux from "reflux"
 import Settings from '../util/Settings.es6'
 let settings = Settings.getInstace()
 
-const initialState = {showPopup:false}
+const initialState = {showPopup:false,save:false}
 
 
 const LOCATION_CLASS_ADM_REGION = { "code": "1", "name": "Administrative Region"}
@@ -21,9 +21,7 @@ class DataEntryStore extends Reflux.Store {
   constructor() {
 
     super()
-
     this.state = initialState
-
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), this.openPopup)
 
     this.listenTo(Actions.get(Constants.ACTION_CLOSE_DATAENTRY_POPUP), this.closePopup)
@@ -43,11 +41,15 @@ class DataEntryStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData)
     this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).completed, this.updateAdminData)
     this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, this.geonamesFailed)
+
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData)
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_SHAPES), this.setShapesAdmins)
+
   }
 
   closePopup() {
     let newState = Object.assign({}, this.state)
-    Object.assign(newState, {'showPopup': false})//set the location to be used
+    Object.assign(newState, {'showPopup': false,'save':false})//set the location to be used
     //Object.assign(newState, {'geocodingBackup': null})//set the location to be used
     this.setState(newState)
   }
@@ -68,6 +70,7 @@ class DataEntryStore extends Reflux.Store {
   delete() {
     let newState = Object.assign({}, this.state,{'confirmDeletion':true})
     newState=this.valueChanged(newState,{'name':'locationStatus','value':'DELETED'})
+    Object.assign(newState,{'save':true})
     this.setState(newState)
     this.closePopup()
   }
@@ -76,8 +79,10 @@ class DataEntryStore extends Reflux.Store {
   saveLocation() {
     let newState = Object.assign({}, this.state)
     newState=this.valueChanged(newState,{'name':'locationStatus','value':'UPDATED'})
+    Object.assign(newState,{'save':true})
     this.setState(newState)
     this.closePopup()
+
   }
 
 
@@ -140,10 +145,48 @@ class DataEntryStore extends Reflux.Store {
   }
 
 
+  loadingAdminData(){
+    let newState = Object.assign({}, this.state)
+    Object.assign(newState, {'loadingAdminNames': true})
+    this.setState(newState)
+  }
 
 
-  updateAdminData(location) {
-    alert('Re implement method')
+  setShapesAdmins(){
+    debugger;
+    const {geocoding:{countryFeature:{properties}}}=this.state
+
+    const {ADMIN_0_CODE,ADMIN_0_NAME,ADMIN_1_CODE,ADMIN_1_NAME,ADMIN_2_CODE,ADMIN_2_NAME}=properties
+    const data={adminCode0:ADMIN_0_CODE,adminCode1:ADMIN_1_CODE,adminCode2:ADMIN_2_CODE,adminName0:ADMIN_0_NAME,adminName1:ADMIN_1_NAME,adminName2:ADMIN_2_NAME}
+    const vocabulary={code:"A3", name:"Global Administrative Areas"}
+    this.setAdministratives(data,vocabulary)
+  }
+
+  updateAdminData(data) {
+    let newState = Object.assign({}, this.state)
+    Object.assign(newState, {'loadingAdminNames': false})
+    const vocabulary={code:"G1", name:"Geonames"}
+    this.setAdministratives(data,vocabulary)
+  }
+
+  setAdministratives(data,vocabulary) {
+    debugger;
+    let newState = Object.assign({}, this.state)
+    var newLocationFeature = JSON.parse(JSON.stringify(newState.geocoding.locationFeature))
+    const admins=[];
+    const {adminCode0,adminCode1,adminCode2,adminName0,adminName1,adminName2}=data
+    if (adminCode0 && adminName0){
+        admins.push({code:adminCode0,level:1,name:adminName0,vocabulary})
+    }
+    if (adminCode1 && adminName1){
+        admins.push({code:adminCode1,level:1,name:adminName1,vocabulary})
+    }
+    if (adminCode2 && adminName2){
+        admins.push({code:adminCode2,level:2,name:adminName2,vocabulary})
+    }
+    newLocationFeature.properties.administratives=admins;
+    newState.geocoding.locationFeature=newLocationFeature;
+    this.setState(newState)
   }
 
 
@@ -167,6 +210,7 @@ class DataEntryStore extends Reflux.Store {
 
 
   updateFromGeonames(location) {
+    debugger;
     let newState = Object.assign({}, this.state)
 
     Object.assign(newState, {'loadingGeonames': false})
