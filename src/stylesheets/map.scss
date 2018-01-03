@@ -131,14 +131,14 @@
 }
 
 .lan-selector-container {
-  padding-top: 5px;
-  padding-right: 7px;
+  padding-top: $base-unit;
+  padding-right: $base-unit;
   select {
     @include fontDefault($large, $green, 100);
   }
 }
 
-.language-selector{
+.language-selector {
   @include border-radius(0);
   border: 1px solid $green;
   float: right;

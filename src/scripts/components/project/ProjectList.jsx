@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
+import {Link} from 'react-router-dom';
 import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, Button} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
@@ -60,8 +61,8 @@ class ProjectList extends Reflux.Component {
               </Col>
               
               <Col md={5} sm={5}>
-                <button className="action-btn">export</button>
-                <button className="action-btn">import</button>
+                <button className="action-btn"><Message k="projectlist.export"/></button>
+                <button className="action-btn"><Link to="/upload"><Message k="projectlist.import"/></Link></button>
               </Col>
             </Row>
           </div>
