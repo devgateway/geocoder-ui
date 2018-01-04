@@ -157,6 +157,10 @@ $bold-text: 800;
   color: $pending-locations;
 }
 
+.pending-locations-background {
+  background-color: $pending-locations;
+}
+
 .verified-locations {
   color: $verified;
 }
