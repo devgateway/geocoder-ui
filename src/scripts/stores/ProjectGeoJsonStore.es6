@@ -1,43 +1,41 @@
-import {createStore} from 'reflux';
-import {getAction} from '../actions/Actions.es6';
-import {StoreMixins} from '../mixins/StoreMixins.es6';
 import ProjectStore from './ProjectStore.es6';
-import {GeoJsonBuilder} from '../util/GeojsonBuilder.es6';
+import { GeoJsonBuilder } from '../util/GeojsonBuilder.es6';
 import Reflux from "reflux";
+import _ from 'lodash'
 
-const initialData = {};
+const initialState = { data: null, autoZoom: false };
 
-const ProjectGeoJsonStore = createStore({
+class ProjectGeoJsonStore extends Reflux.Store {
 
-  initialData: initialData,
-  mixins: [StoreMixins],
 
-  init() {
-    // TODO - use directly singleton when we switch to Reflux es6
-    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.process);
+  constructor() {
+    super();
+    this.state = initialState;
     this.listenTo(Reflux.initStore(ProjectStore), this.process);
-  },
-
-  process(projectStore) {
-
-    if (projectStore){
-    const project = projectStore.project;
-    let newData;
-    if (project.locations) {
-      let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
-      featureCollection.features.forEach((record) => {
-        
-        let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;
-        Object.assign(record, {'propertiesBackup': JSON.parse(JSON.stringify(rollbackData))});//duplicates the values into same object for rollback purposes
-      });
-      newData = Object.assign(this.get(), {data: featureCollection, autoZoom: false, date: new Date()});
-    } else {
-      newData = Object.assign(this.get(), {data: null, autoZoom: false, date: new Date()});
-    }
-      this.setData(newData);
-    }
   }
 
-});
+  process(projectStore) {
+    let newData;
+    if (projectStore) {
+      const project = projectStore.project;
+
+      if (project.locations) {
+        const featureCollection = new GeoJsonBuilder({
+          "type": 'Point',
+          "coordinates": function() {
+            return [this.x, this.y]
+          }
+        }).build(_.cloneDeep(project.locations));
+
+        newData = { data: featureCollection, autoZoom: false, date: new Date() };
+
+    } else {
+        newData = _.cloneDeep(initialData)
+    }
+    this.setState(newData);
+  }
+}
+
+}
 
 export default ProjectGeoJsonStore;

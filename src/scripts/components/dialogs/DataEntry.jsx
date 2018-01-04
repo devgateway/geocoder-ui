@@ -47,46 +47,54 @@ class DataEntryContent extends React.Component {
   }
 
   onCancel() {
+
     Actions.invoke(Constants.ACTION_CANCEL);
   }
 
   onDelete() {
+
     Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
 
   doDelete() {
+
     Actions.invoke(Constants.ACTION_DELETE);
   }
 
   cancelDelete() {
+
     Actions.invoke(Constants.ACTION_CANCEL_DELETE);
   }
 
   onSave() {
-      Actions.invoke(Constants.ACTION_SAVE_LOCATION);
+
+      Actions.invoke(Constants.ACTION_SAVE);
   }
 
 
   updateAdminInfo(geonameID) {
+
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': geonameID});
   }
 
   updateAdminFromShapes(){
+
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_SHAPES)
   }
 
   updateLocationInfo(geonameID) {
+
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': geonameID});
   }
 
 
   render() {
-
+    
     let {geocoding:{countryFeature,locationFeature},lang,confirmDeletion} = this.props;
 
-    let {properties:{ activityDescriptions, administratives, descriptions,
+    let { activityDescriptions, administratives, descriptions,
       exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,
-      locationStatus,names,locationIdentifiers}}=locationFeature
+      locationStatus,names,locationIdentifiers}=locationFeature.properties?locationFeature.properties:{}
 
 
     let type='geocoding'
@@ -246,7 +254,7 @@ class DataEntryContent extends React.Component {
               <div className='separator'/>
               <DataEntryHelp parentId='dataentry' type={type}/>
               <div className='separator'/>
-            
+
               <button className="btn btn-lg btn-success pull-right"  id="savebutton" onClick={e=>this.onSave()}>
                 {locationStatus == 'EXISTING' ? Message.t('dataentry.update') :null}
                 {locationStatus == 'NEW' ? Message.t('dataentry.add') :null}
@@ -300,11 +308,10 @@ class DataEntry extends Reflux.Component {
 
 
   render() {
-
     return (
       <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.cancel} >
         <Modal.Body>
-          <DataEntryContent {...this.state}/>
+          {this.state.showPopup?<DataEntryContent {...this.state}/>:null}
         </Modal.Body>
       </Modal>
     )

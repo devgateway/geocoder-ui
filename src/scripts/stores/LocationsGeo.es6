@@ -18,7 +18,7 @@ class LocationsGeoJsonStore extends Reflux.Store {
     super();
     this.state = initialState;
     this.listenTo(Reflux.initStore(LocationsStore), this.process)
-    this.listenTo(Actions.get(Constants.ACTION_SAVE_LOCATION), this.removeSavedLocation)
+    this.listenTo(Actions.get(Constants.ACTION_SAVE), this.removeSavedLocation)
   }
 
   process(data) {
@@ -37,9 +37,11 @@ class LocationsGeoJsonStore extends Reflux.Store {
   }
 
   removeSavedLocation(location) {
+    /*
     let newState = Object.assign({}, this.state)
     let newGeoJson = newState.data;
     let filteredFeatures = newGeoJson.features.filter((it) => {
+
       if (it.properties.geonameId != location.id) {
         return it
       }
@@ -47,6 +49,7 @@ class LocationsGeoJsonStore extends Reflux.Store {
     newGeoJson = Object.assign(newGeoJson, {'features': filteredFeatures})
     newState = Object.assign(newState, {data: newGeoJson, autoZoom: false});
     this.setState(newState);
+    */
   }
 }
 
