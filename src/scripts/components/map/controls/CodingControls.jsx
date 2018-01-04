@@ -79,7 +79,6 @@ class CodingControls extends Reflux.Component {
                 </CollapsibleControl>
                 
                 <CollapsibleControl title={"Selected Locations"} iconClass={"selected-locations-icon"} count={countSelected}>
-                  <div>{Message.t('projectinfo.geocoding') + " (" + (this.state.project.locations ? this.state.project.locations.length : 0) + ")"}</div>
                   <SelectedLocations {...this.state.project}/>
                 </CollapsibleControl>
               </div>

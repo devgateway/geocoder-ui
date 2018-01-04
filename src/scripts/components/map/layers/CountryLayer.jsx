@@ -3,10 +3,6 @@ import {PropTypes} from 'react';
 import GeoJsonLayer from './GeoJsonLayer.jsx';
 
 export default class CountryLayer extends GeoJsonLayer {
-  constructor() {
-    super();
-  }
-  
   /**
    Set feature style
    */
@@ -23,12 +19,8 @@ export default class CountryLayer extends GeoJsonLayer {
   
   
   highlightFeature(e) {
-    var layer = e.target;
-    var feature = e.target.feature;
+    const layer = e.target;
     layer.setStyle(this.highlightStyle());
-    /*if (!L.Browser.ie && !L.Browser.opera) {
-       layer.bringToFront();
-     }*/
   }
   
   /*Set feature events*/
@@ -41,8 +33,7 @@ export default class CountryLayer extends GeoJsonLayer {
   
   /*Return to original style*/
   resetHighlight(e) {
-    var layer = e.target;
-    var feature = e.target.feature;
+    const layer = e.target;
     layer.setStyle(this.style());
   }
 }

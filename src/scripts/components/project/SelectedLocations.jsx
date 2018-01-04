@@ -3,15 +3,12 @@ import {Button, Label} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
+import MultiLingualText from '../MultiLingualText.jsx';
 
-/*
-  Renders a single Location
-  */
+/**
+ * Renders a single Location
+ */
 class Item extends React.Component {
-  
-  constructor() {
-    super();
-  }
   
   _showLocationPopup() {
     Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'isCoded': true, 'locationFeature': this.props});
@@ -26,7 +23,7 @@ class Item extends React.Component {
   }
   
   render() {
-    var status = !this.props.status ? 'EXISTING' : this.props.status;
+    let status = !this.props.status ? 'EXISTING' : this.props.status;
     let statusLabel, statusStyle;
     switch (status) {
       case 'NEW':
@@ -48,16 +45,15 @@ class Item extends React.Component {
     }
     return (
       <div className="list-group-item">
-        <h3 className="list-group-item-heading"><b>{this.props.name}</b></h3>
+        <h3 className="list-group-item-heading"><b><MultiLingualText texts={this.props.names}/> </b></h3>
         
         <p className="list-group-item-text">
           <label><Message k="dataentry.featuredesignation"/></label>
-          <span> {this.props.featureDesignation ? this.props.featureDesignation.code : ''} - {this.props.featureDesignation ? this.props.featureDesignation.name : ''}</span>
+          <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
         </p>
         <p className="list-group-item-text">
           <label><Message k="dataentry.activitydescription"/></label>
-          
-          <span>{this.props.activityDescription}</span>
+          <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
         </p>
         <p className="list-group-item-text">
           <label><Message k="dataentry.type"/></label>
@@ -72,7 +68,7 @@ class Item extends React.Component {
         <p className="list-group-item-text">
           <label className="inline"><Message k="dataentry.status"/></label>
           <Label bsStyle={statusStyle}
-                 style={status == 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
+                 style={status === 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
         </p>
         <p className="list-group-item-text pull-right">
           <Button className="show-location-btn"
