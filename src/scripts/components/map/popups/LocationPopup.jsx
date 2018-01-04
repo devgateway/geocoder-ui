@@ -4,8 +4,7 @@ import React from 'react';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 import Message from '../../Message.jsx';
-import Reflux from "reflux";
-import MultiLangualText from '../../MultiLingualText.jsx';
+import MultiLingualText from '../../MultiLingualText.jsx';
 
 
 /*Popup info*/
@@ -66,7 +65,7 @@ class InfoView extends React.Component {
 
 
             <div id="location-info-popup" className={cssClass}>
-              <h2><MultiLangualText texts={this.props.names}/> </h2>
+              <h2><MultiLingualText texts={this.props.names}/></h2>
 
                 <div className="row border">
                   {this.props.administratives.sort((a,b)=>a.level-b.level).map(adm=> <div className="col-lg-4">
@@ -142,7 +141,7 @@ class InfoView extends React.Component {
 
             <div className="row">
               <div className="col-lg-12">
-                    <label className="green text-large bolder"> <MultiLangualText texts={this.props.activityDescriptions}/> </label>
+                    <label className="green text-large bolder"> <MultiLingualText texts={this.props.activityDescriptions}/> </label>
 
               </div>
             </div>
@@ -156,7 +155,7 @@ class InfoView extends React.Component {
 
             <div className="row">
               <div className="col-lg-12">
-                    <label className="green text-large bolder"> <MultiLangualText texts={this.props.descriptions}/> </label>
+                    <label className="green text-large bolder"> <MultiLingualText texts={this.props.descriptions}/> </label>
 
               </div>
             </div>

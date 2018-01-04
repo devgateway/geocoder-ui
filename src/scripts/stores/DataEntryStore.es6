@@ -80,14 +80,11 @@ class DataEntryStore extends Reflux.Store {
 
 
   saveLocation() {
-
     let newState = Object.assign({}, this.state)
-    debugger;
     newState=this.valueChanged(newState,{'name':'locationStatus','value':'UPDATED'})
     Object.assign(newState,{'save':true})
     this.setState(newState)
     this.closePopup()
-
   }
 
   cleanStore() {

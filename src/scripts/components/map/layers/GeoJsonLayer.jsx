@@ -7,12 +7,10 @@ import React from 'react';
  */
 export default class GeoJsonLayer extends Path {
   componentDidMount() {
-
     this.layerContainer.addLayer(this.leafletElement);
   };
 
   createLeafletElement() {
-    
     const {data, ...props} = this.props;
 
     const leafletElement = geoJson(data, Object.assign({
@@ -38,13 +36,6 @@ export default class GeoJsonLayer extends Path {
 
     this.setStyleIfChanged(prevProps, this.props);
   }
-
-
-  componentWillUnmount() {
-    super.componentWillUnmount();
-    //this._remove();//remove this layer while unmounting the component
-  }
-
 
   pointToLayer(feature, latlng) {
     console.log('not implemented');

@@ -38,18 +38,14 @@ const MapStore = createStore({
   mixins: [StoreMixins],
 
   init() {
-    // TODO - use directly singleton when we switch to Reflux es6
-    //this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
     this.listenTo(ProjectGeoJsonStore, this.updateGeocodingLayer);
     this.listenTo(Reflux.initStore(LocationsGeoJson), this.updateGazetteerLayer);
 
     this.listenTo(CountryGeo, this.updateCountry);
-    //this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
     this.listenTo(Actions.get(Constants.ACTION_SET_ACTIVE_LOCATION), 'setActiveLocation');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
-
 
   cleanStore() {
     this.setData(this.initialData);
@@ -62,10 +58,10 @@ const MapStore = createStore({
   setActiveLocation(params) {
     const {locationFeature, isCoded, activeDataentry} = params;
     console.log(locationFeature);
-    var newState = Object.assign({}, this.get());
+    let newState = Object.assign({}, this.get());
     let activeLocation;
     if (isCoded) {
-      var lf = Object.assign({}, locationFeature);
+      let lf = Object.assign({}, locationFeature);
       Object.assign(lf, {'lat': lf.x});
       Object.assign(lf, {'lng': lf.y});
       activeLocation = lf;
@@ -81,7 +77,7 @@ const MapStore = createStore({
   },
 
   updateCountry(data) {
-    var newState = Object.assign({}, this.get())
+    let newState = Object.assign({}, this.get());
     newState.layers.countries = data.countries;
     this.setData(newState);
   },
@@ -95,8 +91,7 @@ const MapStore = createStore({
   },
 
   updateGazetteerLayer(data) {
-
-    var newState = Object.assign({}, this.get())
+    let newState = Object.assign({}, this.get());
     newState.layers.locations = data;
 
     Object.assign(newState, {
@@ -110,8 +105,7 @@ const MapStore = createStore({
 
 
   updateGeocodingLayer(data) {
-
-    var newState = Object.assign({}, this.get())
+    let newState = Object.assign({}, this.get());
     newState.layers.geocoding = data;
 
     Object.assign(newState, {

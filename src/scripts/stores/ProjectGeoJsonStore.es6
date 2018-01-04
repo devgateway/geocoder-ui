@@ -6,38 +6,35 @@ import {GeoJsonBuilder} from '../util/GeojsonBuilder.es6';
 import Reflux from "reflux";
 
 const initialData = {};
-
 const ProjectGeoJsonStore = createStore({
-
+  
   initialData: initialData,
   mixins: [StoreMixins],
-
+  
   init() {
-    // TODO - use directly singleton when we switch to Reflux es6
-    this.listenTo(ProjectStore.singleton !== undefined ? ProjectStore.singleton : new ProjectStore(), this.process);
     this.listenTo(Reflux.initStore(ProjectStore), this.process);
   },
-
+  
   process(projectStore) {
-
+    
     if (projectStore){
-    const project = projectStore.project;
-    let newData;
-    if (project.locations) {
-      let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
-      featureCollection.features.forEach((record) => {
-        
-        let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;
-        Object.assign(record, {'propertiesBackup': JSON.parse(JSON.stringify(rollbackData))});//duplicates the values into same object for rollback purposes
-      });
-      newData = Object.assign(this.get(), {data: featureCollection, autoZoom: false, date: new Date()});
-    } else {
-      newData = Object.assign(this.get(), {data: null, autoZoom: false, date: new Date()});
-    }
+      const project = projectStore.project;
+      let newData;
+      if (project.locations) {
+        let featureCollection = new GeoJsonBuilder({ type: 'Point', coordinates: function () { return [this.x, this.y] } }).build(project.locations);
+        featureCollection.features.forEach((record) => {
+          
+          let rollbackData = project.locationsBackup ? project.locationsBackup.find((it) => { return it.id == record.properties.id }) : null;
+          Object.assign(record, {'propertiesBackup': JSON.parse(JSON.stringify(rollbackData))});//duplicates the values into same object for rollback purposes
+        });
+        newData = Object.assign(this.get(), {data: featureCollection, autoZoom: false, date: new Date()});
+      } else {
+        newData = Object.assign(this.get(), {data: null, autoZoom: false, date: new Date()});
+      }
       this.setData(newData);
     }
   }
-
+  
 });
 
 export default ProjectGeoJsonStore;

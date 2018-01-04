@@ -133,26 +133,25 @@ export default class MapView extends React.Component {
           <DataEntryPopup/>
           <Map   {...this.state.map} ref="map">
 
-
             <MapPopUp maxWidth="850" {...this.state.popup}>
               <LocationPopup/>
             </MapPopUp>
 
             <MiniMap  collapsed={true} position='topright' topPadding= {1500} bottomPadding= {40}>
               <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>
-                {this.state.layers.countries?this.state.layers.countries.map((country)=>{
+                {this.state.layers.countries ? this.state.layers.countries.map((country) => {
                   return <CountryLayer {...country}/>
-                }):null}
+                }) : null}
               </LayerGroup>
 
               <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
 
               <GazetterLayer name="Available Locations" onFeatureClick={e=>this.onLocationClick(e)}  {...this.state.layers.locations}/>
-
             </MiniMap>
 
 
             <ZoomControl position="bottomright"/>
+  
             <Control className="leaflet-control-layer-selector" position="bottomleft">
               <CountrySelector/>
             </Control>
