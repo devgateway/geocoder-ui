@@ -58,28 +58,30 @@ class ProjectStore extends Reflux.Store {
 
 
   updateLocation(data) {
-    const { geocoding: { locationFeature }, save, add } = data
-    if (save || add) {
+    const { geocoding: { locationFeature }, action } = data
+    if (action) {
       const { properties: { locationStatus, id }, properties } = locationFeature
       let project = JSON.parse(JSON.stringify(this.state.project))
-      let  locations  = project.locations.slice(0)
+      let locations = project.locations.slice(0)
 
-      if (save) {
-      locations =  locations.map(loc => {
+      if (action == 'save') {
+        locations = locations.map(loc => {
           if (loc.id == id) {
             return Object.assign({}, properties)
           } else {
             return Object.assign({}, loc)
           }
         })
-      } else if (add) {
+      } else if (action == 'add') {
         locations.push(Object.assign({}, properties))
-
+      } else if (action == 'remove') {
+        debugger;
+        locations=locations.filter(loc => loc.id != id)
       }
 
       Object.assign(project, { locations })
-      console.log('Number of locations '+locations.length)
-      this.setState({project});
+      console.log('======= Number of locations ' + locations.length + '=======')
+      this.setState({ project });
     }
   }
 
@@ -99,7 +101,7 @@ class ProjectStore extends Reflux.Store {
     newpProject.locations = locNoStatus;
 
     newpProject = _.omit(newpProject, 'locationsBackup');
-    this.setState({project: newpProject});
+    this.setState({ project: newpProject });
 
     Actions.invoke(Constants.ACTION_SAVE_PROJECT, newpProject);
   }

@@ -21,7 +21,8 @@ export default class GeocodingLayer extends GeoJsonLayer {
       html: `<div class='text'>${feature.properties.featuresDesignation ? feature.properties.featuresDesignation.code : ''}</div>`
     });
     let marker = L.marker(latlng, {
-      icon: icon
+      icon: icon,
+      forceZIndex:50000
     });
     return marker
   }
@@ -30,6 +31,7 @@ export default class GeocodingLayer extends GeoJsonLayer {
     layer.on({
       click: this.onFeatureClick.bind(this)
     });
+    debugger;
   }
 
   onFeatureClick(e) {
