@@ -6,7 +6,7 @@ import Reflux from "reflux"
 import Settings from '../util/Settings.es6'
 let settings = Settings.getInstace()
 import _ from 'lodash'
-const initialState = {confirmDeletion=false, showPopup: false, save: false, add: false, geocoding: { locationFeature: {} } }
+const initialState = { "confirmDeletion": false, "showPopup": false, "save": false, "add": false, "geocoding": { "locationFeature": {}, "countryFeature": {} } }
 
 
 const LOCATION_CLASS_ADM_REGION = { "code": "1", "name": "Administrative Region" }
@@ -166,9 +166,9 @@ class DataEntryStore extends Reflux.Store {
       "locationIdentifiers": [{ "vocabulary": geoNamesVocabulary, "code": geonameId }],
       "administratives": admins,
       "locationClass": this.getClassFromFcl(fcl),
-      "exactness":{"id":21,"code":"1","name":"Exact"},
-      "locationReach":{"id":19,"code":"1","name":"Activity"},
-      "featuresDesignation": { "code": fcode, "name": fcodeName},
+      "exactness": { "id": 21, "code": "1", "name": "Exact" },
+      "locationReach": { "id": 19, "code": "1", "name": "Activity" },
+      "featuresDesignation": { "code": fcode, "name": fcodeName },
       "locationStatus": "NEW"
     }
 
