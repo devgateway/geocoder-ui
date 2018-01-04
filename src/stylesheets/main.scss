@@ -387,13 +387,19 @@ h4 {
     @include border-radius(3px);
     color: $white;
     float: left;
-    font-size: $huge - 2;
-    font-weight: $bold-text;
+    font-size: $large;
+    font-weight: 400;
     margin-right: $base-unit;
     padding: $base-unit/2 $base-unit + 5;
     width: $base-unit * 10;
     &:hover {
       background: $darkGray;
+    }
+    &.edit {
+      background: $no-locations;
+      &:hover {
+        background: $darkGray;
+      }
     }
     &.remove {
       background: $red;

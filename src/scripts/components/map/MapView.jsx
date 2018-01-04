@@ -76,13 +76,13 @@ export default class MapView extends React.Component {
     const {latlng} = e;
     let countryFeature = this.getCountryLayerFeatures(latlng);
   
-    console.log(locationFeature);
+    console.log(countryFeature);
     
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
   
   /*Query features behind the point*/
-  queryFeatures(latlng, layer) {
+  queryFeatures(latlng) {
     let countryInfos = [];
     const map = this.refs.map.leafletElement;
     

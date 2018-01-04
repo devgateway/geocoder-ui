@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import {Button, Label} from 'react-bootstrap';
+import {Label} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
@@ -24,7 +24,7 @@ class Item extends Reflux.Component {
   }
   
   render() {
-    let status = !this.props.status ? 'EXISTING' : this.props.status;
+    let status = !this.props.locationStatus ? 'EXISTING' : this.props.locationStatus;
     let statusLabel, statusStyle;
     switch (status) {
       case 'NEW':
@@ -75,10 +75,12 @@ class Item extends Reflux.Component {
         </div>
         
         <div className="list-group-item-text pull-right">
-          <Button className="show-location-btn"
-                  onClick={this._showDataEntryForm.bind(this)}>
-            <Message k="projectinfo.locationslist.edit"/>
-          </Button>
+          <div className="geocoded-btns">
+            <button className="edit" onClick={this._showDataEntryForm.bind(this)}>
+              <Message k="projectinfo.locationslist.edit"/>
+            </button>
+            <button className="remove">Remove</button>
+          </div>
         </div>
         <br/>
       </div>
