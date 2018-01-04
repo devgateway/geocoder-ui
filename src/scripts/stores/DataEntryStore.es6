@@ -7,7 +7,7 @@ import Reflux from "reflux"
 import Settings from '../util/Settings.es6'
 let settings = Settings.getInstace()
 import _ from 'lodash'
-const initialState = { "confirmDeletion": false, "showPopup": false, "save": false, "add": false, "geocoding": { "locationFeature": {}, "countryFeature": {} } }
+const initialState = { "confirmDeletion": false, "showPopup": false,  "action":null, "geocoding": { "locationFeature": {}, "countryFeature": {} } }
 
 const LOCATION_CLASS_ADM_REGION = { "code": "1", "name": "Administrative Region" }
 const LOCATION_CLASS_PPL = { "code": "2", "name": "Populated Place" }
@@ -71,8 +71,16 @@ class DataEntryStore extends Reflux.Store {
 
   delete() {
     let newState = Object.assign({}, this.state, { 'confirmDeletion': false })
+    const { geocoding: { locationFeature: { properties: { locationStatus:prevState } } } } = newState
+
+    if (prevState=='NEW'){
+      Object.assign(newState, { 'action': 'remove' })
+
+    }else{
+
     newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': 'DELETED' })
-    Object.assign(newState, { 'save': true })
+    Object.assign(newState, { 'action': 'save' })
+  }
     this.setState(newState)
     this.closePopup()
   }
@@ -86,12 +94,12 @@ class DataEntryStore extends Reflux.Store {
 
     if (locationStatus == 'CREATED') {
       newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': 'NEW' })
-      Object.assign(newState, { 'add': true })
+      Object.assign(newState, { 'action': 'add' })
 
     } else {
 
       newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': locationStatus=='NEW'?'NEW':'UPDATED' })
-      Object.assign(newState, { 'save': true })
+      Object.assign(newState, { 'action': 'save' })
     }
     this.setState(newState)
     this.closePopup();
@@ -187,7 +195,7 @@ class DataEntryStore extends Reflux.Store {
     let newGeocding = _.cloneDeep(newState.geocoding)
     Object.assign(newGeocding, { locationFeature: newLocationFeature, countryFeature: _.cloneDeep(data.countryFeature) })
     Object.assign(newState, { geocoding: newGeocding, 'showPopup': true })
-    debugger;
+
     this.setState(newState)
   }
 

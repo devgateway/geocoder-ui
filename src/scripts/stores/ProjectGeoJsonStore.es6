@@ -18,7 +18,7 @@ class ProjectGeoJsonStore extends Reflux.Store {
     let newData;
     if (projectStore) {
       const project = projectStore.project;
-      debugger;
+      
       if (project.locations) {
         const featureCollection = new GeoJsonBuilder({
           "type": 'Point',

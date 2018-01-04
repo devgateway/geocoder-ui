@@ -276,7 +276,7 @@ class DataEntryContent extends React.Component {
                 {locationStatus == 'AUTO_CODED' ? Message.t('dataentry.verify') :null}
                 {locationStatus == 'DELETED' ? Message.t('dataentry.save') :null}
               </button>
-                {locationStatus=='NEW'?null:   <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>
+                {(locationStatus=='CREATED' || locationStatus=='DELETED') ?null:   <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>
                       <Message k="dataentry.delete"/>
                   </button>
                   }
