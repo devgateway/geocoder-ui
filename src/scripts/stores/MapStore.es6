@@ -58,6 +58,7 @@ const MapStore = createStore({
   setActiveLocation(params) {
     const {locationFeature, isCoded, activeDataentry} = params;
     console.log(locationFeature);
+    
     let newState = Object.assign({}, this.get());
     let activeLocation;
     if (isCoded) {

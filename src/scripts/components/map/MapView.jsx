@@ -55,10 +55,10 @@ export default class MapView extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextState.activeLocation && nextState.activeLocation != this.state.activeLocation) {
+    if (nextState.activeLocation && nextState.activeLocation !== this.state.activeLocation) {
       this.setActiveLocation(nextState.activeLocation);
     }
-    if (nextState.activeDataentry && nextState.activeDataentry != this.state.activeDataentry) {
+    if (nextState.activeDataentry && nextState.activeDataentry !== this.state.activeDataentry) {
       this.setActiveLocation(nextState.activeDataentry, true);
     }
   }
@@ -109,11 +109,12 @@ export default class MapView extends React.Component {
 
   /* Pass on location click from location list window, make selected location active and show popup */
   setActiveLocation(location, showDataEntry) {
-
     let countryInfo = this.queryFeatures([location.lng, location.lat], this.refs.country.leafletElement);
     let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
+    
     this.refs.map.leafletElement.panTo({lat: location.lat, lng: location.lng});//center the map at point
-    Actions.invoke(Constants.ACTION_POPUP_INFO, {
+    
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {
       locationFeature: {
         properties: location
       },

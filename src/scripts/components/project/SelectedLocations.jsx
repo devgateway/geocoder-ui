@@ -10,9 +10,9 @@ import MultiLingualText from '../MultiLingualText.jsx';
  */
 class Item extends React.Component {
   
-  _showLocationPopup() {
-    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'isCoded': true, 'locationFeature': this.props});
-  }
+  // _showLocationPopup() {
+  //   Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'isCoded': true, 'locationFeature': this.props});
+  // }
   
   _showDataEntryForm() {
     Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {
@@ -47,39 +47,38 @@ class Item extends React.Component {
       <div className="list-group-item">
         <h3 className="list-group-item-heading"><b><MultiLingualText texts={this.props.names}/> </b></h3>
         
-        <p className="list-group-item-text">
+        <div className="list-group-item-text">
           <label><Message k="dataentry.featuredesignation"/></label>
           <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
-        </p>
-        <p className="list-group-item-text">
+        </div>
+        
+        <div className="list-group-item-text">
           <label><Message k="dataentry.activitydescription"/></label>
           <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
-        </p>
-        <p className="list-group-item-text">
+        </div>
+        
+        <div className="list-group-item-text">
           <label><Message k="dataentry.type"/></label>
           <span>{this.props.locationClass.name}</span>
-        </p>
+        </div>
         
-        <p className="list-group-item-text">
+        <div className="list-group-item-text">
           <label><Message k="dataentry.geographicexactness"/></label>
           <span>{this.props.exactness.name}</span>
-        </p>
+        </div>
         
-        <p className="list-group-item-text">
+        <div className="list-group-item-text">
           <label className="inline"><Message k="dataentry.status"/></label>
           <Label bsStyle={statusStyle}
                  style={status === 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
-        </p>
-        <p className="list-group-item-text pull-right">
+        </div>
+        
+        <div className="list-group-item-text pull-right">
           <Button className="show-location-btn"
                   onClick={this._showDataEntryForm.bind(this)}>
             <Message k="projectinfo.locationslist.edit"/>
           </Button>
-          <Button className="map-location-btn"
-                  onClick={this._showLocationPopup.bind(this)}>
-            <Message k="projectinfo.locationslist.mapit"/>
-          </Button>
-        </p>
+        </div>
         <br/>
       </div>
     )
