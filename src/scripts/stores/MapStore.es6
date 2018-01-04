@@ -24,10 +24,6 @@ const MapStore = createStore({
       locations: null,
       geocoding: null
     },
-    popup: {
-      mode: 'info',
-      data: {}
-    },
     project: null,
     activeLocation: null,
     activeDataentry: null,

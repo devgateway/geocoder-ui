@@ -20,40 +20,36 @@ import MiniMap from './controls/MiniMap.jsx';
 import CountrySelector from './controls/CountrySelector.jsx'
 import CodingControls from './controls/CodingControls.jsx';
 
-/*Popups*/
-import MapPopUp from './popups/PopUp.jsx';
-import LocationPopup from './popups/LocationPopup.jsx';
-
 /*Dialogs*/
 import DataEntryPopup from '../dialogs/DataEntry.jsx';
 
 /*Store*/
 import MapStore from '../../stores/MapStore.es6';
 
+require('leaflet/dist/leaflet.css');
 
 export default class MapView extends React.Component {
-
+  
   constructor() {
     super();
     this.state = MapStore.get();
     this.render = this.render.bind(this);
   }
-
+  
   componentDidMount() {
     this.unsubscribe = MapStore.listen(this.onMapUpdated.bind(this));
   }
-
+  
   componentWillUnmount() {
     try{
-
-   Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
-   this.unsubscribe();
-   }catch(e){
-     console.log(e)
-   }
-
+      Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
+      this.unsubscribe();
+    }catch(e){
+      console.log(e)
+    }
+    
   }
-
+  
   componentWillUpdate(nextProps, nextState) {
     if (nextState.activeLocation && nextState.activeLocation !== this.state.activeLocation) {
       this.setActiveLocation(nextState.activeLocation);
@@ -62,38 +58,38 @@ export default class MapView extends React.Component {
       this.setActiveLocation(nextState.activeDataentry, true);
     }
   }
-
+  
   onMapUpdated(data) {
     this.setState(data);
   }
-
+  
   /*
     This is called by location onClick
     */
-    getCountryLayerFeatures(latlng){
-      let countryInfo = this.queryFeatures(latlng);
-      let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
-      return countryFeature
-    }
-
-    onLocationClick(e){
-
-      let locationFeature = e.target.feature
-      const {latlng} = e
-      let countryFeature=this.getCountryLayerFeatures(latlng)
-      Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature, countryFeature})
-    }
-
+  getCountryLayerFeatures(latlng){
+    let countryInfo = this.queryFeatures(latlng);
+    let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
+    
+    return countryFeature;
+  }
+  
+  onLocationClick(e){
+    let locationFeature = e.target.feature;
+    const {latlng} = e;
+    let countryFeature=this.getCountryLayerFeatures(latlng);
+    Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature, countryFeature})
+  }
+  
   onGeocodingClick(e) {
-    let locationFeature = e.target.feature
-    const {latlng} = e
-    let countryFeature=this.getCountryLayerFeatures(latlng)
+    let locationFeature = e.target.feature;
+    const {latlng} = e;
+    let countryFeature=this.getCountryLayerFeatures(latlng);
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
-
+  
   /*Query features behind the point*/
   queryFeatures(latlng, layer) {
-
+    
     let countryInfos = [];
     const map = this.refs.map.leafletElement
     map.eachLayer(function (layer) {
@@ -106,7 +102,7 @@ export default class MapView extends React.Component {
     });
     return countryInfos[0];
   }
-
+  
   /* Pass on location click from location list window, make selected location active and show popup */
   setActiveLocation(location, showDataEntry) {
     let countryInfo = this.queryFeatures([location.lng, location.lat], this.refs.country.leafletElement);
@@ -123,48 +119,40 @@ export default class MapView extends React.Component {
       'showDataEntry': showDataEntry
     })
   }
-
+  
   render() {
-
-
-
     return (
       <div id="mapContainer">
         <div className="map">
           <DataEntryPopup/>
           <Map   {...this.state.map} ref="map">
-
-            <MapPopUp maxWidth="850" {...this.state.popup}>
-              <LocationPopup/>
-            </MapPopUp>
-
             <MiniMap  collapsed={true} position='topright' topPadding= {1500} bottomPadding= {40}>
               <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>
                 {this.state.layers.countries ? this.state.layers.countries.map((country) => {
                   return <CountryLayer {...country}/>
                 }) : null}
               </LayerGroup>
-
+              
               <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
-
+              
               <GazetterLayer name="Available Locations" onFeatureClick={e=>this.onLocationClick(e)}  {...this.state.layers.locations}/>
             </MiniMap>
-
-
+            
+            
             <ZoomControl position="bottomright"/>
-  
+            
             <Control className="leaflet-control-layer-selector" position="bottomleft">
               <CountrySelector/>
             </Control>
-
+            
             <Control className="leaflet-control-actions-buttons" position="bottomright">
               <ActionButtons/>
             </Control>
-
+            
             <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel" position="topleft">
               <CodingControls id={this.props.match.params.projectID}/>
             </Control>
-
+          
           </Map>
         </div>
       </div>
