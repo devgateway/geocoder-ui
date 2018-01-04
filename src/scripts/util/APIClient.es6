@@ -44,11 +44,6 @@ export default class ApiClient {
     })
   }
 
-  static getShapeList() {
-
-  }
-
-
   static getGeoJsonShape(iso) {
 
     const API_BASE_URL = settings.get('API', 'API_BASE_URL');
@@ -67,12 +62,10 @@ export default class ApiClient {
 
   }
 
-
-
   static getCountryList(iso) {
-
     const API_BASE_URL = settings.get('API', 'API_BASE_URL');
     const COUNTRY_END_POINT = settings.get('API', 'COUNTRY_END_POINT');
+    
     let url = `${API_BASE_URL}/${COUNTRY_END_POINT}`;
       return new Promise((resolve, reject) => {
         AjaxUtil.get(url)
@@ -91,11 +84,11 @@ export default class ApiClient {
    * Get a project by project_id
    * @return {} project
    */
-  static getProject(project_id, lang) {
+  static getProject(project_id) {
     const API_BASE_URL = settings.get('API', 'API_BASE_URL');
     const PROJECT_END_POINT = settings.get('API', 'PROJECT_END_POINT');
     return new Promise((resolve, reject) => {
-      AjaxUtil.get(`${API_BASE_URL}/${PROJECT_END_POINT}/${project_id}?lang=${lang}`)
+      AjaxUtil.get(`${API_BASE_URL}/${PROJECT_END_POINT}/${project_id}`)
         .then((response) => {
           resolve(response);
         })

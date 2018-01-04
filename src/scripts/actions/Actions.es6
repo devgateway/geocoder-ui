@@ -141,8 +141,7 @@ actions[Constants.ACTION_FIND_PROJECTS].listen(function (params) {
 });
 
 actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function (options) {
-
-  APIClient.getProject(options.id, options.lang)
+  APIClient.getProject(options.id)
     .then((results) => {
 
       return actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results)

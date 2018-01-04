@@ -106,7 +106,6 @@
     "locationtype": "Location Type",
     "country": "Country",
     "projectinfo": "Project Info",
-    "geocoding": "Geocoding",
     "gazetteerlocations": "Gazetteer Locations",
     "nogeocodingdata": "No Geocoding Data."
   },

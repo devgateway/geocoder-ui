@@ -1,32 +1,30 @@
 import React from 'react';
-import {Button, Label} from 'react-bootstrap';
+import Reflux from "reflux";
+import {Label} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
+import MultiLingualText from '../MultiLingualText.jsx';
+import ProjectGeoJsonStore from "../../stores/ProjectGeoJsonStore.es6";
 
-/*
-  Renders a single Location
-  */
-class Item extends React.Component {
-  
+/**
+ * Renders a single Location
+ */
+class Item extends Reflux.Component {
   constructor() {
     super();
-  }
-  
-  _showLocationPopup() {
-    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'isCoded': true, 'locationFeature': this.props});
+    this.store = ProjectGeoJsonStore;
   }
   
   _showDataEntryForm() {
-    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {
-      'isCoded': true,
-      'locationFeature': this.props,
-      'activeDataentry': true
-    });
+    // find the feature from the state
+    const feature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature})
   }
   
   render() {
-    var status = !this.props.status ? 'EXISTING' : this.props.status;
+    let status = !this.props.locationStatus ? 'EXISTING' : this.props.locationStatus;
     let statusLabel, statusStyle;
     switch (status) {
       case 'NEW':
@@ -48,42 +46,42 @@ class Item extends React.Component {
     }
     return (
       <div className="list-group-item">
-        <h3 className="list-group-item-heading"><b>{this.props.name}</b></h3>
+        <h3 className="list-group-item-heading"><b><MultiLingualText texts={this.props.names}/> </b></h3>
         
-        <p className="list-group-item-text">
+        <div className="list-group-item-text">
           <label><Message k="dataentry.featuredesignation"/></label>
-          <span> {this.props.featureDesignation ? this.props.featureDesignation.code : ''} - {this.props.featureDesignation ? this.props.featureDesignation.name : ''}</span>
-        </p>
-        <p className="list-group-item-text">
+          <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
+        </div>
+        
+        <div className="list-group-item-text">
           <label><Message k="dataentry.activitydescription"/></label>
-          
-          <span>{this.props.activityDescription}</span>
-        </p>
-        <p className="list-group-item-text">
+          <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
+        </div>
+        
+        <div className="list-group-item-text">
           <label><Message k="dataentry.type"/></label>
           <span>{this.props.locationClass.name}</span>
-        </p>
+        </div>
         
-        <p className="list-group-item-text">
+        <div className="list-group-item-text">
           <label><Message k="dataentry.geographicexactness"/></label>
           <span>{this.props.exactness.name}</span>
-        </p>
+        </div>
         
-        <p className="list-group-item-text">
+        <div className="list-group-item-text">
           <label className="inline"><Message k="dataentry.status"/></label>
           <Label bsStyle={statusStyle}
-                 style={status == 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
-        </p>
-        <p className="list-group-item-text pull-right">
-          <Button className="show-location-btn"
-                  onClick={this._showDataEntryForm.bind(this)}>
-            <Message k="projectinfo.locationslist.edit"/>
-          </Button>
-          <Button className="map-location-btn"
-                  onClick={this._showLocationPopup.bind(this)}>
-            <Message k="projectinfo.locationslist.mapit"/>
-          </Button>
-        </p>
+                 style={status === 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
+        </div>
+        
+        <div className="list-group-item-text pull-right">
+          <div className="geocoded-btns">
+            <button className="edit" onClick={this._showDataEntryForm.bind(this)}>
+              <Message k="projectinfo.locationslist.edit"/>
+            </button>
+            <button className="remove">Remove</button>
+          </div>
+        </div>
         <br/>
       </div>
     )

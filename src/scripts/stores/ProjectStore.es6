@@ -16,9 +16,12 @@ class ProjectStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), this.loading);
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).failed, this.failed);
+
+
     this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING), this.submitGeocoding);
 
     this.listenTo(Reflux.initStore(DataEntryStore), this.updateLocation);
+
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), this.save);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, this.saveSuccess);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, this.failed);
@@ -28,9 +31,11 @@ class ProjectStore extends Reflux.Store {
   cleanStore() {
     this.setState(this.initialData);
   }
+
   loading() {
     console.log('Loading project...');
   }
+
   save() {
     console.log('Save project...');
   }
@@ -93,9 +98,7 @@ class ProjectStore extends Reflux.Store {
     newpProject.locations = locNoStatus;
 
     newpProject = _.omit(newpProject, 'locationsBackup');
-    this.setState({
-      project: newpProject
-    });
+    this.setState({project: newpProject});
 
     Actions.invoke(Constants.ACTION_SAVE_PROJECT, newpProject);
   }

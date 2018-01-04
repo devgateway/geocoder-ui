@@ -1,14 +1,12 @@
 import {createStore} from 'reflux';
-
+import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import {StoreMixins} from '../mixins/StoreMixins.es6';
 
-import ProjectStore from './ProjectStore.es6';
 import CountryGeo from './CountryShapeStore.es6';
 import LocationsGeoJson from './LocationsGeo.es6';
 import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
-import Reflux from "reflux";
 
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
 const MapStore = createStore({
@@ -24,13 +22,7 @@ const MapStore = createStore({
       locations: null,
       geocoding: null
     },
-    popup: {
-      mode: 'info',
-      data: {}
-    },
     project: null,
-    activeLocation: null,
-    activeDataentry: null,
     geocoding: null,
     clickedLocationPosition: null
   },
@@ -45,12 +37,9 @@ const MapStore = createStore({
     this.listenTo(Reflux.initStore(LocationsGeoJson), this.updateGazetteerLayer);
 
     this.listenTo(CountryGeo, this.updateCountry);
-    //this.listenTo(Actions.get(Constants.ACTION_POPUP_INFO), 'updatePopupInfo');
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
-    this.listenTo(Actions.get(Constants.ACTION_SET_ACTIVE_LOCATION), 'setActiveLocation');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
-
 
   cleanStore() {
     this.setData(this.initialData);
@@ -60,29 +49,8 @@ const MapStore = createStore({
     return this.get();
   },
 
-  setActiveLocation(params) {
-    const {locationFeature, isCoded, activeDataentry} = params;
-    console.log(locationFeature);
-    var newState = Object.assign({}, this.get());
-    let activeLocation;
-    if (isCoded) {
-      var lf = Object.assign({}, locationFeature);
-      Object.assign(lf, {'lat': lf.x});
-      Object.assign(lf, {'lng': lf.y});
-      activeLocation = lf;
-    } else {
-      activeLocation = locationFeature;
-    }
-    if (activeDataentry) {
-      Object.assign(newState, {'activeDataentry': activeLocation});
-    } else {
-      Object.assign(newState, {'activeLocation': activeLocation});
-    }
-    this.setData(newState);
-  },
-
   updateCountry(data) {
-    var newState = Object.assign({}, this.get())
+    let newState = Object.assign({}, this.get());
     newState.layers.countries = data.countries;
     this.setData(newState);
   },
@@ -96,8 +64,7 @@ const MapStore = createStore({
   },
 
   updateGazetteerLayer(data) {
-
-    var newState = Object.assign({}, this.get())
+    let newState = Object.assign({}, this.get());
     newState.layers.locations = data;
 
     Object.assign(newState, {
@@ -111,8 +78,7 @@ const MapStore = createStore({
 
 
   updateGeocodingLayer(data) {
-
-    var newState = Object.assign({}, this.get())
+    let newState = Object.assign({}, this.get());
     newState.layers.geocoding = data;
 
     Object.assign(newState, {

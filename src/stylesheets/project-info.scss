@@ -19,15 +19,14 @@
   transition: opacity .1s;
   height: $extend;
   width: 620px;
-  z-index: 99;
 
   @include fontDefault($medium, $darkGray);
   @include scrollbar();
 
   .panel-success {
-    height: $base-unit * 60.5;
-    overflow-y: scroll;  
-    
+    height: $base-unit * 60;
+    overflow-y: scroll;
+
     .panel-heading {
       background-color: $header-bg;
       border: 0px;
@@ -51,8 +50,6 @@
     float: right;
     cursor: pointer;
     position: relative;
-    top: 0px;
-    right: 0px;
     top: 10px;
     right: 5px;
   }
@@ -70,13 +67,12 @@
     display: block;
 
   }
+
   label.inline {
     display: inline !important;
     margin-right: 3px;
   }
 
-  .tab-content {
-  }
 
   .form-group {
     padding: 15px 0px;
@@ -84,8 +80,6 @@
   }
 
   .list-group {
-    overflow: auto;
-    max-height: 400px;
     padding: 5px;
     margin-top: 2px;
   }

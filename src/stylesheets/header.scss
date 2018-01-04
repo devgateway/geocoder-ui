@@ -4,39 +4,18 @@
   .navbar {
     @include border-radius(0);
     border: 1px rgb(244, 244, 244);
-    height: 38px;
-    min-height: 38px !important;
     background-color: $gray;
-    margin: 0px;
-  }
-
-  .container-fluid {
-    padding-right: 0px;
-    padding-left: 0px;
+    margin-bottom: 0px;
   }
 
   .navbar-header {
-    height: 36px;
-
+    height: $base-unit * 4;
   }
 
   .navbar-brand {
-    margin: 0px 0px 0px 10px !important;
-    padding: 0px 0px;
+    padding-left: $base-unit * 3.5;
 
-    @include fontDefault($huge, $darkGray);
+    @include fontDefault($giant, $darkGray);
     font-weight: normal;
-
-    @include middle();
-
   }
-
-  .nav {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    height: 38px;
-    /* border: 1px solid red; */
-  }
-
 }

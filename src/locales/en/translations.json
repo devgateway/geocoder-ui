@@ -116,7 +116,6 @@
     "locationtype": "Location Type",
     "country": "Country",
     "projectinfo": "Project Info",
-    "geocoding": "Geocoding",
     "gazetteerlocations": "Gazetteer Locations",
     "nogeocodingdata": "No Geocoding Data."
   },
@@ -129,7 +128,8 @@
     "any": "All Options",
     "geojsonexport": "GeoJson",
     "kmlexport": "Kml",
-    "import": "Import"
+    "import": "Import",
+    "export": "Export"
   },
   "locationpopup": {
     "adminsource": {

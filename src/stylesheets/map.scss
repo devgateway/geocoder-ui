@@ -108,14 +108,17 @@
     background-color: #FFF;
     width: 500px;
     max-height: 400px;
-    overflow: auto;
+    overflow-y: scroll;
+    z-index: 9999;
   }
+
   .close-btn {
     margin-top: -16px;
     margin-right: -12px;
     @include fontDefault($large, $green, 100);
     float: right;
   }
+
   .list-group-item-text {
     border-bottom: 1px solid $gray;
     padding: 4px;
@@ -126,19 +129,15 @@
   }
 }
 
-.leaflet-control-layer-selector.introjs-fixParent {
-  position: relative !important;
-}
-
 .lan-selector-container {
-  padding-top: 5px;
-  padding-right: 7px;
+  padding-top: $base-unit;
+  padding-right: $base-unit;
   select {
     @include fontDefault($large, $green, 100);
   }
 }
 
-.language-selector{
+.language-selector {
   @include border-radius(0);
   border: 1px solid $green;
   float: right;

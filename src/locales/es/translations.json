@@ -106,7 +106,6 @@
     "locationtype": "Tipo de ubicación",
     "country": "País",
     "projectinfo": "Información",
-    "geocoding": "Geocodificación",
     "gazetteerlocations": "Ubicaciones",
     "nogeocodingdata": "Sin datos de geocodificación."
   },

@@ -31,7 +31,6 @@ export default class PanelHeading extends React.Component {
             <div className="project-info-label">{Message.t('projectinfo.projectinfo')}</div>
             <div className="project-info">
               <MultiLingualText texts={project.descriptions}/>
-              <a href="">more</a>
             </div>
 
             <p>

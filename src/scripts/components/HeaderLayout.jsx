@@ -18,10 +18,6 @@ export default class HeaderLayout extends Reflux.Component {
               <div className="separator"/>
             </div>
             
-            <div className="nav navbar-left">
-              <li><Link to="/upload">Import Activities</Link></li>
-            </div>
-            
             <div className="nav navbar-rigth lan-selector-container">
               <LangSelector/>
             </div>
