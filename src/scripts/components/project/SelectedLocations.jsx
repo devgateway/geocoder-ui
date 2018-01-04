@@ -1,25 +1,26 @@
 import React from 'react';
+import Reflux from "reflux";
 import {Button, Label} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
 import MultiLingualText from '../MultiLingualText.jsx';
+import ProjectGeoJsonStore from "../../stores/ProjectGeoJsonStore.es6";
 
 /**
  * Renders a single Location
  */
-class Item extends React.Component {
-  
-  // _showLocationPopup() {
-  //   Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'isCoded': true, 'locationFeature': this.props});
-  // }
+class Item extends Reflux.Component {
+  constructor() {
+    super();
+    this.store = ProjectGeoJsonStore;
+  }
   
   _showDataEntryForm() {
-    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {
-      'isCoded': true,
-      'locationFeature': this.props,
-      'activeDataentry': true
-    });
+    // find the feature from the state
+    const feature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature})
   }
   
   render() {

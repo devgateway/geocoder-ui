@@ -147,14 +147,14 @@ class DataEntryContent extends React.Component {
               <div className="col-lg-12">
                 <label className="colored" htmlFor="name">
                   <Message k="dataentry.name"/> {names.sort(it => it.lang).map(d => (
-                  <span><b>{d.lang}{' | '}</b></span>))}</label>
+                  <span key={d.lang}><b>{d.lang}{' | '}</b></span>))}</label>
                 <MultiLangualInput id="name" name="name" texts={names}></MultiLangualInput>
               </div>
             </div>
             <div className="row">
               {administratives.sort((a, b) => a.level - b.level).map(admin => {
                 return (
-                  <div className={`col-lg-${12 / administratives.length}`}>
+                  <div key={admin.code} className={`col-lg-${12 / administratives.length}`}>
                     <div className="form-group">
                       
                       <label className="colored" htmlFor={`admin${admin.level}`}><Message
@@ -238,7 +238,7 @@ class DataEntryContent extends React.Component {
               <div className="form-group">
                 <label className="colored"><Message
                   k="dataentry.activitydescription"/> {activityDescriptions.sort(it => it.lang).map(d => (
-                  <span><b>{d.lang}{' | '}</b></span>))}</label>
+                  <span key={d.lang}><b>{d.lang}{' | '}</b></span>))}</label>
                 <MultiLangualTextArea name="activityDescriptions" id="activityDescription"
                                       onChange={this.changeCodingValue}
                                       texts={activityDescriptions}></MultiLangualTextArea>
@@ -251,7 +251,7 @@ class DataEntryContent extends React.Component {
               <div className="form-group">
                 <label className="colored"><Message
                   k="dataentry.description"/> {descriptions.sort(it => it.lang).map(d => (
-                  <span><b>{d.lang}{' | '}</b></span>))}</label>
+                  <span key={d.lang}><b>{d.lang}{' | '}</b></span>))}</label>
                 <MultiLangualTextArea name="descriptions" id="description" onChange={this.changeCodingValue}
                                       texts={descriptions}></MultiLangualTextArea>
               </div>

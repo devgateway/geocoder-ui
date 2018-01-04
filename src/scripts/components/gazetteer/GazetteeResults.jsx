@@ -70,7 +70,8 @@ class ListItems extends React.Component {
  */
 class Item extends React.Component {
   setActiveLocation(data) {
-    Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'locationFeature': data});
+    // TODO - open data entry
+    // Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'locationFeature': data});
   }
   
   render() {

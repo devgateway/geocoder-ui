@@ -50,15 +50,6 @@ export default class MapView extends React.Component {
     
   }
   
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.activeLocation && nextState.activeLocation !== this.state.activeLocation) {
-      this.setActiveLocation(nextState.activeLocation);
-    }
-    if (nextState.activeDataentry && nextState.activeDataentry !== this.state.activeDataentry) {
-      this.setActiveLocation(nextState.activeDataentry, true);
-    }
-  }
-  
   onMapUpdated(data) {
     this.setState(data);
   }
@@ -83,15 +74,18 @@ export default class MapView extends React.Component {
   onGeocodingClick(e) {
     let locationFeature = e.target.feature;
     const {latlng} = e;
-    let countryFeature=this.getCountryLayerFeatures(latlng);
+    let countryFeature = this.getCountryLayerFeatures(latlng);
+  
+    console.log(locationFeature);
+    
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
   
   /*Query features behind the point*/
   queryFeatures(latlng, layer) {
-    
     let countryInfos = [];
-    const map = this.refs.map.leafletElement
+    const map = this.refs.map.leafletElement;
+    
     map.eachLayer(function (layer) {
       if (layer.eachLayer) {
         let countryInfo = leafletPip.pointInLayer(latlng, layer);
@@ -101,23 +95,6 @@ export default class MapView extends React.Component {
       }
     });
     return countryInfos[0];
-  }
-  
-  /* Pass on location click from location list window, make selected location active and show popup */
-  setActiveLocation(location, showDataEntry) {
-    let countryInfo = this.queryFeatures([location.lng, location.lat], this.refs.country.leafletElement);
-    let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
-    
-    this.refs.map.leafletElement.panTo({lat: location.lat, lng: location.lng});//center the map at point
-    
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {
-      locationFeature: {
-        properties: location
-      },
-      countryFeature,
-      'position': [location.lat, location.lng],
-      'showDataEntry': showDataEntry
-    })
   }
   
   render() {
