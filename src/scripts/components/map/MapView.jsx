@@ -76,8 +76,6 @@ export default class MapView extends React.Component {
     const {latlng} = e;
     let countryFeature = this.getCountryLayerFeatures(latlng);
   
-    console.log(countryFeature);
-    
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
   
