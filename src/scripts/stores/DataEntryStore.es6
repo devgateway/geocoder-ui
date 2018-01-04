@@ -84,11 +84,14 @@ class DataEntryStore extends Reflux.Store {
 
     const { geocoding: { locationFeature: { properties: { locationStatus } } } } = newState
 
-    if (locationStatus != 'NEW') {
-      newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': 'UPDATED' })
-      Object.assign(newState, { 'save': true })
-    } else {
+    if (locationStatus == 'CREATED') {
+      newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': 'NEW' })
       Object.assign(newState, { 'add': true })
+
+    } else {
+
+      newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': locationStatus=='NEW'?'NEW':'UPDATED' })
+      Object.assign(newState, { 'save': true })
     }
     this.setState(newState)
     this.closePopup();
@@ -169,7 +172,9 @@ class DataEntryStore extends Reflux.Store {
       "exactness": { "id": 21, "code": "1", "name": "Exact" },
       "locationReach": { "id": 19, "code": "1", "name": "Activity" },
       "featuresDesignation": { "code": fcode, "name": fcodeName },
-      "locationStatus": "NEW"
+      "locationStatus": "CREATED",
+      "x":lng,
+      "y":lat
     }
 
     const newLocationFeature = {
@@ -182,7 +187,7 @@ class DataEntryStore extends Reflux.Store {
     let newGeocding = _.cloneDeep(newState.geocoding)
     Object.assign(newGeocding, { locationFeature: newLocationFeature, countryFeature: _.cloneDeep(data.countryFeature) })
     Object.assign(newState, { geocoding: newGeocding, 'showPopup': true })
-
+    debugger;
     this.setState(newState)
   }
 

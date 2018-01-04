@@ -78,6 +78,7 @@ class ProjectStore extends Reflux.Store {
       }
 
       Object.assign(project, { locations })
+      console.log('Number of locations '+locations.length)
       this.setState({project});
     }
   }

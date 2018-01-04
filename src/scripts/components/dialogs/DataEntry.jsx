@@ -270,8 +270,9 @@ class DataEntryContent extends React.Component {
 
               <button className="btn btn-lg btn-success pull-right"  id="savebutton" onClick={e=>this.onSave()}>
                 {locationStatus == 'EXISTING' ? Message.t('dataentry.update') :null}
-                {locationStatus == 'NEW' ? Message.t('dataentry.add') :null}
                 {locationStatus == 'UPDATED' ? Message.t('dataentry.update') :null}
+                {locationStatus == 'NEW' ? Message.t('dataentry.update') :null}
+                {locationStatus == 'CREATED' ? Message.t('dataentry.add') :null}
                 {locationStatus == 'AUTO_CODED' ? Message.t('dataentry.verify') :null}
                 {locationStatus == 'DELETED' ? Message.t('dataentry.save') :null}
               </button>
