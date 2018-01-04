@@ -30,6 +30,9 @@ const MapStore = createStore({
   mixins: [StoreMixins],
 
   init() {
+    // TODO - use directly singleton when we switch to Reflux es6
+    //this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
+
     this.listenTo(Reflux.initStore(ProjectGeoJsonStore), this.updateGeocodingLayer);
     this.listenTo(Reflux.initStore(LocationsGeoJson), this.updateGazetteerLayer);
 

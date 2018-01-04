@@ -29,17 +29,17 @@ import MapStore from '../../stores/MapStore.es6';
 require('leaflet/dist/leaflet.css');
 
 export default class MapView extends React.Component {
-  
+
   constructor() {
     super();
     this.state = MapStore.get();
     this.render = this.render.bind(this);
   }
-  
+
   componentDidMount() {
     this.unsubscribe = MapStore.listen(this.onMapUpdated.bind(this));
   }
-  
+
   componentWillUnmount() {
     try{
       Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
@@ -47,43 +47,43 @@ export default class MapView extends React.Component {
     }catch(e){
       console.log(e)
     }
-    
+
   }
-  
+
   onMapUpdated(data) {
     this.setState(data);
   }
-  
+
   /*
     This is called by location onClick
     */
   getCountryLayerFeatures(latlng){
     let countryInfo = this.queryFeatures(latlng);
     let countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
-    
+
     return countryFeature;
   }
-  
+
   onLocationClick(e){
     let locationFeature = e.target.feature;
     const {latlng} = e;
     let countryFeature=this.getCountryLayerFeatures(latlng);
     Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature, countryFeature})
   }
-  
+
   onGeocodingClick(e) {
     let locationFeature = e.target.feature;
     const {latlng} = e;
     let countryFeature = this.getCountryLayerFeatures(latlng);
-  
+
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
-  
+
   /*Query features behind the point*/
   queryFeatures(latlng) {
     let countryInfos = [];
     const map = this.refs.map.leafletElement;
-    
+
     map.eachLayer(function (layer) {
       if (layer.eachLayer) {
         let countryInfo = leafletPip.pointInLayer(latlng, layer);
@@ -94,7 +94,7 @@ export default class MapView extends React.Component {
     });
     return countryInfos[0];
   }
-  
+
   render() {
     return (
       <div id="mapContainer">
@@ -107,27 +107,27 @@ export default class MapView extends React.Component {
                   return <CountryLayer {...country}/>
                 }) : null}
               </LayerGroup>
-              
+
               <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
-              
+
               <GazetterLayer name="Available Locations" onFeatureClick={e=>this.onLocationClick(e)}  {...this.state.layers.locations}/>
             </MiniMap>
-            
-            
+
+
             <ZoomControl position="bottomright"/>
-            
+
             <Control className="leaflet-control-layer-selector" position="bottomleft">
               <CountrySelector/>
             </Control>
-            
+
             <Control className="leaflet-control-actions-buttons" position="bottomright">
               <ActionButtons/>
             </Control>
-            
+
             <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel" position="topleft">
               <CodingControls id={this.props.match.params.projectID}/>
             </Control>
-          
+
           </Map>
         </div>
       </div>

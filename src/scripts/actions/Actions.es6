@@ -57,7 +57,7 @@ actionsDef[Constants.ACTION_SHOW_DELETE_CONFIRM] = {
 };
 
 
-actionsDef[Constants.ACTION_SAVE_LOCATION] = {
+actionsDef[Constants.ACTION_SAVE] = {
   children: ['completed', 'failed']
 };
 
