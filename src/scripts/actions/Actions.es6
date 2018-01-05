@@ -66,6 +66,10 @@ actionsDef[Constants.ACTION_TRANSFORM_TO_GEOCODING] = {
   children: ['completed', 'failed']
 };
 
+actionsDef[Constants.ACTION_FETCH_DOCUMENT_REF] = {
+  children: ['completed', 'failed']
+};
+
 
 /*create async actions*/
 const actions = createActions(actionsDef);
@@ -178,6 +182,16 @@ actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
 
     }
   })
+});
+
+
+/**
+ * Load document references.
+ */
+actions[Constants.ACTION_FETCH_DOCUMENT_REF].listen(function(locationId) {
+  APIClient.getDocumentRef(locationId)
+    .then((results) => actions[Constants.ACTION_FETCH_DOCUMENT_REF].completed(results))
+    .catch((message) => actions[Constants.ACTION_FETCH_DOCUMENT_REF].failed(message));
 });
 
 export {

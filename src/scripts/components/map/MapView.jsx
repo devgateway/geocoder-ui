@@ -22,6 +22,7 @@ import CodingControls from './controls/CodingControls.jsx';
 
 /*Dialogs*/
 import DataEntryPopup from '../dialogs/DataEntry.jsx';
+import DocumentRef from '../dialogs/DocumentRef.jsx';
 
 /*Store*/
 import MapStore from '../../stores/MapStore.es6';
@@ -100,6 +101,7 @@ export default class MapView extends React.Component {
       <div id="mapContainer">
         <div className="map">
           <DataEntryPopup/>
+          <DocumentRef/>
           <Map   {...this.state.map} ref="map">
             <MiniMap  collapsed={true} position='topright' topPadding= {1500} bottomPadding= {40}>
               <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>

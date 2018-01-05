@@ -133,4 +133,23 @@ export default class ApiClient {
       headers: {"X-Requested-With": "XMLHttpRequest"},
     })
   }
+  
+  /**
+   * Fetches all document references for a particular location
+   */
+  static getDocumentRef(locationId) {
+    const API_BASE_URL = settings.get('API', 'API_BASE_URL');
+    const DOCUMENT_REF_END_POINT = settings.get('API', 'DOCUMENT_REF_END_POINT');
+    const url = `${API_BASE_URL}/${DOCUMENT_REF_END_POINT}/${locationId}`;
+    
+    return new Promise((resolve, reject) => {
+      AjaxUtil.get(url)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((response) => {
+          reject(`got ${response.status}  ${response.statusText}`)
+        })
+    })
+  }
 }
