@@ -23,8 +23,7 @@ class ProjectGeoJsonStore extends Reflux.Store {
         const featureCollection = new GeoJsonBuilder({
           "type": 'Point',
           "coordinates": function() {
-
-            return [this.x, this.y]
+            return [this.point.coordinates[0], this.point.coordinates[1]]
           }
         }).build(_.cloneDeep(project.locations));
 
