@@ -108,7 +108,7 @@ export default class ApiClient {
     let url = `${API_BASE_URL}/${PROJECT_END_POINT}/${project.id}`;
 
     return new Promise((resolve, reject) => {
-      AjaxUtil.put(url, project)
+        AjaxUtil.put(url, project)
         .then((response) => {
           resolve(response);
         })
