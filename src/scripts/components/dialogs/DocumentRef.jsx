@@ -16,8 +16,12 @@ class DocumentRef extends Reflux.Component {
     this.stores = [DocumentRefStore];
   }
   
+  componentWillUpdate(nextProps, nextState) {
+    // console.log(nextState);
+  }
+  
   componentDidMount() {
-    Actions.invoke(Constants.ACTION_FETCH_DOCUMENT_REF, 1989);
+    // Actions.invoke(Constants.ACTION_FETCH_DOCUMENT_REF, 1989);
   }
   
   closeModal() {

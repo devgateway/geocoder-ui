@@ -3,7 +3,7 @@ import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 
 const initialState = {
-  showPopup:          true,
+  showPopup:          false,
   currentLocationId:  undefined,
   references:         new Map()
 };

@@ -23,6 +23,12 @@ class Item extends Reflux.Component {
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature})
   }
   
+  showDocumentRef() {
+    const currentLocationId = this.props.id;
+  
+    Actions.invoke(Constants.ACTION_TOGGLE_DOCUMENT_REF_POPUP, currentLocationId);
+  }
+  
   render() {
     return (
       <div className="list-group-item">
@@ -56,7 +62,7 @@ class Item extends Reflux.Component {
         <div className="list-group-item-text pull-right">
           <div className="geocoded-btns">
             <button className="verify" onClick={this.showDataEntryForm.bind(this)}>Verify</button>
-            <button className="preview">Preview Ref</button>
+            <button className="preview" onClick={this.showDocumentRef.bind(this)}>Preview Ref</button>
             <button className="remove">Remove</button>
           </div>
         </div>
