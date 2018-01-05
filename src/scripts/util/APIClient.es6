@@ -108,7 +108,7 @@ export default class ApiClient {
     let url = `${API_BASE_URL}/${PROJECT_END_POINT}/${project.id}`;
 
     return new Promise((resolve, reject) => {
-      AjaxUtil.put(url, project)
+        AjaxUtil.put(url, project)
         .then((response) => {
           resolve(response);
         })
@@ -131,6 +131,25 @@ export default class ApiClient {
 
     return Axios.post(`${API_BASE_URL}/${IMPORT_END_POINT}`, formData, {
       headers: {"X-Requested-With": "XMLHttpRequest"},
+    })
+  }
+  
+  /**
+   * Fetches all document references for a particular location
+   */
+  static getDocumentRef(locationId) {
+    const API_BASE_URL = settings.get('API', 'API_BASE_URL');
+    const DOCUMENT_REF_END_POINT = settings.get('API', 'DOCUMENT_REF_END_POINT');
+    const url = `${API_BASE_URL}/${DOCUMENT_REF_END_POINT}/${locationId}`;
+    
+    return new Promise((resolve, reject) => {
+      AjaxUtil.get(url)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((response) => {
+          reject(`got ${response.status}  ${response.statusText}`)
+        })
     })
   }
 }
