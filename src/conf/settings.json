@@ -9,7 +9,8 @@
     "PROJECT_END_POINT": "project",
     "PROJECT_LIST_END_POINT": "projects",
     "BOUNDARY_END_POINT": "boundary",
-    "COUNTRY_END_POINT": "boundaries/list"
+    "COUNTRY_END_POINT": "boundaries/list",
+    "DOCUMENT_REF_END_POINT": "documentref"
   },
   "I18N": {
     "LANGUAGES":[
