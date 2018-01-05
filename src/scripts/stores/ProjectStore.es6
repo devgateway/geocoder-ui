@@ -75,7 +75,7 @@ class ProjectStore extends Reflux.Store {
       } else if (action == 'add') {
         locations.push(Object.assign({}, properties))
       } else if (action == 'remove') {
-        debugger;
+        
         locations=locations.filter(loc => loc.id != id)
       }
 

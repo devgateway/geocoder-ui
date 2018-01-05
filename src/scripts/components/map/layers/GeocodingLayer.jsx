@@ -31,7 +31,7 @@ export default class GeocodingLayer extends GeoJsonLayer {
     layer.on({
       click: this.onFeatureClick.bind(this)
     });
-    debugger;
+    
   }
 
   onFeatureClick(e) {

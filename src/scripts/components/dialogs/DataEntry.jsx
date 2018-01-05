@@ -96,13 +96,14 @@ class DataEntryContent extends React.Component {
     let type='geocoding'
 
     let geonamesIdentifier=locationIdentifiers.find(id=>{
-
       return (id.vocabulary?id.vocabulary.code=='G1':false)
     })
     let geonamesId
     if (geonamesIdentifier){
         geonamesId=geonamesIdentifier.code
     }
+
+    
 
     if (confirmDeletion) {
       return (
@@ -158,7 +159,7 @@ class DataEntryContent extends React.Component {
             <div className="row">
               {administratives.sort((a, b) => a.level - b.level).map(admin => {
                 return (
-                  <div key={admin.code} className={`col-lg-${12 / administratives.length}`}>
+                  <div key={admin.level} className={`col-lg-${12 / administratives.length}`}>
                     <div className="form-group">
 
                       <label className="colored" htmlFor={`admin${admin.level}`}><Message
