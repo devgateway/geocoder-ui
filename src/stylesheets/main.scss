@@ -14,6 +14,7 @@
 @import "intro.scss";
 @import "minimap.scss";
 @import "upload.scss";
+@import "document.scss";
 
 body {
   @include fontDefault($regular, $black);
