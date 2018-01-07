@@ -18,21 +18,29 @@
   -webkit-transition: opacity .1s; /* Safari */
   transition: opacity .1s;
   height: $extend;
-  width: 620px;
+  width: 550px;
 
   @include fontDefault($medium, $darkGray);
   @include scrollbar();
 
   .panel-success {
     height: $base-unit * 60;
-    overflow-y: scroll;
 
     .panel-heading {
       background-color: $header-bg;
       border: 0px;
+      width: $extend;
+      height: $base-unit * 10;
       overflow: hidden;
-      position: relative;
+      position: static;
+      .panel-section{
+        margin-bottom: 0;
+      }
     }
+  }
+  
+  .panel-body{
+    overflow-y: auto;
   }
 
   .heading-container {
@@ -73,7 +81,6 @@
     margin-right: 3px;
   }
 
-
   .form-group {
     padding: 15px 0px;
     margin: 0px;
@@ -83,5 +90,9 @@
     padding: 5px;
     margin-top: 2px;
   }
+}
+
+.fa-spinner{
+  margin-left: $base-unit;
 }
 

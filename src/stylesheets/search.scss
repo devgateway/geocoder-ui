@@ -8,7 +8,7 @@
 
   .list-group {
     overflow: auto;
-    max-height: 400px;
+    max-height: $base-unit * 30;
     padding: $base-unit / 2;
 
   }

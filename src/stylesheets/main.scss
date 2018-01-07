@@ -236,19 +236,24 @@ h4 {
 
   input[type=text] {
     @include border-radius(0);
-    border: $px-unit solid $gray-darker;
+    border: $px-unit solid $gray;
     float: left;
     margin-right: $base-unit + 5;
     padding: $base-unit;
     outline: none;
-    width: $extend  / 1.6;
+    width: $extend  / 2;
   }
 
   button {
     background: $green-light;
+    border: 1px solid $green-light;
     color: $white;
     padding: $base-unit - 1;
     text-transform: uppercase;
+    &:hover{
+      background: $green;
+      border: 1px solid $green;
+    }
   }
 
   .form-section {
@@ -269,7 +274,7 @@ h4 {
   }
   .select-box {
     background: $white;
-    border: $px-unit solid $gray-darker;
+    border: $px-unit solid $gray;
     display: inline-block;
     float: left;
     height: $base-unit * 2;
@@ -390,6 +395,7 @@ h4 {
     font-size: $large;
     font-weight: 400;
     margin-right: $base-unit;
+    outline:none;
     padding: $base-unit/2 $base-unit + 5;
     width: $base-unit * 10;
     &:hover {
@@ -397,26 +403,33 @@ h4 {
     }
     &.edit {
       background: $no-locations;
+      border: 1px solid $no-locations;
       &:hover {
         background: $darkGray;
       }
     }
     &.remove {
       background: $red;
+      border: 1px solid $red;
       &:hover {
         background: $darkGray;
+        border: 1px solid $darkGray;
       }
     }
     &.preview {
       background: $blue;
+      border:1px solid $blue;
       &:hover {
         background: $darkGray;
+        border: 1px solid $darkGray;
       }
     }
     &.verify {
       background: $green;
+      border: 1px solid $green;
       &:hover {
         background: $darkGray;
+        border: 1px solid $darkGray;
       }
     }
   }
@@ -454,9 +467,10 @@ h4 {
     font-weight: $normal-weight-text;
     font-size: $large;
     margin-left: $base-unit;
-    margin-top: $base-unit + 3;
+    margin-top: $base-unit - 4;
     &:hover {
       background: darken($pending-locations, 20%);
+      border: $px-unit solid darken($pending-locations, 20%);
     }
 
     a {
@@ -512,7 +526,7 @@ h4 {
       height: $base-unit * 2;
       margin-right: $base-unit / 2;
       width: $base-unit * 2;
-      border: 2px solid $gray;
+      border: 1px solid $gray;
       &:hover {
         background: $green;
       }
