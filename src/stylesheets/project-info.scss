@@ -24,7 +24,8 @@
   @include scrollbar();
 
   .panel-success {
-    height: $base-unit * 60;
+    min-height: $base-unit * 30;
+    overflow: hidden;
 
     .panel-heading {
       background-color: $header-bg;

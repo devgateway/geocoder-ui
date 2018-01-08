@@ -3,6 +3,7 @@
 }
 
 .leaflet-control.leaflet-control-layers.leaflet-control-layers-expanded {
+  @include scrollbar();
   background-color: #FFF !important;
 }
 
@@ -19,7 +20,7 @@
     padding: 3px;
     cursor: pointer;
     position: absolute;
-    right: -5px;
+    right: -10px;
     top: -5px;
     font-family: $default-font;
     color: $green;
@@ -30,12 +31,14 @@
   }
 
   .leaflet-control-layers-container {
+    @include scrollbar();
     position: absolute;
-    top: 20px;
+    top: $base-unit * 2.5;
     max-height: 265px;
-    width: 455px;
+    width: $extend;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0 $base-unit;
 
     .leaflet-control-layers {
       overflow: scroll;
@@ -50,7 +53,6 @@
 
     .leaflet-control-layers-list {
       display: block;
-      /* position: relative; */
       background-color: #FFF;
       overflow: visible;
     }
@@ -62,7 +64,7 @@
       display: block;
       width: 120px;
       float: left;
-      margin: 10px;
+      margin: $base-unit $base-unit + 5 $base-unit 0;
       background-color: #FFF;
       padding: 0px;
 
@@ -85,7 +87,7 @@
     .leaflet-minimap {
       height: 70px;
       width: $extend;
-      border: 3px solid $green;
+      border: 1px solid $gray;
     }
 
     .leaflet-minimap-label {
@@ -97,6 +99,7 @@
     .leaflet-minimap-title {
       border-bottom: 1px solid $gray;
       clear: both;
+      margin-top: -10px;
     }
 
     .leaflet-minimap-container.leaflet-minimap-hidden {

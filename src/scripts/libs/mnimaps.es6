@@ -92,7 +92,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
     }
     
     var closeDiv = L.DomUtil.create('div', 'close-btn');
-    closeDiv.innerHTML = '<i class="fa fa-times-circle-o"></i>';
+    closeDiv.innerHTML = '<i class="close-icon"></i>';
     
     var formContainer = this._form = L.DomUtil.create('form', className + '-list');
     var form = this._form = L.DomUtil.create('div', className + '-container');
