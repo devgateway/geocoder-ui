@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   context: __dirname,
@@ -19,14 +20,22 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {'NODE_ENV': JSON.stringify('production')}
     }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   sourceMap: false,
-    //   compressor: {
-    //     unused    : true,
-    //     dead_code : true,
-    //     warnings  : false
-    //   }
-    // }),  TODO - disable for now uglify plugin (https://github.com/webpack/webpack/issues/2023)
+    new UglifyJsPlugin({
+      sourceMap: true,
+      exclude: [/\.min\.js$/gi],    // skip pre-minified libs
+      uglifyOptions: {
+        ie8: false,
+        ecma: 7,
+        mangle: true,
+        output: {
+          ascii_only: true,
+          comments: false,
+          beautify: false
+        },
+        compress: true,
+        warnings: false,
+      }
+    }),
     new ExtractTextPlugin('[name].css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
