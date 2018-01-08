@@ -12,17 +12,16 @@ import MultiLangualInput from './MultiLangualInput.jsx'
 import MultiLangualTextArea from './MultiLangualTextArea.jsx'
 import LangSelector from '../LangSelector.jsx'
 
-
 /*Popup Data Entry*/
 class DataEntryContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-
+  
   changeCodingValue(name, value, lang) {
     let val;
-
+    
     switch (name) {
       case "locationClass":
         val = Constants.LOCATION_CLASS_LIST.find((item) => {
@@ -38,73 +37,61 @@ class DataEntryContent extends React.Component {
         val = value;
         break;
     }
-
+    
     Actions.invoke(Constants.ACTION_CHANGE_CODING_VALUE, {'name': name, 'value': val, 'lang': lang});
   }
-
+  
   onCancel() {
-
     Actions.invoke(Constants.ACTION_CANCEL);
   }
-
+  
   onDelete() {
-
     Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
-
+  
   doDelete() {
-
     Actions.invoke(Constants.ACTION_DELETE);
   }
-
+  
   cancelDelete() {
-
     Actions.invoke(Constants.ACTION_CANCEL_DELETE);
   }
-
+  
   onSave() {
-
-      Actions.invoke(Constants.ACTION_SAVE);
+    Actions.invoke(Constants.ACTION_SAVE);
   }
-
-
+  
+  
   updateAdminInfo(geonameID) {
-
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': geonameID});
   }
-
+  
   updateAdminFromShapes(){
-
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_SHAPES)
   }
-
+  
   updateLocationInfo(geonameID) {
-
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': geonameID});
   }
-
-
+  
+  
   render() {
-
     let {geocoding:{countryFeature,locationFeature},lang,confirmDeletion} = this.props;
-
+    
     let { activityDescriptions, administratives, descriptions,
       exactness,featuresDesignation,gazetteerAgency,locationClass,locationReach,
       locationStatus,names,locationIdentifiers}=locationFeature.properties?locationFeature.properties:{}
-
-
+    
     let type='geocoding'
-
+    
     let geonamesIdentifier=locationIdentifiers.find(id=>{
       return (id.vocabulary?id.vocabulary.code=='G1':false)
     })
     let geonamesId
     if (geonamesIdentifier){
-        geonamesId=geonamesIdentifier.code
+      geonamesId=geonamesIdentifier.code
     }
-
     
-
     if (confirmDeletion) {
       return (
         <div>
@@ -118,15 +105,14 @@ class DataEntryContent extends React.Component {
         </div>
       )
     } else {
-
       return (
         <div id='dataentry' className={locationStatus ? locationStatus : ''}>
           <LangSelector></LangSelector>
           <label className=""><b> * All entered text will be stored in "{this.props.lang}" language</b></label>
-
-
+          
+          
           {locationIdentifiers.map(id =>
-            <div className="row" key={id.id}>
+            <div className="row" key={id.id + id.code}>
               <div className="col-lg-6">
                 <div className="form-group">
                   <label className="colored" htmlFor="id"><Message k="dataentry.identifier"/></label>
@@ -134,19 +120,19 @@ class DataEntryContent extends React.Component {
                   </div>
                 </div>
               </div>
-
+              
               <div className="col-lg-6">
                 <div className="form-group" id="source">
                   <label className="colored"><Message k="dataentry.source"/></label>
                   <input type="text" className="form-control" id="id"
                          value={id.vocabulary ? id.vocabulary.name : 'Unknown'} disabled/>
-
-
+                
+                
                 </div>
               </div>
             </div>
           )}
-
+          
           <div id='noneditablefields'>
             <div className="row">
               <div className="col-lg-12">
@@ -161,7 +147,7 @@ class DataEntryContent extends React.Component {
                 return (
                   <div key={admin.level} className={`col-lg-${12 / administratives.length}`}>
                     <div className="form-group">
-
+                      
                       <label className="colored" htmlFor={`admin${admin.level}`}><Message
                         k={`dataentry.admin${admin.level}`}/> </label>
                       <input type="text" className="form-control" id={`admin${admin.level}`} placeholder="NA"
@@ -178,16 +164,16 @@ class DataEntryContent extends React.Component {
                 }}>
                   <Message k="dataentry.sourceadmin.geonames"/>
                 </button>) : null}
-
+                
                 {countryFeature ? (<button className="btn btn-xs btn-success pull-right" onClick={e => {
                   this.updateAdminFromShapes()
                 }}>
                   <Message k="dataentry.sourceadmin.shapes"/>
                 </button>) : null}
-
+              
               </div>
             </div>
-
+            
             <div className="row">
               <div className="col-lg-4">
                 <div className="form-group">
@@ -237,7 +223,7 @@ class DataEntryContent extends React.Component {
               </div>
             </div>
           </div>
-
+          
           <div className="row">
             <div className="col-lg-12">
               <div className="form-group">
@@ -250,7 +236,7 @@ class DataEntryContent extends React.Component {
               </div>
             </div>
           </div>
-
+          
           <div className="row">
             <div className="col-lg-12">
               <div className="form-group">
@@ -262,28 +248,28 @@ class DataEntryContent extends React.Component {
               </div>
             </div>
           </div>
-
+          
           <div className="row">
             <div className="col-lg-12 help-container">
               <div className='separator'/>
               <DataEntryHelp parentId='dataentry' type={type}/>
               <div className='separator'/>
-
+              
               <button className="btn btn-lg btn-success pull-right"  id="savebutton" onClick={e=>this.onSave()}>
-                {locationStatus == 'EXISTING' ? Message.t('dataentry.update') :null}
-                {locationStatus == 'UPDATED' ? Message.t('dataentry.update') :null}
-                {locationStatus == 'NEW' ? Message.t('dataentry.update') :null}
-                {locationStatus == 'CREATED' ? Message.t('dataentry.add') :null}
-                {locationStatus == 'AUTO_CODED' ? Message.t('dataentry.verify') :null}
-                {locationStatus == 'DELETED' ? Message.t('dataentry.save') :null}
+                {locationStatus === 'EXISTING' ? Message.t('dataentry.update') :null}
+                {locationStatus === 'UPDATED' ? Message.t('dataentry.update') :null}
+                {locationStatus === 'NEW' ? Message.t('dataentry.update') :null}
+                {locationStatus === 'CREATED' ? Message.t('dataentry.add') :null}
+                {locationStatus === 'AUTO_CODED' ? Message.t('dataentry.verify') :null}
+                {locationStatus === 'DELETED' ? Message.t('dataentry.save') :null}
               </button>
-                {(locationStatus=='CREATED' || locationStatus=='DELETED') ?null:   <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>
-                      <Message k="dataentry.delete"/>
-                  </button>
-                  }
-
+              {(locationStatus==='CREATED' || locationStatus==='DELETED') ?null:   <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e=>this.onDelete()}>
+                <Message k="dataentry.delete"/>
+              </button>
+              }
+              
               <button className="btn btn-lg btn-warning pull-right" id="cancelbutton" onClick={e=>this.onCancel()}>
-                  <Message k="dataentry.cancel"/>
+                <Message k="dataentry.cancel"/>
               </button>
               {geonamesId ?
                 <button className="btn btn-lg btn-default pull-right" title={Message.t('dataentry.updatefromgeonames')}
@@ -291,7 +277,7 @@ class DataEntryContent extends React.Component {
                   {(this.props.loadingGeonames) ? <i className="fa fa-refresh fa-spin"></i> :
                     <i className="fa fa-refresh"></i>}
                 </button> : null}
-
+            
             </div>
           </div>
           {this.props.error ?
@@ -314,14 +300,14 @@ class DataEntryContent extends React.Component {
 
 /*Data Entry Main Container*/
 class DataEntry extends Reflux.Component {
-
+  
   constructor() {
     super();
-
+    
     this.state = {};
     this.stores = [DataEntryStore, LangStore];
   }
-
+  
   render() {
     return (
       <Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.cancel}>
@@ -333,4 +319,4 @@ class DataEntry extends Reflux.Component {
   }
 }
 
-export default DataEntry
+export default DataEntry;

@@ -16,7 +16,7 @@ const initialState = {
   countryISO: undefined
 };
 
-class LocationsStore extends Reflux.Store {
+class GazetteerStore extends Reflux.Store {
   constructor() {
     super();
     this.state = initialState;
@@ -30,7 +30,6 @@ class LocationsStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FILTER_BY_TYPE), this.filter);
-    //this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
   }
 
   updateText(text) {
@@ -124,4 +123,4 @@ class LocationsStore extends Reflux.Store {
 
 }
 
-export default LocationsStore;
+export default GazetteerStore;
