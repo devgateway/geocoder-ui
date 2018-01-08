@@ -16,11 +16,22 @@ class Item extends Reflux.Component {
     this.store = ProjectGeoJsonStore;
   }
   
-  _showDataEntryForm() {
+  getLocationFeatures() {
     // find the feature from the state
-    const feature = this.state.data.features.find(f => f.properties.id === this.props.id);
-    
+    return this.state.data.features.find(f => f.properties.id === this.props.id);
+  }
+  
+  showDataEntryForm() {
+    const feature = this.getLocationFeatures();
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature})
+  }
+  
+  deleteLocation() {
+    const feature = this.getLocationFeatures();
+    
+    // show the data entry form and invoke deletion immediately
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature});
+    Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
   
   render() {
@@ -76,10 +87,10 @@ class Item extends Reflux.Component {
         
         <div className="list-group-item-text pull-right">
           <div className="geocoded-btns">
-            <button className="edit" onClick={this._showDataEntryForm.bind(this)}>
+            <button className="edit" onClick={this.showDataEntryForm.bind(this)}>
               <Message k="projectinfo.locationslist.edit"/>
             </button>
-            <button className="remove">Remove</button>
+            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
           </div>
         </div>
         <br/>
