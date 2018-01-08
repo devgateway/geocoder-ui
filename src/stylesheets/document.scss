@@ -1,0 +1,15 @@
+@import "variables.scss";
+
+.document-ref-dialog {
+  table {
+    font-size: $large;
+  }
+
+  .modal-dialog {
+    width: 800px;
+  }
+
+  .modal-content {
+    padding: $base-unit;
+  }
+}
