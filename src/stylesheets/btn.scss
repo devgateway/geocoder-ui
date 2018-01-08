@@ -19,11 +19,13 @@
 .btn-default {
   @include fontDefault($small, $black);
   @include grayBorder();
+  outline: none;
 }
 
-.btn-default:hover {
+.btn-default:hover,
+.btn-default:focus {
   @include fontDefault($small, $black);
-  @include grayBorder();
+  outline: none;
 }
 
 .btn-sm {
@@ -45,14 +47,16 @@
 }
 
 .btn-success {
+  @include border-radius(3px);
   color: $white;
   background-color: $green-light;
-  border-color: darken($green-light, 10%);
+  border-color: $green-light;
+  outline:none;
 }
 
 .btn-success:hover {
   color: $white;
-  background-color: $green-light;
+  background-color: darken($green-light, 10%);
   border-color: darken($green-light, 10%);
 }
 

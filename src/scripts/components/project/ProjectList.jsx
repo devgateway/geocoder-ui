@@ -75,7 +75,7 @@ class ProjectList extends Reflux.Component {
                 <Col md={2} sm={2}>
                   <h3><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h3>
                 </Col>
-                <Col md={10} className="project-list-filters">
+                <Col md={10} className="project-list-filters no-padding">
                   <Message className="filter-label" k="projectlist.geocodingfilter"/>
                   
                   <YearFilter/>
