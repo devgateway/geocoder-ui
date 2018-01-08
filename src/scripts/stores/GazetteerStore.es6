@@ -16,7 +16,7 @@ const initialState = {
   countryISO: undefined
 };
 
-class LocationsStore extends Reflux.Store {
+class GazetteerStore extends Reflux.Store {
   constructor() {
     super();
     this.state = initialState;
@@ -123,4 +123,4 @@ class LocationsStore extends Reflux.Store {
 
 }
 
-export default LocationsStore;
+export default GazetteerStore;

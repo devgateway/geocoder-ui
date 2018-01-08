@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from "reflux";
-import LocationsStore from '../../stores/LocationsStore.es6';
+import GazetteerStore from '../../stores/GazetteerStore.es6';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import {Button} from 'react-bootstrap';
@@ -13,7 +13,7 @@ class GazetteeResults extends Reflux.Component {
   
   constructor() {
     super();
-    this.store = LocationsStore;
+    this.store = GazetteerStore;
     this.storeKeys = ['locations'];
   }
   
@@ -70,8 +70,7 @@ class ListItems extends React.Component {
  */
 class Item extends React.Component {
   setActiveLocation(data) {
-    // TODO - open data entry
-    // Actions.invoke(Constants.ACTION_SET_ACTIVE_LOCATION, {'locationFeature': data});
+    console.log(data);
   }
   
   render() {

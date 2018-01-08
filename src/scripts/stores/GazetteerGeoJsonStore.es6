@@ -1,6 +1,6 @@
 import Reflux from "reflux";
 import Constants from '../constants/Contants.es6';
-import LocationsStore from './LocationsStore.es6';
+import GazetteerStore from './GazetteerStore.es6';
 import {GeoJsonBuilder} from '../util/GeojsonBuilder.es6';
 import * as Actions from '../actions/Actions.es6';
 
@@ -9,12 +9,12 @@ const initialState = {
   data: {}
 };
 
-class LocationsGeoJsonStore extends Reflux.Store {
+class GazetteerGeoJsonStore extends Reflux.Store {
   constructor() {
     super();
     
     this.state = initialState;
-    this.listenTo(Reflux.initStore(LocationsStore), this.process);
+    this.listenTo(Reflux.initStore(GazetteerStore), this.process);
     this.listenTo(Actions.get(Constants.ACTION_SAVE), this.removeSavedLocation)
   }
   
@@ -50,4 +50,4 @@ class LocationsGeoJsonStore extends Reflux.Store {
   }
 }
 
-export default LocationsGeoJsonStore
+export default GazetteerGeoJsonStore;

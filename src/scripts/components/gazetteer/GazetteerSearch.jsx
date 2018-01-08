@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import * as Actions from '../../actions/Actions.es6'
-import LocationsStore from '../../stores/LocationsStore.es6';
+import GazetteerStore from '../../stores/GazetteerStore.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
 import Help from '../../help/LocationsSearch.es6';
@@ -12,7 +12,7 @@ import Help from '../../help/LocationsSearch.es6';
 class GazetteerSearch extends Reflux.Component {
   constructor() {
     super();
-    this.store = LocationsStore;
+    this.store = GazetteerStore;
   }
   
   doSearch() {
