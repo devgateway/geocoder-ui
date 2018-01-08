@@ -30,9 +30,6 @@ const MapStore = createStore({
   mixins: [StoreMixins],
   
   init() {
-    // TODO - use directly singleton when we switch to Reflux es6
-    //this.listenTo(Reflux.initStore(ProjectStore), this.onProjectUpdate);
-    
     this.listenTo(Reflux.initStore(ProjectGeoJsonStore), this.updateGeocodingLayer);
     this.listenTo(Reflux.initStore(GazetteerGeoJsonStore), this.updateGazetteerLayer);
     
@@ -76,7 +73,6 @@ const MapStore = createStore({
     this.setData(newState);
   },
   
-  
   updateGeocodingLayer(data) {
     let newState = Object.assign({}, this.get());
     newState.layers.geocoding = data;
@@ -89,8 +85,6 @@ const MapStore = createStore({
     
     this.setData(newState);
   }
-  
-  
 });
 
 export default MapStore;

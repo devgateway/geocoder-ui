@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from "reflux";
 import GazetteerStore from '../../stores/GazetteerStore.es6';
+import GazetteerGeoJsonStore from "../../stores/GazetteerGeoJsonStore.es6";
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import {Button} from 'react-bootstrap';
@@ -68,9 +69,22 @@ class ListItems extends React.Component {
 /**
  * Renders a single Location.
  */
-class Item extends React.Component {
+class Item extends Reflux.Component {
+  
+  constructor() {
+    super();
+    this.store = GazetteerGeoJsonStore;
+    this.storeKeys = ['data'];
+  }
+  
+  getLocationFeatures() {
+    // find the feature from the state
+    return this.state.data.features.find(f => f.properties.id === this.props.id);
+  }
+  
   setActiveLocation(data) {
-    console.log(data);
+    const feature = this.getLocationFeatures();
+    Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature: feature})
   }
   
   render() {
