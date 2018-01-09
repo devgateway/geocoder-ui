@@ -31,7 +31,7 @@ class Item extends Reflux.Component {
     const locationFeature = this.getLocationFeatures();
     const coordinates = locationFeature.geometry.coordinates;
     const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
-    
+  
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
   

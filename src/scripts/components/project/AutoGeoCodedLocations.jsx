@@ -22,13 +22,26 @@ class Item extends Reflux.Component {
     this.store = ProjectGeoJsonStore;
   }
   
+  getLocationFeatures() {
+    // find the feature from the state
+    return this.state.data.features.find(f => f.properties.id === this.props.id);
+  }
+  
   showDataEntryForm() {
     // find the feature from the state
-    const locationFeature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    const locationFeature = this.getLocationFeatures();
     const coordinates = locationFeature.geometry.coordinates;
     const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
-  
+    
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
+  }
+  
+  deleteLocation() {
+    const feature = this.getLocationFeatures();
+    
+    // show the data entry form and invoke deletion immediately
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature});
+    Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
   
   showDocumentRef() {
@@ -71,7 +84,7 @@ class Item extends Reflux.Component {
           <div className="geocoded-btns">
             <button className="verify" onClick={this.showDataEntryForm.bind(this)}>Verify</button>
             <button className="preview" onClick={this.showDocumentRef.bind(this)}>Preview Ref</button>
-            <button className="remove">Remove</button>
+            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
           </div>
         </div>
         <br/>

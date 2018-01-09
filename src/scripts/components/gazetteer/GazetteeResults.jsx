@@ -6,11 +6,16 @@ import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import {Button} from 'react-bootstrap';
 import Message from '../Message.jsx';
+import PropTypes from "prop-types";
+import L from "leaflet";
 
 /**
  * This view renders the Gazetteer results.
  */
 class GazetteeResults extends Reflux.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
   
   constructor() {
     super();
@@ -23,6 +28,8 @@ class GazetteeResults extends Reflux.Component {
   }
   
   render() {
+    const {getCountryLayerFeatures} = this.props;
+    
     return (
       <div id="search-results">
         <div className="form">
@@ -37,7 +44,7 @@ class GazetteeResults extends Reflux.Component {
             </select>
           </div>
         </div>
-        <ListItems {...this.state.locations}/>
+        <ListItems {...this.state.locations} getCountryLayerFeatures={getCountryLayerFeatures}/>
       </div>
     )
   }
@@ -47,7 +54,13 @@ class GazetteeResults extends Reflux.Component {
  * Renders a  List of locations.
  */
 class ListItems extends React.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
+  
   render() {
+    const {getCountryLayerFeatures} = this.props;
+    
     if (!this.props.records || this.props.records.length === 0) {
       return (
         <h4> No location results found. </h4>
@@ -57,7 +70,7 @@ class ListItems extends React.Component {
         <div className="list-group">
           {
             this.props.records.map((item) => {
-              return <Item key={item.geonameId + item.lat + item.lng} {...item}/>
+              return <Item key={item.geonameId + item.lat + item.lng} {...item} getCountryLayerFeatures={getCountryLayerFeatures}/>
             })
           }
         </div>
@@ -70,6 +83,9 @@ class ListItems extends React.Component {
  * Renders a single Location.
  */
 class Item extends Reflux.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
   
   constructor() {
     super();
@@ -83,8 +99,11 @@ class Item extends Reflux.Component {
   }
   
   setActiveLocation(data) {
-    const feature = this.getLocationFeatures();
-    Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature: feature})
+    const locationFeature = this.getLocationFeatures();
+    const coordinates = locationFeature.geometry.coordinates;
+    const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
+  
+    Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature, countryFeature});
   }
   
   render() {
