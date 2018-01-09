@@ -175,7 +175,7 @@ actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
         .catch((ajax) => {
           console.log(ajax);
           actions[Constants.ACTION_UPLOAD_FILES].failed({
-            message: ajax.response.data.error,
+            message: ajax.response.data,
             file
           })
         });

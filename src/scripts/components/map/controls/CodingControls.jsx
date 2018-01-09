@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from "reflux";
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 
@@ -20,6 +21,9 @@ import CollapsibleControl from './CollapsibleControl.jsx';
  * This view renders the info tab view UI component.
  */
 class CodingControls extends Reflux.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
   
   constructor() {
     super();
@@ -47,7 +51,8 @@ class CodingControls extends Reflux.Component {
   }
   
   render() {
-    const {project, lang} = this.state;
+    const {project} = this.state;
+    const {getCountryLayerFeatures} = this.props;
     
     let countAutogeoCoded = 0;
     let countSelected = 0;
@@ -70,16 +75,16 @@ class CodingControls extends Reflux.Component {
                 <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} count={this.state.locations.records.length}>
                   <div className="panel-section padded-section">
                     {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
-                    <GazetteeResults/>
+                    <GazetteeResults getCountryLayerFeatures={getCountryLayerFeatures}/>
                   </div>
                 </CollapsibleControl>
                 
                 <CollapsibleControl title={"Auto-Geocoded"} iconClass={"geocoded-icon"} count={countAutogeoCoded}>
-                  <AutoGeoCodedLocations {...this.state.project}/>
+                  <AutoGeoCodedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
                 </CollapsibleControl>
                 
                 <CollapsibleControl title={"Selected Locations"} iconClass={"selected-locations-icon"} count={countSelected}>
-                  <SelectedLocations {...this.state.project}/>
+                  <SelectedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
                 </CollapsibleControl>
               </div>
             </div>

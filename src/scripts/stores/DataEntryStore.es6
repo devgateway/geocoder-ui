@@ -1,55 +1,43 @@
-import {createStore} from 'reflux'
-import * as Actions from '../actions/Actions.es6'
-import Constants from '../constants/Contants.es6'
-import {StoreMixins} from '../mixins/StoreMixins.es6'
-import Reflux from "reflux"
-import Settings from '../util/Settings.es6'
+import Reflux from "reflux";
+import * as Actions from '../actions/Actions.es6';
+import Constants from '../constants/Contants.es6';
+import Settings from '../util/Settings.es6';
+import _ from 'lodash';
 
-let settings = Settings.getInstace()
-import _ from 'lodash'
+let settings = Settings.getInstace();
 
-const initialState = {
-  "confirmDeletion": false,
-  "showPopup": false,
-  "action": null,
-  "geocoding": {"locationFeature": {}, "countryFeature": {}}
-}
+const LOCATION_CLASS_ADM_REGION = { "code": "1", "name": "Administrative Region" }
+const LOCATION_CLASS_PPL = { "code": "2", "name": "Populated Place" }
+const LOCATION_CLASS_STR = { "code": "3", "name": "Structure" }
+const LOCATION_CLASS_OTHER = { "code": "4", "name": "Other Topographical Feature" }
+const geoNamesVocabulary = { "code": "G1", "name": "Geonames", "lang": "en" }
+const gadminVocabulary = { "code": "A3", "name": "Global Administrative Areas" }
 
-const LOCATION_CLASS_ADM_REGION = {"code": "1", "name": "Administrative Region"}
-const LOCATION_CLASS_PPL = {"code": "2", "name": "Populated Place"}
-const LOCATION_CLASS_STR = {"code": "3", "name": "Structure"}
-const LOCATION_CLASS_OTHER = {"code": "4", "name": "Other Topographical Feature"}
-
-const geoNamesVocabulary = {"code": "G1", "name": "Geonames", "lang": "en"}
-const gadminVocabulary = {"code": "A3", "name": "Global Administrative Areas"}
-
-
+const initialState = { "confirmDeletion": false, "showPopup": false,  "action":null, "geocoding": { "locationFeature": {}, "countryFeature": {} } }
 class DataEntryStore extends Reflux.Store {
   
   constructor() {
+    super();
+    this.state = _.cloneDeep(initialState);
     
-    super()
-    this.state = _.cloneDeep(initialState)
+    this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), this.openPopup);
+    this.listenTo(Actions.get(Constants.ACTION_CLOSE_DATAENTRY_POPUP), this.closePopup);
+    this.listenTo(Actions.get(Constants.ACTION_CHANGE_CODING_VALUE), this.updateValue);
+    this.listenTo(Actions.get(Constants.ACTION_SHOW_DELETE_CONFIRM), this.beforeDelete);
     
-    this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), this.openPopup)
-    this.listenTo(Actions.get(Constants.ACTION_CLOSE_DATAENTRY_POPUP), this.closePopup)
-    this.listenTo(Actions.get(Constants.ACTION_CHANGE_CODING_VALUE), this.updateValue)
-    this.listenTo(Actions.get(Constants.ACTION_SHOW_DELETE_CONFIRM), this.beforeDelete)
+    this.listenTo(Actions.get(Constants.ACTION_SAVE), this.save);
+    this.listenTo(Actions.get(Constants.ACTION_DELETE), this.delete);
+    this.listenTo(Actions.get(Constants.ACTION_CANCEL), this.cancel);
     
-    this.listenTo(Actions.get(Constants.ACTION_SAVE), this.save)
-    this.listenTo(Actions.get(Constants.ACTION_DELETE), this.delete)
-    this.listenTo(Actions.get(Constants.ACTION_CANCEL), this.cancel)
-    
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID), this.loadingData)
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).completed, this.updateFromGeonames)
-    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).failed, this.geonamesFailed)
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData)
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).completed, this.updateAdminData)
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, this.geonamesFailed)
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData)
-    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_SHAPES), this.setShapesAdmins)
-    this.listenTo(Actions.get(Constants.ACTION_TRANSFORM_TO_GEOCODING), this.makeGeoCoding)
-    
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID), this.loadingData);
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).completed, this.updateFromGeonames);
+    this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).failed, this.geonamesFailed);
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData);
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).completed, this.updateAdminData);
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES).failed, this.geonamesFailed);
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES), this.loadingAdminData);
+    this.listenTo(Actions.get(Constants.ACTION_UPDATE_ADM_FROM_SHAPES), this.setShapesAdmins);
+    this.listenTo(Actions.get(Constants.ACTION_TRANSFORM_TO_GEOCODING), this.makeGeoCoding);
   }
   
   closePopup() {
@@ -58,12 +46,14 @@ class DataEntryStore extends Reflux.Store {
   
   openPopup(data) {
     let newState = _.cloneDeep(this.state);
-    Object.assign(newState, {'geocoding': _.cloneDeep(data), 'showPopup': true, 'confirmDeletion': false}) //set the location to be used
+    
+    Object.assign(newState, { 'geocoding': _.cloneDeep(data), 'showPopup': true, 'confirmDeletion': false }) //set the location to be used
     this.setState(newState)
   }
   
+  
   beforeDelete() {
-    let newState = Object.assign({}, this.state, {'confirmDeletion': true})
+    let newState = Object.assign({}, this.state, { 'confirmDeletion': true })
     this.setState(newState)
   }
   
@@ -72,16 +62,18 @@ class DataEntryStore extends Reflux.Store {
   }
   
   delete() {
-    let newState = Object.assign({}, this.state, {'confirmDeletion': false});
-    const {geocoding: {locationFeature: {properties: {locationStatus: prevState}}}} = newState;
+    let newState = Object.assign({}, this.state, { 'confirmDeletion': false })
+    const { geocoding: { locationFeature: { properties: { locationStatus:prevState } } } } = newState
     
-    if (prevState === 'NEW') {
-      Object.assign(newState, {'action': 'remove'})
-    } else {
-      newState = this.valueChanged(newState, {'name': 'locationStatus', 'value': 'DELETED'});
-      Object.assign(newState, {'action': 'save'})
+    if (prevState === 'NEW'){
+      Object.assign(newState, { 'action': 'remove' })
+      
+    }else{
+      
+      newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': 'DELETED' })
+      Object.assign(newState, { 'action': 'save' })
     }
-    this.setState(newState);
+    this.setState(newState)
     this.closePopup()
   }
   
@@ -89,24 +81,20 @@ class DataEntryStore extends Reflux.Store {
   save() {
     let newState = _.cloneDeep(this.state)
     
-    const {geocoding: {locationFeature: {properties: {locationStatus}}}} = newState
+    const { geocoding: { locationFeature: { properties: { locationStatus } } } } = newState
     
-    if (locationStatus == 'CREATED') {
-      newState = this.valueChanged(newState, {'name': 'locationStatus', 'value': 'NEW'})
-      Object.assign(newState, {'action': 'add'})
+    if (locationStatus === 'CREATED') {
+      newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': 'NEW' })
+      Object.assign(newState, { 'action': 'add' })
       
     } else {
       
-      newState = this.valueChanged(newState, {
-        'name': 'locationStatus',
-        'value': locationStatus == 'NEW' ? 'NEW' : 'UPDATED'
-      })
-      Object.assign(newState, {'action': 'save'})
+      newState = this.valueChanged(newState, { 'name': 'locationStatus', 'value': locationStatus === 'NEW' ? 'NEW' : 'UPDATED' })
+      Object.assign(newState, { 'action': 'save' })
     }
     this.setState(newState)
     this.closePopup();
   }
-  
   
   updateValue(newValue) {
     let newState = _.cloneDeep(this.state)
@@ -114,9 +102,8 @@ class DataEntryStore extends Reflux.Store {
     this.setState(newState)
   }
   
-  
   valueChanged(newState, newValue) {
-    const {name, value, lang} = newValue
+    const { name, value, lang } = newValue
     const val = {}
     let newProperties = Object.assign({}, newState.geocoding.locationFeature.properties)
     if (lang != undefined && lang != null) {
@@ -138,19 +125,18 @@ class DataEntryStore extends Reflux.Store {
     
     Object.assign(newProperties, val)
     newState.geocoding.locationFeature.properties = newProperties
-    console.log(newState.geocoding.locationFeature.properties)
-    return newState
+    return newState;
   }
   
   makeGeoCoding(data) {
-    const {locationFeature: {properties}, countryFeature} = data
-    const {lat, lng, geonameId, name, toponymName, alternateNames, fcl, fcode, fcodeName} = properties
+    const { locationFeature: { properties }, countryFeature } = data
+    const { lat, lng, geonameId, name, toponymName, alternateNames, fcl, fcode, fcodeName } = properties
     const names = this.getNames(name, toponymName, alternateNames)
     const admins = []
-    let {adminCode0, adminCode1, adminCode2, adminName0, adminName1, adminName2} = properties
+    let { adminCode0, adminCode1, adminCode2, adminName0, adminName1, adminName2 } = properties
     
     if (countryFeature) {
-      const {ADMIN_0_CODE, ADMIN_1_CODE, ADMIN_2_CODE, ADMIN_0_NAME, ADMIN_1_NAME, ADMIN_2_NAME} = countryFeature.properties,
+      const { ADMIN_0_CODE, ADMIN_1_CODE, ADMIN_2_CODE, ADMIN_0_NAME, ADMIN_1_NAME, ADMIN_2_NAME } = countryFeature.properties,
         adminCode0 = ADMIN_0_CODE,
         adminCode1 = ADMIN_1_CODE,
         adminCode2 = ADMIN_2_CODE,
@@ -160,13 +146,13 @@ class DataEntryStore extends Reflux.Store {
     }
     
     if (adminCode0 && adminName0) {
-      admins.push({"code": adminCode0, "level": 0, "name": adminName0, "vocabulary": gadminVocabulary})
+      admins.push({ "code": adminCode0, "level": 0, "name": adminName0, "vocabulary": gadminVocabulary })
     }
     if (adminCode1 && adminName1) {
-      admins.push({"code": adminCode1, "level": 1, "name": adminName1, "vocabulary": gadminVocabulary})
+      admins.push({ "code": adminCode1, "level": 1, "name": adminName1, "vocabulary": gadminVocabulary })
     }
     if (adminCode2 && adminName2) {
-      admins.push({"code": adminCode2, "level": 2, "name": adminName2, "vocabulary": gadminVocabulary})
+      admins.push({ "code": adminCode2, "level": 2, "name": adminName2, "vocabulary": gadminVocabulary })
     }
     
     const props = {
@@ -201,38 +187,28 @@ class DataEntryStore extends Reflux.Store {
     this.setState(newState)
   }
   
-  
   loadingData() {
     let newState = _.cloneDeep(this.state)
-    Object.assign(newState, {'loadingGeonames': true})
+    Object.assign(newState, { 'loadingGeonames': true })
     this.setState(newState)
   }
-  
   
   loadingAdminData() {
     let newState = _.cloneDeep(this.state)
-    Object.assign(newState, {'loadingAdminNames': true})
+    Object.assign(newState, { 'loadingAdminNames': true })
     this.setState(newState)
   }
   
-  
   setShapesAdmins() {
-    const {geocoding: {countryFeature: {properties}}} = this.state
-    const {ADMIN_0_CODE, ADMIN_0_NAME, ADMIN_1_CODE, ADMIN_1_NAME, ADMIN_2_CODE, ADMIN_2_NAME} = properties
-    const data = {
-      adminCode0: ADMIN_0_CODE,
-      adminCode1: ADMIN_1_CODE,
-      adminCode2: ADMIN_2_CODE,
-      adminName0: ADMIN_0_NAME,
-      adminName1: ADMIN_1_NAME,
-      adminName2: ADMIN_2_NAME
-    }
+    const { geocoding: { countryFeature: { properties } } } = this.state
+    const { ADMIN_0_CODE, ADMIN_0_NAME, ADMIN_1_CODE, ADMIN_1_NAME, ADMIN_2_CODE, ADMIN_2_NAME } = properties
+    const data = { adminCode0: ADMIN_0_CODE, adminCode1: ADMIN_1_CODE, adminCode2: ADMIN_2_CODE, adminName0: ADMIN_0_NAME, adminName1: ADMIN_1_NAME, adminName2: ADMIN_2_NAME }
     this.setAdministratives(data, gadminVocabulary)
   }
   
   updateAdminData(data) {
     let newState = _.cloneDeep(this.state)
-    Object.assign(newState, {'loadingAdminNames': false})
+    Object.assign(newState, { 'loadingAdminNames': false })
     this.setAdministratives(data, geoNamesVocabulary)
   }
   
@@ -255,7 +231,6 @@ class DataEntryStore extends Reflux.Store {
     this.setState(newState)
   }
   
-  
   getClassFromFcl(fcl) {
     if (fcl == 'A') {
       return LOCATION_CLASS_ADM_REGION
@@ -272,9 +247,7 @@ class DataEntryStore extends Reflux.Store {
     }
   }
   
-  
   getNames(defName, toponymName, alternateNames) {
-    
     const langs = settings.get('I18N', 'LANGUAGES').map(l => l.code)
     
     const names = []
@@ -332,5 +305,4 @@ class DataEntryStore extends Reflux.Store {
   }
 }
 
-
-export default DataEntryStore
+export default DataEntryStore;

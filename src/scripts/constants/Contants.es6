@@ -99,4 +99,17 @@ export default class Constants {
     'description': 'The designated geographic location is approximate'
   }]
 
+
+  static LOCATION_REACH_LIST = [{
+    'code': '1',
+    'name': 'Activity',
+    'language': 'en',
+    'description': 'The location specifies where the activity is carried out'
+  }, {
+    'code': '2',
+    'name': 'Intended Beneficiaries',
+    'language': 'en',
+    'description': 'The location specifies where the intended beneficiaries of the activity live'
+  }]
+
 }

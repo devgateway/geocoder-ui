@@ -6,26 +6,47 @@ import ProjectGeoJsonStore from "../../stores/ProjectGeoJsonStore.es6";
 import Message from '../Message.jsx';
 import MultiLingualText from '../MultiLingualText.jsx';
 import * as Actions from '../../actions/Actions.es6';
+import PropTypes from "prop-types";
+import L from "leaflet";
 
 /**
  * Renders a single Location
  */
 class Item extends Reflux.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
+  
   constructor() {
     super();
     this.store = ProjectGeoJsonStore;
   }
   
+  getLocationFeatures() {
+    // find the feature from the state
+    return this.state.data.features.find(f => f.properties.id === this.props.id);
+  }
+  
   showDataEntryForm() {
     // find the feature from the state
-    const feature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    const locationFeature = this.getLocationFeatures();
+    const coordinates = locationFeature.geometry.coordinates;
+    const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
     
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature})
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
+  }
+  
+  deleteLocation() {
+    const feature = this.getLocationFeatures();
+    
+    // show the data entry form and invoke deletion immediately
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature});
+    Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
   
   showDocumentRef() {
     const currentLocationId = this.props.id;
-  
+    
     Actions.invoke(Constants.ACTION_TOGGLE_DOCUMENT_REF_POPUP, currentLocationId);
   }
   
@@ -33,37 +54,37 @@ class Item extends Reflux.Component {
     return (
       <div className="list-group-item">
         <h3 className="list-group-item-heading"><b><MultiLingualText texts={this.props.names}/> </b></h3>
-    
+        
         <div className="list-group-item-text">
           <label><Message k="dataentry.featuredesignation"/></label>
           <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
         </div>
-    
+        
         <div className="list-group-item-text">
           <label><Message k="dataentry.activitydescription"/></label>
           <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
         </div>
-    
+        
         <div className="list-group-item-text">
           <label><Message k="dataentry.type"/></label>
           <span>{this.props.locationClass.name}</span>
         </div>
-    
+        
         <div className="list-group-item-text">
           <label><Message k="dataentry.geographicexactness"/></label>
           <span>{this.props.exactness.name}</span>
         </div>
-    
+        
         <div className="list-group-item-text">
           <label className="inline"><Message k="dataentry.status"/></label>
           <Label bsStyle="default" className="pending-locations-background">{this.props.locationStatus}</Label>
         </div>
-    
+        
         <div className="list-group-item-text pull-right">
           <div className="geocoded-btns">
             <button className="verify" onClick={this.showDataEntryForm.bind(this)}>Verify</button>
             <button className="preview" onClick={this.showDocumentRef.bind(this)}>Preview Ref</button>
-            <button className="remove">Remove</button>
+            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
           </div>
         </div>
         <br/>
@@ -73,8 +94,12 @@ class Item extends Reflux.Component {
 }
 
 export default class AutoGeoCodedLocations extends React.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
   
   render() {
+    const {getCountryLayerFeatures} = this.props;
     let locations;
     if (this.props.locations !== undefined) {
       locations = this.props.locations.filter(location => location.locationStatus === Constants.AUTO_CODED);
@@ -88,7 +113,7 @@ export default class AutoGeoCodedLocations extends React.Component {
           <ul className="project-list search-results">
             {
               locations.map((item) => {
-                return <Item key={item.id} {...item}/>
+                return <Item key={item.id} {...item} getCountryLayerFeatures={getCountryLayerFeatures}/>
               })
             }
           </ul>

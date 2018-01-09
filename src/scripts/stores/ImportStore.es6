@@ -2,14 +2,16 @@ import {createStore} from 'reflux';
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import Reflux from "reflux";
+import _ from "lodash"
 
 /**
  * Stored used in {@link FileUpload} component.
  */
 const initialState = {
-  autoGeocode:  false,
-  files:        []
+  autoGeocode: false,
+  files: []
 };
+
 class ImportSore extends Reflux.Store {
   constructor() {
     super();
@@ -19,6 +21,7 @@ class ImportSore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_SET_FILE), this.setFile);
     this.listenTo(Actions.get(Constants.ACTION_REMOVE_FILE), this.removeFile);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES_VALIDATION), this.setError);
+    this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES), this.upload);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).completed, this.uploadCompleted);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).failed, this.uploadFailed);
   }
@@ -50,6 +53,18 @@ class ImportSore extends Reflux.Store {
     });
   }
   
+  
+  upload(data) {
+    const newFiles = [...this.state.files];
+    newFiles.map(f => {
+      f.status = 'LOADING'
+      return f
+    });
+    this.setState({
+      files: newFiles
+    });
+  }
+  
   uploadCompleted(file) {
     const newFiles = [...this.state.files];
     const fileIndex = this.state.files.findIndex(f => f.name === file.name);
@@ -62,10 +77,10 @@ class ImportSore extends Reflux.Store {
   
   uploadFailed(data) {
     const {message, file} = data;
-    
     const newFiles = [...this.state.files];
     const fileIndex = this.state.files.findIndex(f => f.name === file.name);
     newFiles[fileIndex].status = 'ERROR';
+    newFiles[fileIndex].message = message;
     
     this.setState({
       files: newFiles

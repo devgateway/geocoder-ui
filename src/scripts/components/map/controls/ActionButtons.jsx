@@ -25,8 +25,8 @@ class SubmitGeocoding extends React.Component {
   }
   
   onCancelCoding() {
+    this.cancel();
     window.history.back();
-    setTimeout(function(){ window.location.reload(); }, 100);
   }
   
   cancel() {
@@ -70,7 +70,7 @@ class SubmitGeocoding extends React.Component {
               k="general.yes"/></Button>
           </Modal.Body>
         </Modal>
-  
+        
         <Modal  {...this.props} show={this.state.showModal && this.state.cancel} onHide={this.cancel}>
           <Modal.Body>
             <h4 className="list-group-item-heading">
@@ -87,7 +87,7 @@ class SubmitGeocoding extends React.Component {
         <Button bsStyle='warning' id='cancelCoding' onClick={this.openConfirm.bind(this, false)}><Message
           k="submitgeocoding.cancel"/></Button>
         <Button bsStyle='success' id='submitCoding' onClick={this.openConfirm.bind(this, true)}><Message
-          k="submitgeocoding.submit"/></Button>
+          k="submitgeocoding.submit"/></Button>s
       </div>
     );
   }

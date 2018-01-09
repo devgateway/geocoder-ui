@@ -74,22 +74,17 @@ h4 {
   @include fontDefault($large, $black);
 }
 
-;
 .text-medium {
   @include fontDefault($medium, $black);
 }
 
-;
 .text-regular {
   @include fontDefault($regular, $black);
 }
 
-;
 .text-small {
   @include fontDefault($small, $black);
 }
-
-;
 
 /*General styles*/
 .panel {
@@ -159,6 +154,7 @@ h4 {
 .padded-section {
   padding: $base-unit;
 }
+
 .panel-content {
   margin-top: -($base-unit / 2);
   overflow: hidden;
@@ -238,7 +234,7 @@ h4 {
 
   input[type=text] {
     @include border-radius(0);
-    border: $px-unit solid $gray;
+    border: $px-unit solid $gray-darker;
     float: left;
     margin-right: $base-unit + 5;
     outline: none;
@@ -248,14 +244,9 @@ h4 {
 
   button {
     background: $green-light;
-    border: 1px solid $green-light;
     color: $white;
     padding: $base-unit - 1;
     text-transform: uppercase;
-    &:hover{
-      background: $green;
-      border: 1px solid $green;
-    }
   }
 
   .form-section {

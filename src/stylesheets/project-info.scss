@@ -25,8 +25,8 @@
   @include scrollbar();
 
   .panel-success {
-    min-height: $base-unit * 30;
-    overflow: hidden;
+    height: $base-unit * 60;
+    overflow-y: scroll;
 
     .panel-heading {
       background-color: $header-bg;
@@ -34,15 +34,8 @@
       width: $extend;
       height: $base-unit * 16;
       overflow: hidden;
-      position: static;
-      .panel-section{
-        margin-bottom: 0;
-      }
+      position: relative;
     }
-  }
-  
-  .panel-body{
-    overflow-y: auto;
   }
 
   .heading-container {
@@ -94,7 +87,7 @@
   }
 }
 
-.fa-spinner{
+.fa-spinner {
   margin-left: $base-unit;
 }
 
@@ -109,10 +102,12 @@
     font-weight: $normal-weight-text + 50;
     margin-bottom: $base-unit / 2;
   }
+
   .project-info {
     font-size: $big - 1.5;
     color: $darkGray;
     margin: 0 0 $base-unit;
+
     a {
       color: $green;
       font-size: $small + 2;
@@ -124,7 +119,7 @@
   }
 }
 
-.country-name{
+.country-name {
   color: $black;
   font-weight: $normal-weight-text + 50;
 }
