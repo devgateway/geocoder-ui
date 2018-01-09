@@ -39,7 +39,6 @@ class FileUpload extends Reflux.Component {
   }
 
   render() {
-    debugger;
     return (
       <div className="container">
         <h1>Upload XML File</h1>

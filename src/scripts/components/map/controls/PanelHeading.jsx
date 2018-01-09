@@ -36,7 +36,7 @@ export default class PanelHeading extends React.Component {
             <p>
               <label className="green inline text-medium"><Message k="projectinfo.country"/>:</label>
               {project.countries ? project.countries.map((c) => {
-                return (<b key={c.name}>{c.name}</b>)
+                return (<span className="country-name" key={c.name}>{c.name}</span>)
               }) : 'N/A'}
             </p>
           </div>

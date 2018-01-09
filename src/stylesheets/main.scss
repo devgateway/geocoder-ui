@@ -73,22 +73,17 @@ h4 {
   @include fontDefault($large, $black);
 }
 
-;
 .text-medium {
   @include fontDefault($medium, $black);
 }
 
-;
 .text-regular {
   @include fontDefault($regular, $black);
 }
 
-;
 .text-small {
   @include fontDefault($small, $black);
 }
-
-;
 
 /*General styles*/
 .panel {
@@ -139,12 +134,11 @@ h4 {
 }
 
 // new styles
-
 .project-code {
   color: $green;
   font-size: $large + 2;
   font-weight: $bold-text;
-  margin-bottom: $base-unit / 2;
+  margin-bottom: $base-unit - 2;
   margin-top: $base-unit / 1.5;
 }
 
@@ -168,7 +162,8 @@ h4 {
   .project-info-label {
     color: $black;
     font-size: $small + 2;
-    margin-bottom: $base-unit / 1.3;
+    font-weight: $normal-weight-text + 50;
+    margin-bottom: $base-unit / 2;
   }
   .project-info {
     font-size: $big - 2;
@@ -239,9 +234,9 @@ h4 {
     border: $px-unit solid $gray-darker;
     float: left;
     margin-right: $base-unit + 5;
-    padding: $base-unit;
     outline: none;
-    width: $extend  / 1.6;
+    padding: $base-unit;
+    width: $extend  / 2;
   }
 
   button {

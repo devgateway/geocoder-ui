@@ -79,7 +79,7 @@ input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + lab
 
 .form-control {
   @include inputText();
-  border: $px-unit solid $gray-darker;
+  border: $px-unit solid $gray;
   display: block;
   width: $extend;
   height: $base-unit * 4;

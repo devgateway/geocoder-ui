@@ -14,11 +14,12 @@
 }
 
 #project-info {
-  z-index: 9999;
   -webkit-transition: opacity .1s; /* Safari */
-  transition: opacity .1s;
   height: $extend;
-  width: 620px;
+  line-height: 110%;
+  transition: opacity .1s;
+  width: $base-unit * 55;
+  z-index: 9999;
 
   @include fontDefault($medium, $darkGray);
   @include scrollbar();
@@ -29,14 +30,16 @@
 
     .panel-heading {
       background-color: $header-bg;
-      border: 0px;
+      border: none;
+      width: $extend;
+      height: $base-unit * 16;
       overflow: hidden;
       position: relative;
     }
   }
 
   .heading-container {
-    height: 30px;
+    height: $base-unit * 3;
   }
 
   .title {
@@ -50,12 +53,12 @@
     float: right;
     cursor: pointer;
     position: relative;
-    top: 10px;
-    right: 5px;
+    top: $base-unit;
+    right: $base-unit / 2;
   }
 
   .tab-container {
-    padding: 10px 15px;
+    padding: $base-unit $base-unit + 5;
     &.no-padding {
       padding: 0;
     }
@@ -73,15 +76,50 @@
     margin-right: 3px;
   }
 
-
   .form-group {
-    padding: 15px 0px;
+    padding: $base-unit + 5 0px;
     margin: 0px;
   }
 
   .list-group {
-    padding: 5px;
+    padding: $base-unit / 2;
     margin-top: 2px;
   }
 }
 
+.fa-spinner {
+  margin-left: $base-unit;
+}
+
+.panel-content {
+  margin-top: -($base-unit / 2);
+  overflow: hidden;
+  padding-right: $base-unit;
+
+  .project-info-label {
+    color: $black;
+    font-size: $small + 2;
+    font-weight: $normal-weight-text + 50;
+    margin-bottom: $base-unit / 2;
+  }
+
+  .project-info {
+    font-size: $big - 1.5;
+    color: $darkGray;
+    margin: 0 0 $base-unit;
+
+    a {
+      color: $green;
+      font-size: $small + 2;
+      text-decoration: underline;
+      &:hover {
+        color: $black;
+      }
+    }
+  }
+}
+
+.country-name {
+  color: $black;
+  font-weight: $normal-weight-text + 50;
+}

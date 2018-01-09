@@ -29,8 +29,6 @@ class DocumentRef extends Reflux.Component {
   }
   
   render() {
-    console.log(this.state);
-    
     return (
       <Modal className="document-ref-dialog" show={this.state.showPopup} onHide={this.closeModal}>
         <Modal.Header closeButton>
