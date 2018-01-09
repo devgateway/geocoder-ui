@@ -22,7 +22,7 @@ class SubmitGeocoding extends React.Component {
   
   onCancelCoding() {
     window.history.back();
-    window.location.reload();
+    setTimeout(function(){ window.location.reload(); }, 100);
     this.cancel();
   }
   

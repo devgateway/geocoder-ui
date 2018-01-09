@@ -1,26 +1,34 @@
 import React from 'react';
 import Reflux from "reflux";
+import PropTypes from 'prop-types';
 import {Label} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
 import MultiLingualText from '../MultiLingualText.jsx';
 import ProjectGeoJsonStore from "../../stores/ProjectGeoJsonStore.es6";
+import L from 'leaflet';
 
 /**
  * Renders a single Location
  */
 class Item extends Reflux.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
+  
   constructor() {
     super();
     this.store = ProjectGeoJsonStore;
   }
   
-  _showDataEntryForm() {
+  showDataEntryForm() {
     // find the feature from the state
-    const feature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    const locationFeature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    const coordinates = locationFeature.geometry.coordinates;
+    const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
     
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature})
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
   
   render() {
@@ -76,7 +84,7 @@ class Item extends Reflux.Component {
         
         <div className="list-group-item-text pull-right">
           <div className="geocoded-btns">
-            <button className="edit" onClick={this._showDataEntryForm.bind(this)}>
+            <button className="edit" onClick={this.showDataEntryForm.bind(this)}>
               <Message k="projectinfo.locationslist.edit"/>
             </button>
             <button className="remove">Remove</button>
@@ -92,7 +100,13 @@ class Item extends Reflux.Component {
    This view renders the Project Information UI component
    */
 export default class SelectedLocations extends React.Component {
+  static propTypes = {
+    getCountryLayerFeatures:  PropTypes.func.isRequired
+  };
+  
   render() {
+    const {getCountryLayerFeatures} = this.props;
+    
     let locations;
     if (this.props.locations !== undefined) {
       locations = this.props.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED);
@@ -105,7 +119,7 @@ export default class SelectedLocations extends React.Component {
         <div className="list-group">
           {
             locations.map((item) => {
-              return <Item key={item.id} {...item}/>
+              return <Item key={item.id} {...item} getCountryLayerFeatures={getCountryLayerFeatures}/>
             })
           }
         </div>
