@@ -107,7 +107,6 @@ class ProjectStore extends Reflux.Store {
   
   saveSuccess() {
     window.history.back();
-    setTimeout(function(){ window.location.reload(); }, 100);
   }
 }
 
