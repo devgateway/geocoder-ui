@@ -147,9 +147,8 @@ class DataEntryContent extends React.Component {
             <div className="row" key={id.id + id.code}>
               <div className="col-lg-6">
                 <div className="form-group">
-                  <label className="colored" htmlFor="id"><Message k="dataentry.identifier"/></label>
-                  <div><input type="text" className="form-control" id="id" placeholder="id" value={id.code} disabled/>
-                  </div>
+                  <label htmlFor="id"><Message k="dataentry.identifier"/></label>
+                  <input type="text" className="form-control" id="id" placeholder="id" value={id.code} disabled/>
                 </div>
               </div>
               
@@ -196,7 +195,7 @@ class DataEntryContent extends React.Component {
               <div className="col-lg-12 ">
                 {
                   geonamesId
-                    ? (<button className="btn btn-xs btn-success pull-right" onClick={e => {
+                    ? (<button className="btn btn-geonames" onClick={e => {
                       this.updateAdminInfo(geonamesId)
                     }}>
                       <Message k="dataentry.sourceadmin.geonames"/>
@@ -365,7 +364,7 @@ class DataEntryContent extends React.Component {
                     {
                       (this.props.loadingGeonames)
                         ? <i className="fa fa-refresh fa-spin"></i>
-                        : <i className="fa fa-refresh"></i>
+                        : <Message k="dataentry.delete"/>
                     }
                   </button>
                   : null

@@ -25,14 +25,10 @@ export default class PanelHeading extends React.Component {
           <div className="panel-section">
             <div className="project-info-label"><MultiLingualText texts={project.titles}/></div>
             <div className="project-info">{Date(project.date)}</div>
-          </div>
-
-          <div className="panel-section">
             <div className="project-info-label">{Message.t('projectinfo.projectinfo')}</div>
             <div className="project-info">
               <MultiLingualText texts={project.descriptions}/>
             </div>
-
             <p>
               <label className="green inline text-medium"><Message k="projectinfo.country"/>:</label>
               {project.countries ? project.countries.map((c) => {

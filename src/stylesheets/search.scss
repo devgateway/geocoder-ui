@@ -2,21 +2,22 @@
 
 /*Locations Search*/
 #search-results {
-  height: $base-unit * 30;
+  // height: $base-unit * 30;
   p {
     width: $extend - 15;
   }
 
   .list-group {
-    overflow: auto;
-    max-height: $base-unit * 20;
+    // overflow: auto;
+    // max-height: $base-unit * 20;
     padding: $base-unit / 2;
 
   }
   .list-group-item {
     font-size: $medium;
     border: none;
-    margin: 0;
-    border-bottom: 1px solid #eee;
+    margin-bottom: $base-unit;
+    border-bottom: 1px solid $gray;
+    padding: 0 0 $base-unit 0;
   }
 }

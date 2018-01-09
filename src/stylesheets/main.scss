@@ -140,7 +140,7 @@ h4 {
   font-size: $large + 2;
   font-weight: $bold-text;
   margin-bottom: $base-unit - 2;
-  margin-top: $base-unit / 1.5;
+  margin-top: $base-unit + 2;
 }
 
 .panel-section {
@@ -234,7 +234,7 @@ h4 {
 
   input[type=text] {
     @include border-radius(0);
-    border: $px-unit solid $gray-darker;
+    border: $px-unit solid $gray;
     float: left;
     margin-right: $base-unit + 5;
     outline: none;
@@ -245,6 +245,7 @@ h4 {
   button {
     background: $green-light;
     color: $white;
+    margin-top: $base-unit / 2;
     padding: $base-unit - 1;
     text-transform: uppercase;
   }
@@ -257,7 +258,7 @@ h4 {
 .project-search, .upload-options {
   .search-option-label {
     float: left;
-    margin-top: $base-unit / 6;
+    margin-top: $base-unit / 2;
   }
   .select-section {
     float: left;
@@ -302,7 +303,7 @@ h4 {
 .accordion-heading {
   border-bottom: $px-unit solid $gray;
   clear: both;
-  height: $base-unit * 5;
+  height: $base-unit * 4.2;
   padding: $base-unit / 2 $base-unit;
 
   .arrow-icon {
@@ -310,7 +311,7 @@ h4 {
     background-repeat: no-repeat;
     float: right;
     height: $base-unit * 1.7;
-    margin-top: -($base-unit * 2);
+    margin-top: -($base-unit * 1.5);
     width: $base-unit * 1.7;
   }
 
@@ -319,7 +320,7 @@ h4 {
     display: block;
     font-size: $big + 1;
     font-weight: $normal-weight-text;
-    margin-top: $base-unit / 1.5;
+    margin-top: $base-unit - 2;
     &.results-title {
       color: $black;
       margin-left: $base-unit * 3.2;

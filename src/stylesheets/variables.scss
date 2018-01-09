@@ -126,7 +126,7 @@ $bold-text: 800;
 
 @mixin scrollbar() {
   ::-webkit-scrollbar {
-    width: $base-unit + 2;
+    width: $base-unit;
   }
 
   ::-webkit-scrollbar-track {
