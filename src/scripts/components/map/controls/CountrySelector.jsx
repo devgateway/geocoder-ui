@@ -26,12 +26,12 @@ class LayerItem extends React.Component {
           <i className="fa fa-spinner fa-spin pull-right"></i>
           :
           (this.props.added) ?
-            <Button bsStyle='warning' bsSize='small' className='pull-right' onClick={e=>this.removeLayer(e)}
+            <Button bsStyle='warning' className='pull-right' onClick={e=>this.removeLayer(e)}
                     value={this.props.iso3}>
               <Message k="layerselector.remove"/>
             </Button>
             :
-            <Button bsStyle='info' bsSize='small' className='pull-right' onClick={e=>this.addLayer(e)}
+            <Button bsStyle='info' className='pull-right' onClick={e=>this.addLayer(e)}
                     value={this.props.iso3}>
               <Message k="layerselector.add"/>
             </Button>
@@ -50,10 +50,10 @@ class LayerList extends React.Component {
     return (
       <div className="list-group-item">
         <div className="list-group-item-heading">
-          <h4 className="green">
+          <h4>
             <Message k="layerselector.countryboundaries"/>
             <div className="close-btn" onClick={this.props.onClose}>
-              <i className='fa fa-times-circle-o'></i>
+              <i className='close-icon'></i>
             </div>
           </h4>
         </div>
