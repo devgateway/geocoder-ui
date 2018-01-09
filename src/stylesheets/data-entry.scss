@@ -2,31 +2,51 @@
 
 .modal-dialog {
   width: 480px;
-
 }
-
+.modal-content{
+  @include border-radius(3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+}
+.form-control{
+  box-shadow: none;
+}
 #dataentry {
-  width: 450px;
-  padding: 10px;
-
+  padding: $base-unit;
+  width: $base-unit * 45;
+  
   input[type="text"] {
-    @include fontDefault($regular, $darkGray);
-    padding: 5px;
-    height: 26px;
+    @include fontDefault($regular, $gray);
+    border: 1px solid $gray;
+    height: $base-unit * 2;
     line-height: 1.5;
-
+    padding: $base-unit / 2;
+  }
+  label{
+    font-size: $large - 1;
+    margin-bottom: 0;
+    margin-left: -3px;
+    padding:0;
+    &.form-description{
+      font-weight: $light-text;
+      margin-left: -13px;
+    }
   }
   .help-container {
-    height: 24px;
+    height: $base-unit * 2.4;
     float: left;
+    .help {
+      background-position: center center;
+      background-size: 13px;
+      float: left;
+      height: $base-unit + 5;
+      width: $base-unit + 5;
+    }
   }
   .separator {
-    margin-right: 5px;
+    margin-right: $base-unit / 2;
     float: left;
   }
-  .help {
-    float: left
-  }
+
   .form-group {
     margin-bottom: 3px;
   }
@@ -35,65 +55,67 @@
   }
   .row {
     border: 0px solid red;
-    padding-bottom: 7px;
+    padding-bottom: $base-unit - 3;
   }
   .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
-    padding: 0px 7px;
+    padding: 0px $base-unit - 3;
   }
 
   .options {
     padding-top: 2px;
-    padding-right: 5px;
+    padding-right: $base-unit / 2;
     label {
-      padding-right: 5px;
+      padding-right: $base-unit / 2;
     }
     .btn {
       margin: 2px;
-
-
     }
-
-
   }
 
 }
 
 #dataentry.new , #dataentry.created {
   .colored {
+    @include border-radius(3px);
     color: $green;
   }
   #savebutton{
-    background-color: $green !important
+    @include border-radius(3px);
+    background-color: $green-light !important
   }
 }
 
 #dataentry.updated {
   .colored {
-    color: rgba(253, 154, 0, 0.8);
+    @include border-radius(3px);
+    color: $no-locations;
   }
   #savebutton{
-    background-color: rgba(253, 154, 0, 0.8) !important;
+    @include border-radius(3px);
+    background-color: $no-locations !important;
   }
 }
 
 #dataentry.auto_coded {
   .colored {
-    color: #0c7bce;
+    @include border-radius(3px);
+    color: $pending-locations;
   }
   #savebutton{
-    background-color: #0c7bce!important
+    @include border-radius(3px);
+    background-color: $pending-locations!important
   }
 }
 
 
 #dataentry {
   .has-error label {
-    color: #E25956 !important;
+    color: $red-variant !important;
     font-weight: bold;
   }
 
   .has-error select {
-    border-color: #E25956;
+    border-color: $red-variant;
     border-style: solid;
     border-width: 1px;
   }
@@ -110,4 +132,8 @@
   margin-left: -15px;
   padding-right: 15px;
   padding-left: 15px;
+}
+
+#cancelbutton{
+  @include border-radius(3px);
 }

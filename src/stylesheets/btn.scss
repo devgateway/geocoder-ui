@@ -154,12 +154,15 @@
   color: $white;
   height: $base-unit * 5;
   right: $base-unit;
-  outline:none;
+  -webkit-box-shadow: none;
+  outline: -webkit-focus-ring-color auto 0px;
   padding: $base-unit * 3.2 $base-unit $base-unit $base-unit;
   position: absolute;
   top: 10%;
   width: $base-unit * 5;
-  &:hover{
+  &:hover,
+  &:focus
+  &:active{
     background-color: darken($green-light, 10%);
     border: $green;
     color: $white;
@@ -168,11 +171,11 @@
 
 .map-location-btn{
   @include border-radius(2px);
-  background: $green;
+  background-color: $green;
   border: $green;
   color: $white;
   outline: none;
   &:hover, &:focus{
-    backgrouns: $gray-darker;
+    background-color: $green;
   }
 }

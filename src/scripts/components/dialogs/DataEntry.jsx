@@ -108,7 +108,7 @@ class DataEntryContent extends React.Component {
       return (
         <div id='dataentry' className={locationStatus ? locationStatus : ''}>
           <LangSelector></LangSelector>
-          <label className=""><b> * All entered text will be stored in "{this.props.lang}" language</b></label>
+          <label className="form-description"><b>* All entered text will be stored in "{this.props.lang}" language</b></label>
           
           
           {locationIdentifiers.map(id =>

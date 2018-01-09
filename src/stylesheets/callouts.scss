@@ -40,7 +40,7 @@
       font-size: $medium;
       font-weight: $normal-weight-text;
       margin-bottom: $base-unit / 2;
-      padding: $base-unit $base-unit * 2 $base-unit $base-unit * 2;
+      padding: $base-unit - 3 $base-unit * 2 $base-unit - 3 $base-unit * 2;
       &:hover {
         background: $black;
       }
