@@ -18,7 +18,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {'NODE_ENV': JSON.stringify('production')}
     }),
-    new UglifyJsPlugin({
+    /*new UglifyJsPlugin({
       sourceMap: true,
       exclude: [/\.min\.js$/gi],    // skip pre-minified libs
       uglifyOptions: {
@@ -33,7 +33,7 @@ module.exports = {
         compress: true,
         warnings: false,
       }
-    }),
+    }),*/
     new ExtractTextPlugin('[name].css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
