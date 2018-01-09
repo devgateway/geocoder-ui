@@ -39,6 +39,7 @@ class FileUpload extends Reflux.Component {
   }
 
   render() {
+    debugger;
     return (
       <div className="container">
         <h1>Upload XML File</h1>
@@ -49,13 +50,22 @@ class FileUpload extends Reflux.Component {
             <ul>
               {
                 this.state.files.map(file =>
-                  <li key={file.name}>Loading {file.name} - {file.size} bytes 
-                    {file.status === 'ERROR' ? <div className="label label-warning">Failed</div> : null}
+                  <li key={file.name}>Loading {file.name} - {file.size} bytes
+                    {file.status === 'ERROR' ? <div className="label label-warning">Failed ({file.message})</div> : null}
 
                     {file.status === 'DONE' ? <div className="label label-success">Done</div> : null}
 
-                    <button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs link pull-right">(remove)
-                    </button>
+                  {file.status === 'LOADING' ? <div className="label label-info"></div> : null}
+                      {file.status === 'LOADING' ? <div class="spinner">  <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>: null}
+
+
+                      {file.status != 'LOADING'?<button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs link pull-right">Remove</button> : null}
+
                   </li>)
               }
             </ul>
