@@ -136,6 +136,7 @@
   "submitgeocoding": {
     "cancel": "Cancel",
     "submit": "Submit",
-    "submitmessage": "This will overwrite the project geocoding with the current changes.  Are you sure?"
+    "submitmessage": "This will overwrite the project geocoding with the current changes.  Are you sure?",
+    "cancelmessage": "Are you sure you want to cancel? None of your edits will be saved."
   }
 }

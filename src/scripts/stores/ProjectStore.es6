@@ -12,34 +12,34 @@ class ProjectStore extends Reflux.Store {
   constructor() {
     super();
     this.state = initialState;
-
+    
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT), this.loading);
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_LOAD_SINGLE_PROJECT).failed, this.failed);
-
-
+    
+    
     this.listenTo(Actions.get(Constants.ACTION_SUBMIT_GEOCODING), this.submitGeocoding);
-
+    
     this.listenTo(Reflux.initStore(DataEntryStore), this.updateLocation);
-
+    
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), this.save);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, this.saveSuccess);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
   }
-
+  
   cleanStore() {
     this.setState(this.initialData);
   }
-
+  
   loading() {
     console.log('Loading project...');
   }
-
+  
   save() {
     console.log('Save project...');
   }
-
+  
   completed(response) {
     let project = response.data;
     if (project.countries !== undefined && project.countries.length !== 0) {
@@ -51,19 +51,19 @@ class ProjectStore extends Reflux.Store {
       project: project
     });
   }
-
+  
   failed(message) {
     console.error(`Error loading project: ${message}`)
   }
-
-
+  
+  
   updateLocation(data) {
     const { geocoding: { locationFeature }, action } = data
     if (action) {
       const { properties: { locationStatus, id }, properties } = locationFeature
       let project = JSON.parse(JSON.stringify(this.state.project))
       let locations = project.locations.slice(0)
-
+      
       if (action == 'save') {
         locations = locations.map(loc => {
           if (loc.id == id) {
