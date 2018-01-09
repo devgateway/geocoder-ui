@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 module.exports = {
   context: __dirname,
   entry: ['./src/scripts/main.js'],
@@ -10,7 +12,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
-
+  
   plugins: [
     new CopyWebpackPlugin([{from: './src/conf', to: 'conf'}], {force: true}),
     new CopyWebpackPlugin([{from: './src/locales', to: 'locales'}], {force: true}),
@@ -18,7 +20,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {'NODE_ENV': JSON.stringify('production')}
     }),
-    /*new UglifyJsPlugin({
+    new UglifyJsPlugin({
       sourceMap: true,
       exclude: [/\.min\.js$/gi],    // skip pre-minified libs
       uglifyOptions: {
@@ -33,7 +35,7 @@ module.exports = {
         compress: true,
         warnings: false,
       }
-    }),*/
+    }),
     new ExtractTextPlugin('[name].css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -41,7 +43,7 @@ module.exports = {
       inject: true
     })
   ],
-
+  
   module: {
     rules: [
       {

@@ -6,7 +6,7 @@ import * as Actions from '../../../actions/Actions.es6';
 import Constants from '../../../constants/Contants.es6';
 
 import ProjectStore from '../../../stores/ProjectStore.es6';
-import LocationsStore from '../../../stores/LocationsStore.es6';
+import GazetteerStore from '../../../stores/GazetteerStore.es6';
 import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
 import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
 import L from 'leaflet';
@@ -33,7 +33,7 @@ class CodingControls extends Reflux.Component {
       showTab:    1
     };
     
-    this.stores = [ProjectStore, LocationsStore];
+    this.stores = [ProjectStore, GazetteerStore];
   }
   
   componentDidMount() {

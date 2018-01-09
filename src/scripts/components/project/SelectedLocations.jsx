@@ -22,13 +22,25 @@ class Item extends Reflux.Component {
     this.store = ProjectGeoJsonStore;
   }
   
-  showDataEntryForm() {
+  getLocationFeatures() {
     // find the feature from the state
-    const locationFeature = this.state.data.features.find(f => f.properties.id === this.props.id);
+    return this.state.data.features.find(f => f.properties.id === this.props.id);
+  }
+  
+  showDataEntryForm() {
+    const locationFeature = this.getLocationFeatures();
     const coordinates = locationFeature.geometry.coordinates;
     const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
     
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
+  }
+  
+  deleteLocation() {
+    const feature = this.getLocationFeatures();
+    
+    // show the data entry form and invoke deletion immediately
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature: feature});
+    Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
   
   render() {
@@ -87,7 +99,7 @@ class Item extends Reflux.Component {
             <button className="edit" onClick={this.showDataEntryForm.bind(this)}>
               <Message k="projectinfo.locationslist.edit"/>
             </button>
-            <button className="remove">Remove</button>
+            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
           </div>
         </div>
         <br/>

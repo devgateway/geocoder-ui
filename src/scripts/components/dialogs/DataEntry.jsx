@@ -57,42 +57,34 @@ class DataEntryContent extends React.Component {
   }
   
   onCancel() {
-    
     Actions.invoke(Constants.ACTION_CANCEL);
   }
   
   onDelete() {
-    
     Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
   
   doDelete() {
-    
     Actions.invoke(Constants.ACTION_DELETE);
   }
   
   cancelDelete() {
-    
     Actions.invoke(Constants.ACTION_CANCEL_DELETE);
   }
   
   onSave() {
-    
     Actions.invoke(Constants.ACTION_SAVE);
   }
   
   updateAdminInfo(geonameID) {
-    
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': geonameID});
   }
   
   updateAdminFromShapes() {
-    
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_SHAPES)
   }
   
   updateLocationInfo(geonameID) {
-    
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': geonameID});
   }
   
@@ -103,7 +95,6 @@ class DataEntryContent extends React.Component {
         countryFeature,
         locationFeature
       },
-      lang,
       confirmDeletion
     } = this.props;
     
@@ -327,38 +318,38 @@ class DataEntryContent extends React.Component {
               
               <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={e => this.onSave()}>
                 {
-                  locationStatus == 'EXISTING'
+                  locationStatus === 'EXISTING'
                     ? Message.t('dataentry.update')
                     : null
                 }
                 {
-                  locationStatus == 'UPDATED'
+                  locationStatus === 'UPDATED'
                     ? Message.t('dataentry.update')
                     : null
                 }
                 {
-                  locationStatus == 'NEW'
+                  locationStatus === 'NEW'
                     ? Message.t('dataentry.update')
                     : null
                 }
                 {
-                  locationStatus == 'CREATED'
+                  locationStatus === 'CREATED'
                     ? Message.t('dataentry.add')
                     : null
                 }
                 {
-                  locationStatus == 'AUTO_CODED'
+                  locationStatus === 'AUTO_CODED'
                     ? Message.t('dataentry.verify')
                     : null
                 }
                 {
-                  locationStatus == 'DELETED'
+                  locationStatus === 'DELETED'
                     ? Message.t('dataentry.save')
                     : null
                 }
               </button>
               {
-                (locationStatus == 'CREATED' || locationStatus == 'DELETED')
+                (locationStatus === 'CREATED' || locationStatus === 'DELETED')
                   ? null
                   : <button className="btn btn-lg btn-danger pull-right" id="deletebutton" onClick={e => this.onDelete()}>
                     <Message k="dataentry.delete"/>
@@ -423,4 +414,4 @@ class DataEntry extends Reflux.Component {
   }
 }
 
-export default DataEntry
+export default DataEntry;
