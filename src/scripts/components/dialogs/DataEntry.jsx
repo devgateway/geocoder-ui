@@ -309,12 +309,11 @@ class DataEntryContent extends React.Component {
             </div>
           </div>
           
-          <div className="row">
+          <div className="row button-row">
             <div className="col-lg-12 help-container">
-              <div className='separator'/>
+            
               <DataEntryHelp parentId='dataentry' type={type}/>
-              <div className='separator'/>
-              
+              <div className="popup-btn-wrapper">
               <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={e => this.onSave()}>
                 {
                   locationStatus === 'EXISTING'
@@ -360,16 +359,16 @@ class DataEntryContent extends React.Component {
               </button>
               {
                 geonamesId
-                  ? <button className="btn btn-lg btn-default pull-right" title={Message.t('dataentry.updatefromgeonames')} onClick={e => this.updateLocationInfo(geonamesId)}>
+                  ? <button className="btn btn-lg btn-blue pull-right" title={Message.t('dataentry.updatefromgeonames')} onClick={e => this.updateLocationInfo(geonamesId)}>
                     {
                       (this.props.loadingGeonames)
                         ? <i className="fa fa-refresh fa-spin"></i>
-                        : <Message k="dataentry.delete"/>
+                        : <Message k="dataentry.refresh"/>
                     }
                   </button>
                   : null
               }
-            
+              </div>
             </div>
           </div>
           {

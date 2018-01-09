@@ -11,7 +11,7 @@
   box-shadow: none;
 }
 #dataentry {
-  padding: $base-unit;
+  padding: $base-unit $base-unit 0 $base-unit;
   width: $base-unit * 45;
   
   input[type="text"] {
@@ -35,14 +35,22 @@
     }
   }
   .help-container {
-    height: $base-unit * 2.4;
-    float: left;
+    height: $base-unit * 3;
+    padding: 0 $base-unit / 2;
     .help {
       background-position: center center;
-      background-size: 13px;
+      background-size: $base-unit + 5;
+      border-left: 1px solid $gray;
+      float: right;
+      height: $base-unit * 3 !important;
+      margin-left: $base-unit;
+      margin-right: -($base-unit - 2);
+      padding-left: $base-unit * 4;
+      width: $base-unit * 3;
+    }
+    .popup-btn-wrapper{
       float: left;
-      height: $base-unit + 5;
-      width: $base-unit + 5;
+      margin-left: -($px-unit * 2);
     }
   }
   .separator {
@@ -59,6 +67,10 @@
   .row {
     border: 0px solid red;
     padding-bottom: $base-unit - 3;
+    &.button-row{
+      margin-top: $base-unit;
+      padding-bottom: 0;
+    }
   }
   .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
     padding: 0px $base-unit - 3;
