@@ -16,14 +16,6 @@ class DocumentRef extends Reflux.Component {
     this.stores = [DocumentRefStore];
   }
   
-  componentWillUpdate(nextProps, nextState) {
-    // console.log(nextState);
-  }
-  
-  componentDidMount() {
-    // Actions.invoke(Constants.ACTION_FETCH_DOCUMENT_REF, 1989);
-  }
-  
   closeModal() {
     Actions.invoke(Constants.ACTION_TOGGLE_DOCUMENT_REF_POPUP);
   }
@@ -32,11 +24,28 @@ class DocumentRef extends Reflux.Component {
     return (
       <Modal className="document-ref-dialog" show={this.state.showPopup} onHide={this.closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title className="green">Location  Name / References</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <h1> TEST </h1>
-        </Modal.Body>
+        {this.state.currentReferences !== undefined
+          ? <table className="table">
+            <tbody>
+            <tr>
+              <th>File Name</th>
+              <th>Document Details</th>
+              <th>Locations</th>
+            </tr>
+            {
+              this.state.currentReferences.map(reference =>
+                <tr key={reference.id} className="success">
+                  <td>{reference.fileName}</td>
+                  <td>{reference.text}</td>
+                  <td>{reference.entities}</td>
+                </tr>)
+            }
+            </tbody>
+          </table>
+          : null
+        }
         <Modal.Footer>
           <Button onClick={this.closeModal}>Close</Button>
         </Modal.Footer>
