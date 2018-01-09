@@ -50,7 +50,7 @@ class FileUpload extends Reflux.Component {
             <ul>
               {
                 this.state.files.map(file =>
-                  <li key={file.name}>Loading {file.name} - {file.size} bytes
+                  <li key={file.name}> {file.name} - {file.size} bytes
 
 
                   {file.status === 'LOADING' ? <div className="label label-info"></div> : null}
