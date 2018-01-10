@@ -58,11 +58,14 @@
 
   .tab-container {
     border: 1px solid $gray;
-    height: 400px;
+    height: $base-unit * 40;
     padding: $base-unit $base-unit + 5;
     overflow-y: auto;
     &.no-padding {
       padding: 0;
+    }
+    .panel-body{
+      padding: 0 $base-unit + 5 $base-unit + 5 $base-unit + 5;
     }
   }
 

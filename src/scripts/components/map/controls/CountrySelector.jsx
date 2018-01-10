@@ -53,7 +53,7 @@ class LayerList extends React.Component {
           <h4>
             <Message k="layerselector.countryboundaries"/>
             <div className="close-btn" onClick={this.props.onClose}>
-              <i className='close-icon'></i>
+              <i className='close-icon country-panel'></i>
             </div>
           </h4>
         </div>

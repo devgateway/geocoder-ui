@@ -390,7 +390,7 @@ h4 {
     font-size: $large;
     font-weight: $normal-weight-text - 50;
     margin-right: $base-unit;
-    margin-top: $base-unit / 2;
+    margin-top: $base-unit;
     outline:none;
     padding: $base-unit - 6 $base-unit + 5;
     width: $base-unit * 10;
@@ -401,31 +401,32 @@ h4 {
       background: $no-locations;
       border: 1px solid $no-locations;
       &:hover {
-        background: $darkGray;
+        background: darken($no-locations, 10%);
+        border: 1px solid darken($no-locations, 10%);
       }
     }
     &.remove {
       background: $red;
       border: 1px solid $red;
       &:hover {
-        background: $darkGray;
-        border: 1px solid $darkGray;
+        background: darken($red,10%);
+        border: 1px solid darken($red,10%);
       }
     }
     &.preview {
       background: $blue;
       border:1px solid $blue;
       &:hover {
-        background: $darkGray;
-        border: 1px solid $darkGray;
+        background: darken($blue, 10%);
+        border: 1px solid darken($blue, 10%);
       }
     }
     &.verify {
       background: $green;
       border: 1px solid $green;
       &:hover {
-        background: $darkGray;
-        border: 1px solid $darkGray;
+        background: darken($green,10%);
+        border: 1px solid darken($green,10%);
       }
     }
   }
