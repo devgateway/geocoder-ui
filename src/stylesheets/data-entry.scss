@@ -14,6 +14,14 @@
 #dataentry {
   width: $base-unit * 47;
   
+  .editable{
+    label{
+      color: $green-light;
+      font-size: $large;
+      font-weight: $bold-text - 100;
+    }
+  }
+  
   hr{
     background: $gray;
     border: none;
@@ -222,6 +230,7 @@
   margin-bottom: $base-unit / 2;
   overflow: hidden;
 }
+
 
 .header-buttons{
   border-right: 1px solid $gray;

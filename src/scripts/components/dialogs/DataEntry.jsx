@@ -245,7 +245,7 @@ class DataEntryContent extends React.Component {
         
         <hr/>
 
-        <div className="popup-section">
+        <div className="popup-section editable">
         <div>
           <div className="col-md-6 no-padding">
             <div className="form-group">
