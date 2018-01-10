@@ -8,8 +8,8 @@ import * as Actions from '../../actions/Actions.es6'
 import Constants from '../../constants/Contants.es6';
 import DataEntryHelp from '../../help/DataEntry.es6';
 import Message from '../Message.jsx'
-import MultiLangualInput from './MultiLangualInput.jsx'
-import MultiLangualTextArea from './MultiLangualTextArea.jsx'
+import MultiLangualInput from './MultiLingualInput.jsx'
+import MultiLangualTextArea from './MultiLingualTextArea.jsx'
 import LangSelector from '../LangSelector.jsx'
 
 /* Popup Data Entry */

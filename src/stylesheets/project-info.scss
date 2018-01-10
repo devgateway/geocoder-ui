@@ -87,6 +87,43 @@
     padding: $base-unit / 2;
     margin-top: 2px;
   }
+
+  // read more styles
+  .read-more-state {
+    display: none;
+  }
+
+  .read-more-target {
+    opacity: 0;
+    max-height: 0;
+    font-size: 0;
+    transition: .25s ease;
+  }
+
+  .read-more-state:checked ~ .read-more-wrap .read-more-target {
+    opacity: 1;
+    font-size: inherit;
+    max-height: 999em;
+  }
+
+  .read-more-state ~ .read-more-trigger:before {
+    content: 'Show more';
+  }
+
+  .read-more-state:checked ~ .read-more-trigger:before {
+    content: 'Show less';
+  }
+
+  .read-more-trigger {
+    cursor: pointer;
+    text-decoration: underline;
+    color: $green;
+    font-size: $medium;
+    line-height: 2;
+    &:hover {
+      color: $black;
+    }
+  }
 }
 
 .fa-spinner {
@@ -104,14 +141,6 @@
   font-size: $big - 1.5;
   color: $darkGray;
   margin: 0 0 $base-unit;
-  a {
-    color: $green;
-    font-size: $small + 2;
-    text-decoration: underline;
-    &:hover {
-      color: $black;
-    }
-  }
 }
 
 .panel-content {

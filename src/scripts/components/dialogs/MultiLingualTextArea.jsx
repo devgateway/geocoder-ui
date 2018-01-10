@@ -1,7 +1,7 @@
 import React from 'react';
 import MultiLingualText from '../MultiLingualText.jsx';
 
-class MultiLangualTextArea extends MultiLingualText {
+class MultiLingualTextArea extends MultiLingualText {
   
   
   onChange(e) {
@@ -14,4 +14,4 @@ class MultiLangualTextArea extends MultiLingualText {
   }
 }
 
-export default MultiLangualTextArea;
+export default MultiLingualTextArea;
