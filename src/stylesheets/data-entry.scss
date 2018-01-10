@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .modal-dialog {
-  width: 480px;
+  width: $base-unit * 50;
 }
 .modal-content{
   @include border-radius(3px);
@@ -12,7 +12,7 @@
 }
 
 #dataentry {
-  width: $base-unit * 45;
+  width: $base-unit * 47;
   
   hr{
     background: $gray;
@@ -134,6 +134,7 @@
   .colored {
     @include border-radius(3px);
     color: $no-locations;
+    font-weight: $bold-text - 100;
   }
   #savebutton{
     @include border-radius(3px);
@@ -145,6 +146,7 @@
   .colored {
     @include border-radius(3px);
     color: $pending-locations;
+    font-weight: $bold-text - 100;
   }
   #savebutton{
     @include border-radius(3px);
@@ -197,8 +199,8 @@
     background-size: $base-unit - 3 $base-unit - 3;
     color: $white;
     font-size: $large - 2;
-    margin-left: $base-unit / 2;
-    padding: $base-unit - 6 $base-unit + 5 $base-unit - 6 $base-unit;
+    margin-left: $base-unit;
+    padding: $base-unit - 6 $base-unit $base-unit - 6 $base-unit;
     text-transform: uppercase;
     &:hover{
       background-color: darken($green-light, 10%);
@@ -210,8 +212,8 @@
 .popup-close{
   border-left: 1px solid $gray;
   float: right;
-  margin-left: $base-unit * 2;
-  margin-right: -($base-unit + 2);
+  margin-left: $base-unit;
+  margin-right: -($base-unit + 5);
   padding: 0 $base-unit / 2;
 }
 
@@ -225,5 +227,5 @@
   border-right: 1px solid $gray;
   display: inline-block;
   float: right;
-  margin-right: $base-unit;
+  margin-right: 0;
 }

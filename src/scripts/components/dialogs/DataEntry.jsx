@@ -164,7 +164,7 @@ class DataEntryContent extends React.Component {
               
               {
                 countryFeature
-                  ? (<button className="btn btn-xs btn-success pull-right" onClick={e => {
+                  ? (<button className="btn btn-popup-header" onClick={e => {
                     this.updateAdminFromShapes()
                   }}>
                     <Message k="dataentry.sourceadmin.shapes"/>
@@ -190,7 +190,7 @@ class DataEntryContent extends React.Component {
           administratives.sort((a, b) => a.level - b.level).map(admin => {
           return (<div key={admin.level} className="col-md-4">
             <div className="form-group">
-              <label className="colored" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/>
+              <label className="noneditable" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/>
               </label>
               <input type="text" className="form-control noneditable" id={`admin${admin.level}`} placeholder="NA" value={admin.name} disabled="disabled"/>
               <Message k="dataentry.source"/>: {admin.vocabulary.name}
@@ -228,14 +228,14 @@ class DataEntryContent extends React.Component {
         <div className="popup-section">
         
         <div className="col-md-4 no-padding">
-          <label className="colored"><Message k="dataentry.code"/></label>
+          <label className="noneditable"><Message k="dataentry.code"/></label>
           <input type="text" className="noneditable" id="featureDesignation" value={featuresDesignation
           ? featuresDesignation.code
           : ''} disabled="disabled"/>
         </div>
         
         <div className="col-md-8">
-          <label className="colored"><Message k="dataentry.featuredesignation"/></label>
+          <label className="noneditable"><Message k="dataentry.featuredesignation"/></label>
           <input type="text" className="input-wide noneditable" id="featureDesignationName" value={featuresDesignation
           ? featuresDesignation.name
           : 'None'} disabled="disabled"/>
@@ -249,7 +249,7 @@ class DataEntryContent extends React.Component {
         <div>
           <div className="col-md-6 no-padding">
             <div className="form-group">
-              <label className="editable" htmlFor="locationClass"><Message k="dataentry.locationclass"/></label>
+              <label className="colored" htmlFor="locationClass"><Message k="dataentry.locationclass"/></label>
               <select value={locationClass
                 ? locationClass.code
                 : ''} className="form-control" name="locationClass" id="locationClass" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>

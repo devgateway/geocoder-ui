@@ -6,10 +6,11 @@
   &.btn-popup-header{
     @extend .btn-success;
     font-size: $large - 2;
-    margin-right: $base-unit + 5;
+    margin-right: $base-unit;
     margin-top: 0;
     padding: $base-unit - 6 $base-unit - 3;
     text-transform: uppercase;
+    width: 70px;
   }
 }
 
