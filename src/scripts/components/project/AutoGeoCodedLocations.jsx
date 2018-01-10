@@ -77,12 +77,11 @@ class Item extends Reflux.Component {
         
         <div className="list-group-item-text pull-left">
           <div className="geocoded-btns">
-            <button className="verify" onClick={this.showDataEntryForm.bind(this)}>Verify</button>
-            <button className="preview" onClick={this.showDocumentRef.bind(this)}>Preview Ref</button>
             <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
+            <button className="preview" onClick={this.showDocumentRef.bind(this)}>Preview Ref</button>
+            <button className="verify" onClick={this.showDataEntryForm.bind(this)}>Verify</button>
           </div>
         </div>
-        <br/>
       </div>
     )
   }

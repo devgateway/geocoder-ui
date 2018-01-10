@@ -383,6 +383,12 @@ h4 {
 }
 
 .geocoded-btns {
+  border-bottom: 1px solid $gray;
+  clear: both;
+  display: block;
+  overflow: hidden;
+  padding-bottom: $base-unit;
+  width: $extend;
   button {
     @include border-radius(3px);
     color: $white;

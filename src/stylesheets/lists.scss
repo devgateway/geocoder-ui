@@ -7,8 +7,8 @@
 }
 
 .list-group-item {
-  border: 0px;
-  margin: 0 0 $base-unit / 2 0;
+  border: none;
+  margin: 0;
   overflow: hidden;
   padding-top: 0;
   h3{
@@ -22,7 +22,7 @@
 .list-group-item-text {
   border: 0;
   line-height: 110%;
-  margin-bottom: $base-unit - 7;
+  width: $extend;
   label{
     display: inline-block;
     margin-right: 5px;

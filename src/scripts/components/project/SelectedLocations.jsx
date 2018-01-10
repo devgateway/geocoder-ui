@@ -91,10 +91,10 @@ class Item extends Reflux.Component {
         
         <div className="list-group-item-text">
           <div className="geocoded-btns">
+            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
             <button className="edit" onClick={this.showDataEntryForm.bind(this)}>
               <Message k="projectinfo.locationslist.edit"/>
             </button>
-            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
           </div>
         </div>
         <br/>
