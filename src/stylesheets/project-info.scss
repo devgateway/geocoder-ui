@@ -26,15 +26,14 @@
 
   .panel-success {
     height: $base-unit * 60;
-    overflow-y: scroll;
+    overflow: hidden;
 
     .panel-heading {
       background-color: $header-bg;
       border: none;
-      width: $extend;
-      height: $base-unit * 16;
       overflow: hidden;
       position: relative;
+      width: $extend;
     }
   }
 
@@ -58,7 +57,10 @@
   }
 
   .tab-container {
+    border: 1px solid $gray;
+    height: 400px;
     padding: $base-unit $base-unit + 5;
+    overflow-y: auto;
     &.no-padding {
       padding: 0;
     }
@@ -91,32 +93,31 @@
   margin-left: $base-unit;
 }
 
+.project-info-label {
+  color: $black;
+  font-size: $small + 2;
+  font-weight: $normal-weight-text + 50;
+  margin-bottom: $base-unit / 2;
+}
+
+.project-info {
+  font-size: $big - 1.5;
+  color: $darkGray;
+  margin: 0 0 $base-unit;
+  a {
+    color: $green;
+    font-size: $small + 2;
+    text-decoration: underline;
+    &:hover {
+      color: $black;
+    }
+  }
+}
+
 .panel-content {
   margin-top: -($base-unit / 2);
   overflow: hidden;
   padding-right: $base-unit;
-
-  .project-info-label {
-    color: $black;
-    font-size: $small + 2;
-    font-weight: $normal-weight-text + 50;
-    margin-bottom: $base-unit / 2;
-  }
-
-  .project-info {
-    font-size: $big - 1.5;
-    color: $darkGray;
-    margin: 0 0 $base-unit;
-
-    a {
-      color: $green;
-      font-size: $small + 2;
-      text-decoration: underline;
-      &:hover {
-        color: $black;
-      }
-    }
-  }
 }
 
 .country-name {

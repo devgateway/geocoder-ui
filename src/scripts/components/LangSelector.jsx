@@ -18,10 +18,10 @@ export default class LangSelector extends Reflux.Component {
   }
 
   render() {
-    return (<select value={this.state.lang} name="lang" className="pull-right" onChange={this.changeLan}>
-      <option value="en">{Message.t('lang.en')}</option>
-      <option value="es">{Message.t('lang.es')}</option>
-      <option value="fr">{Message.t('lang.fr')}</option>
-    </select>)
-  }
+      return (<select value={this.state.lang} name="lang" className="btn-popup-header pull-right" onChange={this.changeLan}>
+        <option value="en">{Message.t('lang.en')}</option>
+        <option value="es">{Message.t('lang.es')}</option>
+        <option value="fr">{Message.t('lang.fr')}</option>
+      </select>)
+    }
 }

@@ -58,7 +58,7 @@ class GazetteerSearch extends Reflux.Component {
             </div>
           </div>
           
-          <button onClick={this.doSearch.bind(this)}>Go</button>
+          <button className="btn-succes" onClick={this.doSearch.bind(this)}>Go</button>
           {this.state.loadingLocations ? <i className="fa fa-spinner fa-spin"></i> : null}
         </div>
       </div>

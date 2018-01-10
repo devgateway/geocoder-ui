@@ -10,6 +10,7 @@
     "coordinates": "Coordinates",
     "country": "Country",
     "delete": "Delete",
+    "refresh": "Refresh",
     "deletemessage": "This location will be marked as deleted, are you sure you want to continue?",
     "description": "Description",
     "featuredesignation": "Feature Designation",

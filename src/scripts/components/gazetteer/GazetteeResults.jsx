@@ -109,9 +109,9 @@ class Item extends Reflux.Component {
   render() {
     return (
       <div className="list-group-item">
-        <Button className="map-it-btn"
+        <span className="map-it-btn"
                 onClick={this.setActiveLocation.bind(this, this.props)}><Message
-          k="projectinfo.locationslist.mapit"/></Button>
+          k="projectinfo.locationslist.mapit"/></span>
         <p className="list-group-item-text">
           <label className='green text-large inline'>{this.props.name}:</label> {this.props.countryName}
         </p>
