@@ -10,13 +10,13 @@ class MultiLingualTextShowMore extends MultiLingualText {
     if (text.length > limit) {
       for (let i = limit; i > 0; i--) {
         if (text.charAt(i) === ' '
-          && (text.charAt(i - 1) != ',' || text.charAt(i - 1) != '.' || text.charAt(i - 1) != ';')) {
+          && (text.charAt(i - 1) !== ',' || text.charAt(i - 1) !== '.' || text.charAt(i - 1) !== ';')) {
           return i;
         }
       }
     }
     else {
-      return text;
+      return text.length;
     }
   }
   
@@ -24,16 +24,22 @@ class MultiLingualTextShowMore extends MultiLingualText {
     const value = this.getTranslation(this.props.texts, false);
     const index = this.truncateText(value, 200);
     const lessText = value.substring(0, index);
-    const moreText = value.substring(index, value.length - 1);
+    const moreText = value.substring(index, value.length);
     
     return (<div>
       <input type="checkbox" className="read-more-state" id="project-description" />
       
       <p className="read-more-wrap">{lessText}
-        <span className="read-more-target">{moreText}</span>
+        { moreText !== ''
+          ? <span className="read-more-target">{moreText}</span>
+          : null
+        }
       </p>
       
-      <label htmlFor="project-description" className="read-more-trigger"></label>
+      { moreText !== ''
+        ? <label htmlFor="project-description" className="read-more-trigger"></label>
+        : null
+      }
     </div>)
   }
 }
