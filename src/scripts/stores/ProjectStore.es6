@@ -28,7 +28,9 @@ class ProjectStore extends Reflux.Store {
   }
   
   cleanStore() {
-    this.setState(this.initialData);
+    this.setState({
+      project: {}
+    });
   }
   
   loading() {
