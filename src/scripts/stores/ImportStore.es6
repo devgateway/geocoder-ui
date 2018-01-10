@@ -8,8 +8,9 @@ import _ from "lodash"
  * Stored used in {@link FileUpload} component.
  */
 const initialState = {
-  autoGeocode: false,
-  files: []
+  autoGeocodeAll:           false,
+  autoGeocodeAllWithoutLoc: false,
+  files:                    []
 };
 
 class ImportSore extends Reflux.Store {
@@ -26,8 +27,20 @@ class ImportSore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).failed, this.uploadFailed);
   }
   
-  toggleAutoGeocode() {
-    this.setState({autoGeocode: !this.state.autoGeocode});
+  toggleAutoGeocode(autoType) {
+    if (autoType === 'autoGeocodeAll') {
+      this.setState({
+        autoGeocodeAll:            !this.state.autoGeocodeAll,
+        autoGeocodeAllWithoutLoc:  false
+      });
+    } else {
+      if (autoType === 'autoGeocodeAllWithoutLoc') {
+        this.setState({
+          autoGeocodeAll:            false,
+          autoGeocodeAllWithoutLoc:  !this.state.autoGeocodeAllWithoutLoc
+        });
+      }
+    }
   }
   
   setFile(files) {
@@ -57,7 +70,7 @@ class ImportSore extends Reflux.Store {
   upload(data) {
     const newFiles = [...this.state.files];
     newFiles.map(f => {
-      f.status = 'LOADING'
+      f.status = 'LOADING';
       return f
     });
     this.setState({

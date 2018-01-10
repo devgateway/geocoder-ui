@@ -121,13 +121,14 @@ export default class ApiClient {
   /**
    * Uploads a file to the server.
    */
-  static upload(file, autoGeocode) {
+  static upload(file, autoGeocodeAll, autoGeocodeAllWithoutLoc) {
     const API_BASE_URL = settings.get('API', 'API_BASE_URL');
     const IMPORT_END_POINT = settings.get('API', 'IMPORT_END_POINT');
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("autoGeocode", autoGeocode);
+    formData.append("autoGeocodeAll", autoGeocodeAll);
+    formData.append("autoGeocodeAllWithoutLoc", autoGeocodeAllWithoutLoc);
 
     return Axios.post(`${API_BASE_URL}/${IMPORT_END_POINT}`, formData, {
       headers: {"X-Requested-With": "XMLHttpRequest"},
