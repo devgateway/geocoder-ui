@@ -3,17 +3,15 @@ import { GeoJsonBuilder } from '../util/GeojsonBuilder.es6';
 import Reflux from "reflux";
 import _ from 'lodash'
 
-const initialState = { data: null, autoZoom: false };
-
+const initialState = { data: undefined, autoZoom: false };
 class ProjectGeoJsonStore extends Reflux.Store {
-
-
   constructor() {
     super();
+    
     this.state = initialState;
     this.listenTo(Reflux.initStore(ProjectStore), this.process);
   }
-
+  
   process(projectStore) {
     let newData;
     if (projectStore) {
@@ -26,16 +24,15 @@ class ProjectGeoJsonStore extends Reflux.Store {
             return [this.point.coordinates[0], this.point.coordinates[1]]
           }
         }).build(_.cloneDeep(project.locations));
-
+        
         newData = { data: featureCollection, autoZoom: false, date: new Date() };
-
-    } else {
-        newData = _.cloneDeep(initialData)
+      } else {
+        newData = { data: undefined, autoZoom: false };
+      }
+      this.setState(newData);
     }
-    this.setState(newData);
   }
-}
-
+  
 }
 
 export default ProjectGeoJsonStore;

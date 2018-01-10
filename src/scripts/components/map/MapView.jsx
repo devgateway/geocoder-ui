@@ -42,10 +42,10 @@ export default class MapView extends React.Component {
   }
   
   componentWillUnmount() {
-    try{
+    try {
       Actions.invoke(Constants.ACTION_CLEAN_MAP_STORE);
       this.unsubscribe();
-    }catch(e){
+    } catch (e) {
       console.log(e)
     }
     
@@ -60,7 +60,7 @@ export default class MapView extends React.Component {
    *
    * @param latlng
    */
-  getCountryLayerFeatures(latlng){
+  getCountryLayerFeatures(latlng) {
     const countryInfo = this.queryFeatures(latlng);
     const countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
     
@@ -88,7 +88,7 @@ export default class MapView extends React.Component {
     return countryInfos[0];
   }
   
-  onLocationClick(e){
+  onLocationClick(e) {
     const locationFeature = e.target.feature;
     const {latlng} = e;
     const countryFeature = this.getCountryLayerFeatures(latlng);
@@ -111,16 +111,18 @@ export default class MapView extends React.Component {
           <DataEntryPopup/>
           <DocumentRef/>
           <Map   {...this.state.map} ref="map">
-            <MiniMap  collapsed={true} position='topright' topPadding= {1500} bottomPadding= {40}>
+            <MiniMap collapsed={true} position='topright' topPadding={1500} bottomPadding={40}>
               <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>
                 {this.state.layers.countries ? this.state.layers.countries.map((country) => {
                   return <CountryLayer {...country}/>
                 }) : null}
               </LayerGroup>
               
-              <GeocodingLayer name="Geocoding" onFeatureClick={e=>this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
+              <GeocodingLayer name="Geocoding"
+                              onFeatureClick={e => this.onGeocodingClick(e)}  {...this.state.layers.geocoding}/>
               
-              <GazetterLayer name="Available Locations" onFeatureClick={e=>this.onLocationClick(e)}  {...this.state.layers.locations}/>
+              <GazetterLayer name="Available Locations"
+                             onFeatureClick={e => this.onLocationClick(e)}  {...this.state.layers.locations}/>
             </MiniMap>
             
             
@@ -135,7 +137,8 @@ export default class MapView extends React.Component {
             </Control>
             
             <Control bottomPadding={80} topPadding={0} className="leaflet-control-info-panel" position="topleft">
-              <CodingControls id={this.props.match.params.projectID} getCountryLayerFeatures={this.getCountryLayerFeatures.bind(this)}/>
+              <CodingControls id={this.props.match.params.projectID}
+                              getCountryLayerFeatures={this.getCountryLayerFeatures.bind(this)}/>
             </Control>
           
           </Map>

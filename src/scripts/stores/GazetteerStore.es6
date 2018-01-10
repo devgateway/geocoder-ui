@@ -30,6 +30,22 @@ class GazetteerStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).completed, this.completed);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATIONS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FILTER_BY_TYPE), this.filter);
+    this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
+  }
+  
+  cleanStore() {
+    this.setState({
+      fuzzy:    false,
+      country:  false,
+      text:     '',
+      locations: {
+        total: 0,
+        records: [],
+        types: []
+      },
+      loadingLocations: false,
+      countryISO: undefined
+    })
   }
   
   updateText(text) {
