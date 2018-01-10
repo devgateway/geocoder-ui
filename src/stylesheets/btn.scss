@@ -3,6 +3,14 @@
 .btn {
   color: $white;
   margin: $px-unit * 2;
+  &.btn-popup-header{
+    @extend .btn-success;
+    font-size: $large - 2;
+    margin-right: $base-unit + 5;
+    margin-top: 0;
+    padding: $base-unit - 6 $base-unit - 3;
+    text-transform: uppercase;
+  }
 }
 
 .btn-xs {
@@ -192,3 +200,4 @@
     background-color: $green;
   }
 }
+

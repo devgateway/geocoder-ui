@@ -10,33 +10,68 @@
 .form-control{
   box-shadow: none;
 }
+
 #dataentry {
-  padding: $base-unit $base-unit 0 $base-unit;
   width: $base-unit * 45;
+  
+  hr{
+    background: $gray;
+    border: none;
+    clear: both;
+    display: block;
+    height: 1px;
+    margin: $base-unit 0;
+    overflow: hidden;
+    width: $extend;
+  }
+  
+  .form-description{
+    font-size: $large;
+    font-weight: $normal-weight-text;
+  }
   
   input[type="text"] {
     border: 1px solid transparent;
-    color: $black;
-    font-size: $large + 2;
-    font-weight: $bold-text - 300;
     height: $base-unit * 2;
     line-height: 1.5;
     padding: 0;
+    &.noneditable{
+      clear: both;
+      color: $black;
+      display: block;
+      font-size: $large;
+      font-weight: $normal-weight-text + 100;
+      height: auto;
+      margin-top: -5px;
+    }
+    &.input-wide{
+      width: $extend;
+    }
   }
+  
+  .location-name{
+    input[type="text"]{
+      color: $green;
+      font-size: $large + 2;
+      font-weight: $bold-text - 200;
+    }
+  }
+  
   label{
     color: $darkGray;
     font-size: $large - 2;
     margin-bottom: 0;
     margin-left: -3px;
     padding:0;
-    &.form-description{
-      font-weight: $light-text;
-      margin-left: -13px;
+    &.editable{
+      color: $green-light;
+      font-size: $large;
+      font-weight: $bold-text - 200; 
     }
   }
   .help-container {
     height: $base-unit * 3;
-    padding: 0 $base-unit / 2;
+    margin-top: $base-unit;
     .help {
       background-position: center center;
       background-size: $base-unit + 5;
@@ -65,7 +100,6 @@
     padding: 3px;
   }
   .row {
-    border: 0px solid red;
     padding-bottom: $base-unit - 3;
     &.button-row{
       margin-top: $base-unit;
@@ -147,4 +181,49 @@
 
 #cancelbutton{
   @include border-radius(3px);
+}
+
+.popup-header{
+  overflow: visible;
+  select{
+    @include border-radius(3px);
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
+    background: $green-light;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNjgzIDgwOGwtNzQyIDc0MXEtMTkgMTktNDUgMTl0LTQ1LTE5bC03NDItNzQxcS0xOS0xOS0xOS00NS41dDE5LTQ1LjVsMTY2LTE2NXExOS0xOSA0NS0xOXQ0NSAxOWw1MzEgNTMxIDUzMS01MzFxMTktMTkgNDUtMTl0NDUgMTlsMTY2IDE2NXExOSAxOSAxOSA0NS41dC0xOSA0NS41eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==);
+    background-position: $base-unit * 5.3 $base-unit - 2;
+    background-repeat: no-repeat;
+    background-size: $base-unit - 3 $base-unit - 3;
+    color: $white;
+    font-size: $large - 2;
+    margin-left: $base-unit / 2;
+    padding: $base-unit - 6 $base-unit + 5 $base-unit - 6 $base-unit;
+    text-transform: uppercase;
+    &:hover{
+      background-color: darken($green-light, 10%);
+      border-color: darken($green-light, 10%);
+    }
+  }
+}
+
+.popup-close{
+  border-left: 1px solid $gray;
+  float: right;
+  margin-left: $base-unit * 2;
+  margin-right: -($base-unit + 2);
+  padding: 0 $base-unit / 2;
+}
+
+.popup-section{
+  border: 1px dotted transparent;
+  margin-bottom: $base-unit / 2;
+  overflow: hidden;
+}
+
+.header-buttons{
+  border-right: 1px solid $gray;
+  display: inline-block;
+  float: right;
+  margin-right: $base-unit;
 }
