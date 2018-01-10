@@ -60,6 +60,6 @@ export default class MultiLingualText extends Reflux.Component {
   }
   
   render() {
-    return <div>{this.getTranslation(this.props.texts, false)}</div>
+    return <span>{this.getTranslation(this.props.texts, false)}</span>
   }
 }

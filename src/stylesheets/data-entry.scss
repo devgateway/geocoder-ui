@@ -39,11 +39,13 @@
   }
   
   input[type="text"] {
+    background: $white;
     border: 1px solid transparent;
     height: $base-unit * 2;
     line-height: 1.5;
     padding: 0;
     &.noneditable{
+      background: $white;
       clear: both;
       color: $black;
       display: block;

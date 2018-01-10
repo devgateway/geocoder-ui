@@ -110,10 +110,15 @@
 }
 
 .filter-button-wrapper{
-  .dropdown-menu{
-    @inlude border-radius(0);
-    border: $px-unit solid $gray;
-    width: $base-unit * 20;
+  ul{
+    &.dropdown-menu{
+      @include scrollbar();
+      @include border-radius(0);
+      border: $px-unit solid $gray;
+      height: $base-unit * 35;
+      overflow-y: scroll;
+      width: $base-unit * 20;
+    }
   }
 }
 

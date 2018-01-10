@@ -53,34 +53,29 @@ class Item extends Reflux.Component {
   render() {
     return (
       <div className="list-group-item">
-        <h3 className="list-group-item-heading"><b><MultiLingualText texts={this.props.names}/> </b></h3>
+        <h3><MultiLingualText texts={this.props.names}/></h3>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.featuredesignation"/></label>
+          <label><Message k="dataentry.featuredesignation"/>:</label>
           <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
         </div>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.activitydescription"/></label>
+          <label><Message k="dataentry.activitydescription"/>:</label>
           <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
         </div>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.type"/></label>
+          <label><Message k="dataentry.type"/>:</label>
           <span>{this.props.locationClass.name}</span>
         </div>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.geographicexactness"/></label>
-          <span>{this.props.exactness.name}</span>
-        </div>
-        
-        <div className="list-group-item-text">
-          <label className="inline"><Message k="dataentry.status"/></label>
+          <label className="inline"><Message k="dataentry.status"/>:</label>
           <Label bsStyle="default" className="pending-locations-background">{this.props.locationStatus}</Label>
         </div>
         
-        <div className="list-group-item-text pull-right">
+        <div className="list-group-item-text pull-left">
           <div className="geocoded-btns">
             <button className="verify" onClick={this.showDataEntryForm.bind(this)}>Verify</button>
             <button className="preview" onClick={this.showDocumentRef.bind(this)}>Preview Ref</button>

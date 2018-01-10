@@ -244,6 +244,7 @@ h4 {
 
   button {
     background: $green-light;
+    border: 1px solid $green-light;
     color: $white;
     margin-top: $base-unit / 2;
     padding: $base-unit - 1;
@@ -258,6 +259,7 @@ h4 {
 .project-search, .upload-options {
   .search-option-label {
     float: left;
+    font-size: $large;
     margin-top: $base-unit / 2;
   }
   .select-section {
@@ -365,7 +367,6 @@ h4 {
     font-size: $big;
     font-weight: $light-text;
   }
-
   ul.project-list {
     @include list-unstyled();
     padding-right: $base-unit * 2.5;
@@ -387,10 +388,11 @@ h4 {
     color: $white;
     float: left;
     font-size: $large;
-    font-weight: 400;
+    font-weight: $normal-weight-text - 50;
     margin-right: $base-unit;
+    margin-top: $base-unit / 2;
     outline:none;
-    padding: $base-unit/2 $base-unit + 5;
+    padding: $base-unit - 6 $base-unit + 5;
     width: $base-unit * 10;
     &:hover {
       background: $darkGray;
@@ -507,15 +509,18 @@ h4 {
 .dropdown-menu {
   padding-left: $base-unit;
   li {
-    display: block;
-    margin-bottom: $base-unit / 3;
-
+    display: table;
+    width: $extend;
     .select-box {
-      float: left;
-      height: $base-unit * 2;
-      margin-right: $base-unit / 2;
-      width: $base-unit * 2;
       border: 1px solid $gray;
+      display: table-cell;
+      float: left;
+      height: $base-unit * 1.5;
+      margin-right: $base-unit / 2;
+      width: $base-unit * 1.5;
+      .search-option-label{
+        display: table-cell;
+      }
       &:hover {
         background: $green;
       }
