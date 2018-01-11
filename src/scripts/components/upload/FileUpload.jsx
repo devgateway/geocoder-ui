@@ -18,8 +18,8 @@ class FileUpload extends Reflux.Component {
     this.store = ImportStore;
   }
   
-  toggleAutoGeocode() {
-    Actions.invoke(Constants.ACTION_TOGGLE_AUTOGEOCODE);
+  toggleAutoGeocode(autoType) {
+    Actions.invoke(Constants.ACTION_TOGGLE_AUTOGEOCODE, autoType);
   }
   
   onDrop(acceptedFiles) {
@@ -52,16 +52,21 @@ class FileUpload extends Reflux.Component {
                   <li key={file.name}> {file.name} - {file.size} bytes
                     
                     
-                    {file.status === 'LOADING' ? <div className="label label-info"></div> : null}
-                    {file.status === 'LOADING' ? <div className="spinner">  <div className="rect1"></div>
-                      <div className="rect2"></div>
-                      <div className="rect3"></div>
-                      <div className="rect4"></div>
-                      <div className="rect5"></div>
-                    </div>: null}
+                    {file.status === 'LOADING'
+                      ? <div className="label label-info"></div>
+                      : null
+                    }
+                    {file.status === 'LOADING'
+                      ? <div className="spinner">  <div className="rect1"></div>
+                        <div className="rect2"></div>
+                        <div className="rect3"></div>
+                        <div className="rect4"></div>
+                        <div className="rect5"></div>
+                      </div>: null
+                    }
                     
                     
-                    {file.status != 'LOADING'?<button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs btn-default link pull-right">Remove</button> : null}
+                    {file.status !== 'LOADING'? <button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs btn-default link pull-right">Remove</button> : null}
                     {file.status === 'ERROR' ? <div className="label label-warning">Failed ({file.message})</div> : null}
                     {file.status === 'DONE' ? <div className="label label-success">Done</div> : null}
                   
@@ -83,9 +88,13 @@ class FileUpload extends Reflux.Component {
             Upload and Import
           </Button>
           
-          <div className="select-section" onClick={this.toggleAutoGeocode.bind(this)}>
-            <span className={"select-box " + (this.state.autoGeocode ? "selected" : "")}></span>
-            <span className="search-option-label">Auto Code Projects</span>
+          <div className="select-section" onClick={this.toggleAutoGeocode.bind(this, "autoGeocodeAll")}>
+            <span className={"select-box " + (this.state.autoGeocodeAll ? "selected" : "")}></span>
+            <span className="search-option-label">Auto Code ALL Projects</span>
+          </div>
+          <div className="select-section" onClick={this.toggleAutoGeocode.bind(this, "autoGeocodeAllWithoutLoc")}>
+            <span className={"select-box " + (this.state.autoGeocodeAllWithoutLoc ? "selected" : "")}></span>
+            <span className="search-option-label">Auto Code ONLY Projects without locations</span>
           </div>
         </div>
       </div>)

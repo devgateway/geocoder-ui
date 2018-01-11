@@ -40,7 +40,7 @@ class CodingControls extends Reflux.Component {
     const container = ReactDOM.findDOMNode(this);
     L.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
     L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
-  
+    
     Actions.invoke(Constants.ACTION_LOAD_SINGLE_PROJECT, {id: this.props.id})
   }
   
@@ -72,16 +72,22 @@ class CodingControls extends Reflux.Component {
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
                 
-                <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} count={this.state.locations.records.length}>
-                  <div className="panel-section padded-section">
-                    {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
-                    <GazetteeResults getCountryLayerFeatures={getCountryLayerFeatures}/>
-                  </div>
-                </CollapsibleControl>
+                { (this.state.locations.records.length > 0)
+                  ? <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} count={this.state.locations.records.length}>
+                    <div className="panel-section padded-section">
+                      {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
+                      <GazetteeResults getCountryLayerFeatures={getCountryLayerFeatures}/>
+                    </div>
+                  </CollapsibleControl>
+                  : null
+                }
                 
-                <CollapsibleControl title={"Auto-Geocoded"} iconClass={"geocoded-icon"} count={countAutogeoCoded}>
-                  <AutoGeoCodedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
-                </CollapsibleControl>
+                { (countAutogeoCoded > 0)
+                  ? <CollapsibleControl title={"Auto-Geocoded"} iconClass={"geocoded-icon"} count={countAutogeoCoded}>
+                    <AutoGeoCodedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
+                  </CollapsibleControl>
+                  : null
+                }
                 
                 <CollapsibleControl title={"Selected Locations"} iconClass={"selected-locations-icon"} count={countSelected}>
                   <SelectedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>

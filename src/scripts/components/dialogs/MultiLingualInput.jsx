@@ -1,7 +1,7 @@
 import React from 'react';
 import MultiLingualText from '../MultiLingualText.jsx';
 
-class MultiLangualInput extends MultiLingualText {
+class MultiLingualInput extends MultiLingualText {
   
   render() {
     const value = this.getTranslation(this.props.texts, true);
@@ -10,4 +10,4 @@ class MultiLangualInput extends MultiLingualText {
   }
 }
 
-export default MultiLangualInput;
+export default MultiLingualInput;

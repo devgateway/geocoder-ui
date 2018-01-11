@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .modal-dialog {
-  width: 480px;
+  width: $base-unit * 50;
 }
 .modal-content{
   @include border-radius(3px);
@@ -10,36 +10,90 @@
 .form-control{
   box-shadow: none;
 }
+
 #dataentry {
-  padding: $base-unit;
-  width: $base-unit * 45;
+  width: $base-unit * 47;
+  
+  .editable{
+    label{
+      color: $green-light;
+      font-size: $large;
+      font-weight: $bold-text - 100;
+    }
+  }
+  
+  hr{
+    background: $gray;
+    border: none;
+    clear: both;
+    display: block;
+    height: 1px;
+    margin: $base-unit 0;
+    overflow: hidden;
+    width: $extend;
+  }
+  
+  .form-description{
+    font-size: $large;
+    font-weight: $normal-weight-text;
+  }
   
   input[type="text"] {
-    @include fontDefault($regular, $gray);
-    border: 1px solid $gray;
+    border: 1px solid transparent;
     height: $base-unit * 2;
     line-height: 1.5;
-    padding: $base-unit / 2;
+    padding: 0;
+    &.noneditable{
+      clear: both;
+      color: $black;
+      display: block;
+      font-size: $large;
+      font-weight: $normal-weight-text + 100;
+      height: auto;
+      margin-top: -5px;
+    }
+    &.input-wide{
+      width: $extend;
+    }
   }
+  
+  .location-name{
+    input[type="text"]{
+      color: $green;
+      font-size: $large + 2;
+      font-weight: $bold-text - 200;
+    }
+  }
+  
   label{
-    font-size: $large - 1;
+    color: $darkGray;
+    font-size: $large - 2;
     margin-bottom: 0;
     margin-left: -3px;
     padding:0;
-    &.form-description{
-      font-weight: $light-text;
-      margin-left: -13px;
+    &.editable{
+      color: $green-light;
+      font-size: $large;
+      font-weight: $bold-text - 200; 
     }
   }
   .help-container {
-    height: $base-unit * 2.4;
-    float: left;
+    height: $base-unit * 3;
+    margin-top: $base-unit;
     .help {
       background-position: center center;
-      background-size: 13px;
+      background-size: $base-unit + 5;
+      border-left: 1px solid $gray;
+      float: right;
+      height: $base-unit * 3 !important;
+      margin-left: $base-unit;
+      margin-right: -($base-unit - 2);
+      padding-left: $base-unit * 4;
+      width: $base-unit * 3;
+    }
+    .popup-btn-wrapper{
       float: left;
-      height: $base-unit + 5;
-      width: $base-unit + 5;
+      margin-left: -($px-unit * 2);
     }
   }
   .separator {
@@ -54,8 +108,11 @@
     padding: 3px;
   }
   .row {
-    border: 0px solid red;
     padding-bottom: $base-unit - 3;
+    &.button-row{
+      margin-top: $base-unit;
+      padding-bottom: 0;
+    }
   }
   .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
     padding: 0px $base-unit - 3;
@@ -75,10 +132,6 @@
 }
 
 #dataentry.new , #dataentry.created {
-  .colored {
-    @include border-radius(3px);
-    color: $green;
-  }
   #savebutton{
     @include border-radius(3px);
     background-color: $green-light !important
@@ -89,6 +142,7 @@
   .colored {
     @include border-radius(3px);
     color: $no-locations;
+    font-weight: $bold-text - 100;
   }
   #savebutton{
     @include border-radius(3px);
@@ -100,6 +154,7 @@
   .colored {
     @include border-radius(3px);
     color: $pending-locations;
+    font-weight: $bold-text - 100;
   }
   #savebutton{
     @include border-radius(3px);
@@ -136,4 +191,50 @@
 
 #cancelbutton{
   @include border-radius(3px);
+}
+
+.popup-header{
+  overflow: visible;
+  select{
+    @include border-radius(3px);
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
+    background: $green-light;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNjgzIDgwOGwtNzQyIDc0MXEtMTkgMTktNDUgMTl0LTQ1LTE5bC03NDItNzQxcS0xOS0xOS0xOS00NS41dDE5LTQ1LjVsMTY2LTE2NXExOS0xOSA0NS0xOXQ0NSAxOWw1MzEgNTMxIDUzMS01MzFxMTktMTkgNDUtMTl0NDUgMTlsMTY2IDE2NXExOSAxOSAxOSA0NS41dC0xOSA0NS41eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==);
+    background-position: $base-unit * 5.3 $base-unit - 2;
+    background-repeat: no-repeat;
+    background-size: $base-unit - 3 $base-unit - 3;
+    color: $white;
+    font-size: $large - 2;
+    margin-left: $base-unit;
+    padding: $base-unit - 6 $base-unit $base-unit - 6 $base-unit;
+    text-transform: uppercase;
+    &:hover{
+      background-color: darken($green-light, 10%);
+      border-color: darken($green-light, 10%);
+    }
+  }
+}
+
+.popup-close{
+  border-left: 1px solid $gray;
+  float: right;
+  margin-left: $base-unit;
+  margin-right: -($base-unit + 5);
+  padding: 0 $base-unit / 2;
+}
+
+.popup-section{
+  border: 1px dotted transparent;
+  margin-bottom: $base-unit / 2;
+  overflow: hidden;
+}
+
+
+.header-buttons{
+  border-right: 1px solid $gray;
+  display: inline-block;
+  float: right;
+  margin-right: 0;
 }

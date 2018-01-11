@@ -8,8 +8,8 @@ import * as Actions from '../../actions/Actions.es6'
 import Constants from '../../constants/Contants.es6';
 import DataEntryHelp from '../../help/DataEntry.es6';
 import Message from '../Message.jsx'
-import MultiLangualInput from './MultiLangualInput.jsx'
-import MultiLangualTextArea from './MultiLangualTextArea.jsx'
+import MultiLangualInput from './MultiLingualInput.jsx'
+import MultiLangualTextArea from './MultiLingualTextArea.jsx'
 import LangSelector from '../LangSelector.jsx'
 
 /* Popup Data Entry */
@@ -139,183 +139,194 @@ class DataEntryContent extends React.Component {
       
       return (
         <div id='dataentry' className={locationStatus ? locationStatus : ''}>
-          <LangSelector></LangSelector>
-          <label className="form-description"><b>* All entered text will be stored in "{this.props.lang}" language</b></label>
+          <div className="popup-header">
           
-          
+            <div className="col-md-4 no-padding location-name">
+              <MultiLangualInput id="name" name="name" texts={names}></MultiLangualInput>
+            </div>
+        
+            <div className="col-md-8">
+              <div className="popup-close">
+                <span className="close-icon" onClick={e => this.onCancel()}></span>
+              </div>
+              <LangSelector></LangSelector>
+              
+              <div className="header-buttons">
+              {
+                geonamesId
+                  ? (<button className="btn btn-popup-header" onClick={e => {
+                    this.updateAdminInfo(geonamesId)
+                  }}>
+                    <Message k="dataentry.sourceadmin.geonames"/>
+                  </button>)
+                  : null
+              }
+              
+              {
+                countryFeature
+                  ? (<button className="btn btn-popup-header" onClick={e => {
+                    this.updateAdminFromShapes()
+                  }}>
+                    <Message k="dataentry.sourceadmin.shapes"/>
+                  </button>)
+                  : null
+              }
+              </div>
+            </div>
+      
+        </div>
+        
+        <div className="popup-section">
+          <label className="form-description">* All entered text will be stored in "{this.props.lang}" language</label>
+        </div>
+        
+        <div className="popup-section">
+        <div className="col-md-4 no-padding">
+          <label>Country</label>
+          <input type="text" className="form-control noneditable" id="featureDesignation" value="Country Name" disabled="true"/>
+        </div>
+        
+        {
+          administratives.sort((a, b) => a.level - b.level).map(admin => {
+          return (<div key={admin.level} className="col-md-4">
+            <div className="form-group">
+              <label className="noneditable" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/>
+              </label>
+              <input type="text" className="form-control noneditable" id={`admin${admin.level}`} placeholder="NA" value={admin.name} disabled="disabled"/>
+              <Message k="dataentry.source"/>: {admin.vocabulary.name}
+            </div>
+            </div>)
+          })
+        }
+        
+        </div>
+        
+        <div className="popup-section">
+
           {locationIdentifiers.map(id =>
-            <div className="row" key={id.id + id.code}>
-              <div className="col-lg-6">
-                <div className="form-group">
-                  <label className="colored" htmlFor="id"><Message k="dataentry.identifier"/></label>
-                  <div><input type="text" className="form-control" id="id" placeholder="id" value={id.code} disabled/>
-                  </div>
-                </div>
+            <div key={id.id + id.code}>
+            
+              <div className="col-md-4 no-padding">
+                  <label htmlFor="id"><Message k="dataentry.identifier"/></label>
+                  <input type="text" className="form-control noneditable" id="id" placeholder="id" value={id.code} disabled/>
               </div>
               
-              <div className="col-lg-6">
-                <div className="form-group" id="source">
-                  <label className="colored"><Message k="dataentry.source"/></label>
-                  <input type="text" className="form-control" id="id" value={id.vocabulary
-                    ? id.vocabulary.name
-                    : 'Unknown'} disabled="disabled"/>
-                
-                </div>
+              <div className="col-md-4">
+                <label>Type</label>
+                <input type="text" className="noneditable" id="type" value="Point" disabled="true"/>
               </div>
+              
+            <div className="col-md-4">
+              <label>Coordinattes</label>
+              <input type="text" className="noneditable" id="coordinates" value="13.1339 - 27.8493" disabled="true"/>
+            </div>
+
             </div>)
           }
-          
-          <div id='noneditablefields'>
-            <div className="row">
-              <div className="col-lg-12">
-                <label className="colored" htmlFor="name">
-                  <Message k="dataentry.name"/> {
-                  names.sort(it => it.lang).map(d => (<span key={d.lang}>
-                    <b>{d.lang}{' | '}</b>
-                  </span>))
-                }</label>
-                <MultiLangualInput id="name" name="name" texts={names}></MultiLangualInput>
-              </div>
-            </div>
-            <div className="row">
-              {
-                administratives.sort((a, b) => a.level - b.level).map(admin => {
-                  return (<div key={admin.level} className={`col-lg-${ 12 / administratives.length}`}>
-                    <div className="form-group">
-                      
-                      <label className="colored" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/>
-                      </label>
-                      <input type="text" className="form-control" id={`admin${admin.level}`} placeholder="NA" value={admin.name} disabled="disabled"/>
-                      <Message k="dataentry.source"/>: {admin.vocabulary.name}
-                    </div>
-                  </div>)
-                })
-              }
-            </div>
-            <div className="row">
-              <div className="col-lg-12 ">
+        </div>
+        
+        <div className="popup-section">
+        
+        <div className="col-md-4 no-padding">
+          <label className="noneditable"><Message k="dataentry.code"/></label>
+          <input type="text" className="noneditable" id="featureDesignation" value={featuresDesignation
+          ? featuresDesignation.code
+          : ''} disabled="disabled"/>
+        </div>
+        
+        <div className="col-md-8">
+          <label className="noneditable"><Message k="dataentry.featuredesignation"/></label>
+          <input type="text" className="input-wide noneditable" id="featureDesignationName" value={featuresDesignation
+          ? featuresDesignation.name
+          : 'None'} disabled="disabled"/>
+        </div>
+        
+        </div>
+        
+        <hr/>
+
+        <div className="popup-section editable">
+        <div>
+          <div className="col-md-6 no-padding">
+            <div className="form-group">
+              <label className="colored" htmlFor="locationClass"><Message k="dataentry.locationclass"/></label>
+              <select value={locationClass
+                ? locationClass.code
+                : ''} className="form-control" name="locationClass" id="locationClass" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>
+                <option>Select</option>
                 {
-                  geonamesId
-                    ? (<button className="btn btn-xs btn-success pull-right" onClick={e => {
-                      this.updateAdminInfo(geonamesId)
-                    }}>
-                      <Message k="dataentry.sourceadmin.geonames"/>
-                    </button>)
-                    : null
+                  Constants.LOCATION_CLASS_LIST.map((item) => {
+                    return (<option key={item.code} value={item.code}>{item.name}</option>)
+                  })
                 }
+              </select>
+            </div>
+          </div>
+          <div className="col-md-6 no-padding-r">
+            <div className="form-group">
+              <label className="colored" htmlFor="Exactness"><Message k="dataentry.geographicexactness"/></label>
+              <select value={exactness
+                ? exactness.code
+                : ''} className="form-control" name="exactness" id="exactness" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>
+                <option>Select</option>
+                {
+                  Constants.EXACTNESS_LIST.map((item) => {
+                    return (<option key={item.code} value={item.code}>{item.name}</option>)
+                  })
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+        <div>
                 
-                {
-                  countryFeature
-                    ? (<button className="btn btn-xs btn-success pull-right" onClick={e => {
-                      this.updateAdminFromShapes()
-                    }}>
-                      <Message k="dataentry.sourceadmin.shapes"/>
-                    </button>)
-                    : null
-                }
-              
-              </div>
+          <div className="col-md-12 no-padding">
+            <div className="form-group">
+              <label className="colored" htmlFor="locationReach"><Message k="dataentry.locationreach"/></label>
+              <select value={locationReach
+                ? locationReach.code
+                : ''} className="form-control" name="locationReach" id="locationReach" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>
+                <option>Select</option>
+                <option value="1">Activity</option>
+                <option value="2">Intended Beneficiaries</option>
+              </select>
             </div>
+          </div>
+        </div>
+        
+        <div>
+          <div className="col-md-12 no-padding">
+            <div className="form-group">
+              <label className="colored"><Message k="dataentry.activitydescription"/> {
+                activityDescriptions.sort(it => it.lang).map(d => (<span key={d.lang}>
+                  <b>{d.lang}{' | '}</b>
+                </span>))
+              }</label>
+              <MultiLangualTextArea name="activityDescriptions" id="activityDescription" onChange={this.changeCodingValue} texts={activityDescriptions}></MultiLangualTextArea>
+            </div>
+          </div>
+        </div>        
+        <div>
+          <div className="col-md-12 no-padding">
+            <div className="form-group">
+              <label className="colored"><Message k="dataentry.description"/> {
+                descriptions.sort(it => it.lang).map(d => (<span key={d.lang}>
+                  <b>{d.lang}{' | '}</b>
+                </span>))
+              }</label>
+              <MultiLangualTextArea name="descriptions" id="description" onChange={this.changeCodingValue} texts={descriptions}></MultiLangualTextArea>
+            </div>
+          </div>
+        </div>
+        
+        </div>
+        
+          
+          <div className="popup-section button-row">
+            <div className="help-container no-padding">
             
-            <div className="row">
-              <div className="col-lg-4">
-                <div className="form-group">
-                  <label className="colored"><Message k="dataentry.code"/></label>
-                  <input type="text" className="form-control" id="featureDesignation" value={featuresDesignation
-                    ? featuresDesignation.code
-                    : ''} disabled="disabled"/>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="form-group">
-                  <label className="colored"><Message k="dataentry.featuredesignation"/></label>
-                  <input type="text" className="form-control" id="featureDesignationName" value={featuresDesignation
-                    ? featuresDesignation.name
-                    : 'None'} disabled="disabled"/>
-                </div>
-              </div>
-            </div>
-          
-          </div>
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="form-group">
-                <label className="colored" htmlFor="locationClass"><Message k="dataentry.locationclass"/></label>
-                <select value={locationClass
-                  ? locationClass.code
-                  : ''} className="form-control" name="locationClass" id="locationClass" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>
-                  <option>Select</option>
-                  {
-                    Constants.LOCATION_CLASS_LIST.map((item) => {
-                      return (<option key={item.code} value={item.code}>{item.name}</option>)
-                    })
-                  }
-                </select>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="form-group">
-                <label className="colored" htmlFor="Exactness"><Message k="dataentry.geographicexactness"/></label>
-                <select value={exactness
-                  ? exactness.code
-                  : ''} className="form-control" name="exactness" id="exactness" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>
-                  <option>Select</option>
-                  {
-                    Constants.EXACTNESS_LIST.map((item) => {
-                      return (<option key={item.code} value={item.code}>{item.name}</option>)
-                    })
-                  }
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="form-group">
-                <label className="colored" htmlFor="locationReach"><Message k="dataentry.locationreach"/></label>
-                <select value={locationReach
-                  ? locationReach.code
-                  : ''} className="form-control" name="locationReach" id="locationReach" onChange={e => this.changeCodingValue(e.target.name, e.target.value)}>
-                  <option>Select</option>
-                  <option value="1">Activity</option>
-                  <option value="2">Intended Beneficiaries</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="form-group">
-                <label className="colored"><Message k="dataentry.activitydescription"/> {
-                  activityDescriptions.sort(it => it.lang).map(d => (<span key={d.lang}>
-                    <b>{d.lang}{' | '}</b>
-                  </span>))
-                }</label>
-                <MultiLangualTextArea name="activityDescriptions" id="activityDescription" onChange={this.changeCodingValue} texts={activityDescriptions}></MultiLangualTextArea>
-              </div>
-            </div>
-          </div>
-          
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="form-group">
-                <label className="colored"><Message k="dataentry.description"/> {
-                  descriptions.sort(it => it.lang).map(d => (<span key={d.lang}>
-                    <b>{d.lang}{' | '}</b>
-                  </span>))
-                }</label>
-                <MultiLangualTextArea name="descriptions" id="description" onChange={this.changeCodingValue} texts={descriptions}></MultiLangualTextArea>
-              </div>
-            </div>
-          </div>
-          
-          <div className="row">
-            <div className="col-lg-12 help-container">
-              <div className='separator'/>
               <DataEntryHelp parentId='dataentry' type={type}/>
-              <div className='separator'/>
-              
+              <div className="popup-btn-wrapper">
               <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={e => this.onSave()}>
                 {
                   locationStatus === 'EXISTING'
@@ -361,22 +372,22 @@ class DataEntryContent extends React.Component {
               </button>
               {
                 geonamesId
-                  ? <button className="btn btn-lg btn-default pull-right" title={Message.t('dataentry.updatefromgeonames')} onClick={e => this.updateLocationInfo(geonamesId)}>
+                  ? <button className="btn btn-lg btn-blue pull-right" title={Message.t('dataentry.updatefromgeonames')} onClick={e => this.updateLocationInfo(geonamesId)}>
                     {
                       (this.props.loadingGeonames)
                         ? <i className="fa fa-refresh fa-spin"></i>
-                        : <i className="fa fa-refresh"></i>
+                        : <Message k="dataentry.refresh"/>
                     }
                   </button>
                   : null
               }
-            
+              </div>
             </div>
           </div>
           {
             this.props.error
-              ? <div className="row">
-                <div className="col-lg-12">
+              ? <div>
+                <div className="col-md-12">
                   <div className="form-group has-error">
                     <label className="colored">
                       ERROR: {this.props.error}
