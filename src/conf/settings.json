@@ -32,6 +32,18 @@
           "translations"
         ]
       },
+      "staging": {
+        "backend": {
+          "loadPath": "/locales/{{lng}}/{{ns}}.json"
+        },
+        "defaultNS": "translations",
+        "fallbackLng": "en",
+        "fallbackNS": "common",
+        "lng": "en",
+        "ns": [
+          "translations"
+        ]
+      },
       "production": {
         "backend": {
           "loadPath": "locales/{{lng}}/{{ns}}.json"
