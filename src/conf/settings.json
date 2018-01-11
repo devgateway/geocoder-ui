@@ -2,7 +2,8 @@
   "API": {
     "API_BASE_URL": {
       "development": "http://localhost:8083",
-      "production": "http://demo.geocoding.dgstg.org"
+      "staging": "https://demo.geocoding.dgstg.org",
+      "production": "https://geocoder-afdb.developmentgateway.org"
     },
     "ALL_FILTERS_END_POINT": "filters/all",
     "IMPORT_END_POINT": "import",
