@@ -121,6 +121,7 @@
   },
   "projectlist": {
     "geocodeproject": "GeoCode",
+    "verifyproject": "Verify",
     "geocodingfilter": "GeoCode Filter",
     "withNoLocation": "No Location(s)",
     "pendingVerification": "Pending Verification",
