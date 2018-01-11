@@ -66,40 +66,35 @@ class Item extends Reflux.Component {
     }
     return (
       <div className="list-group-item">
-        <h3 className="list-group-item-heading"><b><MultiLingualText texts={this.props.names}/> </b></h3>
+        <h3><MultiLingualText texts={this.props.names}/></h3>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.featuredesignation"/></label>
+          <label><Message k="dataentry.featuredesignation"/>:</label>
           <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
         </div>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.activitydescription"/></label>
+          <label><Message k="dataentry.activitydescription"/>:</label>
           <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
         </div>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.type"/></label>
+          <label><Message k="dataentry.type"/>:</label>
           <span>{this.props.locationClass.name}</span>
         </div>
         
         <div className="list-group-item-text">
-          <label><Message k="dataentry.geographicexactness"/></label>
-          <span>{this.props.exactness.name}</span>
-        </div>
-        
-        <div className="list-group-item-text">
-          <label className="inline"><Message k="dataentry.status"/></label>
+          <label className="inline"><Message k="dataentry.status"/>:</label>
           <Label bsStyle={statusStyle}
                  style={status === 'EXISTING' ? {'backgroundColor': '#FFEE42'} : {}}>{statusLabel}</Label>
         </div>
         
-        <div className="list-group-item-text pull-right">
+        <div className="list-group-item-text">
           <div className="geocoded-btns">
+            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
             <button className="edit" onClick={this.showDataEntryForm.bind(this)}>
               <Message k="projectinfo.locationslist.edit"/>
             </button>
-            <button className="remove" onClick={this.deleteLocation.bind(this)}>Remove</button>
           </div>
         </div>
         <br/>

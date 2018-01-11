@@ -112,13 +112,14 @@
     max-height: $base-unit * 30;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: $base-unit + 5;
     z-index: 9999;
     width: $extend;
   }
 
   .close-btn {
     margin-top: -($base-unit + 6);
-    margin-right: -20px;
+    margin-right: -25px;
     @include fontDefault($large + 5, $green, 100);
     float: right;
   }
@@ -211,5 +212,10 @@
   .close-icon{
     margin-right: $base-unit * 1.7;
     margin-top: $base-unit / 1.2;
+    &.country-panel{
+      margin-right: $base-unit + 5;
+      margin-top: $base-unit;
+    }
   }
 }
+

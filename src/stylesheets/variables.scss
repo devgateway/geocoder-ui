@@ -106,6 +106,13 @@ $bold-text: 800;
   background-position: 50% 50% !important;
 }
 
+@mixin hover-filter($brightness){
+  -moz-filter:brightness($brightness);
+  -webkit-filter:brightness($brightness);
+  -ms-filter:brightness($brightness);
+  filter:brightness($brightness);
+}
+
 @mixin boxSizeBig() {
   height: $base-unit * 3;
 }
