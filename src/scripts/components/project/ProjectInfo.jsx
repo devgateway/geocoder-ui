@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import Message from '../Message.jsx';
 import MultiLingualText from '../MultiLingualText.jsx';
 import Constants from "../../constants/Contants.es6";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 
 /**
  * Component that displays main information related to a project.
@@ -32,8 +33,19 @@ class ProjectInfo extends React.Component {
     return "bs-callout-success";
   }
   
+  getGeocodeText(locations) {
+    for(let i = 0; i < locations.length; i++) {
+      if (locations[i].locationStatus === Constants.AUTO_CODED) {
+        return <Message k="projectlist.verifyproject"/>
+      }
+    }
+    
+    return <Message k="projectlist.geocodeproject"/>;
+  }
+  
   render() {
-    const {lang, project: {id, locations, countries, titles, descriptions, identifier}} = this.props;
+    const {project: {id, queue, locations, countries, titles, descriptions, identifier}} = this.props;
+    const ST_PENDING = "PENDING";
     
     return (
       <div className={"bs-callout " + this.activityClass(locations)}>
@@ -44,7 +56,17 @@ class ProjectInfo extends React.Component {
           </div>
         </div>
         <div className="project-panel-content">
-          <div className="status-link"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
+          {(queue && queue.state === ST_PENDING)
+            ? <div>
+              <i className="fa fa-spinner fa-2x fa-spin pull-right loading"></i>
+              <OverlayTrigger placement="bottom"
+                              overlay={<Tooltip id={id}>Autogeocode in process.</Tooltip>}>
+                <div className="status-link gray"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
+              </OverlayTrigger>
+            </div>
+            : <div className="status-link"><Link to={'map/' + id}>{this.getGeocodeText(locations)}</Link></div>
+          }
+          
           <h3><Link to={'map/' + id}><MultiLingualText texts={titles}/></Link></h3>
           {<MultiLingualText texts={descriptions}/>}
         </div>
