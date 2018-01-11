@@ -40,13 +40,17 @@ export default class MultiLingualText extends Reflux.Component {
     }
     
     const translationLanguage = texts.find(val => val.lang === this.state.lang);
-    if (translationLanguage !== undefined) {
+    if (translationLanguage !== undefined
+      && translationLanguage.description !== undefined
+      && translationLanguage.description !== "") {
       return translationLanguage.description;
     } else {
       if (!exact) {
         const translationEnglish = texts.find(val => val.lang === MultiLingualText.ENGLISH_LANG);
         
-        if (translationEnglish !== undefined) {
+        if (translationEnglish !== undefined
+          && translationEnglish.description !== undefined
+          && translationEnglish.description !== "") {
           return translationEnglish.description;
         }
       }

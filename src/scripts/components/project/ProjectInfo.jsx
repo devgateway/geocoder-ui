@@ -61,13 +61,16 @@ class ProjectInfo extends React.Component {
               <i className="fa fa-spinner fa-2x fa-spin pull-right loading"></i>
               <OverlayTrigger placement="bottom"
                               overlay={<Tooltip id={id}>Autogeocode in process.</Tooltip>}>
-                <div className="status-link gray"><Link to={'map/' + id}><Message k="projectlist.geocodeproject"/></Link></div>
+                <div className="status-link gray"><Message k="projectlist.geocodeproject"/></div>
               </OverlayTrigger>
             </div>
             : <div className="status-link"><Link to={'map/' + id}>{this.getGeocodeText(locations)}</Link></div>
           }
           
-          <h3><Link to={'map/' + id}><MultiLingualText texts={titles}/></Link></h3>
+          {(queue && queue.state === ST_PENDING)
+            ? <h3><MultiLingualText texts={titles}/></h3>
+            : <h3><Link to={'map/' + id}><MultiLingualText texts={titles}/></Link></h3>
+          }
           {<MultiLingualText texts={descriptions}/>}
         </div>
       </div>
