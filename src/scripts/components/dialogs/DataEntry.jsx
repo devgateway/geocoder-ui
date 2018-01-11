@@ -18,10 +18,10 @@ class DataEntryContent extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
   changeCodingValue(name, value, lang) {
     let val;
-    
+
     switch (name) {
       case "locationClass":
         val = Constants.LOCATION_CLASS_LIST.find((item) => {
@@ -48,48 +48,48 @@ class DataEntryContent extends React.Component {
         val = value;
         break;
     }
-    
+
     Actions.invoke(Constants.ACTION_CHANGE_CODING_VALUE, {
       'name': name,
       'value': val,
       'lang': lang
     });
   }
-  
+
   onCancel() {
     Actions.invoke(Constants.ACTION_CANCEL);
   }
-  
+
   onDelete() {
     Actions.invoke(Constants.ACTION_SHOW_DELETE_CONFIRM);
   }
-  
+
   doDelete() {
     Actions.invoke(Constants.ACTION_DELETE);
   }
-  
+
   cancelDelete() {
     Actions.invoke(Constants.ACTION_CANCEL_DELETE);
   }
-  
+
   onSave() {
     Actions.invoke(Constants.ACTION_SAVE);
   }
-  
+
   updateAdminInfo(geonameID) {
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_GEONAMES, {'geonameID': geonameID});
   }
-  
+
   updateAdminFromShapes() {
     Actions.invoke(Constants.ACTION_UPDATE_ADM_FROM_SHAPES)
   }
-  
+
   updateLocationInfo(geonameID) {
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': geonameID});
   }
-  
+
   render() {
-    
+
     let {
       geocoding: {
         countryFeature,
@@ -97,7 +97,7 @@ class DataEntryContent extends React.Component {
       },
       confirmDeletion
     } = this.props;
-    
+
     let {
       activityDescriptions,
       administratives,
@@ -112,9 +112,9 @@ class DataEntryContent extends React.Component {
     } = locationFeature.properties
       ? locationFeature.properties
       : {}
-    
+
     let type = 'geocoding'
-    
+
     let geonamesIdentifier = locationIdentifiers.find(id => {
       return (
         id.vocabulary
@@ -125,7 +125,7 @@ class DataEntryContent extends React.Component {
     if (geonamesIdentifier) {
       geonamesId = geonamesIdentifier.code
     }
-    
+
     if (confirmDeletion) {
       return (<div>
         <h4 className='list-group-item-heading'>
@@ -136,21 +136,21 @@ class DataEntryContent extends React.Component {
         <Button bsStyle='success' className="pull-right" onClick={e => this.doDelete()}><Message k="general.yes"/></Button>
       </div>)
     } else {
-      
+
       return (
         <div id='dataentry' className={locationStatus ? locationStatus : ''}>
           <div className="popup-header">
-          
+
             <div className="col-md-4 no-padding location-name">
               <MultiLangualInput id="name" name="name" texts={names}></MultiLangualInput>
             </div>
-        
+
             <div className="col-md-8">
               <div className="popup-close">
                 <span className="close-icon" onClick={e => this.onCancel()}></span>
               </div>
               <LangSelector></LangSelector>
-              
+
               <div className="header-buttons">
               {
                 geonamesId
@@ -161,7 +161,7 @@ class DataEntryContent extends React.Component {
                   </button>)
                   : null
               }
-              
+
               {
                 countryFeature
                   ? (<button className="btn btn-popup-header" onClick={e => {
@@ -173,18 +173,14 @@ class DataEntryContent extends React.Component {
               }
               </div>
             </div>
-      
+
         </div>
-        
+
         <div className="popup-section">
           <label className="form-description">* All entered text will be stored in "{this.props.lang}" language</label>
         </div>
-        
+
         <div className="popup-section">
-        <div className="col-md-4 no-padding">
-          <label>Country</label>
-          <input type="text" className="form-control noneditable" id="featureDesignation" value="Country Name" disabled="true"/>
-        </div>
         
         {
           administratives.sort((a, b) => a.level - b.level).map(admin => {
@@ -198,24 +194,24 @@ class DataEntryContent extends React.Component {
             </div>)
           })
         }
-        
+
         </div>
-        
+
         <div className="popup-section">
 
           {locationIdentifiers.map(id =>
             <div key={id.id + id.code}>
-            
+
               <div className="col-md-4 no-padding">
                   <label htmlFor="id"><Message k="dataentry.identifier"/></label>
                   <input type="text" className="form-control noneditable" id="id" placeholder="id" value={id.code} disabled/>
               </div>
-              
+
               <div className="col-md-4">
                 <label>Type</label>
                 <input type="text" className="noneditable" id="type" value="Point" disabled="true"/>
               </div>
-              
+
             <div className="col-md-4">
               <label>Coordinattes</label>
               <input type="text" className="noneditable" id="coordinates" value="13.1339 - 27.8493" disabled="true"/>
@@ -224,25 +220,25 @@ class DataEntryContent extends React.Component {
             </div>)
           }
         </div>
-        
+
         <div className="popup-section">
-        
+
         <div className="col-md-4 no-padding">
           <label className="noneditable"><Message k="dataentry.code"/></label>
           <input type="text" className="noneditable" id="featureDesignation" value={featuresDesignation
           ? featuresDesignation.code
           : ''} disabled="disabled"/>
         </div>
-        
+
         <div className="col-md-8">
           <label className="noneditable"><Message k="dataentry.featuredesignation"/></label>
           <input type="text" className="input-wide noneditable" id="featureDesignationName" value={featuresDesignation
           ? featuresDesignation.name
           : 'None'} disabled="disabled"/>
         </div>
-        
+
         </div>
-        
+
         <hr/>
 
         <div className="popup-section editable">
@@ -279,7 +275,7 @@ class DataEntryContent extends React.Component {
           </div>
         </div>
         <div>
-                
+
           <div className="col-md-12 no-padding">
             <div className="form-group">
               <label className="colored" htmlFor="locationReach"><Message k="dataentry.locationreach"/></label>
@@ -293,7 +289,7 @@ class DataEntryContent extends React.Component {
             </div>
           </div>
         </div>
-        
+
         <div>
           <div className="col-md-12 no-padding">
             <div className="form-group">
@@ -305,7 +301,7 @@ class DataEntryContent extends React.Component {
               <MultiLangualTextArea name="activityDescriptions" id="activityDescription" onChange={this.changeCodingValue} texts={activityDescriptions}></MultiLangualTextArea>
             </div>
           </div>
-        </div>        
+        </div>
         <div>
           <div className="col-md-12 no-padding">
             <div className="form-group">
@@ -318,13 +314,13 @@ class DataEntryContent extends React.Component {
             </div>
           </div>
         </div>
-        
+
         </div>
-        
-          
+
+
           <div className="popup-section button-row">
             <div className="help-container no-padding">
-            
+
               <DataEntryHelp parentId='dataentry' type={type}/>
               <div className="popup-btn-wrapper">
               <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={e => this.onSave()}>
@@ -366,7 +362,7 @@ class DataEntryContent extends React.Component {
                     <Message k="dataentry.delete"/>
                   </button>
               }
-              
+
               <button className="btn btn-lg btn-warning pull-right" id="cancelbutton" onClick={e => this.onCancel()}>
                 <Message k="dataentry.cancel"/>
               </button>
@@ -404,14 +400,14 @@ class DataEntryContent extends React.Component {
 
 /* Data Entry Main Container */
 class DataEntry extends Reflux.Component {
-  
+
   constructor() {
     super();
-    
+
     this.state = {};
     this.stores = [DataEntryStore, LangStore];
   }
-  
+
   render() {
     return (<Modal className="dataentry-dialog" {...this.props} show={this.state.showPopup} onHide={this.cancel}>
       <Modal.Body>
