@@ -58,19 +58,20 @@
 
   .tab-container {
     border: 1px solid $gray;
-    height: 400px;
+    height: $base-unit * 40;
     padding: $base-unit $base-unit + 5;
     overflow-y: auto;
     &.no-padding {
       padding: 0;
+    }
+    .panel-body{
+      padding: 0 $base-unit + 5 $base-unit + 5 $base-unit + 5;
     }
   }
 
   label {
     font-weight: bold;
     padding: 2px 0px 0px 0px;
-    display: block;
-
   }
 
   label.inline {

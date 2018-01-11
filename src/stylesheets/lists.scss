@@ -2,29 +2,40 @@
 
 /*LISTS*/
 .list {
-  margin: 1px;
   border: 0px;
+  margin: $px-unit;
 }
 
 .list-group-item {
-  border: 0px;
-  margin: 1px;
-
+  border: none;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 0;
+  h3{
+    clear: both;
+    color: $black;
+    font-weight: $bold-text - 200;
+    margin-top: 0;
+  }
 }
 
 .list-group-item-text {
-  margin-bottom: 15px;
-  line-height: 110%;
   border: 0;
+  line-height: 110%;
+  width: $extend;
+  label{
+    display: inline-block;
+    margin-right: 5px;
+  }
 }
 
 .upload {
-  margin-top: 40px;
-  border-radius: 5px;
+  @include border-radius(5px);
+  margin-top: $base-unit * 4;
 }
 
 .export {
-  margin-left: 10px;
-  margin-top: 40px;
-  border-radius: 5px;
+  @include border-radius(5px);
+  margin-left: $base-unit;
+  margin-top: $base-unit * 4;
 }
