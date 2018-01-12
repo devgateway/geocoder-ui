@@ -52,6 +52,8 @@
 
       a {
         color: $white;
+        padding: $base-unit;
+
         &:hover {
           text-decoration: none;
         }
