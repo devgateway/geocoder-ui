@@ -10,6 +10,7 @@ import _ from "lodash"
 const initialState = {
   autoGeocodeAll:           false,
   autoGeocodeAllWithoutLoc: false,
+  overwriteProjects:        false,
   files:                    []
 };
 
@@ -19,6 +20,7 @@ class ImportSore extends Reflux.Store {
     this.state = initialState;
     
     this.listenTo(Actions.get(Constants.ACTION_TOGGLE_AUTOGEOCODE), this.toggleAutoGeocode);
+    this.listenTo(Actions.get(Constants.ACTION_TOGGLE_OVERWRITEPROJECTS), this.toggleOverwriteProjects);
     this.listenTo(Actions.get(Constants.ACTION_SET_FILE), this.setFile);
     this.listenTo(Actions.get(Constants.ACTION_REMOVE_FILE), this.removeFile);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES_VALIDATION), this.setError);
@@ -41,6 +43,10 @@ class ImportSore extends Reflux.Store {
         });
       }
     }
+  }
+  
+  toggleOverwriteProjects() {
+    this.setState({overwriteProjects: !this.state.overwriteProjects});
   }
   
   setFile(files) {
@@ -78,10 +84,11 @@ class ImportSore extends Reflux.Store {
     });
   }
   
-  uploadCompleted(file) {
+  uploadCompleted(file, message) {
     const newFiles = [...this.state.files];
     const fileIndex = this.state.files.findIndex(f => f.name === file.name);
     newFiles[fileIndex].status = 'DONE';
+    newFiles[fileIndex].message = message;
     
     this.setState({
       files: newFiles

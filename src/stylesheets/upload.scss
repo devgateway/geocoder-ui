@@ -6,9 +6,19 @@
 }
 
 .upload-options {
-  padding: $base-unit * 2;
-  display: block;
   font-size: $large;
+
+  .upload-button {
+    margin-top: $base-unit / 2;
+    min-width: 150px;
+
+    &.btn-lg {
+      padding: 0;
+      height: $base-unit * 3 !important;
+      font-size: $big;
+      font-weight: 400;
+    }
+  }
 }
 
 .error-row{
@@ -17,6 +27,7 @@
 
 .dropzone {
   margin: $base-unit;
+
   > div {
     text-align: center;
     width: $extend !important;
@@ -24,7 +35,7 @@
     border: 1px dashed $black !important;
     min-height: 200px;
     padding: auto;
-    font-size: $large;
+    font-size: $big;
 
     ul {
       line-height: 18px;
@@ -100,7 +111,7 @@
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
   }  20% {
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
-  }
+       transform: scaleY(1.0);
+       -webkit-transform: scaleY(1.0);
+     }
 }

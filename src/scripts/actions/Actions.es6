@@ -167,9 +167,9 @@ actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
 actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
   fileStore.files.forEach(file => {
     if (!file.status) {
-      APIClient.upload(file, fileStore.autoGeocodeAll, fileStore.autoGeocodeAllWithoutLoc)
+      APIClient.upload(file, fileStore.autoGeocodeAll, fileStore.autoGeocodeAllWithoutLoc, fileStore.overwriteProjects)
         .then((results) => {
-          actions[Constants.ACTION_UPLOAD_FILES].completed(file)
+          actions[Constants.ACTION_UPLOAD_FILES].completed(file, results.data)
         })
         .catch((ajax) => {
           console.log(ajax);
