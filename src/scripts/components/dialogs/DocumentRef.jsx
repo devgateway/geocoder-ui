@@ -37,7 +37,7 @@ class DocumentRef extends Reflux.Component {
             {
               this.state.currentReferences.map(reference =>
                 <tr key={reference.id} className="success">
-                  <td>{reference.fileName}</td>
+                  <td>{reference.fileName.replace(/^.*[\\\/]/, '')}</td>
                   <td>{reference.text}</td>
                   <td>{reference.entities}</td>
                 </tr>)
