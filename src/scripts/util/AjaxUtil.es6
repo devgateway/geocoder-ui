@@ -64,4 +64,16 @@ export default class AjaxUtil {
       });
   }
   
+  static delete(url, body = {}) {
+    return new Promise(
+      function (resolve, reject) {
+        Axios.delete(url, body)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (response) {
+            reject(response);
+          });
+      });
+  }
 }
