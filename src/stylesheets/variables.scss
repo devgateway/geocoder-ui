@@ -163,6 +163,10 @@ $bold-text: 800;
   color: $no-locations;
 }
 
+.no-locations-background {
+  background-color: $no-locations !important;
+}
+
 .pending-locations {
   color: $pending-locations;
 }
@@ -173,6 +177,10 @@ $bold-text: 800;
 
 .verified-locations {
   color: $verified;
+}
+
+.verified-locations-background {
+  background-color: $verified;
 }
 
 .all-locations {

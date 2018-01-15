@@ -82,7 +82,7 @@ class FileUpload extends Reflux.Component {
         
         <div className="upload-options row">
           <div className="panel panel-primary col-md-5">
-            <div className="panel-heading"><b>AutoGeocode Options</b></div>
+            <div className="panel-heading no-locations-background"><b>AutoGeocode Options</b></div>
             <div className="panel-body">
               <div className="select-section" onClick={this.toggleAutoGeocode.bind(this, "autoGeocodeAll")}>
                 <span className={"select-box " + (this.state.autoGeocodeAll ? "selected" : "")}></span>
@@ -95,8 +95,8 @@ class FileUpload extends Reflux.Component {
             </div>
           </div>
           
-          <div className="panel panel-danger col-md-4">
-            <div className="panel-heading"><b>Import Options</b></div>
+          <div className="panel panel-primary col-md-4">
+            <div className="panel-heading no-locations-background"><b>Import Options</b></div>
             <div className="panel-body">
               <div className="select-section" onClick={!this.state.overwriteProjects ? this.toggleOverwriteProjects.bind(this) : null}>
                 <span className={"select-box " + (this.state.overwriteProjects ? "selected" : "")}></span>
@@ -110,11 +110,11 @@ class FileUpload extends Reflux.Component {
           </div>
           
           <div className="col-md-3">
-            <Button bsSize="lg" bsStyle='success' className="pull-right upload-button" onClick={e => this.onUpload()}>
+            <Button bsSize="lg" bsStyle='success' className="pull-right upload-button verified-locations-background" onClick={e => this.onUpload()}>
               Upload and Import
             </Button>
             
-            <Button bsSize="lg" bsStyle='info' className="pull-right upload-button" onClick={() => {this.refs.dropzone.open()}}>
+            <Button bsSize="lg" bsStyle='info' className="pull-right upload-button pending-locations-background" onClick={() => {this.refs.dropzone.open()}}>
               Add File
             </Button>
           </div>
