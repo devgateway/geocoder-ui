@@ -3,6 +3,7 @@ import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import _ from 'lodash';
 import DataEntryStore from './DataEntryStore.es6'
+import ProjectListStore from "./ProjectListStore.es6";
 
 const initialState = {
   project: {}
@@ -24,6 +25,11 @@ class ProjectStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT), this.save);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).completed, this.saveSuccess);
     this.listenTo(Actions.get(Constants.ACTION_SAVE_PROJECT).failed, this.failed);
+    
+    this.listenTo(Actions.get(Constants.ACTION_DELETE_PROJECT), this.delete);
+    this.listenTo(Actions.get(Constants.ACTION_DELETE_PROJECT).completed, this.deleteSuccess);
+    this.listenTo(Actions.get(Constants.ACTION_DELETE_PROJECT).failed, this.failed);
+    
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), this.cleanStore);
   }
   
@@ -39,6 +45,10 @@ class ProjectStore extends Reflux.Store {
   
   save() {
     console.log('Save project...');
+  }
+  
+  delete() {
+    console.log('Delete project...');
   }
   
   completed(response) {
@@ -109,6 +119,11 @@ class ProjectStore extends Reflux.Store {
   
   saveSuccess() {
     window.history.back();
+  }
+  
+  deleteSuccess() {
+    // refresh list o projects after delete
+    Actions.invoke(Constants.ACTION_FIND_PROJECTS, Reflux.initStore(ProjectListStore).state.params);
   }
 }
 

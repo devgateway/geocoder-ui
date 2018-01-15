@@ -119,6 +119,26 @@ export default class ApiClient {
   }
   
   /**
+   * Save a project by project_id
+   * @return {} project
+   */
+  static deleteProject(id) {
+    const API_BASE_URL = settings.get('API', 'API_BASE_URL');
+    const PROJECT_END_POINT = settings.get('API', 'PROJECT_END_POINT');
+    let url = `${API_BASE_URL}/${PROJECT_END_POINT}/${id}`;
+    
+    return new Promise((resolve, reject) => {
+      AjaxUtil.delete(url)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((response) => {
+          reject(`got ${response.status}  ${response.statusText}`)
+        })
+    });
+  }
+  
+  /**
    * Uploads a file to the server.
    */
   static upload(file, autoGeocodeAll, autoGeocodeAllWithoutLoc, overwriteProjects) {

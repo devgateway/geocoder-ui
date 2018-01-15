@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom';
 import Message from '../Message.jsx';
 import MultiLingualText from '../MultiLingualText.jsx';
 import Constants from "../../constants/Contants.es6";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import {OverlayTrigger, Tooltip, Button, Modal} from "react-bootstrap";
+import * as Actions from "../../actions/Actions.es6";
 
 /**
  * Component that displays main information related to a project.
@@ -15,6 +16,13 @@ class ProjectInfo extends React.Component {
     lang:    PropTypes.string.isRequired,
   };
   
+  constructor() {
+    super();
+    
+    this.state = {
+      showModal: false,
+    };
+  }
   
   /**
    * Function that determines the color code for an activity.
@@ -43,6 +51,40 @@ class ProjectInfo extends React.Component {
     return <Message k="projectlist.geocodeproject"/>;
   }
   
+  /**
+   * Close the "delete project" modal.
+   */
+  cancelModal() {
+    let newState = Object.assign({}, this.state);
+    Object.assign(newState, {
+      showModal: false,
+    });
+    this.setState(newState);
+  }
+  
+  /**
+   * Open the delete confirmation modal
+   */
+  openConfirm() {
+    let newState = Object.assign({}, this.state);
+    
+    Object.assign(newState, {
+      showModal: true,
+    });
+    this.setState(newState);
+  }
+  
+  /**
+   * Make a request to delete a project
+   */
+  deleteProject() {
+    const {project: {id}} = this.props;
+    
+    Actions.invoke(Constants.ACTION_DELETE_PROJECT, id);
+    
+    this.cancelModal();
+  }
+  
   render() {
     const {project: {id, queue, locations, countries, titles, descriptions, identifier}} = this.props;
     const ST_PENDING = "PENDING";
@@ -53,6 +95,7 @@ class ProjectInfo extends React.Component {
           <div className="project-id">{identifier}</div>
           <div className="country">
             <b> {countries.map(country => (<span key={country.name}>{country.name}</span>))}</b>
+            <span className="delete-project pull-right" onClick={e => this.openConfirm()}/>
           </div>
         </div>
         <div className="project-panel-content">
@@ -73,6 +116,19 @@ class ProjectInfo extends React.Component {
           }
           {<MultiLingualText texts={descriptions}/>}
         </div>
+        
+        
+        <Modal  {...this.props} show={this.state.showModal} onHide={this.cancelModal.bind(this)}>
+          <Modal.Body>
+            <h2 className="list-group-item-heading">
+              <Message k="submitgeocoding.deletemessage"/>
+            </h2>
+            <hr/>
+            <Button bsStyle='danger' onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' className="pull-right" onClick={this.deleteProject.bind(this)}><Message
+              k="general.yes"/></Button>
+          </Modal.Body>
+        </Modal>
       </div>
     )
   }

@@ -42,6 +42,10 @@ actionsDef[Constants.ACTION_SAVE_PROJECT] = {
   children: ['completed', 'failed']
 };
 
+actionsDef[Constants.ACTION_DELETE_PROJECT] = {
+  children: ['completed', 'failed']
+};
+
 actionsDef[Constants.ACTION_UPLOAD_FILES] = {
   children: ['completed', 'failed']
 };
@@ -158,8 +162,13 @@ actions[Constants.ACTION_SAVE_PROJECT].listen(function (project) {
     .catch((message) => actions[Constants.ACTION_SAVE_PROJECT].failed(message));
 });
 
+actions[Constants.ACTION_DELETE_PROJECT].listen(function (id) {
+  APIClient.deleteProject(id)
+    .then((results) => actions[Constants.ACTION_DELETE_PROJECT].completed(results))
+    .catch((message) => actions[Constants.ACTION_DELETE_PROJECT].failed(message));
+});
+
 actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
-  
   APIClient.getCountryList().then((results) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].completed(results))
     .catch((message) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].failed(message));
 });

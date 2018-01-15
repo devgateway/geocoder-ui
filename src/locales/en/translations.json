@@ -139,6 +139,7 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "submitmessage": "This will overwrite the project geocoding with the current changes.  Are you sure?",
-    "cancelmessage": "Are you sure you want to cancel? None of your edits will be saved."
+    "cancelmessage": "Are you sure you want to cancel? None of your edits will be saved.",
+    "deletemessage": "Are you sure you want to delete this project? It will remove the entire project and all your changes from the system."
   }
 }
