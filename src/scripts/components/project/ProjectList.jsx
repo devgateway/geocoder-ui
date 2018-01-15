@@ -79,7 +79,13 @@ class ProjectList extends Reflux.Component {
             <Col md={12} className="project-search-form">
               <div className="form form-inline">
                 <Col md={2} sm={2}>
-                  <h3><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h3>
+                  <h3>
+                    <Message k="projects.projectsCount" count={this.state.data.totalElements}/>
+                    {this.state.loading === true
+                      ? <i className="fa fa-spinner fa fa-spin loading"></i>
+                      : null
+                    }
+                  </h3>
                 </Col>
                 <Col md={10} className="project-list-filters no-padding">
                   <Message className="filter-label" k="projectlist.geocodingfilter"/>
