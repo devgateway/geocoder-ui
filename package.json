@@ -52,22 +52,21 @@
     "webpack-hot-server": "0.6.1"
   },
   "dependencies": {
-    "axios": "0.16.2",
+    "axios": "0.17.1",
     "copy-webpack-plugin": "4.2.3",
     "file-loader": "1.1.5",
     "font-awesome": "4.7.0",
     "i18next": "10.0.2",
     "i18next-xhr-backend": "1.4.3",
     "immutable": "3.8.2",
-    "intro.js": "2.7.0",
     "leaflet": "1.2.0",
     "leaflet-clonelayer": "1.0.4",
     "leaflet-pip": "1.1.0",
     "leaflet-providers": "1.1.17",
     "leaflet.sync": "0.2.1",
     "prop-types": "15.6.0",
-    "react": "16.0.0",
-    "react-bootstrap": "0.31.5",
+    "react": "16.2.0",
+    "react-bootstrap": "0.32.0",
     "react-dom": "16.0.0",
     "react-draggable": "3.0.3",
     "react-dropzone": "4.2.1",
@@ -75,7 +74,7 @@
     "react-leaflet": "1.7.8",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "react-simple-tooltip": "^2.1.0",
+    "tether-shepherd": "1.8.1",
     "webpack-dev-server": "2.9.3"
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Intro from 'intro.js';
 
 export default class Help extends React.Component {
   node() {
