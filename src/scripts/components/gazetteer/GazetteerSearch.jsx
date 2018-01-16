@@ -4,7 +4,7 @@ import * as Actions from '../../actions/Actions.es6'
 import GazetteerStore from '../../stores/GazetteerStore.es6';
 import Constants from '../../constants/Contants.es6';
 import Message from '../Message.jsx';
-import Help from '../../help/LocationsSearch.es6';
+import GazetteerSearchHelp from '../../help/GazetteerSearchHelp.es6';
 
 /**
  * Component that performs the Gazetteer Search.
@@ -40,7 +40,7 @@ class GazetteerSearch extends Reflux.Component {
       <div className="panel-section search-section">
         <div className="project-search padded-section">
           <div className="project-search-icon"/>
-          {/*<Help parentId="gazetteer-search"/>*/}
+          <GazetteerSearchHelp/>
           
           <div className="form-section">
             <input type="text" name="text" value={this.state.text} placeholder={Message.t('header.search.holder')}

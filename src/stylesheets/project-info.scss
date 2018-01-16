@@ -3,14 +3,6 @@
 /*INFO PANEL*/
 .leaflet-control-info-panel {
   overflow: hidden !important;
-
-  .leaflet-control-layers.introjs-fixParent {
-    position: relative !important;
-  }
-}
-
-.leaflet-control-info-panel.introjs-fixParent {
-  position: relative !important;
 }
 
 #project-info {
@@ -43,7 +35,6 @@
 
   .title {
     @include fontDefault($huge, $darkGray);
-
   }
 
   .close-btn {
@@ -64,7 +55,7 @@
     &.no-padding {
       padding: 0;
     }
-    .panel-body{
+    .panel-body {
       padding: 0 $base-unit + 5 $base-unit + 5 $base-unit + 5;
     }
   }
