@@ -4,10 +4,9 @@ import {Link} from 'react-router';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Dropzone from 'react-dropzone';
-import {Button} from 'react-bootstrap';
-
+import {OverlayTrigger, Tooltip, Button} from 'react-bootstrap';
 import ImportStore from '../../stores/ImportStore.es6';
-import Tooltip from "react-simple-tooltip"
+
 /**
  * Component used to upload and import a file.
  */
@@ -43,6 +42,7 @@ class FileUpload extends Reflux.Component {
   }
   
   render() {
+    
     return (
       <div className="container">
         <h1>Upload XML File</h1>
@@ -68,9 +68,25 @@ class FileUpload extends Reflux.Component {
                       </div>: null
                     }
                     
-                    {file.status !== 'LOADING'? <button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs btn-default link pull-right">Remove</button> : null}
-                    {file.status === 'ERROR' ? <div className="label label-warning" >Failed <Tooltip content={file.message ? file.message.map(m=><div key={m} className="error-row">{m}</div>):''}>(Mouse over for details)</Tooltip></div> : null}
-                    {file.status === 'DONE' ? <div className="label label-success" >Done <Tooltip content={file.message ? file.message.map(m=><div key={m} className="error-row">{m}</div>):''}>(Mouse over for statistics)</Tooltip></div> : null}
+                    {file.status !== 'LOADING' ? <button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs btn-default link pull-right">Remove</button> : null}
+                    {file.status === 'ERROR'
+                      ? <div className="label label-warning">
+                        <OverlayTrigger placement="bottom"
+                                        overlay={<Tooltip id={file.name}>{file.message ? file.message.map(m=><div key={m} className="error-row">{m}</div>):''}</Tooltip>}>
+                          <span>Failed (Mouse over for details)</span>
+                        </OverlayTrigger>
+                      </div>
+                      : null
+                    }
+                    {file.status === 'DONE'
+                      ? <div className="label label-success">
+                        <OverlayTrigger placement="bottom"
+                                        overlay={<Tooltip id={file.name}>{file.message ? file.message.map(m=><div key={m} className="error-row">{m}</div>):''}</Tooltip>}>
+                          <span>Done (Mouse over for statistics)</span>
+                        </OverlayTrigger>
+                      </div>
+                      : null
+                    }
                   </li>)
               }
             </ul>

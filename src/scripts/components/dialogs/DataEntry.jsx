@@ -6,7 +6,7 @@ import LangStore from '../../stores/LangStore.es6';
 import Reflux from "reflux";
 import * as Actions from '../../actions/Actions.es6'
 import Constants from '../../constants/Contants.es6';
-import DataEntryHelp from '../../help/DataEntry.es6';
+import DataEntryHelp from '../../help/DataEntryHelp.es6';
 import Message from '../Message.jsx'
 import MultiLangualInput from './MultiLingualInput.jsx'
 import MultiLangualTextArea from './MultiLingualTextArea.jsx'
@@ -321,7 +321,7 @@ class DataEntryContent extends React.Component {
           <div className="popup-section button-row">
             <div className="help-container no-padding">
 
-              <DataEntryHelp parentId='dataentry' type={type}/>
+              <DataEntryHelp/>
               <div className="popup-btn-wrapper">
               <button className="btn btn-lg btn-success pull-right" id="savebutton" onClick={e => this.onSave()}>
                 {

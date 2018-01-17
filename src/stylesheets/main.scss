@@ -11,7 +11,7 @@
 @import 'search.scss';
 @import "data-entry.scss";
 @import "callouts.scss";
-@import "intro.scss";
+@import "shepherd";
 @import "minimap.scss";
 @import "upload.scss";
 @import "document.scss";
@@ -98,14 +98,16 @@ h4 {
 
 .help {
   @include middle();
-  width: $base-unit + 3;
-  height: $base-unit + 4 !important;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAzRJREFUeNrcWd2Nm0AQhpULoASnAtsVHH7Js1PBmQrAUt59fo8UqABfBXfPeQFXEK6CUAIVRJmNhtPceJf9AZy7jLTCsnZ3vv3mdyEMRoj4+mMNjxjGHQz5e6mZ2sJoYFxg1L+/fW58dYYeICN4ZDDuBwCaRB7gEUYO4LtZABOgKYwomEYk2MIFeGgJdgePUgNUKqphvOBTJdJtVvjU7ZEA6OfRgAHsd2SWiwRX2ChRHD5F8FzOsF/iBRhdoMJg4kBPsHE9MmAl4KMCuAzIrc5FQgewHQLNgwkFdGUIPLIBrQP8k4Ft0Mcay+B8c1DTOkyPJdcJ6zZGwLBYLtzbmoisWyJTe00ak9Y5O7qgzB4HLWAMiCcPsENZxDqoNKC/0MAO2eRfRGmHYG3MWTGwLY5AEVQm0Hw/ieNTT5ogczOm9GRZQku2uWREKpCH3UplMGjq22OGUArqPJG/IppWQw27NSqzSU0V+WujOyTMrQjbxv3Z/FeWe4b3nF3LrBQzUw9ZJNGs04mS5R5wSguDQ1G4I78vQxNhT+rXwZBb4Pyalfr7v+vQyWnXVTg2LzTQXObbCMWylFgFM0/n2BskaLqDySqKgmIMaMRCDxkvmFmd+gNMNQ+W04/UGg59sMS0611QsFO/BDMI9guZR1BzTOsF8996YqARVs6Y9Qhnh21qYp2lCOaVK7Cyeo4iYS6kwO4Dz9M2fYlJFjOBjVhuN94k/jXDO9ZfHCYjYybAK8ZuNyXg1rHG28jatmQ79iutYBVnNQPb3YTWagRjIA7en1BMF8GKRYTXnXchiIW2vbXAHpb6cTqBroa4Qztin5T1H02fJR6pCUy9qkVTJNPYBm8JrSe7MXOHgqa1nAXHcYLCsRsZE0cWuOdXwJgnC8ZyNkJZiQqf8ILg0929YVd1a75i2UcZuYOpftuAXSvYza8qHZ4gYYpKNO+tskKkeCGT0EopFFeSnFWsygP0hbDTOIBVvap6Hny3hou9XwYy01pdhVxeBuqany1jpmc6c0htjSXYTMGsttH/P15os41v+cng6vWqM2Ci5GN8lGEu8jE+e2mAj/2wWPjcRsKRgXPzT7d/BBgA4PGjlPeAM/oAAAAASUVORK5CYII=');
   background-repeat: no-repeat;
-  background-size: $base-unit - 2;
+  background-size: $base-unit * 1.5 $base-unit * 1.5;
+  width: $base-unit * 1.5;
+  height: $base-unit * 1.5;
   cursor: pointer;
-  background-position-y: $px-unit;
 
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .separator {
@@ -202,18 +204,18 @@ h4 {
       width: $base-unit * 4;
     }
   }
+
+  .info-icon {
+    .help {
+      margin-right: $base-unit;
+    }
+  }
 }
 
 // heading buttons
 .close-icon {
   @include heading-icon();
   background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMDAgMTAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6bm9uZTtzdHJva2U6IzIzMUUyMDtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cgkuc3Qxe2ZpbGw6bm9uZTtzdHJva2U6IzAxMDEwMTtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+CjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjExOTciIGN5PSI0MTM0IiByPSIyNSIvPgo8bGluZSBjbGFzcz0ic3QxIiB4MT0iMTE5NyIgeTE9IjQxNDYiIHgyPSIxMTk3IiB5Mj0iNDE0OCIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTE5MCw0MTI1YzAtMy45LDMuMi03LjEsNy4xLTdjMy43LDAuMSw2LjgsMy4yLDYuOSw2LjljMCwyLjUtMS4zLDQuNy0zLjIsNmMtMi40LDEuNi0zLjgsNC40LTMuOCw3LjN2Mi44Ii8+CjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjUwIiBjeT0iNDgiIHI9IjI1Ii8+Cjxwb2x5bGluZSBjbGFzcz0ic3QxIiBwb2ludHM9IjQxLDU3IDUwLDQ4IDU5LDM5ICIvPgo8cG9seWxpbmUgY2xhc3M9InN0MSIgcG9pbnRzPSI0MSwzOSA1MCw0OCA1OSw1NyAiLz4KPC9zdmc+Cg==");
-  margin-top: -3px;
-}
-
-.info-icon {
-  @include heading-icon();
-  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMDAgMTAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6bm9uZTtzdHJva2U6IzIzMUUyMDtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cgkuc3Qxe2ZpbGw6bm9uZTtzdHJva2U6IzAxMDEwMTtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cgkuc3Qye2ZpbGw6bm9uZTtzdHJva2U6IzEyNjdBNTtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cgkuc3Qze2ZpbGw6bm9uZTtzdHJva2U6IzEyNjdBNTtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+CjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjExOTciIGN5PSI0MTM0IiByPSIyNSIvPgo8bGluZSBjbGFzcz0ic3QxIiB4MT0iMTE5NyIgeTE9IjQxNDYiIHgyPSIxMTk3IiB5Mj0iNDE0OCIvPgo8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTE5MCw0MTI1YzAtMy45LDMuMi03LjEsNy4xLTdjMy43LDAuMSw2LjgsMy4yLDYuOSw2LjljMCwyLjUtMS4zLDQuNy0zLjIsNmMtMi40LDEuNi0zLjgsNC40LTMuOCw3LjN2Mi44Ii8+CjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjUwIiBjeT0iNDgiIHI9IjI1Ii8+CjxsaW5lIGNsYXNzPSJzdDMiIHgxPSI1MCIgeTE9IjYwIiB4Mj0iNTAiIHkyPSI2MiIvPgo8cGF0aCBjbGFzcz0ic3QzIiBkPSJNNDMsMzljMC0zLjksMy4yLTcuMSw3LjEtN2MzLjcsMC4xLDYuOCwzLjIsNi45LDYuOWMwLDIuNS0xLjMsNC43LTMuMiw2Yy0yLjQsMS42LTMuOCw0LjQtMy44LDcuM1Y1NSIvPgo8L3N2Zz4K");
   margin-top: -3px;
 }
 
@@ -397,7 +399,7 @@ h4 {
     font-weight: $normal-weight-text - 50;
     margin-right: $base-unit;
     margin-top: $base-unit;
-    outline:none;
+    outline: none;
     padding: $base-unit - 6 $base-unit + 5;
     width: $base-unit * 10;
     &:hover {
@@ -415,13 +417,13 @@ h4 {
       background: $red;
       border: 1px solid $red;
       &:hover {
-        background: darken($red,10%);
-        border: 1px solid darken($red,10%);
+        background: darken($red, 10%);
+        border: 1px solid darken($red, 10%);
       }
     }
     &.preview {
       background: $blue;
-      border:1px solid $blue;
+      border: 1px solid $blue;
       &:hover {
         background: darken($blue, 10%);
         border: 1px solid darken($blue, 10%);
@@ -431,8 +433,8 @@ h4 {
       background: $green;
       border: 1px solid $green;
       &:hover {
-        background: darken($green,10%);
-        border: 1px solid darken($green,10%);
+        background: darken($green, 10%);
+        border: 1px solid darken($green, 10%);
       }
     }
   }
@@ -525,7 +527,7 @@ h4 {
       height: $base-unit * 1.5;
       margin-right: $base-unit / 2;
       width: $base-unit * 1.5;
-      .search-option-label{
+      .search-option-label {
         display: table-cell;
       }
       &:hover {
@@ -537,4 +539,3 @@ h4 {
     }
   }
 }
-

@@ -8,7 +8,6 @@ import Constants from '../../../constants/Contants.es6';
 import ProjectStore from '../../../stores/ProjectStore.es6';
 import GazetteerStore from '../../../stores/GazetteerStore.es6';
 import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
-import ProjectInfoHelp from '../../../help/ProjectInfo.es6';
 import L from 'leaflet';
 import Message from '../../Message.jsx';
 import SelectedLocations from '../../project/SelectedLocations.jsx';
@@ -68,12 +67,12 @@ class CodingControls extends Reflux.Component {
           ? <div className="control-info-toggle" title="Info Panel" onClick={this.toggle.bind(this)}></div>
           : <div id="project-info">
             <div className="panel panel-success">
-              <PanelHeading project={project}  toggle={this.toggle.bind(this)}/>
+              <PanelHeading project={project}  toggle={this.toggle.bind(this)} countAutogeoCoded={countAutogeoCoded} countSearch={this.state.locations.records.length}/>
               <div className="tab-container no-padding">
                 <GazetteerSearch/>
                 
                 { (this.state.locations.records.length > 0)
-                  ? <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} count={this.state.locations.records.length}>
+                  ? <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} className={"gazetteer-locations"} count={this.state.locations.records.length}>
                     <div className="panel-section padded-section">
                       {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
                       <GazetteeResults getCountryLayerFeatures={getCountryLayerFeatures}/>
@@ -83,13 +82,13 @@ class CodingControls extends Reflux.Component {
                 }
                 
                 { (countAutogeoCoded > 0)
-                  ? <CollapsibleControl title={"Auto-Geocoded"} iconClass={"geocoded-icon"} count={countAutogeoCoded}>
+                  ? <CollapsibleControl title={"Auto-Geocoded"} iconClass={"geocoded-icon"} className={"autogeocoded"} count={countAutogeoCoded}>
                     <AutoGeoCodedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
                   </CollapsibleControl>
                   : null
                 }
                 
-                <CollapsibleControl title={"Selected Locations"} iconClass={"selected-locations-icon"} count={countSelected}>
+                <CollapsibleControl title={"Selected Locations"} iconClass={"selected-locations-icon"} className={"selected-locations"} count={countSelected}>
                   <SelectedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
                 </CollapsibleControl>
               </div>

@@ -82,6 +82,7 @@
   .help-container {
     height: $base-unit * 3;
     margin-top: $base-unit;
+
     .help {
       background-position: center center;
       background-size: $base-unit + 5;
@@ -182,13 +183,6 @@
     border-style: solid;
     border-width: 1px;
   }
-}
-
-#noneditablefields {
-  margin-right: -15px;
-  margin-left: -15px;
-  padding-right: 15px;
-  padding-left: 15px;
 }
 
 #cancelbutton{
