@@ -17,6 +17,11 @@ class FileUpload extends Reflux.Component {
     this.store = ImportStore;
   }
   
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    Actions.invoke(Constants.ACTION_CLEAN_IMPORT_STORE);
+  }
+  
   toggleAutoGeocode(autoType) {
     Actions.invoke(Constants.ACTION_TOGGLE_AUTOGEOCODE, autoType);
   }
