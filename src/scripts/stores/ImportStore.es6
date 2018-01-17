@@ -23,10 +23,13 @@ class ImportSore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_TOGGLE_OVERWRITEPROJECTS), this.toggleOverwriteProjects);
     this.listenTo(Actions.get(Constants.ACTION_SET_FILE), this.setFile);
     this.listenTo(Actions.get(Constants.ACTION_REMOVE_FILE), this.removeFile);
+    
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES_VALIDATION), this.setError);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES), this.upload);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).completed, this.uploadCompleted);
     this.listenTo(Actions.get(Constants.ACTION_UPLOAD_FILES).failed, this.uploadFailed);
+    
+    this.listenTo(Actions.get(Constants.ACTION_CLEAN_IMPORT_STORE), this.cleanStore);
   }
   
   toggleAutoGeocode(autoType) {
@@ -105,6 +108,15 @@ class ImportSore extends Reflux.Store {
     this.setState({
       files: newFiles
     });
+  }
+  
+  cleanStore() {
+    this.setState({
+      autoGeocodeAll:           false,
+      autoGeocodeAllWithoutLoc: false,
+      overwriteProjects:        false,
+      files:                    []
+    })
   }
 }
 

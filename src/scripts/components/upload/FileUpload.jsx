@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import Dropzone from 'react-dropzone';
-import {OverlayTrigger, Tooltip, Button} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip, Button, Modal} from 'react-bootstrap';
 import ImportStore from '../../stores/ImportStore.es6';
 
 /**
@@ -17,6 +17,11 @@ class FileUpload extends Reflux.Component {
     this.store = ImportStore;
   }
   
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    Actions.invoke(Constants.ACTION_CLEAN_IMPORT_STORE);
+  }
+  
   toggleAutoGeocode(autoType) {
     Actions.invoke(Constants.ACTION_TOGGLE_AUTOGEOCODE, autoType);
   }
@@ -26,7 +31,44 @@ class FileUpload extends Reflux.Component {
   }
   
   onDrop(acceptedFiles) {
-    Actions.invoke(Constants.ACTION_SET_FILE, acceptedFiles);
+    const acceptedFilesSet = [];
+    const ignoredFiles = [];
+    
+    // check for file duplicates
+    acceptedFiles.forEach(file => {
+      let accepted = true;
+      for (let i = 0; i < acceptedFilesSet.length; i++) {
+        if (file.name === acceptedFilesSet[i].name) {
+          ignoredFiles.push(file.name);
+          accepted = false;
+          break;
+        }
+      }
+      
+      for (let i = 0; i < this.state.files.length; i++) {
+        if (file.name === this.state.files[i].name) {
+          ignoredFiles.push(file.name);
+          accepted = false;
+          break;
+        }
+      }
+      
+      if (accepted === true) {
+        acceptedFilesSet.push(file);
+      }
+    });
+    
+    // if we ignored some files then we display the warning message.
+    if (ignoredFiles.length !== 0) {
+      let newState = Object.assign({}, this.state);
+      Object.assign(newState, {
+        showModal: true,
+        ignoredFiles: ignoredFiles
+      });
+      this.setState(newState);
+    }
+    
+    Actions.invoke(Constants.ACTION_SET_FILE, acceptedFilesSet);
   }
   
   onRemove(name) {
@@ -41,6 +83,15 @@ class FileUpload extends Reflux.Component {
     }
   }
   
+  cancelModal() {
+    let newState = Object.assign({}, this.state);
+    Object.assign(newState, {
+      showModal:    false,
+      ignoredFiles: []
+    });
+    this.setState(newState);
+  }
+  
   render() {
     
     return (
@@ -48,7 +99,7 @@ class FileUpload extends Reflux.Component {
         <h1>Upload XML File</h1>
         <p>Only *.xml files will be accepted</p>
         <div className="dropzone">
-          <Dropzone accept="text/xml, application/xml" onDrop={this.onDrop} disableClick={true} ref="dropzone">
+          <Dropzone accept="text/xml, application/xml" onDrop={this.onDrop.bind(this)} disableClick={true} style={{}} ref="dropzone">
             <p>Try dropping some files here, or click to select files to upload.</p>
             <ul>
               {
@@ -135,6 +186,20 @@ class FileUpload extends Reflux.Component {
             </Button>
           </div>
         </div>
+        
+        <Modal show={this.state.showModal} onHide={this.cancelModal.bind(this)}>
+          <Modal.Body>
+            <h2 className="list-group-item-heading">
+              Some files have already been added and they have been ignored:
+              {this.state.ignoredFiles !== undefined
+                ? this.state.ignoredFiles.map(file => <li key={file}>{file}</li>)
+                : null}
+            </h2>
+            <hr/>
+            <Button bsStyle='success' onClick={this.cancelModal.bind(this)}>OK</Button>
+          </Modal.Body>
+        </Modal>
+      
       </div>)
   }
   
