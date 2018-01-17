@@ -10,6 +10,7 @@ class CollapsibleControl extends React.Component {
     title:     PropTypes.string.isRequired,
     iconClass: PropTypes.string.isRequired,
     count:     PropTypes.number.isRequired,
+    className: PropTypes.string
   };
   
   constructor() {
@@ -21,9 +22,9 @@ class CollapsibleControl extends React.Component {
   }
   
   render() {
-    const{title, iconClass, count} = this.props;
+    const{title, iconClass, count, className} = this.props;
     
-    return (<div>
+    return (<div className={className}>
       <div className="accordion-heading" onClick={() => this.setState({ open: !this.state.open })}>
         <div className={iconClass}/>
         <span className="accordion-title">{title} <span className="project-count">({count})</span></span>

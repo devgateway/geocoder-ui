@@ -1,4 +1,4 @@
-import React from 'react';;
+import React from 'react';
 import Help from './Help.jsx';
 import Message from '../components/Message.jsx';
 

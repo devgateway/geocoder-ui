@@ -1,12 +1,20 @@
 @import "variables.scss";
 
-body.shepherd-active #root {
-  -webkit-transition: opacity 1s;
-  transition: opacity 1s;
-  opacity: 0.5;
-  pointer-events: none;
+body.shepherd-active {
+  #root {
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .shepherd-element.shepherd-theme-arrows {
+    z-index: 5000 !important;
+  }
 
   .shepherd-step > * {
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
     opacity: 1;
   }
 

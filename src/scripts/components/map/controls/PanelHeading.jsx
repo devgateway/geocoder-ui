@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Message from '../../Message.jsx';
 import MultiLingualText from "../../MultiLingualText.jsx";
 import MultiLingualTextShowMore from "../../MultiLingualTextShowMore.jsx";
+import ProjectInfoHelp from '../../../help/ProjectInfoHelp.es6';
 
 /**
  * This view renders the Project Information UI component (title, description, etc...)
@@ -11,10 +12,13 @@ export default class PanelHeading extends React.Component {
   static propTypes = {
     project: PropTypes.object.isRequired,
     toggle:  PropTypes.func.isRequired,
+    countAutogeoCoded:  PropTypes.number,
+    countSearch:        PropTypes.number
   };
   
   render() {
-    const {project, toggle} = this.props;
+    const {project, toggle, countAutogeoCoded, countSearch} = this.props;
+    
     
     return (
       <div className="panel-heading">
@@ -43,9 +47,8 @@ export default class PanelHeading extends React.Component {
         
         <div className="heading-buttons">
           <ul>
-            <li>
-              {/*<ProjectInfoHelp parentId="project-info"/>*/}
-              <span className="info-icon"/>
+            <li className="info-icon">
+              <ProjectInfoHelp countAutogeoCoded={countAutogeoCoded} countSearch={countSearch}/>
             </li>
             <li>
               <span className="close-icon" onClick={toggle}/>

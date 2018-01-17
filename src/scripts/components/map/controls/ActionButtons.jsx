@@ -3,7 +3,7 @@ import {Button, Modal} from 'react-bootstrap';
 import {Link} from 'react-router';
 import * as Actions from '../../../actions/Actions.es6'
 import Constants from '../../../constants/Contants.es6';
-import MapHelp from '../../../help/Map.es6';
+import MapHelp from '../../../help/MapHelp.es6';
 import Message from '../../Message.jsx'
 import ReactDOM from 'react-dom';
 
@@ -83,7 +83,7 @@ class SubmitGeocoding extends React.Component {
           </Modal.Body>
         </Modal>
         
-        <MapHelp parentId="mapContainer"/>
+        <MapHelp/>
         <Button bsStyle='warning' id='cancelCoding' onClick={this.openConfirm.bind(this, false)}><Message
           k="submitgeocoding.cancel"/></Button>
         <Button bsStyle='success' id='submitCoding' onClick={this.openConfirm.bind(this, true)}><Message
