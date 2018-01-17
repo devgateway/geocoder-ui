@@ -99,7 +99,7 @@ class FileUpload extends Reflux.Component {
         <h1>Upload XML File</h1>
         <p>Only *.xml files will be accepted</p>
         <div className="dropzone">
-          <Dropzone accept="text/xml, application/xml" onDrop={this.onDrop.bind(this)} disableClick={true} ref="dropzone">
+          <Dropzone accept="text/xml, application/xml" onDrop={this.onDrop.bind(this)} disableClick={true} style={{}} ref="dropzone">
             <p>Try dropping some files here, or click to select files to upload.</p>
             <ul>
               {
