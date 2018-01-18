@@ -22,6 +22,7 @@ import PropTypes from 'prop-types'
   }
 
   createLeafletElement() {
+    this.context.map.addLayer(this.state.baseLayers.OpenStreetMap)
     const leafletElement = L.control.layers.minimap(this.state.baseLayers, this.state.overlay, {})
       leafletElement.addTo(this.context.map);
 
