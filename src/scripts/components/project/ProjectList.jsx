@@ -6,6 +6,7 @@ import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
 import LangStore from '../../stores/LangStore.es6';
+import FiltersStore from "../../stores/FiltersStore.es6";
 import ProjectInfo from './ProjectInfo.jsx';
 import YearFilter from '../filters/YearFilter.jsx';
 import CountryFilter from '../filters/CountryFilter.jsx';
@@ -17,13 +18,18 @@ import Message from '../Message.jsx';
 class ProjectList extends Reflux.Component {
   constructor() {
     super();
-    this.stores = [ProjectListStore, LangStore];
+    this.stores = [ProjectListStore, FiltersStore, LangStore];
   }
   
   componentDidMount() {
-    Actions.invoke(Constants.ACTION_FETCH_FILTERS);
-    // there is no need to invoke the fetch of the project list since this action will be triggered after the filters
-    // are fetched in ProjectListStore
+    // only fetch the filters if we didn't fetched them already
+    if (this.state.filterYears.length === 0) {
+      // there is no need to invoke the fetch of the project list since this action will be triggered after the filters
+      // are fetched in ProjectListStore
+      Actions.invoke(Constants.ACTION_FETCH_FILTERS);
+    } else {
+      Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+    }
   }
   
   handlePageChanged(page) {
@@ -73,7 +79,13 @@ class ProjectList extends Reflux.Component {
             <Col md={12} className="project-search-form">
               <div className="form form-inline">
                 <Col md={2} sm={2}>
-                  <h3><Message k="projects.projectsCount" count={this.state.data.totalElements}/></h3>
+                  <h3>
+                    <Message k="projects.projectsCount" count={this.state.data.totalElements}/>
+                    {this.state.loading === true
+                      ? <i className="fa fa-spinner fa fa-spin loading"></i>
+                      : null
+                    }
+                  </h3>
                 </Col>
                 <Col md={10} className="project-list-filters no-padding">
                   <Message className="filter-label" k="projectlist.geocodingfilter"/>

@@ -7,6 +7,7 @@ import FiltersStore from "./FiltersStore.es6";
  * Stored used in {@link ProjectList} component.
  */
 const initialState = {
+  loading: false,
   data: {},
   params: {
     text: '',
@@ -48,17 +49,26 @@ class ProjectListStore extends Reflux.Store {
   }
   
   loading() {
-    console.log('Loading all projects...')
+    console.log('Loading all projects...');
+  
+    this.setState({
+      loading: true
+    });
   }
   
   completed(data) {
     this.setState({
+      loading: false,
       data
     });
   }
   
   failed(message) {
-    console.error(`Error loading projects: ${message}`)
+    console.error(`Error loading projects: ${message}`);
+  
+    this.setState({
+      loading: false
+    });
   }
   
   setParam(paramName, paramValue) {

@@ -129,12 +129,10 @@ class DataEntryStore extends Reflux.Store {
   }
 
   makeGeoCoding(data) {
-    
     const { locationFeature: { properties }, countryFeature } = data
     const { lat, lng, geonameId, name, toponymName, alternateNames, fcl, fcode, fcodeName } = properties
     const names = this.getNames(name, toponymName, alternateNames)
     const admins = []
-    //let { adminCode0, adminCode1, adminCode2, adminName0, adminName1, adminName2 } = properties
     var adminCode0, adminCode1, adminCode2, adminName0, adminName1, adminName2;
 
     if (countryFeature) {
@@ -311,7 +309,7 @@ class DataEntryStore extends Reflux.Store {
 
     this.setState(newState)
   }
-
+  
   geonamesFailed(error) {
     let newState = _.cloneDeep(this.state)
     Object.assign(newState, { error, 'loadingGeonames': false, 'loadingAdminGeonames': false })

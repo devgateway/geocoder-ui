@@ -51,8 +51,6 @@
   },
   "help": {
     "dataentry": {
-      "noneditablefields": "The data for the following fields is automatically generated from the gazetteer and not editable by the user",
-      "adminoptions": "Use these options to select the source of the admin levels",
       "locationclass": "Location class defines whether the location is a populated place (e.g. city or village), administrative division, or another topological feature (e.g. river or mountain)",
       "exactness": "Exactness defines whether the location represents the most distinct point reasonably possible for this type of activity or if it is an approximation due to lack of more detailed data",
       "activitydescription": "Add here a description for the activity at this location",
@@ -67,7 +65,6 @@
       "searchbtn": "Click the Search button to perform the search"
     },
     "main": {
-      "panel_title": "Project ID and title of the current project",
       "panel_project": "Shows related project information for the current project",
       "panel_geocoding": "Shows all existing and recently added geocoded locations for the current project",
       "panel_locations": "Shows location search results",

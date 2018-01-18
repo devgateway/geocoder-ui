@@ -1,9 +1,8 @@
-import {createActions, createAction} from 'reflux';
+import {createAction, createActions} from 'reflux';
 
 import Constants from '../constants/Contants.es6';
 import Geonames from '../util/gazetteers/Geonames.es6';
 import APIClient from '../util/APIClient.es6';
-import ShapesMapping from '../util/ShapesMapping.es6';
 
 let actionsDef = {};
 
@@ -40,6 +39,10 @@ actionsDef[Constants.ACTION_TOGGLE_LAYER_VISIBILITY] = {
 };
 
 actionsDef[Constants.ACTION_SAVE_PROJECT] = {
+  children: ['completed', 'failed']
+};
+
+actionsDef[Constants.ACTION_DELETE_PROJECT] = {
   children: ['completed', 'failed']
 };
 
@@ -131,8 +134,8 @@ actions[Constants.ACTION_UPDATE_ADM_FROM_GEONAMES].listen(function (options) {
 });
 
 actions[Constants.ACTION_LOAD_SHAPE].listen(function (iso) {
-
-
+  
+  
   APIClient.getGeoJsonShape(iso).then((results) => actions[Constants.ACTION_LOAD_SHAPE].completed(results, iso))
     .catch((message) => actions[Constants.ACTION_LOAD_SHAPE].failed(message));
 });
@@ -147,7 +150,7 @@ actions[Constants.ACTION_FIND_PROJECTS].listen(function (params) {
 actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function (options) {
   APIClient.getProject(options.id)
     .then((results) => {
-
+      
       return actions[Constants.ACTION_LOAD_SINGLE_PROJECT].completed(results)
     })
     .catch((message) => actions[Constants.ACTION_LOAD_SINGLE_PROJECT].failed(message));
@@ -159,8 +162,13 @@ actions[Constants.ACTION_SAVE_PROJECT].listen(function (project) {
     .catch((message) => actions[Constants.ACTION_SAVE_PROJECT].failed(message));
 });
 
-actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
+actions[Constants.ACTION_DELETE_PROJECT].listen(function (id) {
+  APIClient.deleteProject(id)
+    .then((results) => actions[Constants.ACTION_DELETE_PROJECT].completed(results))
+    .catch((message) => actions[Constants.ACTION_DELETE_PROJECT].failed(message));
+});
 
+actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
   APIClient.getCountryList().then((results) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].completed(results))
     .catch((message) => actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].failed(message));
 });
@@ -168,9 +176,9 @@ actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
 actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
   fileStore.files.forEach(file => {
     if (!file.status) {
-      APIClient.upload(file, fileStore.autoGeocodeAll, fileStore.autoGeocodeAllWithoutLoc)
+      APIClient.upload(file, fileStore.autoGeocodeAll, fileStore.autoGeocodeAllWithoutLoc, fileStore.overwriteProjects)
         .then((results) => {
-          actions[Constants.ACTION_UPLOAD_FILES].completed(file)
+          actions[Constants.ACTION_UPLOAD_FILES].completed(file, results.data)
         })
         .catch((ajax) => {
           console.log(ajax);
@@ -179,7 +187,6 @@ actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
             file
           })
         });
-
     }
   })
 });
