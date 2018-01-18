@@ -129,7 +129,7 @@ class DataEntryStore extends Reflux.Store {
   }
 
   makeGeoCoding(data) {
-    debugger;
+    
     const { locationFeature: { properties }, countryFeature } = data
     const { lat, lng, geonameId, name, toponymName, alternateNames, fcl, fcode, fcodeName } = properties
     const names = this.getNames(name, toponymName, alternateNames)

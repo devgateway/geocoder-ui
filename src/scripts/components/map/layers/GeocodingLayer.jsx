@@ -8,7 +8,6 @@ export default class GeocodingLayer extends GeoJsonLayer {
     super();
   }
 
-
   pointToLayer(feature, latlng) {
 
     let iconClass = feature.properties.locationStatus ? ' marker geocoding-marker-' + feature.properties.locationStatus.toLowerCase() : 'marker geocoding-marker-existing';
@@ -31,7 +30,7 @@ export default class GeocodingLayer extends GeoJsonLayer {
     layer.on({
       click: this.onFeatureClick.bind(this)
     });
-    
+
   }
 
   onFeatureClick(e) {

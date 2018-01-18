@@ -7,7 +7,7 @@ import {StoreMixins} from '../mixins/StoreMixins.es6';
 import CountryGeo from './CountryShapeStore.es6';
 import GazetteerGeoJsonStore from './GazetteerGeoJsonStore.es6';
 import ProjectGeoJsonStore from './ProjectGeoJsonStore.es6';
-
+import _ from "lodash"
 /*This store should be renamed to geocoding and should actually manage the state of teh coding data  whic*/
 const MapStore = createStore({
   initialData: {
@@ -26,32 +26,33 @@ const MapStore = createStore({
     geocoding: null,
     clickedLocationPosition: null
   },
-  
+
   mixins: [StoreMixins],
-  
+
   init() {
     this.listenTo(Reflux.initStore(ProjectGeoJsonStore), this.updateGeocodingLayer);
     this.listenTo(Reflux.initStore(GazetteerGeoJsonStore), this.updateGazetteerLayer);
-    
+
     this.listenTo(CountryGeo, this.updateCountry);
     this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
-  
+
   cleanStore() {
+
     this.setData(this.initialData);
   },
-  
+
   getInitialState() {
     return this.get();
   },
-  
+
   updateCountry(data) {
     let newState = Object.assign({}, this.get());
     newState.layers.countries = data.countries;
     this.setData(newState);
   },
-  
+
   closeInfoWindow(params) {
     this.setData(Object.assign({}, this.get(), {
       popup: {
@@ -59,30 +60,31 @@ const MapStore = createStore({
       }
     }));
   },
-  
+
   updateGazetteerLayer(data) {
-    let newState = Object.assign({}, this.get());
+
+    let newState = _.cloneDeep(this.get());
     newState.layers.locations = data;
-    
+
     Object.assign(newState, {
       popup: {
         'open': false
       }
     });
-    
+
     this.setData(newState);
   },
-  
+
   updateGeocodingLayer(data) {
     let newState = Object.assign({}, this.get());
     newState.layers.geocoding = data;
-    
+
     Object.assign(newState, {
       popup: {
         'open': false
       }
     });
-    
+
     this.setData(newState);
   }
 });

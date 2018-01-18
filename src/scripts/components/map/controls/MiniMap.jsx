@@ -1,66 +1,53 @@
-//TODO: this file needs a big refactoring (TODO ADDED By @sdimunzio 31 01 2016)
 import React from 'react';
-import {MapControl} from 'react-leaflet';
-import {Control} from 'leaflet';
-
 import * as MiniMap from '../../../libs/mnimaps.es6';
 import BaseLayerStore from '../../../stores/BaseLayers.es6';
 import L from 'leaflet';
-
 import PropTypes from 'prop-types'
 
+ export default class MiniMapControl extends  React.Component {
 
-export default class  extends MapControl {
-
-  static contextTypes = {
-    map: PropTypes.instanceOf(L.Map),
-  };
+    static contextTypes = {
+      map: PropTypes.instanceOf(L.Map),
+    };
 
   constructor() {
-    super();
+    super()
     let baseLayers = Object.assign({}, BaseLayerStore.get());
     this.state = Object.assign({overlay: {}, baseLayers: baseLayers});
   }
 
+  componentWillMount(){
+    this.leafletElement=this.createLeafletElement()
+
+  }
+
   createLeafletElement() {
-    this.state.baseLayers.OpenStreetMap.addTo(this.context.map);
-    const leafletElement = L.control.layers.minimap(this.state.baseLayers, this.state.overlay, {
-      collapsed: true,
-      overlayBackgroundLayer: this.state.baseLayers.OpenStreetMap
-    }).addTo(this.context.map);
+    const leafletElement = L.control.layers.minimap(this.state.baseLayers, this.state.overlay, {})
+      leafletElement.addTo(this.context.map);
 
-
-    this.initiated = true;
-    return leafletElement;
+      return leafletElement;
   }
 
   componentWillUnmount() {
-    this.context.map.eachLayer(function (i) {
-      this.context.map.removeLayer(i);
-    }.bind(this));//removes all layers from map
-    this.leafletElement = null;
+
   }
 
-  addLayer(layer, name, showAsMiniMap) {
-    
-    if (!this.initiated) {
-      let newState = Object.assign({}, this.state);
 
-      newState.overlay[name] = {layer, showAsMiniMap};
-
-      this.setState(newState)
-    } else {
-      if (this.leafletElement) {
-        this.leafletElement.addOverlay(layer, name, showAsMiniMap);
-      }
+  addOverlay(layer, name, showAsMiniMap) {
+    if (this.leafletElement){
+      this.leafletElement.addOverlay(layer, name, showAsMiniMap);
     }
-    this.context.map.addLayer(layer);
   }
 
-  removeLayer(layer) {
-    this.context.map.removeLayer(layer);
-    if (this.leafletElement) {
-      this.leafletElement.removeLayer(layer);
+  removeOverlay(layer) {
+    if (this.leafletElement){
+      this.leafletElement.removeOverlay(layer);
+    }
+  }
+
+  refresh(layer){
+    if (this.leafletElement){
+      this.leafletElement.refresh(layer);
     }
   }
 
@@ -74,6 +61,7 @@ export default class  extends MapControl {
   }
 
   renderChildrenWithProps(props) {
+
     const children = this.getClonedChildrenWithMap(props);
     return (<div style={{display: 'none'}}>{children}</div>);
   }
