@@ -191,18 +191,20 @@ class FileUpload extends Reflux.Component {
           <Modal.Body>
             <h2 className="list-group-item-heading">
               Some files have already been added and they have been ignored:
-              {this.state.ignoredFiles !== undefined
-                ? this.state.ignoredFiles.map(file => <li key={file}>{file}</li>)
-                : null}
+              <br/><br/>
+              <ul>
+                {this.state.ignoredFiles !== undefined
+                  ? this.state.ignoredFiles.map(file => <li key={file}>{file}</li>)
+                  : null}
+              </ul>
             </h2>
-            <hr/>
-            <Button bsStyle='success' onClick={this.cancelModal.bind(this)}>OK</Button>
           </Modal.Body>
+          <Modal.Footer>
+            <Button bsStyle='success' className="pull-right" onClick={this.cancelModal.bind(this)}>OK</Button>
+          </Modal.Footer>
         </Modal>
-      
       </div>)
   }
-  
 }
 
 export default FileUpload;
