@@ -88,6 +88,10 @@ class DataEntryContent extends React.Component {
     Actions.invoke(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID, {'geonameID': geonameID});
   }
 
+  changeLan(lang) {
+    Actions.invoke(Constants.ACTION_CHANGE_LANGUAGE, lang);
+  }
+
   render() {
 
     let {
@@ -181,7 +185,7 @@ class DataEntryContent extends React.Component {
         </div>
 
         <div className="popup-section">
-        
+
         {
           administratives.sort((a, b) => a.level - b.level).map(admin => {
           return (<div key={admin.level} className="col-md-4">
@@ -295,7 +299,7 @@ class DataEntryContent extends React.Component {
             <div className="form-group">
               <label className="colored"><Message k="dataentry.activitydescription"/> {
                 activityDescriptions.sort(it => it.lang).map(d => (<span key={d.lang}>
-                  <b>{d.lang}{' | '}</b>
+                  <b className={(d.lang==this.props.lang)?"link selected":"link"} onClick={e=>this.changeLan(d.lang)}>{d.lang}{' | '}</b>
                 </span>))
               }</label>
               <MultiLangualTextArea name="activityDescriptions" id="activityDescription" onChange={this.changeCodingValue} texts={activityDescriptions}></MultiLangualTextArea>
@@ -307,7 +311,7 @@ class DataEntryContent extends React.Component {
             <div className="form-group">
               <label className="colored"><Message k="dataentry.description"/> {
                 descriptions.sort(it => it.lang).map(d => (<span key={d.lang}>
-                  <b>{d.lang}{' | '}</b>
+                      <b className={(d.lang==this.props.lang)?"link selected":"link"} onClick={e=>this.changeLan(d.lang)}>{d.lang}{' | '}</b>
                 </span>))
               }</label>
               <MultiLangualTextArea name="descriptions" id="description" onChange={this.changeCodingValue} texts={descriptions}></MultiLangualTextArea>
