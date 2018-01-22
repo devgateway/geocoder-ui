@@ -44,6 +44,24 @@ export default class ApiClient {
     })
   }
   
+  /**
+   * Exports Projects as XML.
+   */
+  static exportProjects(params) {
+    const API_BASE_URL = settings.get('API', 'API_BASE_URL');
+    const PROJECT_EXPORT_END_POINT = settings.get('API', 'PROJECT_EXPORT_END_POINT');
+    
+    return new Promise((resolve, reject) => {
+      AjaxUtil.getXML(`${API_BASE_URL}/${PROJECT_EXPORT_END_POINT}`, params)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((response) => {
+          reject(`got ${response.status}  ${response.statusText}`)
+        })
+    })
+  }
+  
   static getGeoJsonShape(iso) {
     
     const API_BASE_URL = settings.get('API', 'API_BASE_URL');

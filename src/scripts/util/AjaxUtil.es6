@@ -37,6 +37,25 @@ export default class AjaxUtil {
       });
   }
   
+  static getXML(url, params = {}) {
+    return new Promise(
+      function (resolve, reject) {
+        Axios.get(url, {
+          responseType: 'text',
+          params: AjaxUtil.parseFilters(params),
+          paramsSerializer: function(params) {
+            return qs.stringify(params, {arrayFormat: 'repeat'})
+          }
+        })
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (response) {
+            reject(response);
+          });
+      });
+  }
+  
   static post(url, data) {
     return new Promise(
       function (resolve, reject) { // (A)

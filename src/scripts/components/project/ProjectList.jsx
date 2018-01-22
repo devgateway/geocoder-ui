@@ -47,6 +47,10 @@ class ProjectList extends Reflux.Component {
     Actions.invoke(Constants.ACTION_CLEAR_FILTERS);
   }
   
+  exportXML() {
+    Actions.invoke(Constants.ACTION_EXPORT_PROJECTS, this.state.params);
+  }
+  
   render() {
     const {lang} = this.state;
     
@@ -67,7 +71,15 @@ class ProjectList extends Reflux.Component {
               </Col>
               
               <Col md={5} sm={5}>
-                <button className="action-btn"><Link to="/"><Message k="projectlist.export"/></Link></button>
+                <button className="action-btn" onClick={this.exportXML.bind(this)} disabled={this.state.downloading}>
+                  <Link to="#">
+                    <Message k="projectlist.export"/>
+                    {this.state.downloading === true
+                      ? <i className="fa fa-spinner fa-spin loading"></i>
+                      : null
+                    }
+                  </Link>
+                </button>
                 <button className="action-btn"><Link to="/upload"><Message k="projectlist.import"/></Link></button>
               </Col>
             </Row>
@@ -82,7 +94,7 @@ class ProjectList extends Reflux.Component {
                   <h3>
                     <Message k="projects.projectsCount" count={this.state.data.totalElements}/>
                     {this.state.loading === true
-                      ? <i className="fa fa-spinner fa fa-spin loading"></i>
+                      ? <i className="fa fa-spinner fa-spin loading"></i>
                       : null
                     }
                   </h3>
