@@ -57,7 +57,7 @@ class ProjectListStore extends Reflux.Store {
   
   download() {
     console.log('Export projects...');
-  
+    
     this.setState({
       downloading: true
     });
@@ -91,7 +91,8 @@ class ProjectListStore extends Reflux.Store {
     console.error(`Error loading projects: ${message}`);
     
     this.setState({
-      loading: false
+      loading:      false,
+      downloading:  false
     });
   }
   
