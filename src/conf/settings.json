@@ -9,6 +9,7 @@
     "IMPORT_END_POINT": "import",
     "PROJECT_END_POINT": "project",
     "PROJECT_LIST_END_POINT": "projects",
+    "PROJECT_EXPORT_END_POINT": "export",
     "BOUNDARY_END_POINT": "boundary",
     "COUNTRY_END_POINT": "boundaries/list",
     "DOCUMENT_REF_END_POINT": "documentref"

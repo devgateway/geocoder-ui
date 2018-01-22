@@ -25,6 +25,9 @@ actionsDef[Constants.ACTION_LOAD_SHAPE] = {
 actionsDef[Constants.ACTION_FIND_PROJECTS] = {
   children: ['completed', 'failed']
 };
+actionsDef[Constants.ACTION_EXPORT_PROJECTS] = {
+  children: ['completed', 'failed']
+};
 actionsDef[Constants.ACTION_LOAD_SINGLE_PROJECT] = {
   children: ['completed', 'failed']
 };
@@ -145,6 +148,13 @@ actions[Constants.ACTION_FIND_PROJECTS].listen(function (params) {
   APIClient.getProjectList(params)
     .then((results) => actions[Constants.ACTION_FIND_PROJECTS].completed(results))
     .catch((message) => actions[Constants.ACTION_FIND_PROJECTS].failed(message));
+});
+
+/* Export projects asynchronously */
+actions[Constants.ACTION_EXPORT_PROJECTS].listen(function (params) {
+  APIClient.exportProjects(params)
+    .then((results) => actions[Constants.ACTION_EXPORT_PROJECTS].completed(results))
+    .catch((message) => actions[Constants.ACTION_EXPORT_PROJECTS].failed(message));
 });
 
 actions[Constants.ACTION_LOAD_SINGLE_PROJECT].listen(function (options) {
