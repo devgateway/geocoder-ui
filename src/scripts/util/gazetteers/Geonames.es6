@@ -29,7 +29,7 @@ export default class Geonames extends GazetteerClient {
   }
   
   paginate(params = {}) {
-    return Object.assign(params, {startRow: 0, maxRows: 100, style: 'full', orderby: 'relevance', lang: 'en'})
+    return Object.assign(params, {startRow: 0, maxRows: 25, style: 'full', orderby: 'relevance', lang: 'en'})
   }
   
   parseResponse(response) {
