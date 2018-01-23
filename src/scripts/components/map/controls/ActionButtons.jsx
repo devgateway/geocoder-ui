@@ -67,9 +67,9 @@ class SubmitGeocoding extends React.Component {
           </Modal.Body>
           
           <Modal.Footer>
-            <Button bsStyle='success' className="pull-right" onClick={this.onSubmitCoding.bind(this)}><Message
+            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' onClick={this.onSubmitCoding.bind(this)}><Message
               k="general.yes"/></Button>
-            <Button bsStyle='danger' className="pull-right" onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
           </Modal.Footer>
         </Modal>
         
@@ -81,9 +81,9 @@ class SubmitGeocoding extends React.Component {
           </Modal.Body>
           
           <Modal.Footer>
-            <Button bsStyle='success' className="pull-right" onClick={this.onCancelCoding.bind(this)}><Message
+            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' onClick={this.onCancelCoding.bind(this)}><Message
               k="general.yes"/></Button>
-            <Button bsStyle='danger' className="pull-right" onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
           </Modal.Footer>
         
         </Modal>

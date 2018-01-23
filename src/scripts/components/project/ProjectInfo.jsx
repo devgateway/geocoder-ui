@@ -126,9 +126,9 @@ class ProjectInfo extends React.Component {
           </Modal.Body>
   
           <Modal.Footer>
-            <Button bsStyle='success' className="pull-right" onClick={this.deleteProject.bind(this)}><Message
+            <Button bsStyle='danger' onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' onClick={this.deleteProject.bind(this)}><Message
               k="general.yes"/></Button>
-            <Button bsStyle='danger' className="pull-right" onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
           </Modal.Footer>
         </Modal>
       </div>

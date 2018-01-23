@@ -207,7 +207,7 @@ class FileUpload extends Reflux.Component {
             </h2>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle='success' className="pull-right" onClick={this.cancelModal.bind(this)}>OK</Button>
+            <Button bsStyle='success' onClick={this.cancelModal.bind(this)}>OK</Button>
           </Modal.Footer>
         </Modal>
 
