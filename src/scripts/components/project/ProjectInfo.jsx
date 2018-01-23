@@ -120,9 +120,9 @@ class ProjectInfo extends React.Component {
         
         <Modal  {...this.props} show={this.state.showModal} onHide={this.cancelModal.bind(this)}>
           <Modal.Body>
-            <h2 className="list-group-item-heading">
+            <h4 className="list-group-item-heading">
               <Message k="submitgeocoding.deletemessage"/>
-            </h2>
+            </h4>
           </Modal.Body>
   
           <Modal.Footer>
