@@ -64,11 +64,13 @@ class SubmitGeocoding extends React.Component {
             <h4 className="list-group-item-heading">
               <Message k="submitgeocoding.submitmessage"/>
             </h4>
-            <hr/>
-            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+          </Modal.Body>
+          
+          <Modal.Footer>
             <Button bsStyle='success' className="pull-right" onClick={this.onSubmitCoding.bind(this)}><Message
               k="general.yes"/></Button>
-          </Modal.Body>
+            <Button bsStyle='danger' className="pull-right" onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+          </Modal.Footer>
         </Modal>
         
         <Modal  {...this.props} show={this.state.showModal && this.state.cancel} onHide={this.cancel}>
@@ -76,11 +78,14 @@ class SubmitGeocoding extends React.Component {
             <h4 className="list-group-item-heading">
               <Message k="submitgeocoding.cancelmessage"/>
             </h4>
-            <hr/>
-            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+          </Modal.Body>
+          
+          <Modal.Footer>
             <Button bsStyle='success' className="pull-right" onClick={this.onCancelCoding.bind(this)}><Message
               k="general.yes"/></Button>
-          </Modal.Body>
+            <Button bsStyle='danger' className="pull-right" onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+          </Modal.Footer>
+        
         </Modal>
         
         <MapHelp/>

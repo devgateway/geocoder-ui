@@ -123,11 +123,13 @@ class ProjectInfo extends React.Component {
             <h2 className="list-group-item-heading">
               <Message k="submitgeocoding.deletemessage"/>
             </h2>
-            <hr/>
-            <Button bsStyle='danger' onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
+          </Modal.Body>
+  
+          <Modal.Footer>
             <Button bsStyle='success' className="pull-right" onClick={this.deleteProject.bind(this)}><Message
               k="general.yes"/></Button>
-          </Modal.Body>
+            <Button bsStyle='danger' className="pull-right" onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
+          </Modal.Footer>
         </Modal>
       </div>
     )
