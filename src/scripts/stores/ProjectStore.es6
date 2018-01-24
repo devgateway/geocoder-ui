@@ -8,6 +8,7 @@ import ProjectListStore from "./ProjectListStore.es6";
 const initialState = {
   project: {}
 };
+
 class ProjectStore extends Reflux.Store {
   constructor() {
     super();
@@ -68,11 +69,11 @@ class ProjectStore extends Reflux.Store {
   }
   
   updateLocation(data) {
-    const { geocoding: { locationFeature }, action } = data
+    const {geocoding: {locationFeature}, action} = data;
     if (action) {
-      const { properties: { locationStatus, id }, properties } = locationFeature
-      let project = JSON.parse(JSON.stringify(this.state.project))
-      let locations = project.locations.slice(0)
+      const {properties: {locationStatus, id}, properties} = locationFeature;
+      let project = JSON.parse(JSON.stringify(this.state.project));
+      let locations = project.locations.slice(0);
       
       if (action === 'save') {
         locations = locations.map(loc => {
@@ -86,18 +87,17 @@ class ProjectStore extends Reflux.Store {
         locations.push(Object.assign({}, properties))
       } else if (action === 'remove') {
         
-        locations=locations.filter(loc => loc.id != id)
+        locations = locations.filter(loc => loc.id != id)
       }
       
-      Object.assign(project, { locations })
-      console.log('======= Number of locations ' + locations.length + '=======')
-      this.setState({ project });
+      Object.assign(project, {locations})
+      console.log('======= Number of locations ' + locations.length + '=======');
+      this.setState({project});
     }
   }
   
   submitGeocoding(geocoding) {
-    
-    let newpProject = { ...this.state.project }
+    let newpProject = {...this.state.project};
     
     let locations = newpProject.locations || [];
     
@@ -111,7 +111,7 @@ class ProjectStore extends Reflux.Store {
     newpProject.locations = locNoStatus;
     
     newpProject = _.omit(newpProject, 'locationsBackup');
-    this.setState({ project: newpProject });
+    this.setState({project: newpProject});
     
     Actions.invoke(Constants.ACTION_SAVE_PROJECT, newpProject);
   }

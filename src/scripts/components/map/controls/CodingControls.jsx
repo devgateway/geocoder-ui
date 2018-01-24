@@ -7,7 +7,7 @@ import Constants from '../../../constants/Contants.es6';
 
 import ProjectStore from '../../../stores/ProjectStore.es6';
 import GazetteerStore from '../../../stores/GazetteerStore.es6';
-import GazetteeResults from '../../gazetteer/GazetteeResults.jsx';
+import GazetteerResults from '../../gazetteer/GazetteerResults.jsx';
 import L from 'leaflet';
 import Message from '../../Message.jsx';
 import SelectedLocations from '../../project/SelectedLocations.jsx';
@@ -75,7 +75,7 @@ class CodingControls extends Reflux.Component {
                   ? <CollapsibleControl title={"Search Results"} iconClass={"project-search-icon"} className={"gazetteer-locations"} count={this.state.locations.records.length}>
                     <div className="panel-section padded-section">
                       {Message.t('projectinfo.gazetteerlocations') + " (" + (this.state.locations.records.length) + ")"}
-                      <GazetteeResults getCountryLayerFeatures={getCountryLayerFeatures}/>
+                      <GazetteerResults getCountryLayerFeatures={getCountryLayerFeatures}/>
                     </div>
                   </CollapsibleControl>
                   : null
