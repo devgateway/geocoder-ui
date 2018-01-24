@@ -32,6 +32,12 @@ class ProjectList extends Reflux.Component {
     }
   }
   
+  componentWillUnmount() {
+    Reflux.Component.prototype.componentWillUnmount.call(this);
+    
+    Actions.invoke(Constants.ACTION_CLEAR_PROJECTLIST_STORE);
+  }
+  
   handlePageChanged(page) {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PAGE, page);
   }
