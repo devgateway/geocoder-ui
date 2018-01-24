@@ -15,6 +15,7 @@ import PanelHeading from './PanelHeading.jsx';
 import AutoGeoCodedLocations from '../../project/AutoGeoCodedLocations.jsx';
 import GazetteerSearch from '../../gazetteer/GazetteerSearch.jsx';
 import CollapsibleControl from './CollapsibleControl.jsx';
+import ActionButtons from './../controls/ActionButtons.jsx';
 
 /**
  * This view renders the info tab view UI component.
@@ -92,6 +93,8 @@ class CodingControls extends Reflux.Component {
                   <SelectedLocations {...this.state.project} getCountryLayerFeatures={getCountryLayerFeatures}/>
                 </CollapsibleControl>
               </div>
+  
+              <ActionButtons/>
             </div>
           </div>}
       </div>

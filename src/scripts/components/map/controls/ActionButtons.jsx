@@ -58,7 +58,7 @@ class SubmitGeocoding extends React.Component {
   
   render() {
     return (
-      <div className="actions-container">
+      <div className="actions-container pull-right">
         <Modal  {...this.props} show={this.state.showModal && this.state.submit} onHide={this.cancel}>
           <Modal.Body>
             <h4 className="list-group-item-heading">
