@@ -39,6 +39,12 @@ class ProjectListStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_EXPORT_PROJECTS).failed, this.failed);
     
     this.listenTo(Actions.get(Constants.ACTION_CLEAR_FILTERS), this.clearFilters);
+    
+    this.listenTo(Actions.get(Constants.ACTION_CLEAR_PROJECTLIST_STORE), this.clearStore);
+  }
+  
+  clearStore() {
+    clearInterval(this.intervalId);
   }
   
   updateFilterStore(filterStore) {
@@ -75,6 +81,8 @@ class ProjectListStore extends Reflux.Store {
   loading() {
     console.log('Loading all projects...');
     
+    // be sure that the interval is cleared before the request is completed
+    clearInterval(this.intervalId);
     this.setState({
       loading: true
     });
@@ -85,6 +93,12 @@ class ProjectListStore extends Reflux.Store {
       loading: false,
       data
     });
+    
+    // reset the interval and refresh again the project list in 60 seconds
+    clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => {
+      Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+    }, 60000);
   }
   
   failed(message) {
