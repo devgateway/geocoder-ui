@@ -80,11 +80,6 @@
   top: 57px;
   display: inline;
   right: 60px;
-
-  .actions-container {
-    height: 40px;
-    margin-right: -20px;
-  }
 }
 
 .leaflet-control-layer-selector {
@@ -198,6 +193,17 @@
       margin-right: $base-unit + 5;
       margin-top: $base-unit;
     }
+  }
+}
+
+
+.actions-container {
+  height: $base-unit * 6;
+  padding: $base-unit;
+  width: $extend;
+  button{
+    float: right;
+    margin-left: $base-unit;
   }
 }
 

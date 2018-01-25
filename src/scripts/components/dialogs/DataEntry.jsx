@@ -188,7 +188,7 @@ class DataEntryContent extends React.Component {
           <div className="popup-section">
             {
               administratives.sort((a, b) => a.level - b.level).map(admin => {
-                return (<div key={admin.level} className="col-md-4">
+                return (<div key={admin.level} className="col-md-4 no-padding">
                   <div className="form-group">
                     <label className="noneditable" htmlFor={`admin${admin.level}`}><Message k={`dataentry.admin${admin.level}`}/>
                     </label>
@@ -209,12 +209,12 @@ class DataEntryContent extends React.Component {
                   <input type="text" className="form-control noneditable" id="id" placeholder="id" value={id.code} disabled/>
                 </div>
                 
-                <div className="col-md-4">
+                <div className="col-md-4 no-padding">
                   <label>Type</label>
                   <input type="text" className="noneditable" id="type" value="Point" disabled="true"/>
                 </div>
                 
-                <div className="col-md-4">
+                <div className="col-md-4 no-padding">
                   <label>Coordinattes</label>
                   <input type="text" className="noneditable" id="coordinates" value="13.1339 - 27.8493" disabled="true"/>
                 </div>
@@ -232,7 +232,7 @@ class DataEntryContent extends React.Component {
                 : ''} disabled="disabled"/>
             </div>
             
-            <div className="col-md-8">
+            <div className="col-md-8 no-padding">
               <label className="noneditable"><Message k="dataentry.featuredesignation"/></label>
               <input type="text" className="input-wide noneditable" id="featureDesignationName" value={featuresDesignation
                 ? featuresDesignation.name

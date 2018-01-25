@@ -88,11 +88,11 @@ class SubmitGeocoding extends React.Component {
         
         </Modal>
         
-        <MapHelp/>
         <Button bsStyle='warning' id='cancelCoding' onClick={this.openConfirm.bind(this, false)}><Message
           k="submitgeocoding.cancel"/></Button>
         <Button bsStyle='success' id='submitCoding' onClick={this.openConfirm.bind(this, true)}><Message
           k="submitgeocoding.submit"/></Button>
+        <MapHelp/>
       </div>
     );
   }
