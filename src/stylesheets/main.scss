@@ -479,6 +479,7 @@ h4 {
       text-decoration: none;
       display: block;
       overflow: auto;
+      min-width: $base-unit * 12;
     }
   }
 }

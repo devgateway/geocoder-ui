@@ -11,29 +11,29 @@ import ImportStore from '../../stores/ImportStore.es6';
  * Component used to upload and import a file.
  */
 class FileUpload extends Reflux.Component {
-  
+
   constructor() {
     super();
     this.store = ImportStore;
   }
-  
+
   componentWillUnmount() {
     super.componentWillUnmount();
     Actions.invoke(Constants.ACTION_CLEAN_IMPORT_STORE);
   }
-  
+
   toggleAutoGeocode(autoType) {
     Actions.invoke(Constants.ACTION_TOGGLE_AUTOGEOCODE, autoType);
   }
-  
+
   toggleOverwriteProjects() {
     Actions.invoke(Constants.ACTION_TOGGLE_OVERWRITEPROJECTS);
   }
-  
+
   onDrop(acceptedFiles) {
     const acceptedFilesSet = [];
     const ignoredFiles = [];
-    
+
     // check for file duplicates
     acceptedFiles.forEach(file => {
       let accepted = true;
@@ -44,7 +44,7 @@ class FileUpload extends Reflux.Component {
           break;
         }
       }
-      
+
       for (let i = 0; i < this.state.files.length; i++) {
         if (file.name === this.state.files[i].name) {
           ignoredFiles.push(file.name);
@@ -52,12 +52,12 @@ class FileUpload extends Reflux.Component {
           break;
         }
       }
-      
+
       if (accepted === true) {
         acceptedFilesSet.push(file);
       }
     });
-    
+
     // if we ignored some files then we display the warning message.
     if (ignoredFiles.length !== 0) {
       let newState = Object.assign({}, this.state);
@@ -67,14 +67,14 @@ class FileUpload extends Reflux.Component {
       });
       this.setState(newState);
     }
-    
+
     Actions.invoke(Constants.ACTION_SET_FILE, acceptedFilesSet);
   }
-  
+
   onRemove(name) {
     Actions.invoke(Constants.ACTION_REMOVE_FILE, name);
   }
-  
+
   onUpload() {
     if (this.state.files.length > 0) {
       Actions.invoke(Constants.ACTION_UPLOAD_FILES, this.state);
@@ -82,7 +82,7 @@ class FileUpload extends Reflux.Component {
       Actions.invoke(Constants.ACTION_UPLOAD_FILES_VALIDATION, "Please upload some files first.");
     }
   }
-  
+
   cancelModal() {
     let newState = Object.assign({}, this.state);
     Object.assign(newState, {
@@ -91,9 +91,9 @@ class FileUpload extends Reflux.Component {
     });
     this.setState(newState);
   }
-  
+
   render() {
-    
+
     return (
       <div className="container">
         <h1>Upload XML File</h1>
@@ -105,7 +105,7 @@ class FileUpload extends Reflux.Component {
               {
                 this.state.files.map(file =>
                   <li key={file.name}> {file.name} - {file.size} bytes
-                    
+
                     {file.status === 'LOADING'
                       ? <div className="label label-info"></div>
                       : null
@@ -118,7 +118,7 @@ class FileUpload extends Reflux.Component {
                         <div className="rect5"></div>
                       </div>: null
                     }
-                    
+
                     {file.status !== 'LOADING' ? <button onClick={(e) => this.onRemove(file.name)} className="btn btn-xs btn-default link pull-right">Remove</button> : null}
                     {file.status === 'ERROR'
                       ? <div className="label label-warning">
@@ -141,15 +141,21 @@ class FileUpload extends Reflux.Component {
                   </li>)
               }
             </ul>
-            
+
+
             {this.state.error ?
               <div className="alert alert-danger" role="alert">{this.state.error}</div> : null}
           </Dropzone>
+
+          <Button bsSize="lg" bsStyle='info' className="pull-right upload-button" onClick={() => {this.refs.dropzone.open()}}>
+            Add File
+          </Button>
+
         </div>
-        
+
         <div className="upload-options row">
           <div className="panel panel-primary col-md-5">
-            <div className="panel-heading no-locations-background"><b>AutoGeocode Options</b></div>
+            <div className="panel-heading"><b>AutoGeocode Options</b></div>
             <div className="panel-body">
               <div className="select-section" onClick={this.toggleAutoGeocode.bind(this, "autoGeocodeAll")}>
                 <span className={"select-box " + (this.state.autoGeocodeAll ? "selected" : "")}></span>
@@ -161,9 +167,9 @@ class FileUpload extends Reflux.Component {
               </div>
             </div>
           </div>
-          
+
           <div className="panel panel-primary col-md-4">
-            <div className="panel-heading no-locations-background"><b>Import Options</b></div>
+            <div className="panel-heading "><b>Import Options</b></div>
             <div className="panel-body">
               <div className="select-section" onClick={!this.state.overwriteProjects ? this.toggleOverwriteProjects.bind(this) : null}>
                 <span className={"select-box " + (this.state.overwriteProjects ? "selected" : "")}></span>
@@ -175,18 +181,19 @@ class FileUpload extends Reflux.Component {
               </div>
             </div>
           </div>
-          
-          <div className="col-md-3">
-            <Button bsSize="lg" bsStyle='success' className="pull-right upload-button verified-locations-background" onClick={e => this.onUpload()}>
+
+
+        </div>
+
+        <div className="row">
+          <div className="col-lg-12">
+            <Button bsSize="xl" bsStyle='success' className="pull-right upload-button " onClick={e => this.onUpload()}>
               Upload and Import
             </Button>
-            
-            <Button bsSize="lg" bsStyle='info' className="pull-right upload-button pending-locations-background" onClick={() => {this.refs.dropzone.open()}}>
-              Add File
-            </Button>
           </div>
+
         </div>
-        
+
         <Modal show={this.state.showModal} onHide={this.cancelModal.bind(this)}>
           <Modal.Body>
             <h2 className="list-group-item-heading">
@@ -200,11 +207,13 @@ class FileUpload extends Reflux.Component {
             </h2>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle='success' className="pull-right" onClick={this.cancelModal.bind(this)}>OK</Button>
+            <Button bsStyle='success' onClick={this.cancelModal.bind(this)}>OK</Button>
           </Modal.Footer>
         </Modal>
+
       </div>)
   }
+
 }
 
 export default FileUpload;

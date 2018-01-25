@@ -2,12 +2,14 @@ import Reflux from "reflux";
 import * as Actions from '../actions/Actions.es6';
 import Constants from '../constants/Contants.es6';
 import FiltersStore from "./FiltersStore.es6";
+import FileSaver from "file-saver";
 
 /**
  * Stored used in {@link ProjectList} component.
  */
 const initialState = {
-  loading: false,
+  loading:      false,
+  downloading:  false,
   data: {},
   params: {
     text: '',
@@ -31,7 +33,18 @@ class ProjectListStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).failed, this.failed);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PARAM), this.setParam);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS_SET_PAGE), this.setPage);
+    
+    this.listenTo(Actions.get(Constants.ACTION_EXPORT_PROJECTS), this.download);
+    this.listenTo(Actions.get(Constants.ACTION_EXPORT_PROJECTS).completed, this.downloadCompleted);
+    this.listenTo(Actions.get(Constants.ACTION_EXPORT_PROJECTS).failed, this.failed);
+    
     this.listenTo(Actions.get(Constants.ACTION_CLEAR_FILTERS), this.clearFilters);
+    
+    this.listenTo(Actions.get(Constants.ACTION_CLEAR_PROJECTLIST_STORE), this.clearStore);
+  }
+  
+  clearStore() {
+    clearInterval(this.intervalId);
   }
   
   updateFilterStore(filterStore) {
@@ -48,9 +61,28 @@ class ProjectListStore extends Reflux.Store {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
   
+  download() {
+    console.log('Export projects...');
+    
+    this.setState({
+      downloading: true
+    });
+  }
+  
+  downloadCompleted(data) {
+    this.setState({
+      downloading: false,
+    });
+    
+    const blob = new Blob([data], {type: "text/xml"});
+    FileSaver.saveAs(blob, "XML Export.xml");
+  }
+  
   loading() {
     console.log('Loading all projects...');
-  
+    
+    // be sure that the interval is cleared before the request is completed
+    clearInterval(this.intervalId);
     this.setState({
       loading: true
     });
@@ -61,13 +93,20 @@ class ProjectListStore extends Reflux.Store {
       loading: false,
       data
     });
+    
+    // reset the interval and refresh again the project list in 60 seconds
+    clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => {
+      Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+    }, 60000);
   }
   
   failed(message) {
     console.error(`Error loading projects: ${message}`);
-  
+    
     this.setState({
-      loading: false
+      loading:      false,
+      downloading:  false
     });
   }
   
@@ -110,9 +149,9 @@ class ProjectListStore extends Reflux.Store {
     newParams.years = [];
     newParams.text = '';
     newParams.page = 0;   // also reset the page number when a filter parameter is changed
-  
+    
     this.setState({params: newParams});
-  
+    
     Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
   }
 }

@@ -58,17 +58,19 @@ class SubmitGeocoding extends React.Component {
   
   render() {
     return (
-      <div className="actions-container">
+      <div className="actions-container pull-right">
         <Modal  {...this.props} show={this.state.showModal && this.state.submit} onHide={this.cancel}>
           <Modal.Body>
             <h4 className="list-group-item-heading">
               <Message k="submitgeocoding.submitmessage"/>
             </h4>
-            <hr/>
-            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
-            <Button bsStyle='success' className="pull-right" onClick={this.onSubmitCoding.bind(this)}><Message
-              k="general.yes"/></Button>
           </Modal.Body>
+          
+          <Modal.Footer>
+            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' onClick={this.onSubmitCoding.bind(this)}><Message
+              k="general.yes"/></Button>
+          </Modal.Footer>
         </Modal>
         
         <Modal  {...this.props} show={this.state.showModal && this.state.cancel} onHide={this.cancel}>
@@ -76,11 +78,14 @@ class SubmitGeocoding extends React.Component {
             <h4 className="list-group-item-heading">
               <Message k="submitgeocoding.cancelmessage"/>
             </h4>
-            <hr/>
-            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
-            <Button bsStyle='success' className="pull-right" onClick={this.onCancelCoding.bind(this)}><Message
-              k="general.yes"/></Button>
           </Modal.Body>
+          
+          <Modal.Footer>
+            <Button bsStyle='danger' onClick={this.cancel.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' onClick={this.onCancelCoding.bind(this)}><Message
+              k="general.yes"/></Button>
+          </Modal.Footer>
+        
         </Modal>
         
         <MapHelp/>

@@ -120,14 +120,16 @@ class ProjectInfo extends React.Component {
         
         <Modal  {...this.props} show={this.state.showModal} onHide={this.cancelModal.bind(this)}>
           <Modal.Body>
-            <h2 className="list-group-item-heading">
+            <h4 className="list-group-item-heading">
               <Message k="submitgeocoding.deletemessage"/>
-            </h2>
-            <hr/>
-            <Button bsStyle='danger' onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
-            <Button bsStyle='success' className="pull-right" onClick={this.deleteProject.bind(this)}><Message
-              k="general.yes"/></Button>
+            </h4>
           </Modal.Body>
+  
+          <Modal.Footer>
+            <Button bsStyle='danger' onClick={this.cancelModal.bind(this)}><Message k="general.no"/></Button>
+            <Button bsStyle='success' onClick={this.deleteProject.bind(this)}><Message
+              k="general.yes"/></Button>
+          </Modal.Footer>
         </Modal>
       </div>
     )
