@@ -150,6 +150,9 @@ h4 {
   overflow: hidden;
   &.search-section {
     margin-bottom: 0;
+    .help{
+      margin-top: $base-unit * 2.2;
+    }
   }
 }
 
@@ -202,6 +205,9 @@ h4 {
       opacity: 1;
       padding-left: $base-unit / 2;
       width: $base-unit * 4;
+      &:last-child{
+        
+      }
     }
   }
 

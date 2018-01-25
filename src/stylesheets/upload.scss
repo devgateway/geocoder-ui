@@ -7,17 +7,38 @@
 
 .upload-options {
   font-size: $large;
-
-  .upload-button {
-    margin-top: $base-unit / 2;
-    min-width: 150px;
-
-    &.btn-lg {
-      padding: 0;
-      height: $base-unit * 3 !important;
-      font-size: $big;
-      font-weight: 400;
+  margin-top: $base-unit * 2;
+  .panel{
+    box-shadow: none;
+    .panel-heading{
+      @include border-radius(0);
+      background: $header-bg;
+      border-bottom: 2px solid $gray;
+      color: $green-light;
+      font-size: $large;
+      padding: $base-unit - 3;
     }
+    .panel-body{
+      padding: $base-unit + 5 0 0 0;
+    }
+  }
+}
+
+.upload-button {
+  @include border-radius(3px);
+  background: $green-light;
+  border: 1px solid $green-light;
+  color: $white;
+  font-size: $large + 2;
+  font-weight: $bold-text - 300;
+  margin-right: 0;
+  margin-top: $base-unit * 2;
+  min-width: 150px;
+  &:hover, &:focus{
+    background: darken($green-light, 10%);
+    border: 1px solid darken($green-light, 10%);
+    color: $white;
+    font-size: $large + 2;
   }
 }
 
@@ -31,9 +52,10 @@
   > div {
     text-align: center;
     width: $extend !important;
-    border: 1px dashed $black !important;
+    border: 2px solid $project-list-header-bg !important;
+    margin-top: $base-unit + 5;
     min-height: 200px;
-    padding: auto;
+    padding-top: $base-unit * 2;
     font-size: $big;
 
     ul {
