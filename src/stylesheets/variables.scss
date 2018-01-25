@@ -16,6 +16,7 @@ $gray-darker: #cccccc;
 $no-locations: #f0ad4e;
 $verified: #669933;
 $project-list-header-bg: #e7f4df;
+$warning-color: #f0ad4e;
 
 // Base units
 $base-unit: 10px;
@@ -185,4 +186,8 @@ $bold-text: 800;
 
 .all-locations {
   color: $black;
+}
+
+h1{
+  font-weight: $normal-weight-text + 200; 
 }

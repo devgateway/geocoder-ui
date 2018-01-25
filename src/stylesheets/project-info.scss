@@ -93,7 +93,8 @@
   }
 
   .read-more-wrap {
-    margin-bottom: 0px;
+    line-height: 140%;
+    margin-bottom: 0;
   }
 
   .read-more-state:checked ~ .read-more-wrap .read-more-target {
@@ -123,7 +124,7 @@
 }
 
 .fa-spinner {
-  margin-left: $base-unit;
+  margin-left: $base-unit / 2;
 }
 
 .project-info-label {

@@ -147,7 +147,7 @@ class FileUpload extends Reflux.Component {
               <div className="alert alert-danger" role="alert">{this.state.error}</div> : null}
           </Dropzone>
 
-          <Button bsSize="lg" bsStyle='info' className="pull-right upload-button" onClick={() => {this.refs.dropzone.open()}}>
+          <Button className="pull-right upload-button" onClick={() => {this.refs.dropzone.open()}}>
             Add File
           </Button>
 

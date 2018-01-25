@@ -9,6 +9,7 @@
 }
 .form-control{
   box-shadow: none;
+  outline: none;
 }
 
 #dataentry {
@@ -123,10 +124,6 @@
   }
   .row {
     padding-bottom: $base-unit - 3;
-    &.button-row{
-      margin-top: $base-unit;
-      padding-bottom: 0;
-    }
   }
   .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
     padding: 0px $base-unit - 3;
@@ -214,6 +211,7 @@
     background-repeat: no-repeat;
     background-size: $base-unit - 3 $base-unit - 3;
     color: $white;
+    cursor: pointer;
     font-size: $large - 2;
     margin-left: $base-unit;
     padding: $base-unit - 6 $base-unit + 4 $base-unit - 6 $base-unit;
@@ -229,7 +227,7 @@
   border-left: 1px solid $gray;
   float: right;
   margin-left: $base-unit;
-  margin-right: -($base-unit + 5);
+  margin-right: -25px;
   padding: 0 $base-unit / 2;
 }
 
@@ -237,6 +235,11 @@
   border: 1px dotted transparent;
   margin-bottom: $base-unit / 2;
   overflow: hidden;
+  &.button-row{
+    margin-bottom: 0;
+    margin-top: $base-unit;
+    padding-bottom: 0;
+  }
 }
 
 
