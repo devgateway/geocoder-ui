@@ -71,7 +71,7 @@ button {
 .pagination > .active > a:hover,
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
-.pagination > .active > span:focus{
+.pagination > .active > span:focus {
   color: $black;
   cursor: default;
   background-color: $gray;
@@ -84,17 +84,17 @@ button {
   margin-right: $base-unit;
   margin-top: $base-unit / 1.1;
   cursor: pointer;
-  .search-option-label{
-     display: table-cell;
-     font-size: $large;
-     vertical-align: top;
-     width: $extend - 5;
+  .search-option-label {
+    display: table-cell;
+    font-size: $large;
+    vertical-align: top;
+    width: $extend - 5;
   }
-  &:hover{
-    .search-option-label{
+  &:hover {
+    .search-option-label {
       color: $green-light;
     }
-    .select-box{
+    .select-box {
       background-color: $green-light;
     }
   }
