@@ -64,24 +64,34 @@ class Item extends Reflux.Component {
         statusStyle = 'danger';
         break;
     }
+    
     return (
       <div className="list-group-item">
         <h3><MultiLingualText texts={this.props.names}/></h3>
         
-        <div className="list-group-item-text">
-          <label><Message k="dataentry.featuredesignation"/>:</label>
-          <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
-        </div>
+        { this.props.featuresDesignation !== undefined && this.props.featuresDesignation !== null
+          ? <div className="list-group-item-text">
+            <label><Message k="dataentry.featuredesignation"/>:</label>
+            <span> {this.props.featuresDesignation ? this.props.featuresDesignation.code : ''} - {this.props.featuresDesignation ? this.props.featuresDesignation.name : ''}</span>
+          </div>
+          : null
+        }
         
-        <div className="list-group-item-text">
-          <label><Message k="dataentry.activitydescription"/>:</label>
-          <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
-        </div>
+        { this.props.activityDescriptions !== undefined && this.props.activityDescriptions !== null && this.props.activityDescriptions.length > 0
+          ? <div className="list-group-item-text">
+            <label><Message k="dataentry.activitydescription"/>:</label>
+            <span><MultiLingualText texts={this.props.activityDescriptions}/></span>
+          </div>
+          : null
+        }
         
-        <div className="list-group-item-text">
-          <label><Message k="dataentry.type"/>:</label>
-          <span>{this.props.locationClass.name}</span>
-        </div>
+        { this.props.locationClass !== undefined && this.props.locationClass !== null
+          ? <div className="list-group-item-text">
+            <label><Message k="dataentry.type"/>:</label>
+            <span>{this.props.locationClass.name}</span>
+          </div>
+          : null
+        }
         
         <div className="list-group-item-text">
           <label className="inline"><Message k="dataentry.status"/>:</label>
