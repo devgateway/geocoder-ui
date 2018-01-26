@@ -32,11 +32,18 @@ class FiltersStore extends Reflux.Store {
 
   completed(data) {
     this.setState({
-      filterCountries:  data.countries,
-      filterYears:      data.years.map(year => {
+      filterCountries:  data.countries.map((country, index) => {
+        return {
+          index:    index,
+          selected: false,
+          ...country
+        }
+      }),
+      filterYears:      data.years.map((year, index) => {
         return {
           name: year,
-          selected: false
+          selected: false,
+          index:    index,
         }
       })
     });

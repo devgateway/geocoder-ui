@@ -65,7 +65,7 @@ class CountryFilter extends Reflux.Component {
   
   render() {
     const {text, isOpen} = this.state;
-    
+  
     return (<div className="filter-button-wrapper">
       <ButtonToolbar>
         <DropdownButton onToggle={this.onToggle.bind(this)} open={isOpen} className="filter-btn" title="Country" id="country-dropdown">
@@ -75,8 +75,8 @@ class CountryFilter extends Reflux.Component {
             <span className="input-group-addon"><i className="glyphicon glyphicon-search"></i></span>
           </div>
           {
-            this.searchTermInCountries(this.state.filterCountries, text).map((country, index) => {
-              return (<li key={country.iso2} className="filter-section" onClick={this.optionClicked.bind(this, index)}>
+            this.searchTermInCountries(this.state.filterCountries, text).map(country => {
+              return (<li key={country.iso2} className="filter-section" onClick={this.optionClicked.bind(this, country.index)}>
                 <span className={"select-box " + (country.selected ? "selected" : "")}></span>
                 <span className="search-option-label">{country.name}</span>
               </li>)
