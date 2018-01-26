@@ -18,4 +18,11 @@
     @include fontDefault($giant, $darkGray);
     font-weight: normal;
   }
+
+  .home-icon {
+    color: #89b85a;
+    vertical-align: middle;
+    padding-left: $base-unit / 2;
+    margin-top: -$base-unit;
+  }
 }
