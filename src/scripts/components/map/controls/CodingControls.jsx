@@ -58,7 +58,7 @@ class CodingControls extends Reflux.Component {
     let countSelected = 0;
     if (this.state.project.locations !== undefined) {
       countAutogeoCoded = this.state.project.locations.filter(location => location.locationStatus === Constants.AUTO_CODED).length;
-      countSelected = this.state.project.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED).length;
+      countSelected = this.state.project.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED && location.locationStatus !== Constants.DELETED).length;
     }
     
     let activeTab = this.state.showTab || 1;
