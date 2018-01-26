@@ -2,6 +2,7 @@
 export default class Constants {
   
   static AUTO_CODED = "AUTO_CODED";
+  static DELETED = "DELETED";
   
   static ACTION_FETCH_FILTERS = 'ACTION_FETCH_FILTERS';
   static UPDATE_FILTER_SELECTION = 'UPDATE_FILTER_SELECTION';
