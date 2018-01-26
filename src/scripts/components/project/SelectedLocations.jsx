@@ -31,7 +31,7 @@ class Item extends Reflux.Component {
     const locationFeature = this.getLocationFeatures();
     const coordinates = locationFeature.geometry.coordinates;
     const countryFeature = this.props.getCountryLayerFeatures(new L.LatLng(coordinates[1], coordinates[0]));
-  
+    
     Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
   }
   
@@ -116,7 +116,7 @@ export default class SelectedLocations extends React.Component {
     
     let locations;
     if (this.props.locations !== undefined) {
-      locations = this.props.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED);
+      locations = this.props.locations.filter(location => location.locationStatus !== Constants.AUTO_CODED && location.locationStatus !== Constants.DELETED);
     } else {
       locations = [];
     }
