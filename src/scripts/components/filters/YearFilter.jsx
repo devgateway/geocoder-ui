@@ -22,7 +22,7 @@ class YearFilter extends Reflux.Component {
   render() {
     return (<div className="filter-button-wrapper">
       <ButtonToolbar>
-        <DropdownButton className="filter-btn" title="Year" id="dropdown-size-large">
+        <DropdownButton className="filter-btn" title="Year" id="year-dropdown">
           {
             this.state.filterYears.map((year, index) => {
               return (<li key={year.name} className="filter-section" onClick={this.optionClicked.bind(this, index)}>
