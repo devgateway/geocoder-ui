@@ -14,7 +14,7 @@ export default class HeaderLayout extends Reflux.Component {
             <div className="navbar-header">
               <Link className="navbar-brand" to="/">
                 <Message k="header.branding"/>
-                <i className="fa fa-home fa-2x home-icon"></i>
+                <i className="fa fa-home fa-lg home-icon"></i>
               </Link>
               
             </div>
