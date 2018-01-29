@@ -12,12 +12,7 @@ export default class MapPopUp extends Popup {
     map: PropTypes.instanceOf(Leaflet.Map),
   };
   
-  constructor() {
-    super();
-  }
-  
   componentDidUpdate(prevProps) {
-    
     const map = this.context.map;
     const {open, position} = this.props;
     

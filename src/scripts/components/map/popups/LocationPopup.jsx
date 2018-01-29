@@ -5,7 +5,7 @@ import Constants from '../../../constants/Contants.es6';
 import Message from '../../Message.jsx';
 import MultiLingualText from '../../MultiLingualText.jsx';
 
-/*Popup info*/
+/* Popup info */
 class InfoView extends React.Component {
   
   constructor(props) {
