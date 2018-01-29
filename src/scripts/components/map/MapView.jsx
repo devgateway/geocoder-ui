@@ -12,9 +12,9 @@ import LayerGroup from './layers/LayerGroup.jsx';
 import GeocodingLayer from './layers/GeocodingLayer.jsx';
 import CountryLayer from './layers/CountryLayer.jsx';
 import GazetterLayer from './layers/GazetterLayer.jsx'
+
 /*Controls*/
 import Control from './controls/Control.jsx'; //control container
-
 import MiniMap from './controls/MiniMap.jsx';
 import CountrySelector from './controls/CountrySelector.jsx'
 import CodingControls from './controls/CodingControls.jsx';
@@ -25,6 +25,8 @@ import DocumentRef from '../dialogs/DocumentRef.jsx';
 
 /*Store*/
 import MapStore from '../../stores/MapStore.es6';
+
+import MapPopup from './popups/MapPopup.jsx';
 
 require('leaflet/dist/leaflet.css');
 
@@ -48,7 +50,6 @@ export default class MapView extends React.Component {
     } catch (e) {
       console.log(e)
     }
-    
   }
   
   onMapUpdated(data) {
@@ -63,7 +64,7 @@ export default class MapView extends React.Component {
   getCountryLayerFeatures(latlng) {
     const countryInfo = this.queryFeatures(latlng);
     const countryFeature = (countryInfo && countryInfo.length > 0) ? countryInfo[0].feature : null;
-    
+  
     return countryFeature;
   }
   
@@ -92,7 +93,7 @@ export default class MapView extends React.Component {
     const locationFeature = e.target.feature;
     const {latlng} = e;
     const countryFeature = this.getCountryLayerFeatures(latlng);
-    
+  
     Actions.invoke(Constants.ACTION_TRANSFORM_TO_GEOCODING, {locationFeature, countryFeature})
   }
   
@@ -100,17 +101,20 @@ export default class MapView extends React.Component {
     const locationFeature = e.target.feature;
     const {latlng} = e;
     const countryFeature = this.getCountryLayerFeatures(latlng);
-    
-    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature})
+  
+    Actions.invoke(Constants.ACTION_OPEN_DATAENTRY_POPUP, {locationFeature, countryFeature});
   }
   
   render() {
     return (
       <div id="mapContainer">
         <div className="map">
-          <DataEntryPopup/>
           <DocumentRef/>
-          <Map   {...this.state.map} ref="map">
+          <Map {...this.state.map} ref="map">
+  
+            <MapPopup {...this.state.popup}>
+              <DataEntryPopup/>
+            </MapPopup>
             
             <MiniMap collapsed={true} position='topright' topPadding={1500} bottomPadding={40}>
               <LayerGroup name="Administrative Shapes" ref="country" showAsMiniMap={false}>

@@ -52,9 +52,10 @@ class DataEntryStore extends Reflux.Store {
   
   openPopup(data) {
     let newState = _.cloneDeep(this.state);
-    
-    Object.assign(newState, {'geocoding': _.cloneDeep(data), 'showPopup': true, 'confirmDeletion': false}) //set the location to be used
-    this.setState(newState)
+  
+    //set the location to be used
+    Object.assign(newState, {'geocoding': _.cloneDeep(data), 'showPopup': true, 'confirmDeletion': false});
+    this.setState(newState);
   }
   
   

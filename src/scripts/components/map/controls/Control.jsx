@@ -28,7 +28,6 @@ class MapControl extends React.Component {
     ReactDOM.render(this.props.children, this.container);
     
     map.on('zoomend', (a) => {
-      console.log(map.getZoom());
     }, this);
   }
   
