@@ -24,67 +24,44 @@ const MapStore = createStore({
     },
     project: null,
     geocoding: null,
-    clickedLocationPosition: null
+    clickedLocationPosition: null,
   },
-
+  
   mixins: [StoreMixins],
-
+  
   init() {
     this.listenTo(Reflux.initStore(ProjectGeoJsonStore), this.updateGeocodingLayer);
     this.listenTo(Reflux.initStore(GazetteerGeoJsonStore), this.updateGazetteerLayer);
-
+    
     this.listenTo(CountryGeo, this.updateCountry);
-    this.listenTo(Actions.get(Constants.ACTION_OPEN_DATAENTRY_POPUP), 'closeInfoWindow');
     this.listenTo(Actions.get(Constants.ACTION_CLEAN_MAP_STORE), 'cleanStore');
   },
-
+  
   cleanStore() {
-
     this.setData(this.initialData);
   },
-
+  
   getInitialState() {
     return this.get();
   },
-
+  
   updateCountry(data) {
     let newState = Object.assign({}, this.get());
     newState.layers.countries = data.countries;
     this.setData(newState);
   },
-
-  closeInfoWindow(params) {
-    this.setData(Object.assign({}, this.get(), {
-      popup: {
-        'open': false
-      }
-    }));
-  },
-
+  
   updateGazetteerLayer(data) {
-
     let newState = _.cloneDeep(this.get());
     newState.layers.locations = data;
-
-    Object.assign(newState, {
-      popup: {
-        'open': false
-      }
-    });
-
+    
     this.setData(newState);
   },
-
+  
   updateGeocodingLayer(data) {
     let newState = Object.assign({}, this.get());
     newState.layers.geocoding = data;
-
-    Object.assign(newState, {
-      popup: {
-        'open': false
-      }
-    });
-
+    
     this.setData(newState);
   }
 });

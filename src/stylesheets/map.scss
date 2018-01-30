@@ -22,59 +22,6 @@
   background-clip: padding-box;
 }
 
-#location-info-popup {
-  width: 373px;
-}
-
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  background: white;
-  box-shadow: none;
-}
-
-.leaflet-popup-content-wrapper {
-  padding: 1px;
-  text-align: left;
-  border-radius: 0px;
-}
-
-.leaflet-popup-close-button {
-  padding: 15px !important;
-  @include closeIcon();
-}
-
-.leaflet-popup-close-button:hover {
-  color: transparent !important;
-
-}
-
-.leaflet-popup-content {
-  @include fontDefault($medium, $black);
-  margin: 10px 10px;
-  line-height: 1;
-
-  h2 {
-    margin: -5px;
-    padding: 10px 10px 22px 10px;
-  }
-
-  label {
-    padding-top: 5px;
-  }
-
-  label.mini {
-    padding: 2px;
-  }
-
-  .row {
-    padding: 2px;
-    margin: 0px 3px !important;
-  }
-  .row.border {
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-  }
-}
-
 .leaflet-control-actions-buttons {
   position: relative;
   top: 57px;
@@ -196,12 +143,11 @@
   }
 }
 
-
 .actions-container {
   height: $base-unit * 6;
   padding: $base-unit;
   width: $extend;
-  button{
+  button {
     float: right;
     margin-left: $base-unit;
   }

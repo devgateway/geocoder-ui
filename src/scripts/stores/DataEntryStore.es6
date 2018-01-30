@@ -34,6 +34,7 @@ class DataEntryStore extends Reflux.Store {
     this.listenTo(Actions.get(Constants.ACTION_SAVE), this.save);
     this.listenTo(Actions.get(Constants.ACTION_DELETE), this.delete);
     this.listenTo(Actions.get(Constants.ACTION_CANCEL), this.cancel);
+    this.listenTo(Actions.get(Constants.ACTION_CANCEL_DELETE), this.cancelDelete);
     
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID), this.loadingData);
     this.listenTo(Actions.get(Constants.ACTION_SEARCH_LOCATION_BY_GEONAMEID).completed, this.updateFromGeonames);
@@ -53,52 +54,51 @@ class DataEntryStore extends Reflux.Store {
   openPopup(data) {
     let newState = _.cloneDeep(this.state);
     
-    Object.assign(newState, {'geocoding': _.cloneDeep(data), 'showPopup': true, 'confirmDeletion': false}) //set the location to be used
-    this.setState(newState)
+    //set the location to be used
+    Object.assign(newState, {'geocoding': _.cloneDeep(data), 'showPopup': true, 'confirmDeletion': false});
+    this.setState(newState);
   }
   
-  
   beforeDelete() {
-    let newState = Object.assign({}, this.state, {'confirmDeletion': true})
-    this.setState(newState)
+    let newState = Object.assign({}, this.state, {'confirmDeletion': true});
+    this.setState(newState);
   }
   
   cancel() {
     this.setState(_.cloneDeep(initialState))
   }
   
-  delete() {
-    let newState = Object.assign({}, this.state, {'confirmDeletion': false})
-    const {geocoding: {locationFeature: {properties: {locationStatus: prevState}}}} = newState
-    
-    if (prevState === 'NEW') {
-      Object.assign(newState, {'action': 'remove'})
-      
-    } else {
-      
-      newState = this.valueChanged(newState, {'name': 'locationStatus', 'value': 'DELETED'})
-      Object.assign(newState, {'action': 'save'})
-    }
-    this.setState(newState)
-    this.closePopup()
+  cancelDelete() {
+    let newState = Object.assign({}, this.state, {confirmDeletion: false});
+    this.setState(newState);
   }
   
+  delete() {
+    let newState = Object.assign({}, this.state, {'confirmDeletion': false});
+    const {geocoding: {locationFeature: {properties: {locationStatus: prevState}}}} = newState;
+    
+    if (prevState === 'NEW') {
+      Object.assign(newState, {'action': 'remove'});
+    } else {
+      newState = this.valueChanged(newState, {'name': 'locationStatus', 'value': 'DELETED'});
+      Object.assign(newState, {'action': 'save'});
+    }
+    this.setState(newState);
+    this.closePopup();
+  }
   
   save() {
-    let newState = _.cloneDeep(this.state)
-    
-    const {geocoding: {locationFeature: {properties: {locationStatus}}}} = newState
+    let newState = _.cloneDeep(this.state);
+    const {geocoding: {locationFeature: {properties: {locationStatus}}}} = newState;
     
     if (locationStatus === 'CREATED') {
-      newState = this.valueChanged(newState, {'name': 'locationStatus', 'value': 'NEW'})
+      newState = this.valueChanged(newState, {'name': 'locationStatus', 'value': 'NEW'});
       Object.assign(newState, {'action': 'add'})
-      
     } else {
-      
       newState = this.valueChanged(newState, {
         'name': 'locationStatus',
         'value': locationStatus === 'NEW' ? 'NEW' : 'UPDATED'
-      })
+      });
       Object.assign(newState, {'action': 'save'})
     }
     this.setState(newState)
@@ -106,14 +106,14 @@ class DataEntryStore extends Reflux.Store {
   }
   
   updateValue(newValue) {
-    let newState = _.cloneDeep(this.state)
-    newState = this.valueChanged(newState, newValue)
-    this.setState(newState)
+    let newState = _.cloneDeep(this.state);
+    newState = this.valueChanged(newState, newValue);
+    this.setState(newState);
   }
   
   valueChanged(newState, newValue) {
-    const {name, value, lang} = newValue
-    const val = {}
+    const {name, value, lang} = newValue;
+    const val = {};
     let newProperties = Object.assign({}, newState.geocoding.locationFeature.properties)
     if (lang != undefined && lang != null) {
       let currentValues = newProperties[name].slice()
@@ -312,8 +312,8 @@ class DataEntryStore extends Reflux.Store {
   }
   
   updateFromGeonames(location) {
+    let newState = _.cloneDeep(this.state);
     
-    let newState = _.cloneDeep(this.state)
     Object.assign(newState, {'loadingGeonames': false})
     const names = this.getNames(location.name, location.toponymName, location.alternateNames)
     newState = this.valueChanged(newState, {'name': 'names', 'value': names})
