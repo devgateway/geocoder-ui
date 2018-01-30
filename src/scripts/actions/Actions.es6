@@ -185,7 +185,7 @@ actions[Constants.ACTION_LOAD_COUNTRY_LAYER_LIST].listen(function () {
 
 actions[Constants.ACTION_UPLOAD_FILES].listen(function (fileStore) {
   fileStore.files.forEach(file => {
-    if (!file.status) {
+    if (file.status !== 'LOADING') {
       APIClient.upload(file, fileStore.autoGeocodeAll, fileStore.autoGeocodeAllWithoutLoc, fileStore.overwriteProjects)
         .then((results) => {
           actions[Constants.ACTION_UPLOAD_FILES].completed(file, results.data)

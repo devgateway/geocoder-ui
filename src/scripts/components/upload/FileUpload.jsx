@@ -165,6 +165,10 @@ class FileUpload extends Reflux.Component {
                 <span className={"select-box " + (this.state.autoGeocodeAllWithoutLoc ? "selected" : "")}></span>
                 <span className="search-option-label">AutoCode Projects Without Locations</span>
               </div>
+              <div className="select-section" onClick={this.toggleAutoGeocode.bind(this, "none")}>
+                <span className={"select-box " + (!this.state.autoGeocodeAll && !this.state.autoGeocodeAllWithoutLoc ? "selected" : "")}></span>
+                <span className="search-option-label">Don't AutoCode Projects</span>
+              </div>
             </div>
           </div>
           
