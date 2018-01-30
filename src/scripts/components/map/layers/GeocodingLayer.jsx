@@ -1,5 +1,4 @@
 import React from 'react';
-import {PropTypes} from 'react';
 import GeoJsonLayer from './GeoJsonLayer.jsx';
 
 export default class GeocodingLayer extends GeoJsonLayer {

@@ -1,6 +1,4 @@
 import React from 'react';
-import {PropTypes} from 'react';
-
 import {L, Map, ZoomControl} from 'react-leaflet';
 import leafletPip from 'leaflet-pip';
 
@@ -30,8 +28,7 @@ import MapPopup from './popups/MapPopup.jsx';
 
 require('leaflet/dist/leaflet.css');
 
-export default class MapView extends React.Component {
-  
+class MapView extends React.Component {
   constructor() {
     super();
     
@@ -145,3 +142,5 @@ export default class MapView extends React.Component {
     )
   }
 }
+
+export default MapView;
