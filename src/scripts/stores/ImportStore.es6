@@ -44,6 +44,11 @@ class ImportSore extends Reflux.Store {
           autoGeocodeAll:            false,
           autoGeocodeAllWithoutLoc:  !this.state.autoGeocodeAllWithoutLoc
         });
+      } else {
+        this.setState({
+          autoGeocodeAll:            false,
+          autoGeocodeAllWithoutLoc:  false
+        });
       }
     }
   }
@@ -74,7 +79,6 @@ class ImportSore extends Reflux.Store {
       error
     });
   }
-  
   
   upload(data) {
     const newFiles = [...this.state.files];
