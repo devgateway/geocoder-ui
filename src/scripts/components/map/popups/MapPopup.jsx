@@ -38,6 +38,7 @@ export default class MapPopup extends Popup {
     const map = this.context.map;
     
     if (this.state !== null && this.state !== undefined && this.state.showPopup === true) {
+      // get the point coordinates from DataEntryStore
       const coordinates = this.state.geocoding.locationFeature.geometry.coordinates;
       
       this.leafletElement
