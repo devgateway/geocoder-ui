@@ -83,6 +83,35 @@ class DataEntryContent extends React.Component {
     Actions.invoke(Constants.ACTION_CHANGE_LANGUAGE, lang);
   }
   
+  componentWillReceiveProps(nextProps) {
+    // check if the language changed and if we have the proper translations for names.
+    if (this.props.lang !== nextProps.lang) {
+      const names = nextProps.geocoding.locationFeature.properties.names;
+      
+      const translationLanguage = names.find(val => val.lang === nextProps.lang);
+      
+      if (translationLanguage === undefined
+        || translationLanguage.description === undefined
+        || translationLanguage.description === "") {
+        
+        const locationIdentifiers = nextProps.geocoding.locationFeature.properties.locationIdentifiers;
+        const geonamesIdentifier = locationIdentifiers.find(id => {
+          return (
+            id.vocabulary
+              ? id.vocabulary.code === 'G1'
+              : false)
+        });
+        let geonamesId;
+        if (geonamesIdentifier) {
+          geonamesId = geonamesIdentifier.code
+        }
+        
+        this.updateLocationInfo(geonamesId);
+      } else {
+      }
+    }
+  }
+  
   render() {
     let {
       geocoding: {
