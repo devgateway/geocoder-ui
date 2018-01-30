@@ -15,7 +15,8 @@ export default class MapPopup extends Popup {
   static defaultProps = {
     closeOnClick:       false,
     autoClose:          false,
-    keepInView:         true,
+    // keepInView:         true,
+    autoPan:            true,
     closeButton:        false,
     closeOnEscapeKey:   false,
     autoPanPadding:     new L.Point(window.innerWidth / 2, 5) // try to center the popup

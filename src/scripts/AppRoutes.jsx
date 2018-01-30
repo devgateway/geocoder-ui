@@ -34,7 +34,7 @@ class ProjectListLayout extends React.Component {
 const AppRoutes = (props) => {
   return (<Router history={history}>
     <div>
-      <HeaderLayout/>
+      <HeaderLayout history={history}/>
       
       <Route exact path="/" component={ProjectListLayout}/>
       <Route path="/upload" component={FileUpload}/>
