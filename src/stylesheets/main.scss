@@ -147,7 +147,6 @@ h4 {
 }
 
 .panel-section {
-  margin-bottom: $base-unit;
   overflow: hidden;
   &.search-section {
     margin-bottom: 0;
@@ -164,7 +163,6 @@ h4 {
 .panel-content {
   margin-top: -($base-unit / 2);
   overflow: hidden;
-  padding-right: $base-unit;
 
   .project-info-label {
     color: $black;
@@ -238,8 +236,8 @@ h4 {
 .project-search {
   border-bottom: $px-unit solid $gray;
   border-top: $px-unit solid $gray;
-  padding-top: $base-unit * 2;
-  padding-bottom: $base-unit * 2.5;
+  padding-top: $base-unit;
+  padding-bottom: $base-unit;
 
   input[type=text] {
     @include border-radius(0);

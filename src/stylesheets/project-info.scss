@@ -17,7 +17,7 @@
   @include scrollbar();
 
   .panel-success {
-    min-height: $base-unit * 60;
+    min-height: $base-unit * 55;
     overflow: hidden;
 
     .panel-heading {
@@ -49,8 +49,7 @@
 
   .tab-container {
     border: 1px solid $gray;
-    height: $base-unit * 40;
-    padding: $base-unit $base-unit + 5;
+    height: $base-unit * 35;
     overflow-y: auto;
     &.no-padding {
       padding: 0;
@@ -138,12 +137,6 @@
   font-size: $big - 1.5;
   color: $darkGray;
   margin: 0 0 $base-unit;
-}
-
-.panel-content {
-  margin-top: -($base-unit / 2);
-  overflow: hidden;
-  padding-right: $base-unit;
 }
 
 .country-name {

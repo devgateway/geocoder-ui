@@ -144,8 +144,8 @@
 }
 
 .actions-container {
-  height: $base-unit * 6;
-  padding: $base-unit;
+  height: $base-unit * 5;
+  padding: $base-unit / 2 $base-unit;
   width: $extend;
   button {
     float: right;
