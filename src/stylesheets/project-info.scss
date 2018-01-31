@@ -17,7 +17,7 @@
   @include scrollbar();
 
   .panel-success {
-    min-height: $base-unit * 55;
+    max-height: $base-unit * 55;
     overflow: hidden;
 
     .panel-heading {
@@ -49,7 +49,7 @@
 
   .tab-container {
     border: 1px solid $gray;
-    height: $base-unit * 35;
+    height: $base-unit * 33;
     overflow-y: auto;
     &.no-padding {
       padding: 0;
