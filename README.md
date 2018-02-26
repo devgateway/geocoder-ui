@@ -9,8 +9,8 @@ The tool is composed by two main component a pure Javascript React Based UI, tha
 And an API https://github.com/devgateway/geocoder-api which gives to the Open Aid Geocoder the availability of running as an
 standalone wbe application.
 
-Open Aid Geocoder can also be integrated with AutoGeocoder. This integration enables Open Aid Geocoder to send aid activities to 
-autogecoder job queue. please look at https://github.com/devgateway/geocoder-ie 
+Open Aid Geocoder can also be integrated with AutoGeocoder. This integration enables Open Aid Geocoder to send aid activities to
+autogecoder job queue. please look at https://github.com/devgateway/geocoder-ie
 
 
 ### Software Requirements.
@@ -26,3 +26,8 @@ autogecoder job queue. please look at https://github.com/devgateway/geocoder-ie
 Compiled js and other web files will be located under dist folder.
 
 
+## User Guide
+For further details about how to use this tool please take a look to the user guide document https://drive.google.com/file/d/1mso7sAzBeGhnOBDuXZX8YudDUlbfOq0v/view?usp=drive_web
+
+## Geocoder Suite Technical Guide
+For detailed installation instructions please look at the technical guide https://drive.google.com/file/d/1QhGoI_syJq3FqO0lm3Zc7j5ziuWro5TK/view
