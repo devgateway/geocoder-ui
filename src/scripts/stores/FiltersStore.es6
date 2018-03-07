@@ -31,6 +31,15 @@ class FiltersStore extends Reflux.Store {
   }
 
   completed(data) {
+
+    let countries=data.countries;
+
+    data.countries.push({
+      iso2:"-1",
+      iso3:"-1",
+      name:"None (Multinational)"
+    })
+
     this.setState({
       filterCountries:  data.countries.map((country, index) => {
         return {
