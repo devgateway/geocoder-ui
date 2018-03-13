@@ -65,7 +65,7 @@ class CountryFilter extends Reflux.Component {
 
   render() {
     const {text, isOpen} = this.state;
-    debugger;
+    
     return (<div className="filter-button-wrapper">
       <ButtonToolbar>
         <DropdownButton onToggle={this.onToggle.bind(this)} open={isOpen} className="filter-btn" title="Country" id="country-dropdown">

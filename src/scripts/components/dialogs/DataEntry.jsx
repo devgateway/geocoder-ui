@@ -146,6 +146,8 @@ class DataEntryContent extends React.Component {
       geonamesId = geonamesIdentifier.code
     }
     
+    const coordinates = this.props.geocoding.locationFeature.geometry.coordinates;
+    
     return (
       <div id='dataentry' className={locationStatus ? locationStatus : ''}>
         <div className="popup-header">
@@ -221,7 +223,7 @@ class DataEntryContent extends React.Component {
               
               <div className="col-md-4 no-padding">
                 <label>Coordinattes</label>
-                <input type="text" className="noneditable" id="coordinates" value="13.1339 - 27.8493"
+                <input type="text" className="noneditable" id="coordinates" value={coordinates[1] + ", " + coordinates[0]}
                        disabled="true"/>
               </div>
             </div>)
