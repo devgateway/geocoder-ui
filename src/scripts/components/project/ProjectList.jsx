@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from "reflux";
 import {Link} from 'react-router-dom';
-import {ListGroup, Pagination, Grid, Row, Col, FormControl, FormGroup, Button} from 'react-bootstrap';
+import {Button, Col, FormControl, FormGroup, Grid, ListGroup, Pagination, Row} from 'react-bootstrap';
 import * as Actions from '../../actions/Actions.es6';
 import Constants from '../../constants/Contants.es6';
 import ProjectListStore from '../../stores/ProjectListStore.es6';
@@ -42,9 +42,16 @@ class ProjectList extends Reflux.Component {
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PAGE, page);
   }
   
+  handleSearchChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    
+    Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PARAM, name, value, true);
+  }
+  
   handleFilterChange(event) {
     const name = event.target.name;
-    const value = event.target.type === 'radio' || event.target.type === 'checkbox' ? event.target.checked :event.target.value;
+    const value = event.target.type === 'radio' || event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     
     Actions.invoke(Constants.ACTION_FIND_PROJECTS_SET_PARAM, name, value);
   }
@@ -73,7 +80,7 @@ class ProjectList extends Reflux.Component {
               <Col md={5} sm={5}>
                 <FormControl className="project-header-search pull-left" type="text" name="text" value={this.state.params.text}
                              placeholder="Enter text to search" label="Text search" ref="input"
-                             onChange={this.handleFilterChange.bind(this)}/>
+                             onChange={this.handleSearchChange.bind(this)}/>
               </Col>
               
               <Col md={5} sm={5}>
