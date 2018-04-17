@@ -27,6 +27,9 @@ class ProjectListStore extends Reflux.Store {
     super();
     this.state = initialState;
     
+    // Init a timeout variable to be used to delay the search
+    this.searchTimeout = undefined;
+    
     this.listenTo(Reflux.initStore(FiltersStore), this.updateFilterStore);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS), this.loading);
     this.listenTo(Actions.get(Constants.ACTION_FIND_PROJECTS).completed, this.completed);
@@ -110,7 +113,7 @@ class ProjectListStore extends Reflux.Store {
     });
   }
   
-  setParam(paramName, paramValue) {
+  setParam(paramName, paramValue, delaySearch) {
     const newParams = {...this.state.params};
     
     // first reset all the params if we filter by location status
@@ -127,7 +130,18 @@ class ProjectListStore extends Reflux.Store {
     
     this.setState({params: newParams});
     
-    Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+    // Clear the timeout if it has already been set.
+    // This will prevent the previous task from executing if it has been less than <MILLISECONDS>.
+    clearTimeout(this.searchTimeout);
+    
+    if (delaySearch === true) {
+      // Make a new timeout set to go off in 1000ms
+      this.searchTimeout = setTimeout(() => {
+        Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+      }, 1000);
+    } else {
+      Actions.invoke(Constants.ACTION_FIND_PROJECTS, this.state.params);
+    }
   }
   
   setPage(page) {
